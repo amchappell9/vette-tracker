@@ -16,3 +16,19 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
 
 - [FaunaDB Documentation](https://docs.fauna.com/fauna/current/start/cloud)
 - [How to use FaunaDB with Netlify](https://docs.fauna.com/fauna/current/integrations/netlify.html)
+
+## TODO List
+
+- Front End
+
+  - Setup bootstrap colors
+  - Create header and routing
+  - Figure out forms
+
+- Functions
+
+  - Identify functions needed
+
+- FaunaDB
+  - Figure out how to initialize it
+  - Figure out how to add records
