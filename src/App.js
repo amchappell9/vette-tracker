@@ -10,6 +10,8 @@ import AllVettes from './routes/AllVettes';
 import Trends from './routes/Trends';
 import Resources from './routes/Resources';
 import VetteDetail from './routes/VetteDetail';
+import AddVette from './routes/AddVette';
+import NoMatch from './routes/NoMatch';
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
       <main>
         <Container className='pt-4'>
           <Switch>
+            <Route path='/add-vette'>
+              <AddVette />
+            </Route>
             <Route path='/vettes/:id'>
               <VetteDetail />
             </Route>
@@ -30,8 +35,11 @@ function App() {
             <Route path='/resources'>
               <Resources />
             </Route>
-            <Route path='/'>
+            <Route exact path='/'>
               <Home />
+            </Route>
+            <Route path='*'>
+              <NoMatch />
             </Route>
           </Switch>
         </Container>
