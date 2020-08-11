@@ -4,21 +4,21 @@ import AddVetteForm from './AddVetteForm';
 import ConfirmationView from './ConfirmationView';
 
 const AddVette = () => {
-  // const [formValues, setFormValues] = useState(null);
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [formValues, setFormValues] = useState({
-    cost: '40000',
-    exteriorColor: 'Artic White',
-    interiorColor: 'Red',
-    link: 'www.google.com',
-    miles: '12345',
-    packages: [],
-    submodel: 'Base',
-    trim: '1LT',
-    year: '2014',
-  });
+  const [formValues, setFormValues] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // const [formValues, setFormValues] = useState({
+  //   cost: '40000',
+  //   exteriorColor: 'Artic White',
+  //   interiorColor: 'Red',
+  //   link: 'www.google.com',
+  //   miles: '12345',
+  //   packages: [],
+  //   submodel: 'Base',
+  //   trim: '1LT',
+  //   year: '2014',
+  // });
+  // const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!!formValues) {
