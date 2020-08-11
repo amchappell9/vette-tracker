@@ -15,3 +15,10 @@ $primary: $red;
 
 // Import Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+// Confirmation View Styles
+.card-item {
+  font-weight: 700;
+  font-size: 1.3125rem;
+  margin-bottom: 5px;
+}

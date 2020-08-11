@@ -20,14 +20,16 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
 ## TODO List
 
 - Front End
-
-  - Setup bootstrap colors
-  - Create header and routing
-  - Figure out forms
+  - ~~Setup bootstrap colors~~
+  - ~~Create header and routing~~
+  - ~~Figure out forms~~
+  - Break out confirmation view card into vette detail
+  - Create list of current vettes
 
 - Functions
 
   - Identify functions needed
+  - Build out functions
 
 - FaunaDB
   - Figure out how to initialize it

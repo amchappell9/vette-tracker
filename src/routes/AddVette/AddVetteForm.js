@@ -30,7 +30,7 @@ const AddVetteForm = ({ onSubmit }) => {
           link: '',
         }}
         validationSchema={schema}
-        onSubmit={console.log}
+        onSubmit={onSubmit}
       >
         {({
           values,
