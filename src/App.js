@@ -10,7 +10,7 @@ import AllVettes from './routes/AllVettes';
 import Trends from './routes/Trends';
 import Resources from './routes/Resources';
 import VetteDetail from './routes/VetteDetail';
-import AddVette from './routes/AddVette';
+import AddVette from './routes/AddVette/AddVette';
 import NoMatch from './routes/NoMatch';
 
 function App() {
