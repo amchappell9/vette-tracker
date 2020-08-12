@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { Form, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import AddVetteForm from './AddVetteForm';
 import ConfirmationView from './ConfirmationView';
 
@@ -7,6 +7,7 @@ const AddVette = () => {
   const [formValues, setFormValues] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Mock data
   // const [formValues, setFormValues] = useState({
   //   cost: '40000',
   //   exteriorColor: 'Artic White',
@@ -18,7 +19,7 @@ const AddVette = () => {
   //   trim: '1LT',
   //   year: '2014',
   // });
-  // const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(true);
 
   useEffect(() => {
     if (!!formValues) {
@@ -42,9 +43,21 @@ const AddVette = () => {
   let output;
 
   if (isSubmitting) {
-    output = <div>Loading...</div>;
+    output = (
+      <div className='text-center mt-5'>
+        <Spinner animation='border' role='status' variant='primary'>
+          <span className='sr-only'>Loading...</span>
+        </Spinner>
+      </div>
+    );
   } else if (formValues === null) {
-    output = <AddVetteForm onSubmit={onSubmit} />;
+    output = (
+      <>
+        <h1>Add New Vette</h1>
+        <p>Here you can enter a new Vette listing.</p>
+        <AddVetteForm onSubmit={onSubmit} />
+      </>
+    );
   } else if (!!formValues) {
     output = (
       <ConfirmationView
