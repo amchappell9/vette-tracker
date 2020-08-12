@@ -25,6 +25,8 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
   - ~~Figure out forms~~
   - Break out confirmation view card into vette detail
   - Create list of current vettes
+  - Add edit and delete functions
+  - Read RefactoringUI, go back through and redesign everything
 
 - Functions
 
