@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 import Home from './routes/Home';
-import AllVettes from './routes/AllVettes';
+import AllVettes from './routes/AllVettes/AllVettes';
 import Trends from './routes/Trends';
 import Resources from './routes/Resources';
 import VetteDetail from './routes/VetteDetail';
