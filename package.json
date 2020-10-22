@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.20.0",
     "bootstrap": "^4.5.0",
     "faunadb": "^3.0.1",
     "formik": "^2.1.5",
@@ -19,13 +20,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-future": "npm-run-all --parallel start:app start:server",
-    "start:app": "react-scripts start",
-    "start:server": "netlify-lambda serve functions -c ./webpack.config.js",
+    "start:lambda": "netlify-lambda serve src/lambda",
     "build": "react-scripts build",
-    "build-future": "npm-run-all --parallel build:**",
     "build:app": "react-scripts build",
-    "build:functions": "netlify-lambda build functions -c ./webpack.config.js",
+    "build:lambda": "netlify-lambda build src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -43,14 +41,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": {
-    "/.netlify/functions": {
-      "target": "http://localhost:9000",
-      "pathRewrite": {
-        "^/\\.netlify/functions": ""
-      }
-    }
   },
   "devDependencies": {
     "netlify-lambda": "^2.0.1",
