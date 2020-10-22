@@ -3,6 +3,15 @@ import { Spinner } from 'react-bootstrap';
 import AddVetteForm from './AddVetteForm';
 import ConfirmationView from './ConfirmationView';
 
+const createVette = (data) => {
+  return fetch('/.netlify/functions/create-vette.js', {
+    body: JSON.stringify(data),
+    method: 'POST',
+  }).then((response) => {
+    return response.json();
+  });
+};
+
 const AddVette = () => {
   const [formValues, setFormValues] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,6 +43,13 @@ const AddVette = () => {
   const onSubmit = (values) => {
     console.log('Form submitted', values);
     setFormValues(values);
+    createVette()
+      .then((response) => {
+        console.log('Repsonse', response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleSubmitAnother = () => {
