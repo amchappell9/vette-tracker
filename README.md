@@ -20,19 +20,30 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
 ## TODO List
 
 - Front End
+
   - ~~Setup bootstrap colors~~
   - ~~Create header and routing~~
   - ~~Figure out forms~~
   - Break out confirmation view card into vette detail
   - Create list of current vettes
   - Add edit and delete functions
-  - Read RefactoringUI, go back through and redesign everything
 
 - Functions
 
   - Identify functions needed
   - Build out functions
+    - ~~Get all vettes~~
+    - create new vette
+    - update vette
+    - delete vette
 
 - FaunaDB
-  - Figure out how to initialize it
-  - Figure out how to add records
+
+  - ~~Figure out how to initialize it~~
+
+- Miscellaneous
+  - [Update to cra v4](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md)
+  - Incoporate [react router 5](https://ui.dev/react-router-v5-philosophy-introduction/)
+  - Add Typescipt
+  - Read RefactoringUI, go back through and redesign everything
+  - Change to graphQL backend
