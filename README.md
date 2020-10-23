@@ -43,7 +43,7 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
 
 - Miscellaneous
   - [Update to cra v4](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md)
-  - Incoporate [react router 5](https://ui.dev/react-router-v5-philosophy-introduction/)
+  - Incoporate [react router 6](https://reacttraining.com/blog/react-router-v6-pre/)
   - Add Typescipt
   - Read RefactoringUI, go back through and redesign everything
   - Change to graphQL backend
