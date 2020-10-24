@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fakeVettes } from '../../data/fakeCorvettes';
+import axios from 'axios';
+// import { fakeVettes } from '../../data/fakeCorvettes';
 import { Spinner } from 'react-bootstrap';
 import ListOfVettes from './ListOfVettes';
 import DeleteVetteModal from './DeleteVetteModal';
@@ -12,14 +13,20 @@ const AllVettes = () => {
   const [vetteToDelete, setVetteToDelete] = useState(null);
 
   useEffect(() => {
+    async function getAllVettes() {
+      let response = await axios.get('/.netlify/functions/vettes');
+      setIsLoading(false);
+      setAllVettes(response.data.vettes);
+    }
     setIsLoading(true);
 
     if (vetteToDelete === null) {
       console.log('Getting vettes');
-      setTimeout(() => {
-        setIsLoading(false);
-        setAllVettes(fakeVettes);
-      }, 1000);
+      getAllVettes();
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      //   setAllVettes(fakeVettes);
+      // }, 1000);
     } else {
       setIsLoading(false);
     }
@@ -77,6 +84,20 @@ const AllVettes = () => {
     <div>
       <h1>All Vettes</h1>
       <p>View all the Vettes you've entered here.</p>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              allVettes: allVettes,
+              isLoading: isLoading,
+              showDeleteModal: showDeleteModal,
+              vetteToDelete: vetteToDelete,
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
       {output}
     </div>
   );

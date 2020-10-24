@@ -47,3 +47,4 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
   - Add Typescipt
   - Read RefactoringUI, go back through and redesign everything
   - Change to graphQL backend
+  - Add prettier as a commit hook
