@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Jumbotron, Button } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Jumbotron, Button } from "react-bootstrap";
 
 const Home = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const callTest = () => {
-    fetch('/.netlify/functions/test-call')
+    fetch("/.netlify/functions/test-call")
       .then((response) => response.json())
       .then((json) => setMessage(json.msg));
   };
@@ -21,7 +21,7 @@ const Home = () => {
         <p>
           <Button onClick={callTest}>Test Call</Button>
         </p>
-        {message !== '' && <p>{message}</p>}
+        {message !== "" && <p>{message}</p>}
       </Jumbotron>
     </div>
   );

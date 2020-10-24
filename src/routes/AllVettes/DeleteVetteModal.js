@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal, Button } from "react-bootstrap";
 
 const DeleteVetteModal = ({ show, handleClose, vette, deleteVette }) => {
   // const deleteVette = () => {
@@ -10,7 +10,7 @@ const DeleteVetteModal = ({ show, handleClose, vette, deleteVette }) => {
   if (!!vette) {
     return (
       <Modal show={show} onHide={handleClose}>
-        {' '}
+        {" "}
         <Modal.Header closeButton>
           <Modal.Title>Delete Vette</Modal.Title>
         </Modal.Header>
@@ -18,10 +18,10 @@ const DeleteVetteModal = ({ show, handleClose, vette, deleteVette }) => {
           Are you sure you want to delete {`the ${vette.year} Vette`}?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={deleteVette}>
+          <Button variant="primary" onClick={deleteVette}>
             Save Changes
           </Button>
         </Modal.Footer>

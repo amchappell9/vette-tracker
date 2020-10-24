@@ -1,4 +1,4 @@
-import faunadb from 'faunadb';
+import faunadb from "faunadb";
 
 const q = faunadb.query;
 const client = new faunadb.Client({
@@ -13,9 +13,9 @@ exports.handler = (event, context, callback) => {
   };
 
   return client
-    .query(q.Create(q.Collection('Vettes'), todoItem))
+    .query(q.Create(q.Collection("Vettes"), todoItem))
     .then((response) => {
-      console.log('success', response);
+      console.log("success", response);
 
       return callback(null, {
         statusCode: 200,
@@ -23,7 +23,7 @@ exports.handler = (event, context, callback) => {
       });
     })
     .catch((error) => {
-      console.log('error', error);
+      console.log("error", error);
 
       return callback(null, {
         statusCode: 400,

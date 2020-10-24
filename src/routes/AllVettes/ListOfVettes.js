@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
+import React from "react";
+import { Table, Button } from "react-bootstrap";
 
 const ListOfVettes = ({ vettesArray, handleShowDeleteModal }) => {
   return (
@@ -29,11 +29,11 @@ const ListOfVettes = ({ vettesArray, handleShowDeleteModal }) => {
             <td>{value.interiorColor}</td>
             <td>{value.packages.toString()}</td>
             <td>
-              <Button variant='secondary' className='mr-2'>
+              <Button variant="secondary" className="mr-2">
                 Edit
               </Button>
               <Button
-                variant='danger'
+                variant="danger"
                 onClick={() => {
                   handleShowDeleteModal(value);
                 }}

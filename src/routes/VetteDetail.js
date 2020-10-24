@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const VetteDetail = () => {
   return <div>Vette Detail</div>;
