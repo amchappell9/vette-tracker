@@ -54,11 +54,9 @@ const createNewVette = async (vetteData) => {
       q.Create(q.Collection("Vettes"), { data: vetteData })
     );
 
-    console.log(response);
-
     return {
       statusCode: 200,
-      body: JSON.stringify(vetteData),
+      body: JSON.stringify(response.data),
     };
   } catch (error) {
     console.error("In error:", error);
