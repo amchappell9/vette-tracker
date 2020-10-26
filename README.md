@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/acd76991-747a-414b-b3d7-fc03fafd114f/deploy-status)](https://app.netlify.com/sites/vette-tracker/deploys)
+
 # Vette Tracker
 
 A tool to track corvette prices over time. Built using [this tutorial](https://www.netlify.com/blog/2018/07/09/building-serverless-crud-apps-with-netlify-functions-faunadb/#2-set-up-faunadb) as a guide.
