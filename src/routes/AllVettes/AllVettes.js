@@ -14,19 +14,19 @@ const AllVettes = () => {
 
   useEffect(() => {
     async function getAllVettes() {
-      let response = await axios.get("/.netlify/functions/vettes");
-      setIsLoading(false);
-      setAllVettes(response.data.vettes);
+      try {
+        let response = await axios.get("/.netlify/functions/vettes");
+        setIsLoading(false);
+        setAllVettes(response.data.vettes);
+      } catch (error) {
+        console.error(error);
+      }
     }
+
     setIsLoading(true);
 
     if (vetteToDelete === null) {
-      console.log("Getting vettes");
       getAllVettes();
-      // setTimeout(() => {
-      //   setIsLoading(false);
-      //   setAllVettes(fakeVettes);
-      // }, 1000);
     } else {
       setIsLoading(false);
     }
@@ -45,10 +45,21 @@ const AllVettes = () => {
     setVetteToDelete(null);
   };
 
-  const deleteVette = () => {
+  const deleteVette = async () => {
     console.log(`Deleteing vete with id: ${vetteToDelete.id}`);
 
     // Call delete endpoint
+    try {
+      const response = await axios({
+        method: "delete",
+        url: "/.netlify/functions/vettes",
+        data: {
+          id: vetteToDelete.id,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     setVetteToDelete(null);
   };
