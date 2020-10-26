@@ -44,7 +44,9 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
   - ~~Figure out how to initialize it~~
 
 - Miscellaneous
-  - [Update to cra v4](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md)
+  - ~~[Update to cra v4](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md)~~
+  - Add error handing to client side errors
+  - Add logic to account for missing payloads in lambda functions
   - Incoporate [react router 6](https://reacttraining.com/blog/react-router-v6-pre/)
   - Add Typescipt
   - Read RefactoringUI, go back through and redesign everything
