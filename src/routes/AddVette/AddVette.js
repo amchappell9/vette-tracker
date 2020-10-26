@@ -4,32 +4,9 @@ import axios from "axios";
 import AddVetteForm from "./AddVetteForm";
 import ConfirmationView from "./ConfirmationView";
 
-// const createVette = (data) => {
-//   return fetch('/.netlify/functions/create-vette.js', {
-//     body: JSON.stringify(data),
-//     method: 'POST',
-//   }).then((response) => {
-//     return response.json();
-//   });
-// };
-
 const AddVette = () => {
   const [formValues, setFormValues] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Mock data
-  // const [formValues, setFormValues] = useState({
-  //   cost: '40000',
-  //   exteriorColor: 'Artic White',
-  //   interiorColor: 'Red',
-  //   link: 'www.google.com',
-  //   miles: '12345',
-  //   packages: [],
-  //   submodel: 'Base',
-  //   trim: '1LT',
-  //   year: '2014',
-  // });
-  // const [isSubmitting, setIsSubmitting] = useState(true);
 
   useEffect(() => {
     if (!!formValues) {
@@ -49,13 +26,6 @@ const AddVette = () => {
       data: values,
     });
     setFormValues(response);
-    // createVette()
-    //   .then((response) => {
-    //     console.log('Repsonse', response);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   };
 
   const handleSubmitAnother = () => {

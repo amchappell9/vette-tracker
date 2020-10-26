@@ -32,8 +32,6 @@ const AllVettes = () => {
     }
   }, [vetteToDelete]);
 
-  // const handleEditModal = () => {};
-
   const handleShowDeleteModal = (vette) => {
     console.log(vette);
     setShowDeleteModal(true);
