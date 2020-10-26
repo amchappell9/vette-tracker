@@ -84,20 +84,22 @@ const AllVettes = () => {
     <div>
       <h1>All Vettes</h1>
       <p>View all the Vettes you've entered here.</p>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              allVettes: allVettes,
-              isLoading: isLoading,
-              showDeleteModal: showDeleteModal,
-              vetteToDelete: vetteToDelete,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
+      {false && process.env.NODE_ENV === "development" && (
+        <pre>
+          <code>
+            {JSON.stringify(
+              {
+                allVettes: allVettes,
+                isLoading: isLoading,
+                showDeleteModal: showDeleteModal,
+                vetteToDelete: vetteToDelete,
+              },
+              null,
+              2
+            )}
+          </code>
+        </pre>
+      )}
       {output}
     </div>
   );
