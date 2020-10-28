@@ -1,19 +1,36 @@
 import faunadb from "faunadb";
 
 exports.handler = async function (event, context) {
-  if (event.httpMethod === "GET") {
-    return getAllVettes();
-  } else if (event.httpMethod === "POST") {
-    return createNewVette(JSON.parse(event.body));
-  } else if (event.httpMethod === "DELETE") {
-    const body = JSON.parse(event.body);
-    return deleteVette(body.id);
-  } else {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: "Method not allowed" }),
-    };
+  const id = getIDFromPathname(event.path);
+
+  switch (event.httpMethod) {
+    case "GET":
+      return id ? getVetteByID(id) : getAllVettes();
+
+    case "POST":
+      return createNewVette(JSON.parse(event.body));
+
+    case "PUT":
+      return updateVette(id, JSON.parse(event.body));
+
+    case "DELETE":
+      const body = JSON.parse(event.body);
+      return deleteVette(body.id);
+
+    default:
+      return {
+        statusCode: 405,
+        body: JSON.stringify({ message: "Method not allowed" }),
+      };
   }
+};
+
+const getIDFromPathname = (path) => {
+  const pathArray = path.split("/");
+
+  return pathArray.indexOf("vettes") === pathArray.length - 2
+    ? pathArray[pathArray.length - 1]
+    : null;
 };
 
 const getAllVettes = () => {
@@ -39,6 +56,43 @@ const getAllVettes = () => {
       return {
         statusCode: 200,
         body: JSON.stringify({ vettes: vettes }),
+      };
+    });
+};
+
+const getVetteByID = (id) => {
+  const q = faunadb.query;
+  const client = new faunadb.Client({
+    secret: process.env.FAUNADB_SECRET_KEY,
+  });
+
+  return client
+    .query(
+      q.Map(
+        q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+        q.Lambda("X", q.Get(q.Var("X")))
+      )
+    )
+    .then((response) => {
+      if (response.data.length > 0) {
+        return {
+          statusCode: 200,
+          body: JSON.stringify(response.data[0].data),
+        };
+      } else {
+        // Should be a 404 but there's an issue causing netlify functions not to work
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ msg: "Vette not found" }),
+        };
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+
+      return {
+        statusCode: error.requestResult.statusCode,
+        body: error.description,
       };
     });
 };
@@ -73,6 +127,38 @@ const createNewVette = async (vetteData) => {
       body: error.message,
     };
   }
+};
+
+const updateVette = (id, vetteData) => {
+  const q = faunadb.query;
+  const client = new faunadb.Client({
+    secret: process.env.FAUNADB_SECRET_KEY,
+  });
+
+  // Add id and update date
+  vetteData.id = id;
+  vetteData.date = getFormattedDate(new Date());
+
+  return client
+    .query(
+      q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
+        data: vetteData,
+      })
+    )
+    .then((response) => {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(vetteData),
+      };
+    })
+    .catch((error) => {
+      console.error(error);
+
+      return {
+        statusCode: error.requestResult.statusCode,
+        body: error.message,
+      };
+    });
 };
 
 const deleteVette = (id) => {
