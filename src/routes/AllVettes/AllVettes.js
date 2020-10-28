@@ -48,7 +48,7 @@ const AllVettes = () => {
 
     // Call delete endpoint
     try {
-      const response = await axios({
+      await axios({
         method: "delete",
         url: "/.netlify/functions/vettes",
         data: {
