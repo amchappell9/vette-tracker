@@ -43,7 +43,6 @@ const AddVetteForm = ({ onSubmit }) => {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit} noValidate>
-            {console.log(errors)}
             <Form.Group>
               <Form.Label>Year</Form.Label>
               <Form.Control
@@ -215,7 +214,13 @@ const AddVetteForm = ({ onSubmit }) => {
                 {errors.link}
               </Form.Control.Feedback>
             </Form.Group>
-            <Button type="submit">Add Vette</Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="float-right"
+            >
+              Add Vette
+            </Button>
           </Form>
         )}
       </Formik>
