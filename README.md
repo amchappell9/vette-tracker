@@ -2,7 +2,7 @@
 
 # Vette Tracker
 
-A tool to track corvette prices over time. Built using [this tutorial](https://www.netlify.com/blog/2018/07/09/building-serverless-crud-apps-with-netlify-functions-faunadb/#2-set-up-faunadb) as a guide.
+A tool to track corvette prices over time. Built using React, Netlify Functions, and FaunaDB.
 
 ## React
 
@@ -27,17 +27,20 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
   - ~~Create header and routing~~
   - ~~Figure out forms~~
   - Break out confirmation view card into vette detail
+    - Detail wit analysis on how good a deal it is
   - Create list of current vettes
   - Add edit and delete functions
+  - Turn home page into cool marketing page
 
 - Functions
 
   - Identify functions needed
-  - Build out functions
+  - ~~Build out functions~~
     - ~~Get all vettes~~
-    - create new vette
-    - update vette
-    - delete vette
+    - ~~create new vette~~
+    - ~~update vette~~
+    - ~~delete vette~~
+  - Setup GraphQL
 
 - FaunaDB
 
@@ -50,5 +53,9 @@ A tool to track corvette prices over time. Built using [this tutorial](https://w
   - Incoporate [react router 6](https://reacttraining.com/blog/react-router-v6-pre/)
   - Add Typescipt
   - Read RefactoringUI, go back through and redesign everything
+    - Change All Vettes from table to card based
+  - Add a perfect Vette so entered vettes can be compared on criteria
+  - Add ability to mark if vette is still available or not
+  - Ability to add images?
   - Change to graphQL backend
-  - Add prettier as a commit hook
+  - ~~Add prettier as a commit hook~~
