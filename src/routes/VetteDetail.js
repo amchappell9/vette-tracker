@@ -1,7 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const VetteDetail = () => {
-  return <div>Vette Detail</div>;
+  let { id } = useParams();
+
+  return <div>Vette ID {id}</div>;
 };
 
 export default VetteDetail;

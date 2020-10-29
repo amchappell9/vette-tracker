@@ -1,5 +1,6 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ListOfVettes = ({ vettesArray, handleShowDeleteModal }) => {
   return (
@@ -29,11 +30,14 @@ const ListOfVettes = ({ vettesArray, handleShowDeleteModal }) => {
             <td>{value.interiorColor}</td>
             <td>{value.packages.toString()}</td>
             <td>
+              <Button as={Link} to={`/vettes/${value.id}`} className="mr-2">
+                Info
+              </Button>
               <Button variant="secondary" className="mr-2">
                 Edit
               </Button>
               <Button
-                variant="danger"
+                variant="outline-danger"
                 onClick={() => {
                   handleShowDeleteModal(value);
                 }}
