@@ -1,13 +1,16 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 // import logo from './vette-logo.jpg';
 import Nav from "react-bootstrap/Nav";
-// import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <header className="py-3 shadow-sm">
       <Container fluid>
@@ -58,12 +61,15 @@ const Header = () => {
             </Nav>
           </Col>
           <Col className="pl-5">
-            {/* <Button href='/new-vette' className='float-right'>
-              New Vette
-            </Button> */}
-            <Link to="/add-vette" className="btn btn-primary ">
+            <Link to="/add-vette" className="btn btn-primary mr-3">
               New Vette
             </Link>
+            <Button
+              variant="outline-primary"
+              onClick={() => loginWithRedirect()}
+            >
+              Login
+            </Button>
           </Col>
         </Row>
       </Container>
