@@ -14,54 +14,72 @@ import VetteDetail from "./routes/VetteDetail";
 import AddVette from "./routes/AddVette/AddVette";
 import NoMatch from "./routes/NoMatch";
 import { Login } from "./routes/Login";
+import AuthenticatedRoute from "./AuthenticatedRoute";
 // import authentication from "./authentication";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
-  const authenticate = () => {
+  const authenticate = (callback) => {
     console.log(netlifyIdentity);
     netlifyIdentity.open();
     netlifyIdentity.on("login", (user) => {
       console.log(user);
       setIsAuthenticated(true);
       setUserInfo(user);
+      callback(user);
     });
   };
 
-  const logout = () => {
+  const logout = (callback) => {
     netlifyIdentity.logout();
     netlifyIdentity.on("logout", () => {
       setIsAuthenticated(false);
       setUserInfo(null);
+      callback();
     });
   };
 
   return (
     <div>
-      <Header isAuthenticated={isAuthenticated} />
+      <Header isAuthenticated={isAuthenticated} handleLogout={logout} />
       <main>
         <Container className="pt-4">
           <Switch>
             <Route path="/login">
               <Login handleAuth={authenticate} />
             </Route>
-            <Route path="/add-vette">
+            <AuthenticatedRoute
+              isAuthenticated={isAuthenticated}
+              path="/add-vette"
+            >
               <AddVette />
-            </Route>
-            <Route path="/vettes/:id">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute
+              isAuthenticated={isAuthenticated}
+              path="/vettes/:id"
+            >
               <VetteDetail />
-            </Route>
-            <Route path="/vettes">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute
+              isAuthenticated={isAuthenticated}
+              path="/vettes"
+            >
               <AllVettes />
-            </Route>
-            <Route path="/trends">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute
+              isAuthenticated={isAuthenticated}
+              path="/trends"
+            >
               <Trends />
-            </Route>
-            <Route path="/resources">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute
+              isAuthenticated={isAuthenticated}
+              path="/resources"
+            >
               <Resources />
-            </Route>
+            </AuthenticatedRoute>
             <Route exact path="/">
               <Home />
             </Route>

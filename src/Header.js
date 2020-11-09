@@ -7,7 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, handleLogout }) => {
   return (
     <header className="py-3 shadow-sm">
       <Container fluid>
@@ -63,7 +63,10 @@ const Header = ({ isAuthenticated }) => {
                 <Button as={Link} to="/add-vette" className="mr-3">
                   New Vette
                 </Button>
-                <Button as={Link} to="/fakeLogoutURL" variant="outline-primary">
+                <Button
+                  onClick={() => handleLogout()}
+                  variant="outline-primary"
+                >
                   Logout
                 </Button>
               </>
