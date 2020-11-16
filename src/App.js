@@ -15,18 +15,16 @@ import AddVette from "./routes/AddVette/AddVette";
 import NoMatch from "./routes/NoMatch";
 import { Login } from "./routes/Login";
 import AuthenticatedRoute from "./AuthenticatedRoute";
+import UserInfoContext from "./contexts/UserInfoContext";
 // import authentication from "./authentication";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
   const authenticate = (callback) => {
-    console.log(netlifyIdentity);
     netlifyIdentity.open();
     netlifyIdentity.on("login", (user) => {
       console.log(user);
-      setIsAuthenticated(true);
       setUserInfo(user);
       callback(user);
     });
@@ -35,62 +33,57 @@ function App() {
   const logout = (callback) => {
     netlifyIdentity.logout();
     netlifyIdentity.on("logout", () => {
-      setIsAuthenticated(false);
       setUserInfo(null);
       callback();
     });
   };
 
   return (
-    <div>
-      <Header isAuthenticated={isAuthenticated} handleLogout={logout} />
-      <main>
-        <Container className="pt-4">
-          <Switch>
-            <Route path="/login">
-              <Login handleAuth={authenticate} />
-            </Route>
-            <AuthenticatedRoute
-              isAuthenticated={isAuthenticated}
-              path="/add-vette"
-            >
-              <AddVette />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute
-              isAuthenticated={isAuthenticated}
-              path="/vettes/:id"
-            >
-              <VetteDetail />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute
-              isAuthenticated={isAuthenticated}
-              path="/vettes"
-            >
-              <AllVettes />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute
-              isAuthenticated={isAuthenticated}
-              path="/trends"
-            >
-              <Trends />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute
-              isAuthenticated={isAuthenticated}
-              path="/resources"
-            >
-              <Resources />
-            </AuthenticatedRoute>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="*">
-              <NoMatch />
-            </Route>
-          </Switch>
-        </Container>
-      </main>
-      <Footer />
-    </div>
+    <UserInfoContext.Provider value={userInfo}>
+      <div>
+        <Header isAuthenticated={!!userInfo} handleLogout={logout} />
+        <main>
+          <Container className="pt-4">
+            <Switch>
+              <Route path="/login">
+                <Login handleAuth={authenticate} />
+              </Route>
+              <AuthenticatedRoute
+                isAuthenticated={!!userInfo}
+                path="/add-vette"
+              >
+                <AddVette />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute
+                isAuthenticated={!!userInfo}
+                path="/vettes/:id"
+              >
+                <VetteDetail />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute isAuthenticated={!!userInfo} path="/vettes">
+                <AllVettes />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute isAuthenticated={!!userInfo} path="/trends">
+                <Trends />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute
+                isAuthenticated={!!userInfo}
+                path="/resources"
+              >
+                <Resources />
+              </AuthenticatedRoute>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="*">
+                <NoMatch />
+              </Route>
+            </Switch>
+          </Container>
+        </main>
+        <Footer />
+      </div>
+    </UserInfoContext.Provider>
   );
 }
 
