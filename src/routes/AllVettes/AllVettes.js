@@ -63,6 +63,7 @@ const AllVettes = () => {
         data: {
           id: vetteToDelete.id,
         },
+        headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
       });
     } catch (error) {
       console.error(error);
