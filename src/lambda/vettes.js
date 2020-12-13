@@ -196,7 +196,7 @@ const updateVette = async (id, vetteData, userInfo) => {
   }
 };
 
-const deleteVette = async (id) => {
+const deleteVette = async (id, userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
