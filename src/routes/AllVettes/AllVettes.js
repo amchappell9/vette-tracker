@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 // import { fakeVettes } from '../../data/fakeCorvettes';
-import { Spinner } from "react-bootstrap";
 import ListOfVettes from "./ListOfVettes";
 import DeleteVetteModal from "./DeleteVetteModal";
 import UserInfoContext from "../../contexts/UserInfoContext";
@@ -77,9 +76,9 @@ const AllVettes = () => {
   if (isLoading) {
     output = (
       <div className="text-center mt-5">
-        <Spinner animation="border" role="status" variant="primary">
+        {/* <Spinner animation="border" role="status" variant="primary">
           <span className="sr-only">Loading...</span>
-        </Spinner>
+        </Spinner> */}
       </div>
     );
   } else {

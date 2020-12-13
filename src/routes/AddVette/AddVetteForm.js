@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import { Form, Button } from "react-bootstrap";
 import * as yup from "yup";
 
 const schema = yup.object({
@@ -17,7 +16,13 @@ const schema = yup.object({
 const AddVetteForm = ({ onSubmit }) => {
   return (
     <>
-      <Formik
+      <h2>Add Vette Form</h2>
+    </>
+  );
+};
+
+/*
+  <Formik
         initialValues={{
           year: "2014",
           miles: "",
@@ -40,7 +45,7 @@ const AddVetteForm = ({ onSubmit }) => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
+          
         }) => (
           <Form onSubmit={handleSubmit} noValidate>
             <Form.Group>
@@ -224,8 +229,6 @@ const AddVetteForm = ({ onSubmit }) => {
           </Form>
         )}
       </Formik>
-    </>
-  );
-};
+*/
 
 export default AddVetteForm;

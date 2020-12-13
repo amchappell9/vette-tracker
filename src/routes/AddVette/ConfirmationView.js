@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 /**
@@ -9,7 +8,7 @@ const ConfirmationView = ({ formValues, handleSubmitAnother }) => {
   return (
     <div className="mt-5">
       <h1 className="text-center">Vette Added!</h1>
-      <Card bg="light" className="mt-4">
+      {/* <Card bg="light" className="mt-4">
         <Card.Body as={Container}>
           <Row className="mb-4">
             <Col>
@@ -90,7 +89,7 @@ const ConfirmationView = ({ formValues, handleSubmitAnother }) => {
             View All Vettes
           </Button>
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 };
