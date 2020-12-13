@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "autoprefixer": "9",
     "axios": "^0.20.0",
     "encoding": "^0.1.13",
     "faunadb": "^3.0.1",
@@ -13,21 +15,23 @@
     "husky": "^4.3.0",
     "lint-staged": "^10.4.2",
     "netlify-identity-widget": "^1.9.1",
+    "postcss": "7",
     "prettier": "^2.1.2",
     "react": "17.0.0",
     "react-dom": "17.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "craco start",
     "start:lambda": "netlify-lambda serve src/lambda",
     "build": "run-p build:**",
-    "build:app": "react-scripts build",
+    "build:app": "craco build",
     "build:lambda": "netlify-lambda build src/lambda",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": "react-app"

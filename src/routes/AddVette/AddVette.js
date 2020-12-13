@@ -39,9 +39,9 @@ const AddVette = () => {
   if (isSubmitting) {
     output = (
       <div className="text-center mt-5">
-        <Spinner animation="border" role="status" variant="primary">
+        {/* <Spinner animation="border" role="status" variant="primary">
           <span className="sr-only">Loading...</span>
-        </Spinner>
+        </Spinner> */}
       </div>
     );
   } else if (formValues === null) {
