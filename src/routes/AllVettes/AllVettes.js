@@ -39,7 +39,7 @@ const AllVettes = () => {
     } else {
       setIsLoading(false);
     }
-  }, [vetteToDelete]);
+  }, [vetteToDelete, userInfo.token.access_token]);
 
   const handleShowDeleteModal = (vette) => {
     console.log(vette);
