@@ -148,64 +148,95 @@ const createNewVette = async (vetteData, userInfo) => {
   }
 };
 
-const updateVette = (id, vetteData) => {
+const updateVette = async (id, vetteData, userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
   });
+  let userIDMatches = false;
 
   // Add id and update date
   vetteData.id = id;
   vetteData.date = getFormattedDate(new Date());
 
-  return client
-    .query(
-      q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
-        data: vetteData,
-      })
-    )
-    .then((response) => {
+  try {
+    await client
+      .query(
+        q.Map(
+          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Lambda("X", q.Get(q.Var("X")))
+        )
+      )
+      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+
+    if (userIDMatches) {
+      await client.query(
+        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
+          data: vetteData,
+        })
+      );
+
       return {
         statusCode: 200,
         body: JSON.stringify(vetteData),
       };
-    })
-    .catch((error) => {
-      console.error(error);
-
+    } else {
       return {
-        statusCode: error.requestResult.statusCode,
-        body: error.message,
+        statusCode: 403,
+        body: JSON.stringify({ message: "User not authorized" }),
       };
-    });
+    }
+  } catch (error) {
+    console.error(error);
+
+    return {
+      statusCode: error.requestResult.statusCode,
+      body: error.message,
+    };
+  }
 };
 
-const deleteVette = (id) => {
+const deleteVette = async (id) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
   });
+  let userIDMatches = false;
 
   // Validate user has access to vette
+  try {
+    await client
+      .query(
+        q.Map(
+          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Lambda("X", q.Get(q.Var("X")))
+        )
+      )
+      .then((response) => (userIDMatches = response.userId === userInfo.sub));
 
-  return client
-    .query(
-      q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
-    )
-    .then((response) => {
+    if (userIDMatches) {
+      client.query(
+        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
+      );
+
       return {
         statusCode: 200,
         body: JSON.stringify({ msg: `Vette ${id} deleted` }),
       };
-    })
-    .catch((error) => {
-      console.log(error);
-
+    } else {
       return {
-        statusCode: error.requestResult.statusCode,
-        body: error.description,
+        statusCode: 403,
+        body: JSON.stringify({ message: "User not authorized" }),
       };
-    });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return {
+      statusCode: error.requestResult.statusCode,
+      body: error.description,
+    };
+  }
 };
 
 const getFormattedDate = (date) => {
