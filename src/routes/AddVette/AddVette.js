@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import AddVetteForm from "./AddVetteForm";
 import ConfirmationView from "./ConfirmationView";
+import UserInfoContext from "../../contexts/UserInfoContext";
 
 const AddVette = () => {
   const [formValues, setFormValues] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const userInfo = useContext(UserInfoContext);
 
   useEffect(() => {
     if (!!formValues) {
@@ -21,13 +24,13 @@ const AddVette = () => {
   }, [formValues]);
 
   const onSubmit = async (values) => {
-    console.log("Form submitted", values);
     const response = await axios({
       method: "post",
       url: "/.netlify/functions/vettes",
       data: values,
+      headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
     });
-    setFormValues(response);
+    setFormValues(response.data);
   };
 
   const handleSubmitAnother = () => {

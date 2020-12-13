@@ -2,20 +2,29 @@ import faunadb from "faunadb";
 
 exports.handler = async function (event, context) {
   const id = getIDFromPathname(event.path);
+  const { identity, user } = context.clientContext;
+  console.log({ identity, user });
+
+  if (!userIsValid(user)) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ message: "Please authenticate and try again" }),
+    };
+  }
 
   switch (event.httpMethod) {
     case "GET":
-      return id ? getVetteByID(id) : getAllVettes();
+      return id ? getVetteByID(id, user) : getAllVettes(user);
 
     case "POST":
-      return createNewVette(JSON.parse(event.body));
+      return createNewVette(JSON.parse(event.body), user);
 
     case "PUT":
-      return updateVette(id, JSON.parse(event.body));
+      return updateVette(id, JSON.parse(event.body), user);
 
     case "DELETE":
       const body = JSON.parse(event.body);
-      return deleteVette(body.id);
+      return deleteVette(body.id, user);
 
     default:
       return {
@@ -23,6 +32,10 @@ exports.handler = async function (event, context) {
         body: JSON.stringify({ message: "Method not allowed" }),
       };
   }
+};
+
+const userIsValid = (user) => {
+  return typeof user !== "undefined";
 };
 
 const getIDFromPathname = (path) => {
@@ -33,7 +46,7 @@ const getIDFromPathname = (path) => {
     : null;
 };
 
-const getAllVettes = () => {
+const getAllVettes = (userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
@@ -50,7 +63,7 @@ const getAllVettes = () => {
       const vettes = [];
 
       response.data.map((value) => {
-        return vettes.push(value.data);
+        return value.data.userId === userInfo.sub && vettes.push(value.data);
       });
 
       return {
@@ -60,7 +73,7 @@ const getAllVettes = () => {
     });
 };
 
-const getVetteByID = (id) => {
+const getVetteByID = (id, userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
@@ -74,7 +87,10 @@ const getVetteByID = (id) => {
       )
     )
     .then((response) => {
-      if (response.data.length > 0) {
+      if (
+        response.data.length > 0 &&
+        response.data[0].userId === userInfo.sub
+      ) {
         return {
           statusCode: 200,
           body: JSON.stringify(response.data[0].data),
@@ -97,7 +113,7 @@ const getVetteByID = (id) => {
     });
 };
 
-const createNewVette = async (vetteData) => {
+const createNewVette = async (vetteData, userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
@@ -109,6 +125,9 @@ const createNewVette = async (vetteData) => {
 
     // Add Date
     vetteData.date = getFormattedDate(new Date());
+
+    // Add user ID
+    vetteData.userId = userInfo.sub;
 
     // Add record
     const response = await client.query(
@@ -129,62 +148,95 @@ const createNewVette = async (vetteData) => {
   }
 };
 
-const updateVette = (id, vetteData) => {
+const updateVette = async (id, vetteData, userInfo) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
   });
+  let userIDMatches = false;
 
   // Add id and update date
   vetteData.id = id;
   vetteData.date = getFormattedDate(new Date());
 
-  return client
-    .query(
-      q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
-        data: vetteData,
-      })
-    )
-    .then((response) => {
+  try {
+    await client
+      .query(
+        q.Map(
+          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Lambda("X", q.Get(q.Var("X")))
+        )
+      )
+      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+
+    if (userIDMatches) {
+      await client.query(
+        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
+          data: vetteData,
+        })
+      );
+
       return {
         statusCode: 200,
         body: JSON.stringify(vetteData),
       };
-    })
-    .catch((error) => {
-      console.error(error);
-
+    } else {
       return {
-        statusCode: error.requestResult.statusCode,
-        body: error.message,
+        statusCode: 403,
+        body: JSON.stringify({ message: "User not authorized" }),
       };
-    });
+    }
+  } catch (error) {
+    console.error(error);
+
+    return {
+      statusCode: error.requestResult.statusCode,
+      body: error.message,
+    };
+  }
 };
 
-const deleteVette = (id) => {
+const deleteVette = async (id) => {
   const q = faunadb.query;
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
   });
+  let userIDMatches = false;
 
-  return client
-    .query(
-      q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
-    )
-    .then((response) => {
+  // Validate user has access to vette
+  try {
+    await client
+      .query(
+        q.Map(
+          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Lambda("X", q.Get(q.Var("X")))
+        )
+      )
+      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+
+    if (userIDMatches) {
+      client.query(
+        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
+      );
+
       return {
         statusCode: 200,
         body: JSON.stringify({ msg: `Vette ${id} deleted` }),
       };
-    })
-    .catch((error) => {
-      console.log(error);
-
+    } else {
       return {
-        statusCode: error.requestResult.statusCode,
-        body: error.description,
+        statusCode: 403,
+        body: JSON.stringify({ message: "User not authorized" }),
       };
-    });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return {
+      statusCode: error.requestResult.statusCode,
+      body: error.description,
+    };
+  }
 };
 
 const getFormattedDate = (date) => {

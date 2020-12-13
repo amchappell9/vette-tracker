@@ -22,7 +22,7 @@ const DeleteVetteModal = ({ show, handleClose, vette, deleteVette }) => {
             Close
           </Button>
           <Button variant="primary" onClick={deleteVette}>
-            Save Changes
+            Delete Vette
           </Button>
         </Modal.Footer>
       </Modal>

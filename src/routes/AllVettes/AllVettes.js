@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 // import { fakeVettes } from '../../data/fakeCorvettes';
 import { Spinner } from "react-bootstrap";
 import ListOfVettes from "./ListOfVettes";
 import DeleteVetteModal from "./DeleteVetteModal";
+import UserInfoContext from "../../contexts/UserInfoContext";
 
 const AllVettes = () => {
   const [allVettes, setAllVettes] = useState([]);
@@ -12,10 +13,18 @@ const AllVettes = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [vetteToDelete, setVetteToDelete] = useState(null);
 
+  const userInfo = useContext(UserInfoContext);
+
+  console.log("Context in all vettes", userInfo);
+
   useEffect(() => {
     async function getAllVettes() {
       try {
-        let response = await axios.get("/.netlify/functions/vettes");
+        let response = await axios({
+          url: "/.netlify/functions/vettes",
+          method: "get",
+          headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+        });
         setIsLoading(false);
         setAllVettes(response.data.vettes);
       } catch (error) {
@@ -30,7 +39,7 @@ const AllVettes = () => {
     } else {
       setIsLoading(false);
     }
-  }, [vetteToDelete]);
+  }, [vetteToDelete, userInfo.token.access_token]);
 
   const handleShowDeleteModal = (vette) => {
     console.log(vette);
@@ -54,6 +63,7 @@ const AllVettes = () => {
         data: {
           id: vetteToDelete.id,
         },
+        headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
       });
     } catch (error) {
       console.error(error);

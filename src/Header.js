@@ -4,10 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 // import logo from './vette-logo.jpg';
 import Nav from "react-bootstrap/Nav";
-// import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ isAuthenticated, handleLogout }) => {
   return (
     <header className="py-3 shadow-sm">
       <Container fluid>
@@ -58,12 +58,28 @@ const Header = () => {
             </Nav>
           </Col>
           <Col className="pl-5">
-            {/* <Button href='/new-vette' className='float-right'>
-              New Vette
-            </Button> */}
-            <Link to="/add-vette" className="btn btn-primary ">
-              New Vette
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Button as={Link} to="/add-vette" className="mr-3">
+                  New Vette
+                </Button>
+                <Button
+                  onClick={() => handleLogout()}
+                  variant="outline-primary"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button as={Link} to="/login" className="mr-3">
+                  Login
+                </Button>
+                <Button as={Link} to="/signup" variant="outline-primary">
+                  Sign Up
+                </Button>
+              </>
+            )}
           </Col>
         </Row>
       </Container>
