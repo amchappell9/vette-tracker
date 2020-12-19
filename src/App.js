@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import { Switch, Route } from "react-router-dom";
 import netlifyIdentity from "netlify-identity-widget";
 
-import Home from "./routes/Home";
+import Home from "./routes/Home/Home";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
 import Resources from "./routes/Resources";
