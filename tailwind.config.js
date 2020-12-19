@@ -20,6 +20,7 @@ module.exports = {
       gray: colors.warmGray,
       yellow: colors.amber,
       green: colors.green,
+      white: "#FFFFFF",
     },
     extend: {},
   },

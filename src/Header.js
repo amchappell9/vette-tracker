@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 
 const Header = ({ isAuthenticated, handleLogout }) => {
   return (
-    <>
-      <span>Header</span>
-    </>
+    <header className="px-16 py-4">
+      <div className="h-16 w-24 bg-white"></div>
+      <nav></nav>
+    </header>
     // <header className="py-3 shadow-sm">
     //   <Container fluid>
     //     <Row>

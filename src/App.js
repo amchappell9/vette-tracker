@@ -37,68 +37,41 @@ function App() {
     });
   };
 
-  const colorArray = [
-    "50",
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ];
-
   return (
-    // <UserInfoContext.Provider value={userInfo}>
-    //   <div>
-    //     <Header isAuthenticated={!!userInfo} handleLogout={logout} />
-    //     <main>
-    //       <Container className="pt-4">
-    //         <Switch>
-    //           <Route path="/login">
-    //             <Login handleAuth={authenticate} />
-    //           </Route>
-    //           <AuthenticatedRoute
-    //             isAuthenticated={!!userInfo}
-    //             path="/add-vette"
-    //           >
-    //             <AddVette />
-    //           </AuthenticatedRoute>
-    //           <AuthenticatedRoute
-    //             isAuthenticated={!!userInfo}
-    //             path="/vettes/:id"
-    //           >
-    //             <VetteDetail />
-    //           </AuthenticatedRoute>
-    //           <AuthenticatedRoute isAuthenticated={!!userInfo} path="/vettes">
-    //             <AllVettes />
-    //           </AuthenticatedRoute>
-    //           <AuthenticatedRoute isAuthenticated={!!userInfo} path="/trends">
-    //             <Trends />
-    //           </AuthenticatedRoute>
-    //           <AuthenticatedRoute
-    //             isAuthenticated={!!userInfo}
-    //             path="/resources"
-    //           >
-    //             <Resources />
-    //           </AuthenticatedRoute>
-    //           <Route exact path="/">
-    //             <Home />
-    //           </Route>
-    //           <Route path="*">
-    //             <NoMatch />
-    //           </Route>
-    //         </Switch>
-    //       </Container>
-    //     </main>
-    //     <Footer />
-    //   </div>
-    // </UserInfoContext.Provider>
-    <>
-      <h1>Vette Tracker</h1>
-    </>
+    <div className="bg-gray-700 min-h-screen">
+      <UserInfoContext.Provider value={userInfo}>
+        <Header isAuthenticated={!!userInfo} handleLogout={logout} />
+        <main>
+          <Switch>
+            <Route path="/login">
+              <Login handleAuth={authenticate} />
+            </Route>
+            <AuthenticatedRoute path="/add-vette">
+              <AddVette />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/vettes/:id">
+              <VetteDetail />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/vettes">
+              <AllVettes />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/trends">
+              <Trends />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/resources">
+              <Resources />
+            </AuthenticatedRoute>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+        </main>
+        <Footer />
+      </UserInfoContext.Provider>
+    </div>
   );
 }
 

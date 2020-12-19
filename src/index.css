@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.home-triangle-left {
+  @apply w-0 h-0;
+
+  border-top: 8rem solid transparent;
+  border-bottom: 8rem solid transparent;
+  border-left-style: solid;
+  border-left-width: 50vw;
+}
+
+.home-triangle-right {
+  @apply w-0 h-0;
+
+  border-top: 8rem solid transparent;
+  border-bottom: 8rem solid transparent;
+  border-right-style: solid;
+  border-right-width: 50vw;
+}
