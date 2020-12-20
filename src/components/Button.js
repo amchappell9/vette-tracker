@@ -48,13 +48,14 @@ const getVariantClasses = (variant) => {
   return variantClasses;
 };
 
-const Button = ({ children, size, variant, onClick, className }) => {
+const Button = ({ children, size, variant, onClick, className, ...props }) => {
   return (
     <button
       className={`${getSizeClasses(size)} ${getVariantClasses(variant)} ${
         typeof className !== "undefined" && className
       }`}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>

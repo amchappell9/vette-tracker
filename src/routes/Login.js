@@ -10,51 +10,7 @@ export const Login = ({ handleAuth }) => {
   let { from } = location.state || { from: { pathname: "/" } };
 
   return (
-    // <Container>
-    //   <Row>
-    //     <Col xs="12">
-    //       <Card className="text-center">
-    //         <Card.Body>
-    //           <Card.Title>Login</Card.Title>
-    //           <Card.Text>Click below to login</Card.Text>
-    //           <Button
-    //             onClick={() => {
-    //               handleAuth((response) => {
-    //                 console.log(response);
-    //                 history.replace(from);
-    //               });
-    //             }}
-    //           >
-    //             Login
-    //           </Button>
-    //         </Card.Body>
-    //       </Card>
-    //     </Col>
-    //   </Row>
-    // </Container>
     <>
-      {/* <section className="mx-auto mt-16">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold text-gray-800">
-            Sign In to <span className="text-red-500">Vette Tracker</span>
-          </h1>
-          <div className="block mt-4">
-            <span className="text-2xl text-gray-800">
-              Don't have an account?{" "}
-              <Link to="/sign-up" className="text-red-500">
-                Click here to sign up!
-              </Link>
-            </span>
-          </div>
-        </div>
-        <form>
-          <label>Username:</label>
-          <input type="text" />
-          <label>Password:</label>
-          <input type="password" />
-          <button type="submit">Sign In</button>
-        </form>
-      </section> */}
       <div className=" min-main-height flex justify-center items-center w-full h-full">
         <div className="max-w-lg w-full space-y-8 -mt-48">
           <div className="text-center">
@@ -91,7 +47,16 @@ export const Login = ({ handleAuth }) => {
                 autoComplete="current-password"
                 className="w-full py-1 px-4"
               />
-              <Button size="full" className="mt-4">
+              <Button
+                size="full"
+                className="mt-4"
+                onClick={() => {
+                  handleAuth((response) => {
+                    console.log(response);
+                    history.replace(from);
+                  });
+                }}
+              >
                 Sign In
               </Button>
             </form>
