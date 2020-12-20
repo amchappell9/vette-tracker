@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Header = ({ isAuthenticated, handleLogout }) => {
   return (
     <header className="px-16 py-4">
-      <div className="h-16 w-24 bg-white"></div>
+      <div className="h-16 w-24 bg-red-500"></div>
       <nav></nav>
     </header>
     // <header className="py-3 shadow-sm">
