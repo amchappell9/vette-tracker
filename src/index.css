@@ -19,3 +19,7 @@
   border-right-style: solid;
   border-right-width: 50vw;
 }
+
+.min-main-height {
+  min-height: calc(100vh - 96px - 92px);
+}

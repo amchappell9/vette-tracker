@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import netlifyIdentity from "netlify-identity-widget";
 
 import Home from "./routes/Home/Home";
@@ -17,8 +17,25 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 // import authentication from "./authentication";
 
+const getBodyBgColor = (path) => {
+  let className = "";
+
+  switch (path) {
+    case "/":
+      className = "bg-gray-700";
+      break;
+
+    default:
+      className = "";
+      break;
+  }
+
+  return className;
+};
+
 function App() {
   const [userInfo, setUserInfo] = useState(null);
+  let location = useLocation();
 
   const authenticate = (callback) => {
     netlifyIdentity.open();
@@ -38,10 +55,10 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-700 min-h-screen">
+    <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
       <UserInfoContext.Provider value={userInfo}>
         <Header isAuthenticated={!!userInfo} handleLogout={logout} />
-        <main>
+        <main className="min-main-height">
           <Switch>
             <Route path="/sign-in">
               <Login handleAuth={authenticate} />
