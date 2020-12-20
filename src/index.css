@@ -20,6 +20,7 @@
   border-right-width: 50vw;
 }
 
+/* Sets the height to the full height of the screen minus the header and footer */
 .min-main-height {
   min-height: calc(100vh - 96px - 92px);
 }

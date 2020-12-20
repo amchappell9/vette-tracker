@@ -58,7 +58,7 @@ function App() {
     <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
       <UserInfoContext.Provider value={userInfo}>
         <Header isAuthenticated={!!userInfo} handleLogout={logout} />
-        <main className="min-main-height">
+        <main>
           <Switch>
             <Route path="/sign-in">
               <Login handleAuth={authenticate} />
