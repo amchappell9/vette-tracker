@@ -1,6 +1,6 @@
 import React from "react";
 import FeatureCard from "./FeatureCard";
-import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -9,15 +9,21 @@ const Home = () => {
         <h1 className="text-white text-8xl font-bold pb-6">
           Looking for a new Vette?
         </h1>
-        <span className="inline-block max-w-3xl text-gray-200 text-3xl pb-8">
-          Vette Tracker helps you track Vette prices over time, allowing you to
-          find the best deals.
-        </span>
-        <br />
-        {/* <button className="px-12 py-6 bg-red-600 hover:bg-red-700 text-white font-bold text-3xl shadow-md">
-          Get Started
-        </button> */}
-        <Button size="large">Get Started</Button>
+        <div className="block">
+          <span className="inline-block max-w-3xl text-gray-200 text-3xl pb-8">
+            <span className="text-red-500 font-bold">Vette Tracker</span> helps
+            you track Vette prices over time, allowing you to find the best
+            deals.
+          </span>
+        </div>
+        <div className="block mt-4">
+          <Link
+            to="/sign-in"
+            className="px-12 py-6 font-bold text-3xl shadow-md bg-red-500 hover:bg-red-600 text-white rounded"
+          >
+            Get Started
+          </Link>
+        </div>
       </section>
       <section className="h-64 bg-gray-700 flex justify-between overflow-x-hidden">
         <div className="home-triangle-left border-gray-400 "></div>
@@ -30,11 +36,11 @@ const Home = () => {
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
         />
         <FeatureCard
-          title="Helps You Do This"
+          title="And This"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
         />
         <FeatureCard
-          title="Helps You Do This"
+          title="And This Too!"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
         />
       </section>

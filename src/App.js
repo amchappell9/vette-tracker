@@ -43,7 +43,7 @@ function App() {
         <Header isAuthenticated={!!userInfo} handleLogout={logout} />
         <main>
           <Switch>
-            <Route path="/login">
+            <Route path="/sign-in">
               <Login handleAuth={authenticate} />
             </Route>
             <AuthenticatedRoute path="/add-vette">

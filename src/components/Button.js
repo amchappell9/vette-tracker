@@ -35,7 +35,7 @@ const getVariantClasses = (variant) => {
 
     // Defaults to BUTTON_VARIANTS.RED
     default:
-      variantClasses = "bg-red-600 hover:bg-red-700 text-white";
+      variantClasses = "bg-red-500 hover:bg-red-600 text-white rounded";
       break;
   }
 
