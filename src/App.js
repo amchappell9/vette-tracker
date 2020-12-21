@@ -12,7 +12,8 @@ import Resources from "./routes/Resources";
 import VetteDetail from "./routes/VetteDetail";
 import AddVette from "./routes/AddVette/AddVette";
 import NoMatch from "./routes/NoMatch";
-import { Login } from "./routes/Login";
+import Login from "./routes/Login";
+import SignUp from "./routes/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 // import authentication from "./authentication";
@@ -26,7 +27,7 @@ const getBodyBgColor = (path) => {
       break;
 
     default:
-      className = "";
+      className = "bg-gray-50";
       break;
   }
 
@@ -62,6 +63,9 @@ function App() {
           <Switch>
             <Route path="/sign-in">
               <Login handleAuth={authenticate} />
+            </Route>
+            <Route path="/sign-up">
+              <SignUp />
             </Route>
             <AuthenticatedRoute path="/add-vette">
               <AddVette />
