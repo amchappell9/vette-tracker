@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 
 const SignUp = () => {
   return (
-    <div className="min-main-height flex justify-center items-center">
+    <div className="min-main-height mb-8 flex justify-center items-center">
       <div className="block max-w-4xl w-full">
         <h1 className="text-3xl font-bold text-gray-700">Sign Up</h1>
         <div className="mt-4 mb-8 px-8 bg-white rounded shadow-lg grid grid-cols-3 gap-8">
