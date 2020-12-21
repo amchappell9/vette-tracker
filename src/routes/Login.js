@@ -3,7 +3,7 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
-export const Login = ({ handleAuth }) => {
+const Login = ({ handleAuth }) => {
   let history = useHistory();
   let location = useLocation();
 
@@ -26,17 +26,20 @@ export const Login = ({ handleAuth }) => {
           </div>
           <div>
             <form>
-              <label for="username" className="block mb-2 font-bold text-lg">
+              <label
+                htmlFor="username"
+                className="block mb-2 font-bold text-lg"
+              >
                 Username:
               </label>
               <Input
                 id="username"
                 type="text"
-                autocomplete="username"
+                autoComplete="username"
                 className="w-full py-1 px-4"
               />
               <label
-                for="password"
+                htmlFor="password"
                 className="block mb-2 mt-4 font-bold text-lg"
               >
                 Password:
@@ -66,3 +69,5 @@ export const Login = ({ handleAuth }) => {
     </>
   );
 };
+
+export default Login;
