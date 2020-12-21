@@ -8,6 +8,7 @@ const BUTTON_SIZES = {
 
 const BUTTON_VARIANTS = {
   RED: "red",
+  SECONDARY: "secondary",
 };
 
 const getSizeClasses = (size) => {
@@ -24,7 +25,7 @@ const getSizeClasses = (size) => {
 
     // Defaults to BUTTON_SIZES.NORMAL
     default:
-      sizeClasses = "px-6 py-3 text-lg";
+      sizeClasses = "px-6 py-2 text-lg";
       break;
   }
 
@@ -35,8 +36,10 @@ const getVariantClasses = (variant) => {
   let variantClasses = "";
 
   switch (variant) {
-    // case BUTTON_VARIANTS.RED:
-    //   break;
+    case BUTTON_VARIANTS.SECONDARY:
+      variantClasses =
+        "bg-white hover:bg-gray-100 text-gray-800 border border-gray-300";
+      break;
 
     // Defaults to BUTTON_VARIANTS.RED
     default:
