@@ -6,20 +6,19 @@ const Home = () => {
   return (
     <>
       <section className="text-center pt-40 mb-20">
-        <h1 className="text-white text-8xl font-bold pb-6">
+        <h1 className="text-white text-6xl font-bold pb-4">
           Looking for a new Vette?
         </h1>
         <div className="block">
-          <span className="inline-block max-w-3xl text-gray-200 text-3xl pb-8">
+          <span className="inline-block max-w-lg text-gray-200 text-xl pb-6">
             <span className="text-red-500 font-bold">Vette Tracker</span> helps
-            you track Vette prices over time, allowing you to find the best
-            deals.
+            you track Vette prices over time, helping you find the best deals.
           </span>
         </div>
-        <div className="block mt-4">
+        <div className="block mt-2">
           <Link
             to="/sign-in"
-            className="px-12 py-6 font-bold text-3xl shadow-md bg-red-500 hover:bg-red-600 text-white rounded"
+            className="px-8 py-4 font-bold text-2xl shadow-md bg-red-500 hover:bg-red-600 text-white rounded"
           >
             Get Started
           </Link>
