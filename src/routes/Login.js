@@ -53,7 +53,8 @@ const Login = ({ handleAuth }) => {
               <Button
                 size="full"
                 className="mt-4"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   handleAuth((response) => {
                     console.log(response);
                     history.replace(from);

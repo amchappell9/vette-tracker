@@ -6,7 +6,7 @@ import { Switch, Route, useLocation } from "react-router-dom";
 import netlifyIdentity from "netlify-identity-widget";
 
 import Home from "./routes/Home/Home";
-import AllVettes from "./routes/AllVettes/AllVettes";
+// import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
 import Resources from "./routes/Resources";
 import VetteDetail from "./routes/VetteDetail";
@@ -16,6 +16,7 @@ import Login from "./routes/Login";
 import SignUp from "./routes/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
+import AllVettesFake from "./routes/AllVettes/AllVettesFake";
 // import authentication from "./authentication";
 
 const getBodyBgColor = (path) => {
@@ -35,7 +36,12 @@ const getBodyBgColor = (path) => {
 };
 
 function App() {
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({
+    firstName: "Austin",
+    lastName: "Chappell",
+    email: "amchappell9@gmail.com",
+  });
   let location = useLocation();
 
   const authenticate = (callback) => {
@@ -74,7 +80,8 @@ function App() {
               <VetteDetail />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/vettes">
-              <AllVettes />
+              {/* <AllVettes /> */}
+              <AllVettesFake />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/trends">
               <Trends />

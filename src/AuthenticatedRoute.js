@@ -11,7 +11,7 @@ const AuthenticatedRoute = ({ children }) => {
         !!userInfo ? (
           children
         ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          <Redirect to={{ pathname: "/sign-in", state: { from: location } }} />
         )
       }
     />
