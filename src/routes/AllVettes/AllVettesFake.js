@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import ListOfVettes from "./ListOfVettes";
+import PaginationControls from "./PaginationControls";
+import VetteFilter from "./VetteFilter";
 
 const fakeVettes = [
   {
@@ -85,14 +88,52 @@ const AllVettesFake = () => {
   let output;
 
   if (vettes.length > 0) {
-    output = <ListOfVettes />;
+    output = (
+      <>
+        <VetteFilter />
+        <ListOfVettes vettesArray={fakeVettes} />
+        <PaginationControls />
+      </>
+    );
   } else if (vettes.length === 0) {
     output = <div>Add your first vette (Make this cool)</div>;
   } else {
     output = <div>Loading...</div>;
   }
 
-  return <>{output}</>;
+  return (
+    <>
+      <div className="min-main-height flex justify-center">
+        <div className="max-w-4xl w-full -mt-32 mb-8">
+          {/* <div className="grid grid-cols-3">
+            <div className="col-span-2">
+              <h1 className="text-white text-3xl font-bold">View Vettes</h1>
+            </div>
+            <div className="col-span-1 text-right">
+              <Link
+                to="/add-vette"
+                className="px-4 py-2 text-white bg-red-500 rounded"
+              >
+                Add Vette
+              </Link>
+            </div>
+          </div> */}
+          <div className="flex justify-between items-center">
+            <h1 className="text-white text-3xl font-bold">View Vettes</h1>
+            <div className="text-right">
+              <Link
+                to="/add-vette"
+                className="px-4 py-2 text-white bg-red-500 rounded"
+              >
+                Add Vette
+              </Link>
+            </div>
+          </div>
+          <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default AllVettesFake;

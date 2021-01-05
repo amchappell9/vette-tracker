@@ -1,89 +1,77 @@
 import React from "react";
 // import logo from './vette-logo.jpg';
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+
+const getStylesByPath = (path) => {
+  let styles = "";
+
+  switch (path) {
+    case "/vettes":
+      styles = "pt-6 pb-48 px-16";
+      break;
+
+    default:
+      styles = "px-16 py-4";
+      break;
+  }
+
+  return styles;
+};
+
+const shouldShowNav = (path) => {
+  switch (path) {
+    case "/":
+    case "/sign-in":
+    case "/sign-up":
+      return false;
+
+    default:
+      return true;
+  }
+};
+
+const navLinks = [
+  { linkName: "Vettes", path: "/vettes" },
+  { linkName: "Trends", path: "/trends" },
+  { linkName: "Resources", path: "/resources" },
+];
 
 const Header = ({ isAuthenticated, handleLogout }) => {
-  return (
-    <header className="px-16 py-4">
-      <div className="h-16 w-24 bg-red-500"></div>
-      <nav></nav>
-    </header>
-    // <header className="py-3 shadow-sm">
-    //   <Container fluid>
-    //     <Row>
-    //       <Col>
-    //         <span className="headingText font-weight-bold pl-4">
-    //           Vette Tracker
-    //         </span>
-    //       </Col>
-    //       <Col>
-    //         <Nav fill>
-    //           <Nav.Item>
-    //             <Nav.Link
-    //               as={Link}
-    //               to="/"
-    //               className="font-weight-bold navLinks"
-    //             >
-    //               Home
-    //             </Nav.Link>
-    //           </Nav.Item>
-    //           <Nav.Item>
-    //             <Nav.Link
-    //               as={Link}
-    //               to="/vettes"
-    //               className="font-weight-bold navLinks"
-    //             >
-    //               Vettes
-    //             </Nav.Link>
-    //           </Nav.Item>
-    //           <Nav.Item>
-    //             <Nav.Link
-    //               as={Link}
-    //               to="/trends"
-    //               className="font-weight-bold navLinks"
-    //             >
-    //               Trends
-    //             </Nav.Link>
-    //           </Nav.Item>
-    //           <Nav.Item>
-    //             <Nav.Link
-    //               as={Link}
-    //               to="/resources"
-    //               className="font-weight-bold navLinks"
-    //             >
-    //               Resources
-    //             </Nav.Link>
-    //           </Nav.Item>
-    //         </Nav>
-    //       </Col>
-    //       <Col className="pl-5">
-    //         {isAuthenticated ? (
-    //           <>
-    //             <Button as={Link} to="/add-vette" className="mr-3">
-    //               New Vette
-    //             </Button>
-    //             <Button
-    //               onClick={() => handleLogout()}
-    //               variant="outline-primary"
-    //             >
-    //               Logout
-    //             </Button>
-    //           </>
-    //         ) : (
-    //           <>
-    //             <Button as={Link} to="/login" className="mr-3">
-    //               Login
-    //             </Button>
-    //             <Button as={Link} to="/signup" variant="outline-primary">
-    //               Sign Up
-    //             </Button>
-    //           </>
-    //         )}
-    //       </Col>
-    //     </Row>
-    //   </Container>
-    // </header>
-  );
+  let location = useLocation();
+  let showNavigation = shouldShowNav(location.pathname);
+  const headerStyles = getStylesByPath(location.pathname);
+
+  if (showNavigation) {
+    return (
+      <header
+        className={`${headerStyles} grid grid-cols-12 gap-4 bg-gray-700 pb`}
+      >
+        <div className="h-16 w-24 bg-red-500"></div>
+        <nav className="col-span-3 pt-3 pl-6">
+          <ul>
+            {navLinks.map((link) => (
+              <li className="inline" key={link.path}>
+                <NavLink
+                  to={link.path}
+                  className="px-4 py-2 mr-4 text-xl text-gray-50 hover:bg-gray-800 hover:rounded"
+                  activeClassName="bg-gray-800 rounded"
+                >
+                  {link.linkName}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <hr className="border-gray-600 col-span-12" />
+      </header>
+    );
+  } else {
+    return (
+      <header className="px-16 py-4">
+        <div className="h-16 w-24 bg-red-500"></div>
+      </header>
+    );
+  }
 };
 
 export default Header;
