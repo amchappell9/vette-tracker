@@ -70,7 +70,9 @@ const Header = ({ isAuthenticated, handleLogout }) => {
   } else {
     return (
       <header className="px-16 py-4">
-        <div className="h-16 w-24 bg-red-500"></div>
+        <div>
+          <Link to="/" className="block h-16 w-24 bg-red-500"></Link>
+        </div>
       </header>
     );
   }
