@@ -1,6 +1,6 @@
 import React from "react";
 // import logo from './vette-logo.jpg';
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const getStylesByPath = (path) => {
   let styles = "";
@@ -46,7 +46,9 @@ const Header = ({ isAuthenticated, handleLogout }) => {
       <header
         className={`${headerStyles} grid grid-cols-12 gap-4 bg-gray-700 pb`}
       >
-        <div className="h-16 w-24 bg-red-500"></div>
+        <div>
+          <Link to="/" className="block h-16 w-24 bg-red-500"></Link>
+        </div>
         <nav className="col-span-3 pt-3 pl-6">
           <ul>
             {navLinks.map((link) => (
