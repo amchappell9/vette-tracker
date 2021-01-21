@@ -7,6 +7,7 @@ const getStylesByPath = (path) => {
 
   switch (path) {
     case "/vettes":
+    case "/add-vette":
       styles = "pt-6 pb-48 px-16";
       break;
 

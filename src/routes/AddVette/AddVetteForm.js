@@ -1,23 +1,103 @@
 import React from "react";
-import { Formik } from "formik";
-import * as yup from "yup";
+// import { Formik } from "formik";
+// import * as yup from "yup";
 
-const schema = yup.object({
-  year: yup.string().required(),
-  miles: yup.number("Miles must be a number").required("Please enter Miles"),
-  cost: yup.number("Cost should be a number").required("Cost is required"),
-  exteriorColor: yup.string().required(),
-  interiorColor: yup.string().required(),
-  submodel: yup.string().required(),
-  trim: yup.string().required(),
-  link: yup.string().required(),
-});
+import Input from "../../components/Input";
+import Select from "../../components/Select";
+import SubModelRadioButton from "./SubModelRadioButton";
+import TrimRadioButton from "./TrimRadioButton";
+
+import SUBMODELS from "../../constants/SUBMODELS";
+import TRIMS from "../../constants/TRIMS";
+
+// const schema = yup.object({
+//   year: yup.string().required(),
+//   miles: yup.number("Miles must be a number").required("Please enter Miles"),
+//   cost: yup.number("Cost should be a number").required("Cost is required"),
+//   exteriorColor: yup.string().required(),
+//   interiorColor: yup.string().required(),
+//   submodel: yup.string().required(),
+//   trim: yup.string().required(),
+//   link: yup.string().required(),
+// });
 
 const AddVetteForm = ({ onSubmit }) => {
   return (
-    <>
-      <h2>Add Vette Form</h2>
-    </>
+    <div className="px-16 py-8">
+      <p className="text-gray-700 mb-8">
+        Add your info about your potential Vette here. The more Vettes you
+        enter, the easier it is to spot trends!
+      </p>
+      <form className="grid grid-cols-6 gap-8">
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Year</label>
+          <Select
+            className="w-full bg-gray-50 text-lg py-2 px-4"
+            options={["2014", "2015", "2016", "2017", "2018", "2019"]}
+          />
+        </div>
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Miles</label>
+          <Input className="w-full bg-gray-50 text-lg py-2 px-4" />
+        </div>
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Cost</label>
+          <Input className="w-full bg-gray-50 text-lg py-2 px-4" />
+        </div>
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Transmission</label>
+          <Select
+            className="w-full bg-gray-50 text-lg py-2 px-4"
+            options={["Manual", "Automatic"]}
+          />
+        </div>
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Exterior Color</label>
+          <Select
+            className="w-full bg-gray-50 text-lg py-2 px-4"
+            options={["Artic White"]}
+          />
+        </div>
+        <div className="col-span-3">
+          <label className="block font-bold text-lg mb-1">Interior Color</label>
+          <Select
+            className="w-full bg-gray-50 text-lg py-2 px-4"
+            options={["Red"]}
+          />
+        </div>
+        <div className="col-span-6">
+          <label className="block font-bold text-lg mb-1">Submodel</label>
+          <div className="grid grid-cols-2 gap-8">
+            {SUBMODELS.map((submodel) => (
+              <SubModelRadioButton
+                key={submodel.title}
+                name="submodel"
+                className="col-span-1"
+                title={submodel.title}
+                engine={submodel.engine}
+                hp={submodel.hp}
+                torque={submodel.torque}
+                features={submodel.features}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="col-span-6">
+          <label className="block font-bold text-lg mb-1">Trim</label>
+          <div className="grid grid-cols-3 gap-8">
+            {TRIMS.map((trim) => (
+              <TrimRadioButton
+                key={trim.title}
+                name="trim"
+                className=""
+                title={trim.title}
+                features={trim.features}
+              />
+            ))}
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 

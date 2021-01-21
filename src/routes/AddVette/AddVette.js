@@ -45,18 +45,7 @@ const AddVette = () => {
       </div>
     );
   } else if (formValues === null) {
-    output = (
-      <>
-        <h1>Add New Vette</h1>
-        <p>Here you can enter a new Vette listing.</p>
-        <hr />
-        {/* <Row className="mt-4">
-          <Col md={{ span: 8, offset: 2 }}>
-            <AddVetteForm onSubmit={onSubmit} />
-          </Col>
-        </Row> */}
-      </>
-    );
+    output = <AddVetteForm />;
   } else if (!!formValues) {
     output = (
       <ConfirmationView
@@ -68,7 +57,18 @@ const AddVette = () => {
     output = <>Something is wrong</>;
   }
 
-  return <div className="mb-5">{output}</div>;
+  return (
+    <>
+      <div className="min-main-height flex justify-center">
+        <div className="max-w-5xl w-full -mt-32 mb-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-white text-3xl font-bold">Add Vettes</h1>
+          </div>
+          <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default AddVette;
