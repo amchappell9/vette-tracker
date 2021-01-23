@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Switch, Route, useLocation } from "react-router-dom";
