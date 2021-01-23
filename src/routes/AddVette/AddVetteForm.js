@@ -4,11 +4,14 @@ import React from "react";
 
 import Input from "../../components/Input";
 import Select from "../../components/Select";
+import Button from "../../components/Button";
 import SubModelRadioButton from "./SubModelRadioButton";
 import TrimRadioButton from "./TrimRadioButton";
+import PackageCheckbox from "./PackageCheckbox";
 
 import SUBMODELS from "../../constants/SUBMODELS";
 import TRIMS from "../../constants/TRIMS";
+import PACKAGES from "../../constants/PACKAGES";
 
 // const schema = yup.object({
 //   year: yup.string().required(),
@@ -95,6 +98,31 @@ const AddVetteForm = ({ onSubmit }) => {
               />
             ))}
           </div>
+        </div>
+        <div className="col-span-6">
+          <label className="block font-bold text-lg mb-1">Packages</label>
+          <div className="shadow">
+            {PACKAGES.map((packageObj) => (
+              <PackageCheckbox
+                key={packageObj.value}
+                name="package"
+                className=""
+                title={packageObj.title}
+                value={packageObj.value}
+                description={packageObj.description}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="col-span-6">
+          <label className="block font-bold text-lg mb-1">Packages</label>
+          <Input className="w-full bg-gray-50 text-lg py-2 px-4" />
+        </div>
+        <div className="col-span-6 text-right">
+          <Button variant="secondary" className="mr-2">
+            Clear
+          </Button>
+          <Button variant="primary">Add Vette</Button>
         </div>
       </form>
     </div>

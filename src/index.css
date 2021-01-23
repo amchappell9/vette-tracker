@@ -24,3 +24,15 @@
 .min-main-height {
   min-height: calc(100vh - 96px - 92px);
 }
+
+.packageCheckbox:first-of-type {
+  @apply border rounded border-gray-100;
+}
+
+.packageCheckbox:not(:first-of-type) {
+  @apply border-l border-r border-b border-gray-100;
+}
+
+.packageCheckbox:last-of-type {
+  @apply border-b border-l border-r border-gray-100;
+}
