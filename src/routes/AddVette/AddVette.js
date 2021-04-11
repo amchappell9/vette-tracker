@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import AddVetteForm from "./AddVetteForm";
 import ConfirmationView from "./ConfirmationView";
 import UserInfoContext from "../../contexts/UserInfoContext";
@@ -60,7 +61,10 @@ const AddVette = () => {
   return (
     <>
       <div className="min-main-height flex justify-center">
-        <div className="max-w-4xl w-full -mt-32 mb-8">
+        <div className="max-w-4xl w-full -mt-44 mb-8">
+          <div className="text-gray-300 hover:underline mb-8">
+            <Link to="vettes">{"<- Back to All Vettes"}</Link>
+          </div>
           <div className="flex justify-between items-center">
             <h1 className="text-white text-3xl font-bold">Add Vettes</h1>
           </div>
