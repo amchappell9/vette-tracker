@@ -45,7 +45,7 @@ const AddVette = () => {
       </div>
     );
   } else if (formValues === null) {
-    output = <AddVetteForm />;
+    output = <AddVetteForm onSubmit={onSubmit} />;
   } else if (!!formValues) {
     output = (
       <ConfirmationView
@@ -60,7 +60,7 @@ const AddVette = () => {
   return (
     <>
       <div className="min-main-height flex justify-center">
-        <div className="max-w-5xl w-full -mt-32 mb-8">
+        <div className="max-w-4xl w-full -mt-32 mb-8">
           <div className="flex justify-between items-center">
             <h1 className="text-white text-3xl font-bold">Add Vettes</h1>
           </div>
