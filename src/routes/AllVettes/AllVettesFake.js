@@ -126,7 +126,7 @@ const filters = [
 
 const AllVettesFake = () => {
   const [vettes, setVettes] = useState([]);
-  const [filterValues, setFilterValues] = useState({});
+  // const [filterValues, setFilterValues] = useState({});
 
   useEffect(() => {
     setTimeout(() => setVettes(fakeVettes), 750);
@@ -135,7 +135,7 @@ const AllVettesFake = () => {
   let output;
 
   const onFilterChange = (filter, selectedValue) => {
-    setFilterValues();
+    // setFilterValues();
   };
 
   const getFilteredVettes = (vettes) => {
