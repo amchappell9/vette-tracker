@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { PlusIcon } from "@heroicons/react/outline";
 
 const SubModelRadioButton = ({
   name,
@@ -47,10 +45,7 @@ const SubModelRadioButton = ({
           {features.map((feature) => (
             <div key={`${title}-${feature}`} className="col-span-1">
               <span className="text-gray-900">
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="mr-2 h-5 w-5 text-gray-400 align-text-bottom"
-                />
+                <PlusIcon className="inline mr-1 h-5 w-5 text-gray-400 align-text-bottom" />
                 {feature}
               </span>
             </div>
