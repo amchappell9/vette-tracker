@@ -40,7 +40,6 @@ const AddVetteForm = ({ onSubmit }) => {
     },
     validationSchema: addVetteFormValidationSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       onSubmit(values);
     },
   });
@@ -51,9 +50,6 @@ const AddVetteForm = ({ onSubmit }) => {
         Add your info about your potential Vette here. The more Vettes you
         enter, the easier it is to spot trends!
       </p>
-      {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre>
-      <pre>{JSON.stringify(formik.errors, null, 2)}</pre>
-      <pre>{JSON.stringify(formik.touched, null, 2)}</pre> */}
       <form onSubmit={formik.handleSubmit} className="grid grid-cols-6 gap-8">
         <div className="col-span-6">
           <label className="block font-bold text-lg mb-1">Year</label>
