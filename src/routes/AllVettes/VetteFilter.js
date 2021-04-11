@@ -7,7 +7,7 @@ const VetteFilter = ({ filters, onFilterChange }) => {
       <div className="font-bold text-gray-700 mb-2">Filters</div>
       <div className="flex -ml-4">
         {filters.map((filter) => (
-          <div className="flex-auto">
+          <div key={filter.name} className="flex-auto">
             <DropdownBtn filter={filter} onFilterChange={onFilterChange} />
           </div>
         ))}
