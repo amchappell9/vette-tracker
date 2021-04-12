@@ -64,7 +64,7 @@ const AddVette = () => {
       <div className="min-main-height flex justify-center">
         <div className="max-w-4xl w-full -mt-44 mb-8">
           <div className="text-gray-300 hover:underline mb-8">
-            <Link to="vettes">
+            <Link to="/vettes">
               <ArrowLeftIcon className="inline align-text-bottom mr-1 w-5 h-5 " />
               Back to All Vettes
             </Link>

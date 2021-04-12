@@ -2,12 +2,25 @@ import React from "react";
 // import logo from './vette-logo.jpg';
 import { NavLink, Link, useLocation } from "react-router-dom";
 
+/**
+ * This is a pain in the ass and needs to be refactored
+ * @param {*} path
+ * @returns
+ */
 const getStylesByPath = (path) => {
   let styles = "";
+  let pathname = path;
 
-  switch (path) {
+  console.log(path);
+
+  if (pathname.indexOf("/vettes/") !== -1) {
+    pathname = "/vettes/";
+  }
+
+  switch (pathname) {
     case "/vettes":
     case "/add-vette":
+    case "/vettes/":
       styles = "pt-6 pb-48 px-16";
       break;
 

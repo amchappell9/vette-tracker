@@ -191,7 +191,7 @@ const AddVetteForm = ({ onSubmit }) => {
             {PACKAGES.map((packageObj) => (
               <PackageCheckbox
                 key={packageObj.value}
-                name="package"
+                name="packages"
                 className=""
                 title={packageObj.title}
                 value={packageObj.value}

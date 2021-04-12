@@ -8,7 +8,7 @@ import Home from "./routes/Home/Home";
 // import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
 import Resources from "./routes/Resources";
-import VetteDetail from "./routes/VetteDetail";
+import VetteDetail from "./routes/VetteDetail/VetteDetail";
 import AddVette from "./routes/AddVette/AddVette";
 import NoMatch from "./routes/NoMatch";
 import Login from "./routes/Login";
