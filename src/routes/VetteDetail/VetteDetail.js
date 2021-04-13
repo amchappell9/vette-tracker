@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon, PlusIcon, PencilIcon } from "@heroicons/react/outline";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
 import PackagesList from "./PackagesList";
@@ -20,7 +20,7 @@ const fakeVetteData = {
 const VetteDetail = () => {
   let { id } = useParams();
   let location = useLocation();
-  console.log(location);
+
   const [vetteData, setVetteData] = useState(null);
   const [isConfirmationView, setIsConfirmationView] = useState(
     location.state && location.state.isConfirmationView ? true : false
@@ -31,6 +31,7 @@ const VetteDetail = () => {
     setTimeout(() => setVetteData(fakeVetteData), 750);
   }, [id]);
 
+  // See which version needs to be displayed
   useEffect(() => {
     setIsConfirmationView(
       location.state && location.state.isConfirmationView ? true : false
@@ -52,16 +53,25 @@ const VetteDetail = () => {
               ? `${vetteData.year} Corvette ${vetteData.submodel}`
               : "Vette Information"}
           </h1>
-          {isConfirmationView && (
-            <div className="text-right">
+          <div className="text-right">
+            {isConfirmationView ? (
               <Link
                 to="/add-vette"
                 className="px-4 py-2 text-white bg-red-500 rounded"
               >
+                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
                 Add Another Vette
               </Link>
-            </div>
-          )}
+            ) : (
+              <Link
+                to="/add-vette"
+                className="px-4 py-2 text-white bg-red-500 rounded"
+              >
+                <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                Edit Vette
+              </Link>
+            )}
+          </div>
         </div>
         <div className="rounded bg-white w-full shadow-lg mt-4">
           {vetteData ? (
