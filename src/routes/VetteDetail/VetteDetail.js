@@ -94,9 +94,11 @@ const VetteDetail = () => {
               {/* Submodel and Trim Info */}
               <div className="grid grid-cols-2 gap-4 mt-6">
                 <div className="col-span-1">
+                  <span className="block text-gray-600 mb-1">Submodel</span>
                   <SubmodelInfo vetteSubmodel={vetteData.submodel} />
                 </div>
                 <div className="col-span-1">
+                  <span className="block text-gray-600 mb-1">Trim</span>
                   <TrimInfo vetteTrim={vetteData.trim} />
                 </div>
               </div>
