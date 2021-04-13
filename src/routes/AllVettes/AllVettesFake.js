@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import ListOfVettes from "./ListOfVettes";
-import PaginationControls from "./PaginationControls";
-import VetteFilter from "./VetteFilter";
-import FILTER_TYPES from "../../constants/filterTypes";
+// import PaginationControls from "./PaginationControls";
+// import VetteFilter from "./VetteFilter";
+// import FILTER_TYPES from "../../constants/filterTypes";
 
 const fakeVettes = [
   {
@@ -79,50 +79,50 @@ const fakeVettes = [
   },
 ];
 
-const filters = [
-  {
-    name: "Year",
-    type: FILTER_TYPES.SELECT,
-    values: ["2019", "2018", "2017", "2016", "2015", "2014"],
-  },
-  {
-    name: "Date",
-    type: FILTER_TYPES.DATE,
-  },
-  {
-    name: "Price",
-    type: FILTER_TYPES.SLIDER,
-  },
-  {
-    name: "Model",
-    type: FILTER_TYPES.SELECT,
-    values: ["ZR1", "Z06", "Grand Sport", "Z51", "Base"],
-  },
-  {
-    name: "Trim",
-    type: FILTER_TYPES.SELECT,
-    values: ["3LT", "2LT", "1LT"],
-  },
-  {
-    name: "Miles",
-    type: FILTER_TYPES.SLIDER,
-  },
-  {
-    name: "Exterior Color",
-    type: FILTER_TYPES.SELECT,
-    values: ["Artic White", "Torch Red"],
-  },
-  {
-    name: "Interior Color",
-    type: FILTER_TYPES.SELECT,
-    values: ["Black", "Red"],
-  },
-  {
-    name: "Packages",
-    type: FILTER_TYPES.SELECT,
-    values: ["NPP", "MRC", "PDR"],
-  },
-];
+// const filters = [
+//   {
+//     name: "Year",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["2019", "2018", "2017", "2016", "2015", "2014"],
+//   },
+//   {
+//     name: "Date",
+//     type: FILTER_TYPES.DATE,
+//   },
+//   {
+//     name: "Price",
+//     type: FILTER_TYPES.SLIDER,
+//   },
+//   {
+//     name: "Model",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["ZR1", "Z06", "Grand Sport", "Z51", "Base"],
+//   },
+//   {
+//     name: "Trim",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["3LT", "2LT", "1LT"],
+//   },
+//   {
+//     name: "Miles",
+//     type: FILTER_TYPES.SLIDER,
+//   },
+//   {
+//     name: "Exterior Color",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["Artic White", "Torch Red"],
+//   },
+//   {
+//     name: "Interior Color",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["Black", "Red"],
+//   },
+//   {
+//     name: "Packages",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["NPP", "MRC", "PDR"],
+//   },
+// ];
 
 const AllVettesFake = () => {
   const [vettes, setVettes] = useState([]);
@@ -134,9 +134,9 @@ const AllVettesFake = () => {
 
   let output;
 
-  const onFilterChange = (filter, selectedValue) => {
-    // setFilterValues();
-  };
+  // const onFilterChange = (filter, selectedValue) => {
+  //   // setFilterValues();
+  // };
 
   const getFilteredVettes = (vettes) => {
     // Filter vettes based on filters
@@ -146,9 +146,9 @@ const AllVettesFake = () => {
   if (vettes.length > 0) {
     output = (
       <>
-        <VetteFilter filters={filters} onFilterChange={onFilterChange} />
+        {/* <VetteFilter filters={filters} onFilterChange={onFilterChange} /> */}
         <ListOfVettes vettesArray={getFilteredVettes(fakeVettes)} />
-        <PaginationControls />
+        {/* <PaginationControls /> */}
       </>
     );
   } else if (vettes.length === 0) {
