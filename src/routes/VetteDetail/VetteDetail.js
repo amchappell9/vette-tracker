@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
@@ -19,12 +19,23 @@ const fakeVetteData = {
 
 const VetteDetail = () => {
   let { id } = useParams();
+  let location = useLocation();
+  console.log(location);
   const [vetteData, setVetteData] = useState(null);
+  const [isConfirmationView, setIsConfirmationView] = useState(
+    location.state && location.state.isConfirmationView ? true : false
+  );
 
   // Get Vette Detail by ID
   useEffect(() => {
     setTimeout(() => setVetteData(fakeVetteData), 750);
   }, [id]);
+
+  useEffect(() => {
+    setIsConfirmationView(
+      location.state && location.state.isConfirmationView ? true : false
+    );
+  }, [location]);
 
   return (
     <div className="min-main-height flex justify-center">
@@ -36,7 +47,21 @@ const VetteDetail = () => {
           </Link>
         </div>
         <div className="flex justify-between items-center">
-          <h1 className="text-white text-3xl font-bold">Add Vettes</h1>
+          <h1 className="text-white text-3xl font-bold">
+            {vetteData
+              ? `${vetteData.year} Corvette ${vetteData.submodel}`
+              : "Vette Information"}
+          </h1>
+          {isConfirmationView && (
+            <div className="text-right">
+              <Link
+                to="/add-vette"
+                className="px-4 py-2 text-white bg-red-500 rounded"
+              >
+                Add Another Vette
+              </Link>
+            </div>
+          )}
         </div>
         <div className="rounded bg-white w-full shadow-lg mt-4">
           {vetteData ? (
@@ -103,7 +128,7 @@ const VetteDetail = () => {
                 </div>
               </div>
               {/* Packages */}
-              <div className="mt-6">
+              <div className="mt-12">
                 <span className="block text-gray-600">Packages</span>
                 <PackagesList vettePackages={vetteData.packages} />
               </div>
