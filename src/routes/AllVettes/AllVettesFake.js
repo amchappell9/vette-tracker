@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "./ListOfVettes";
 // import PaginationControls from "./PaginationControls";
@@ -168,6 +169,7 @@ const AllVettesFake = () => {
                 to="/add-vette"
                 className="px-4 py-2 text-white bg-red-500 rounded"
               >
+                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
                 Add Vette
               </Link>
             </div>
