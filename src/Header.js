@@ -11,8 +11,6 @@ const getStylesByPath = (path) => {
   let styles = "";
   let pathname = path;
 
-  console.log(path);
-
   if (pathname.indexOf("/vettes/") !== -1) {
     pathname = "/vettes/";
   }
