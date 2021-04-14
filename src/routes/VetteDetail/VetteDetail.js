@@ -64,7 +64,7 @@ const VetteDetail = () => {
               </Link>
             ) : (
               <Link
-                to="/add-vette"
+                to={{ pathname: "/add-vette", state: { vetteToEdit: id } }}
                 className="px-4 py-2 text-white bg-red-500 rounded"
               >
                 <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />

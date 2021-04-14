@@ -5,6 +5,7 @@ const PackageCheckbox = ({
   name,
   title,
   value,
+  checked,
   description,
   onChange,
   onBlur,
@@ -16,6 +17,7 @@ const PackageCheckbox = ({
           type="checkbox"
           name={name}
           value={value}
+          checked={checked}
           onChange={onChange}
           onBlur={onBlur}
         />

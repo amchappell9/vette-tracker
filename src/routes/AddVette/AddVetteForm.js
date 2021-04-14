@@ -25,19 +25,38 @@ const addVetteFormValidationSchema = Yup.object({
   trim: Yup.string().required(),
 });
 
-const AddVetteForm = ({ onSubmit }) => {
+const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
   const formik = useFormik({
     initialValues: {
-      year: "2014",
-      miles: "",
-      cost: "",
-      transmissionType: "Manual",
-      exteriorColor: "Artic White",
-      interiorColor: "Red",
-      submodel: "",
-      trim: "",
-      packages: [],
+      year:
+        vetteToEditInfo && vetteToEditInfo.year ? vetteToEditInfo.year : "2014",
+      miles:
+        vetteToEditInfo && vetteToEditInfo.miles ? vetteToEditInfo.miles : "",
+      cost: vetteToEditInfo && vetteToEditInfo.cost ? vetteToEditInfo.cost : "",
+      transmissionType:
+        vetteToEditInfo && vetteToEditInfo.transmissionType
+          ? vetteToEditInfo.transmissionType
+          : "Manual",
+      exteriorColor:
+        vetteToEditInfo && vetteToEditInfo.exteriorColor
+          ? vetteToEditInfo.exteriorColor
+          : "Artic White",
+      interiorColor:
+        vetteToEditInfo && vetteToEditInfo.interiorColor
+          ? vetteToEditInfo.interiorColor
+          : "Red",
+      submodel:
+        vetteToEditInfo && vetteToEditInfo.submodel
+          ? vetteToEditInfo.submodel
+          : "",
+      trim: vetteToEditInfo && vetteToEditInfo.trim ? vetteToEditInfo.trim : "",
+      packages:
+        vetteToEditInfo && vetteToEditInfo.packages
+          ? vetteToEditInfo.packages
+          : [],
+      link: vetteToEditInfo && vetteToEditInfo.link ? vetteToEditInfo.link : "",
     },
+    enableReinitialize: true,
     validationSchema: addVetteFormValidationSchema,
     onSubmit: (values) => {
       onSubmit(values);
@@ -84,6 +103,8 @@ const AddVetteForm = ({ onSubmit }) => {
         <div className="col-span-6">
           <label className="block font-bold text-lg mb-1">Cost</label>
           <Input
+            id="cost"
+            name="cost"
             className="w-full bg-gray-50 text-lg py-2 px-4"
             {...formik.getFieldProps("cost")}
           />
@@ -195,6 +216,7 @@ const AddVetteForm = ({ onSubmit }) => {
                 className=""
                 title={packageObj.title}
                 value={packageObj.value}
+                checked={formik.values.packages.includes(packageObj.value)}
                 description={packageObj.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -204,7 +226,12 @@ const AddVetteForm = ({ onSubmit }) => {
         </div>
         <div className="col-span-6">
           <label className="block font-bold text-lg mb-1">Link</label>
-          <Input className="w-full bg-gray-50 text-lg py-2 px-4" />
+          <Input
+            id="link"
+            name="link"
+            className="w-full bg-gray-50 text-lg py-2 px-4"
+            {...formik.getFieldProps("link")}
+          />
         </div>
         <div className="col-span-6 text-right">
           <Button type="reset" variant="secondary" className="mr-2">
