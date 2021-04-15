@@ -18,7 +18,7 @@ const fakeVetteData = {
 };
 
 const VetteDetail = () => {
-  let { id } = useParams();
+  let { vetteId } = useParams();
   let location = useLocation();
 
   const [vetteData, setVetteData] = useState(null);
@@ -29,7 +29,7 @@ const VetteDetail = () => {
   // Get Vette Detail by ID
   useEffect(() => {
     setTimeout(() => setVetteData(fakeVetteData), 750);
-  }, [id]);
+  }, [vetteId]);
 
   // See which version needs to be displayed
   useEffect(() => {
@@ -64,7 +64,7 @@ const VetteDetail = () => {
               </Link>
             ) : (
               <Link
-                to={{ pathname: "/add-vette", state: { vetteToEdit: id } }}
+                to={{ pathname: "/add-vette", state: { vetteToEdit: vetteId } }}
                 className="px-4 py-2 text-white bg-red-500 rounded"
               >
                 <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
