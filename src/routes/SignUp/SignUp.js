@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
@@ -44,9 +45,15 @@ const SignUp = () => {
           </div>
         </div>
         <div className="text-right">
-          <Button variant="secondary" className="mr-2">
+          {/* <Button variant="secondary" className="mr-2">
             Cancel
-          </Button>
+          </Button> */}
+          <Link
+            to="/"
+            className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 text-lg mr-2"
+          >
+            Cancel
+          </Link>
           <Button>Sign Up</Button>
         </div>
       </div>
