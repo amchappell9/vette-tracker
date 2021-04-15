@@ -75,7 +75,7 @@ function App() {
             <AuthenticatedRoute path="/add-vette">
               <AddVette />
             </AuthenticatedRoute>
-            <AuthenticatedRoute path="/vettes/:id">
+            <AuthenticatedRoute path="/vettes/:vetteId">
               <VetteDetail />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/vettes">
