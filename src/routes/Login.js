@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Alert, { ALERT_TYPES } from "../components/Alert";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import FormFieldErrorMessage from "../components/FormFieldErrorMessage";
@@ -12,8 +13,25 @@ const LoginFormValidationSchema = Yup.object({
 });
 
 const Login = ({ handleAuth }) => {
-  // let history = useHistory();
-  // let location = useLocation();
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  let history = useHistory();
+  let location = useLocation();
+
+  let { from } = location.state || { from: { pathname: "/" } };
+
+  const handleSuccess = (response) => {
+    alert(response);
+    history.replace(from);
+  };
+
+  const handleError = (error) => {
+    if (error.json && error.json.error_description) {
+      setErrorMessage(error.json.error_description);
+    } else {
+      setErrorMessage("An error has happened.");
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -22,11 +40,10 @@ const Login = ({ handleAuth }) => {
     },
     validationSchema: LoginFormValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setErrorMessage(null);
+      handleAuth(values.email, values.password, handleSuccess, handleError);
     },
   });
-
-  // let { from } = location.state || { from: { pathname: "/" } };
 
   return (
     <>
@@ -43,6 +60,9 @@ const Login = ({ handleAuth }) => {
               </Link>
             </p>
           </div>
+          {errorMessage && (
+            <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
+          )}
           <div>
             <form onSubmit={formik.handleSubmit}>
               <label

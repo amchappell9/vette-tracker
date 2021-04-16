@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
 import { Switch, Route, useLocation } from "react-router-dom";
+import GoTrue from "gotrue-js";
+import { JSONHTTPError } from "micro-api-client";
 // import netlifyIdentity from "netlify-identity-widget";
 
+import Header from "./Header";
+import Footer from "./Footer";
 import Home from "./routes/Home/Home";
 // import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
@@ -42,15 +44,24 @@ function App() {
     lastName: "Chappell",
     email: "amchappell9@gmail.com",
   });
+
+  const auth = new GoTrue({
+    APIUrl: "https://vette-tracker.netlify.app/.netlify/identity",
+  });
+
   let location = useLocation();
 
-  const authenticate = (callback) => {
+  const authenticate = (email, password, handleSuccess, handleError) => {
     // netlifyIdentity.open();
     // netlifyIdentity.on("login", (user) => {
     //   console.log(user);
     //   setUserInfo(user);
     //   callback(user);
     // });
+    auth
+      .login(email, password, true)
+      .then((response) => handleSuccess(response))
+      .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
   };
 
   const logout = (callback) => {
@@ -63,8 +74,8 @@ function App() {
 
   return (
     <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
-      <UserInfoContext.Provider value={userInfo}>
-        <Header isAuthenticated={!!userInfo} handleLogout={logout} />
+      <UserInfoContext.Provider value={true}>
+        <Header isAuthenticated={true} handleLogout={logout} />
         <main>
           <Switch>
             <Route path="/sign-in">
