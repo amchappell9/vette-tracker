@@ -50,6 +50,13 @@ function App() {
 
   let location = useLocation();
 
+  const signUpNewUser = (email, password, handleSuccess, handleError) => {
+    auth
+      .signup(email, password)
+      .then((response) => handleSuccess(response))
+      .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
+  };
+
   const authenticate = (email, password, handleSuccess, handleError) => {
     // netlifyIdentity.open();
     // netlifyIdentity.on("login", (user) => {
@@ -81,7 +88,7 @@ function App() {
               <Login handleAuth={authenticate} />
             </Route>
             <Route path="/sign-up">
-              <SignUp />
+              <SignUp handleSignUp={signUpNewUser} />
             </Route>
             <AuthenticatedRoute path="/add-vette">
               <AddVette />
