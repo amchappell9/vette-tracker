@@ -1,13 +1,32 @@
 import React from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import FormFieldErrorMessage from "../components/FormFieldErrorMessage";
+
+const LoginFormValidationSchema = Yup.object({
+  username: Yup.string().required("Please enter your username"),
+  password: Yup.string().required("Please enter your password"),
+});
 
 const Login = ({ handleAuth }) => {
-  let history = useHistory();
-  let location = useLocation();
+  // let history = useHistory();
+  // let location = useLocation();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: LoginFormValidationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
+  // let { from } = location.state || { from: { pathname: "/" } };
 
   return (
     <>
@@ -25,7 +44,7 @@ const Login = ({ handleAuth }) => {
             </p>
           </div>
           <div>
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <label
                 htmlFor="username"
                 className="block mb-2 font-bold text-lg"
@@ -37,7 +56,14 @@ const Login = ({ handleAuth }) => {
                 type="text"
                 autoComplete="username"
                 className="w-full py-1 px-4"
+                {...formik.getFieldProps("username")}
               />
+              {formik.touched.username && formik.errors.username ? (
+                <FormFieldErrorMessage
+                  errorMessage={formik.errors.username}
+                  className="mt-1"
+                />
+              ) : null}
               <label
                 htmlFor="password"
                 className="block mb-2 mt-4 font-bold text-lg"
@@ -49,18 +75,15 @@ const Login = ({ handleAuth }) => {
                 type="password"
                 autoComplete="current-password"
                 className="w-full py-1 px-4"
+                {...formik.getFieldProps("password")}
               />
-              <Button
-                size="full"
-                className="mt-4"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleAuth((response) => {
-                    console.log(response);
-                    history.replace(from);
-                  });
-                }}
-              >
+              {formik.touched.password && formik.errors.password ? (
+                <FormFieldErrorMessage
+                  errorMessage={formik.errors.password}
+                  className="mt-1"
+                />
+              ) : null}
+              <Button type="submit" size="full" className="mt-4">
                 Sign In
               </Button>
             </form>
