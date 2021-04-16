@@ -36,6 +36,7 @@ const getBodyBgColor = (path) => {
 
 function App() {
   // const [userInfo, setUserInfo] = useState(null);
+  // eslint-disable-next-line
   const [userInfo, setUserInfo] = useState({
     firstName: "Austin",
     lastName: "Chappell",
