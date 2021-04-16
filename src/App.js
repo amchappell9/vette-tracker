@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import GoTrue from "gotrue-js";
-import { JSONHTTPError } from "micro-api-client";
 // import netlifyIdentity from "netlify-identity-widget";
 
 import Header from "./Header";
