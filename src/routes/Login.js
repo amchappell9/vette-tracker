@@ -28,6 +28,8 @@ const Login = ({ handleAuth }) => {
   const handleError = (error) => {
     if (error.json && error.json.error_description) {
       setErrorMessage(error.json.error_description);
+    } else if (error.json && error.json.msg) {
+      setErrorMessage(error.json.msg);
     } else {
       setErrorMessage("An error has happened.");
     }
