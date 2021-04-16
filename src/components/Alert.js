@@ -90,9 +90,13 @@ const getIconByType = (alertType) => {
   }
 };
 
-const Alert = ({ alertType, message }) => {
+const Alert = ({ alertType, message, className }) => {
   return (
-    <div className={`border-l-4 p-4 ${getMainStylesByType(alertType)}`}>
+    <div
+      className={`border-l-4 p-4 ${getMainStylesByType(
+        alertType
+      )} ${className}`}
+    >
       <div className="flex">
         <div className="flex-shrink-0">{getIconByType(alertType)}</div>
         <div className="ml-3">
