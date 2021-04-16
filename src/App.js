@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Switch, Route, useLocation } from "react-router-dom";
-import netlifyIdentity from "netlify-identity-widget";
+// import netlifyIdentity from "netlify-identity-widget";
 
 import Home from "./routes/Home/Home";
 // import AllVettes from "./routes/AllVettes/AllVettes";
@@ -44,20 +44,20 @@ function App() {
   let location = useLocation();
 
   const authenticate = (callback) => {
-    netlifyIdentity.open();
-    netlifyIdentity.on("login", (user) => {
-      console.log(user);
-      setUserInfo(user);
-      callback(user);
-    });
+    // netlifyIdentity.open();
+    // netlifyIdentity.on("login", (user) => {
+    //   console.log(user);
+    //   setUserInfo(user);
+    //   callback(user);
+    // });
   };
 
   const logout = (callback) => {
-    netlifyIdentity.logout();
-    netlifyIdentity.on("logout", () => {
-      setUserInfo(null);
-      callback();
-    });
+    // netlifyIdentity.logout();
+    // netlifyIdentity.on("logout", () => {
+    //   setUserInfo(null);
+    //   callback();
+    // });
   };
 
   return (
