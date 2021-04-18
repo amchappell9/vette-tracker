@@ -93,7 +93,7 @@ const getIconByType = (alertType) => {
 const Alert = ({ alertType, message, className }) => {
   return (
     <div
-      className={`border-l-4 p-4 ${getMainStylesByType(
+      className={`border-l-4 rounded p-4 ${getMainStylesByType(
         alertType
       )} ${className}`}
     >
