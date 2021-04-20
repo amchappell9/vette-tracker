@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+  // Redirect,
+} from "react-router-dom";
 import GoTrue from "gotrue-js";
 // import netlifyIdentity from "netlify-identity-widget";
 
@@ -17,6 +23,7 @@ import SignUp from "./routes/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettesFake from "./routes/AllVettes/AllVettesFake";
+import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
 // import authentication from "./authentication";
 
 const getBodyBgColor = (path) => {
@@ -49,12 +56,28 @@ function App() {
   });
 
   let location = useLocation();
+  let history = useHistory();
 
   const signUpNewUser = (email, password, handleSuccess, handleError) => {
     auth
       .signup(email, password)
       .then((response) => handleSuccess(response))
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
+  };
+
+  const confirmUser = (token) => {
+    auth
+      .confirm(token)
+      .then((response) => console.log("User confirmed"))
+      .catch((error) => console.log("Something is wrong"));
+  };
+
+  const confirmUserSuccess = () => {
+    setUserConfirmationToken(null);
+  };
+
+  const confirmUserFail = () => {
+    setUserConfirmationToken(null);
   };
 
   const authenticate = (email, password, handleSuccess, handleError) => {
@@ -78,6 +101,16 @@ function App() {
     // });
   };
 
+  const [userConfirmationToken, setUserConfirmationToken] = useState(null);
+
+  // Check for confirmation token in hash
+  useEffect(() => {
+    if (location.hash && location.hash.indexOf("#confirmation_token") !== -1) {
+      setUserConfirmationToken(location.hash.substring(20));
+      history.push({ pathname: "/sign-up-confirmation" });
+    }
+  }, [location, history]);
+
   return (
     <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
       <UserInfoContext.Provider value={true}>
@@ -89,6 +122,13 @@ function App() {
             </Route>
             <Route path="/sign-up">
               <SignUp handleSignUp={signUpNewUser} />
+            </Route>
+            {console.log(userConfirmationToken)}
+            <Route path="/sign-up-confirmation">
+              <SignUpConfirmation
+                confirmationToken={userConfirmationToken}
+                confirmUser={confirmUser}
+              />
             </Route>
             <AuthenticatedRoute path="/add-vette">
               <AddVette />
