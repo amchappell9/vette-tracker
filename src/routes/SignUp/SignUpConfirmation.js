@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const SignUpConfirmation = ({ confirmationToken, confirmUser }) => {
+const SignUpConfirmation = ({
+  confirmationToken,
+  confirmUser,
+  userConfirmationErrorMessage,
+}) => {
+  useEffect(() => {
+    if (confirmationToken) {
+      confirmUser(confirmationToken);
+    }
+  }, [confirmationToken, confirmUser]);
+
   return (
     <div>
-      You signed up!{console.log(confirmationToken)}
-      {console.log(confirmUser)}
+      {userConfirmationErrorMessage
+        ? userConfirmationErrorMessage
+        : "You signed up!"}
     </div>
   );
 };

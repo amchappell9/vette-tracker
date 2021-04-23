@@ -68,16 +68,22 @@ function App() {
   const confirmUser = (token) => {
     auth
       .confirm(token)
-      .then((response) => console.log("User confirmed"))
-      .catch((error) => console.log("Something is wrong"));
+      .then((response) => confirmUserSuccess(response))
+      .catch((error) => confirmUserFail(JSON.parse(JSON.stringify(error))));
   };
 
-  const confirmUserSuccess = () => {
+  const confirmUserSuccess = (response) => {
     setUserConfirmationToken(null);
   };
 
-  const confirmUserFail = () => {
+  const confirmUserFail = (error) => {
+    console.log("error message", error);
     setUserConfirmationToken(null);
+    if (error.json && error.json.msg) {
+      setUserConfirmationErrorMessage(error.json.msg);
+    } else {
+      setUserConfirmationErrorMessage("An error has happened");
+    }
   };
 
   const authenticate = (email, password, handleSuccess, handleError) => {
@@ -101,7 +107,12 @@ function App() {
     // });
   };
 
+  // This definitely needs to be moved to a reducer: https://www.robinwieruch.de/react-hooks-fetch-data
   const [userConfirmationToken, setUserConfirmationToken] = useState(null);
+  const [
+    userConfirmationErrorMessage,
+    setUserConfirmationErrorMessage,
+  ] = useState(null);
 
   // Check for confirmation token in hash
   useEffect(() => {
@@ -128,6 +139,7 @@ function App() {
               <SignUpConfirmation
                 confirmationToken={userConfirmationToken}
                 confirmUser={confirmUser}
+                userConfirmationErrorMessage={userConfirmationErrorMessage}
               />
             </Route>
             <AuthenticatedRoute path="/add-vette">
