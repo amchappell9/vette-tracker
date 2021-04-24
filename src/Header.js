@@ -35,6 +35,7 @@ const shouldShowNav = (path) => {
     case "/":
     case "/sign-in":
     case "/sign-up":
+    case "/sign-up-confirmation":
       return false;
 
     default:
