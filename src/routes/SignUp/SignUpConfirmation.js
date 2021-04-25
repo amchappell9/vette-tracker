@@ -1,22 +1,71 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { CheckCircleIcon, ExclamationIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const SignUpConfirmation = ({
-  confirmationToken,
-  confirmUser,
-  userConfirmationErrorMessage,
-}) => {
+const confirmationReducer = (state, action) => {
+  switch (action.type) {
+    case "INIT":
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: false,
+        isSuccess: false,
+      };
+    case "SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: false,
+        isSuccess: true,
+      };
+    case "ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.errorMessage,
+        isSuccess: false,
+      };
+
+    default:
+      throw new Error("Unsupported action type");
+  }
+};
+
+const SignUpConfirmation = ({ auth }) => {
+  const [state, dispatch] = useReducer(confirmationReducer, {
+    isLoading: false,
+    errorMessage: false,
+    isSuccess: false,
+  });
+  const location = useLocation();
+
   useEffect(() => {
-    if (confirmationToken) {
-      confirmUser(confirmationToken);
+    const confirmUser = (token) => {
+      dispatch({ type: "INIT" });
+
+      auth
+        .confirm(token)
+        .then((response) => dispatch({ type: "SUCCESS" }))
+        .catch((error) => {
+          const parsedError = JSON.parse(JSON.stringify(error));
+
+          if (parsedError.json && parsedError.json.msg) {
+            dispatch({ type: "ERROR", errorMessage: parsedError.json.msg });
+          } else {
+            dispatch({ type: "ERROR", errorMessage: "" });
+          }
+        });
+    };
+
+    if (location.hash && location.hash.indexOf("#confirmation_token") !== -1) {
+      confirmUser(location.hash.substring(20));
     }
-  }, [confirmationToken, confirmUser]);
+  }, [location, auth]);
 
   return (
     <div className="min-main-height flex justify-center items-center">
       <div className="max-w-2xl w-full">
-        {!userConfirmationErrorMessage ? (
+        {!state.errorMessage ? (
           <>
             <CheckCircleIcon className="text-green-600 h-24 mx-auto" />
             <h1 className="mt-4 text-center text-3xl font-bold text-gray-900">
@@ -41,9 +90,7 @@ const SignUpConfirmation = ({
             <h1 className="mt-4 text-center text-3xl font-bold text-gray-700">
               There's been an issue.
             </h1>
-            <p className="mt-2 text-center text-xl">
-              {userConfirmationErrorMessage}
-            </p>
+            <p className="mt-2 text-center text-xl">{state.errorMessage}</p>
           </>
         )}
       </div>

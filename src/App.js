@@ -35,8 +35,23 @@ const getBodyBgColor = (path) => {
   return className;
 };
 
+const persistUserInfo = (userInfo) => {
+  localStorage.setItem("userInfo", JSON.stringify(userInfo));
+};
+
+const getUserInfoFromLocalStorage = () => {
+  if (localStorage.getItem("userInfo")) {
+    console.log("Found user info in storage");
+    return JSON.stringify(localStorage.getItem("userInfo"));
+  }
+
+  return null;
+};
+
 function App() {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(getUserInfoFromLocalStorage());
+  let location = useLocation();
+  let history = useHistory();
 
   const auth = new GoTrue({
     APIUrl: "https://vette-tracker.netlify.app/.netlify/identity",
@@ -47,22 +62,6 @@ function App() {
       .signup(email, password)
       .then((response) => handleSuccess(response))
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
-  };
-
-  const confirmUser = (token) => {
-    auth
-      .confirm(token)
-      .then((response) => setUserConfirmationToken(null))
-      .catch((error) => {
-        const parsedError = JSON.parse(JSON.stringify(error));
-
-        setUserConfirmationToken(null);
-        if (parsedError.json && parsedError.json.msg) {
-          setUserConfirmationErrorMessage(parsedError.json.msg);
-        } else {
-          setUserConfirmationErrorMessage("An error has happened");
-        }
-      });
   };
 
   const authenticate = (email, password, handleSuccess, handleError) => {
@@ -77,20 +76,26 @@ function App() {
 
   const logout = (callback) => {};
 
-  // This definitely needs to be moved to a reducer: https://www.robinwieruch.de/react-hooks-fetch-data
-  const [userConfirmationToken, setUserConfirmationToken] = useState(null);
-  const [
-    userConfirmationErrorMessage,
-    setUserConfirmationErrorMessage,
-  ] = useState(null);
+  // If userInfo changes persist it to local storage
+  useEffect(() => {
+    persistUserInfo(userInfo);
+  }, [userInfo]);
 
-  let location = useLocation();
-  let history = useHistory();
+  // Redirect user to Vettes page if they're logged in
+  useEffect(() => {
+    if (
+      !!userInfo &&
+      (location.pathname === "/" ||
+        location.pathname === "/sign-in" ||
+        location.pathname === "/sign-up")
+    ) {
+      history.push({ pathname: "/vettes" });
+    }
+  }, [userInfo, location, history]);
 
-  // Check for confirmation token in hash
+  // Check for confirmation token in hash. If it's there redirect them to the confirmation page to be confirmed
   useEffect(() => {
     if (location.hash && location.hash.indexOf("#confirmation_token") !== -1) {
-      setUserConfirmationToken(location.hash.substring(20));
       history.push({ pathname: "/sign-up-confirmation" });
     }
   }, [location, history]);
@@ -107,13 +112,8 @@ function App() {
             <Route path="/sign-up">
               <SignUp handleSignUp={signUpNewUser} />
             </Route>
-            {console.log(userConfirmationToken)}
             <Route path="/sign-up-confirmation">
-              <SignUpConfirmation
-                confirmationToken={userConfirmationToken}
-                confirmUser={confirmUser}
-                userConfirmationErrorMessage={userConfirmationErrorMessage}
-              />
+              <SignUpConfirmation auth={auth} />
             </Route>
             <AuthenticatedRoute path="/add-vette">
               <AddVette />
@@ -122,7 +122,6 @@ function App() {
               <VetteDetail />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/vettes">
-              {/* <AllVettes /> */}
               <AllVettesFake />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/trends">
