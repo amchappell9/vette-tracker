@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useContext } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
 
@@ -8,14 +8,17 @@ const ACTION_TYPES = {
   ERROR: "ERROR",
 };
 
-const getVettesReducer = (state, action) => {
+const addVetteReducer = (state, action) => {
   switch (action.type) {
     case ACTION_TYPES.INIT:
       return { ...state, isLoading: true };
-
     case ACTION_TYPES.SUCCESS:
-      return { ...state, isLoading: false, vettes: action.payload };
-
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        submissionResponse: action.payload,
+      };
     case ACTION_TYPES.ERROR:
       return {
         ...state,
@@ -29,45 +32,51 @@ const getVettesReducer = (state, action) => {
   }
 };
 
-const useGetAllVettes = () => {
-  const userInfo = useContext(UserInfoContext);
-  const [state, dispatch] = useReducer(getVettesReducer, {
+const useAddVette = () => {
+  const [vetteInfo, setVetteInfo] = useState(null);
+  const [state, dispatch] = useReducer(addVetteReducer, {
     isLoading: false,
     hasError: false,
     errorMessage: "",
-    vettes: [],
+    success: false,
+    submissionResponse: {},
   });
+  const userInfo = useContext(UserInfoContext);
 
   useEffect(() => {
     let requestCancelled = false;
 
-    const getAllVettes = async () => {
+    const addVette = async () => {
       dispatch({ type: ACTION_TYPES.INIT });
 
       try {
-        let response = await axios({
+        const response = await axios({
+          method: "post",
           url: "/.netlify/functions/vettes",
-          method: "get",
+          data: vetteInfo,
           headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
         });
 
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.SUCCESS, payload: response.data.vettes });
+        dispatch({ type: ACTION_TYPES.SUCCESS, payload: response.data });
       } catch (error) {
         if (requestCancelled) return;
+
         dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
       }
     };
 
-    getAllVettes();
+    if (vetteInfo) {
+      addVette();
+    }
 
     return () => {
       requestCancelled = true;
     };
-  }, [userInfo]);
+  }, [vetteInfo, userInfo]);
 
-  return state;
+  return [state, setVetteInfo];
 };
 
-export default useGetAllVettes;
+export default useAddVette;

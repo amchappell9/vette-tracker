@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import React from "react";
+// import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import AddVetteForm from "./AddVetteForm";
-import UserInfoContext from "../../contexts/UserInfoContext";
+// import UserInfoContext from "../../contexts/UserInfoContext";
+import useAddVette from "../../hooks/useAddVette";
 
 // const fakeVetteInfo = {
 //   year: "2016",
@@ -19,29 +20,34 @@ import UserInfoContext from "../../contexts/UserInfoContext";
 // };
 
 const AddVette = () => {
-  const [formValues, setFormValues] = useState(null);
-  const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
-  const userInfo = useContext(UserInfoContext);
+  // const [formValues, setFormValues] = useState(null);
+  // const [vetteSubmitted, setVetteSubmitted] = useState(false)
+  // const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
+  // const userInfo = useContext(UserInfoContext);
+  const [
+    { isLoading, hasError, errorMessage, success, submissionResponse },
+    setVetteInfo,
+  ] = useAddVette();
 
-  let location = useLocation();
+  // let location = useLocation();
 
   // Rough snippet for getting vette info to edit
-  useEffect(() => {
-    const getVetteInfo = async (vetteID) => {
-      const response = await axios({
-        method: "get",
-        url: "/.netlify/functions/vettes",
-        data: vetteID,
-        headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
-      });
+  // useEffect(() => {
+  //   const getVetteInfo = async (vetteID) => {
+  //     const response = await axios({
+  //       method: "get",
+  //       url: "/.netlify/functions/vettes",
+  //       data: vetteID,
+  //       headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+  //     });
 
-      setVetteToEditInfo(response);
-    };
+  //     setVetteToEditInfo(response);
+  //   };
 
-    if (location.state && location.state.vetteToEdit) {
-      getVetteInfo(location.state.vetteToEdit);
-    }
-  }, [location, userInfo]);
+  //   if (location.state && location.state.vetteToEdit) {
+  //     getVetteInfo(location.state.vetteToEdit);
+  //   }
+  // }, [location, userInfo]);
 
   // Testing snippet
   // useEffect(() => {
@@ -49,33 +55,52 @@ const AddVette = () => {
   // }, []);
 
   const onSubmit = async (values) => {
-    const response = await axios({
-      method: "post",
-      url: "/.netlify/functions/vettes",
-      data: values,
-      headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
-    });
-    setFormValues(response.data);
+    // const response = await axios({
+    //   method: "post",
+    //   url: "/.netlify/functions/vettes",
+    //   data: values,
+    //   headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+    // });
+    // setFormValues(response.data);
+    setVetteInfo(values);
+    // setVetteSubmitted(true);
   };
 
   let output;
 
-  if (formValues === null) {
-    output = (
-      <AddVetteForm onSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
-    );
-  } else if (!!formValues) {
+  if (!isLoading && !hasError && !success) {
+    output = <AddVetteForm onSubmit={onSubmit} />;
+  } else if (isLoading) {
+    output = <div>Loading...</div>;
+  } else if (hasError) {
+    output = <div>{errorMessage}</div>;
+  } else if (success) {
     output = (
       <Redirect
         to={{
-          pathname: "/vettes/283581563266925056",
+          pathname: `/vettes/${submissionResponse.id}`,
           state: { isConfirmationView: true },
         }}
       />
     );
-  } else {
-    output = <>Something is wrong</>;
   }
+
+  // if (vetteSubmitted === null) {
+  //   output = (
+  //     <AddVetteForm onSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
+  //   );
+  // } else if (!!vetteSubmitted) {
+  //   output = (
+  //     <Redirect
+  //       to={{
+  //         pathname: "/vettes/283581563266925056",
+  //         state: { isConfirmationView: true },
+  //       }}
+  //     />
+  //   );
+  // } else {
+  //   output = <>Something is wrong</>;
+  // }
 
   return (
     <>
