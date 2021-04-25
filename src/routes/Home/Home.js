@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <>
+    <div className="bg-gray-700">
       <section className="text-center pt-40 mb-20">
         <h1 className="text-white text-7xl font-bold pb-6">
           Looking for a new Vette?
@@ -43,7 +43,7 @@ const Home = () => {
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
         />
       </section>
-    </>
+    </div>
   );
 };
 

@@ -22,6 +22,10 @@ const getStylesByPath = (path) => {
       styles = "pt-6 pb-48 px-16";
       break;
 
+    case "/":
+      styles = "bg-gray-700";
+      break;
+
     default:
       styles = "px-16 py-4";
       break;
@@ -82,7 +86,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
     );
   } else {
     return (
-      <header className="px-16 py-4">
+      <header className={`${headerStyles} px-16 py-4`}>
         <div>
           <Link to="/" className="block h-16 w-24 bg-red-500"></Link>
         </div>

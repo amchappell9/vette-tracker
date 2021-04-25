@@ -17,23 +17,6 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettesFake from "./routes/AllVettes/AllVettesFake";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-// import authentication from "./authentication";
-
-const getBodyBgColor = (path) => {
-  let className = "";
-
-  switch (path) {
-    case "/":
-      className = "bg-gray-700";
-      break;
-
-    default:
-      className = "bg-gray-50";
-      break;
-  }
-
-  return className;
-};
 
 const persistUserInfo = (userInfo) => {
   localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -41,7 +24,6 @@ const persistUserInfo = (userInfo) => {
 
 const getUserInfoFromLocalStorage = () => {
   if (localStorage.getItem("userInfo")) {
-    console.log("Found user info in storage");
     return JSON.stringify(localStorage.getItem("userInfo"));
   }
 
@@ -78,7 +60,9 @@ function App() {
 
   // If userInfo changes persist it to local storage
   useEffect(() => {
-    persistUserInfo(userInfo);
+    if (userInfo) {
+      persistUserInfo(userInfo);
+    }
   }, [userInfo]);
 
   // Redirect user to Vettes page if they're logged in
@@ -101,7 +85,7 @@ function App() {
   }, [location, history]);
 
   return (
-    <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
+    <div className="min-h-screen">
       <UserInfoContext.Provider value={userInfo}>
         <Header isAuthenticated={true} handleLogout={logout} />
         <main>
