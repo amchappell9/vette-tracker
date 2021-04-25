@@ -8,7 +8,7 @@ import Input from "../components/Input";
 import FormFieldErrorMessage from "../components/FormFieldErrorMessage";
 
 const LoginFormValidationSchema = Yup.object({
-  username: Yup.string().required("Please enter your username"),
+  email: Yup.string().required("Please enter your email address"),
   password: Yup.string().required("Please enter your password"),
 });
 
@@ -18,10 +18,9 @@ const Login = ({ handleAuth }) => {
   let history = useHistory();
   let location = useLocation();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state || { from: { pathname: "/vettes" } };
 
   const handleSuccess = (response) => {
-    alert(response);
     history.replace(from);
   };
 
@@ -37,7 +36,7 @@ const Login = ({ handleAuth }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: LoginFormValidationSchema,
@@ -67,22 +66,19 @@ const Login = ({ handleAuth }) => {
           )}
           <div>
             <form onSubmit={formik.handleSubmit}>
-              <label
-                htmlFor="username"
-                className="block mb-2 font-bold text-lg"
-              >
-                Username:
+              <label htmlFor="email" className="block mb-2 font-bold text-lg">
+                Email Address:
               </label>
               <Input
-                id="username"
+                id="email"
                 type="text"
-                autoComplete="username"
+                autoComplete="email"
                 className="w-full py-1 px-4"
-                {...formik.getFieldProps("username")}
+                {...formik.getFieldProps("email")}
               />
-              {formik.touched.username && formik.errors.username ? (
+              {formik.touched.email && formik.errors.email ? (
                 <FormFieldErrorMessage
-                  errorMessage={formik.errors.username}
+                  errorMessage={formik.errors.email}
                   className="mt-1"
                 />
               ) : null}
