@@ -52,7 +52,10 @@ const SignUpConfirmation = ({ auth }) => {
           if (parsedError.json && parsedError.json.msg) {
             dispatch({ type: "ERROR", errorMessage: parsedError.json.msg });
           } else {
-            dispatch({ type: "ERROR", errorMessage: "" });
+            dispatch({
+              type: "ERROR",
+              errorMessage: "An error has happened with your confirmation",
+            });
           }
         });
     };
