@@ -15,7 +15,7 @@ import Login from "./routes/Login";
 import SignUp from "./routes/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
-import AllVettesFake from "./routes/AllVettes/AllVettesFake";
+import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
 
 const persistUserInfo = (userInfo) => {
@@ -106,7 +106,7 @@ function App() {
               <VetteDetail />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/vettes">
-              <AllVettesFake />
+              <AllVettes />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/trends">
               <Trends />
