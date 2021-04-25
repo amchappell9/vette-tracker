@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Switch,
-  Route,
-  useLocation,
-  useHistory,
-  // Redirect,
-} from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import GoTrue from "gotrue-js";
-// import netlifyIdentity from "netlify-identity-widget";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -43,20 +36,11 @@ const getBodyBgColor = (path) => {
 };
 
 function App() {
-  // const [userInfo, setUserInfo] = useState(null);
-  // eslint-disable-next-line
-  const [userInfo, setUserInfo] = useState({
-    firstName: "Austin",
-    lastName: "Chappell",
-    email: "amchappell9@gmail.com",
-  });
+  const [userInfo, setUserInfo] = useState(null);
 
   const auth = new GoTrue({
     APIUrl: "https://vette-tracker.netlify.app/.netlify/identity",
   });
-
-  let location = useLocation();
-  let history = useHistory();
 
   const signUpNewUser = (email, password, handleSuccess, handleError) => {
     auth
@@ -68,44 +52,30 @@ function App() {
   const confirmUser = (token) => {
     auth
       .confirm(token)
-      .then((response) => confirmUserSuccess(response))
-      .catch((error) => confirmUserFail(JSON.parse(JSON.stringify(error))));
-  };
+      .then((response) => setUserConfirmationToken(null))
+      .catch((error) => {
+        const parsedError = JSON.parse(JSON.stringify(error));
 
-  const confirmUserSuccess = (response) => {
-    setUserConfirmationToken(null);
-  };
-
-  const confirmUserFail = (error) => {
-    console.log("error message", error);
-    setUserConfirmationToken(null);
-    if (error.json && error.json.msg) {
-      setUserConfirmationErrorMessage(error.json.msg);
-    } else {
-      setUserConfirmationErrorMessage("An error has happened");
-    }
+        setUserConfirmationToken(null);
+        if (parsedError.json && parsedError.json.msg) {
+          setUserConfirmationErrorMessage(parsedError.json.msg);
+        } else {
+          setUserConfirmationErrorMessage("An error has happened");
+        }
+      });
   };
 
   const authenticate = (email, password, handleSuccess, handleError) => {
-    // netlifyIdentity.open();
-    // netlifyIdentity.on("login", (user) => {
-    //   console.log(user);
-    //   setUserInfo(user);
-    //   callback(user);
-    // });
     auth
       .login(email, password, true)
-      .then((response) => handleSuccess(response))
+      .then((response) => {
+        setUserInfo(response);
+        handleSuccess(response);
+      })
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
   };
 
-  const logout = (callback) => {
-    // netlifyIdentity.logout();
-    // netlifyIdentity.on("logout", () => {
-    //   setUserInfo(null);
-    //   callback();
-    // });
-  };
+  const logout = (callback) => {};
 
   // This definitely needs to be moved to a reducer: https://www.robinwieruch.de/react-hooks-fetch-data
   const [userConfirmationToken, setUserConfirmationToken] = useState(null);
@@ -113,6 +83,9 @@ function App() {
     userConfirmationErrorMessage,
     setUserConfirmationErrorMessage,
   ] = useState(null);
+
+  let location = useLocation();
+  let history = useHistory();
 
   // Check for confirmation token in hash
   useEffect(() => {
@@ -124,7 +97,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${getBodyBgColor(location.pathname)}`}>
-      <UserInfoContext.Provider value={true}>
+      <UserInfoContext.Provider value={userInfo}>
         <Header isAuthenticated={true} handleLogout={logout} />
         <main>
           <Switch>
