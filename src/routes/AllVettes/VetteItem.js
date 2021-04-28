@@ -32,13 +32,13 @@ const VetteItem = ({ vette, index, listLength }) => {
         <div className="col-span-3">
           <p className="block text-gray-700 leading-tight">
             <span className="font-bold">
-              {parseInt(vette.miles).toLocaleString()}{" "}
+              {parseInt(vette.miles).toLocaleString()}
             </span>
             Miles
           </p>
-          <p className="block text-gray-700 leading-tight font-bold">{`$${parseInt(
-            vette.cost
-          ).toLocaleString()}`}</p>
+          <p className="block text-gray-700 leading-tight font-bold">
+            {`$${parseInt(vette.cost).toLocaleString()}`}
+          </p>
         </div>
         <div className="col-span-3">
           <p className="block text-gray-700 leading-tight">

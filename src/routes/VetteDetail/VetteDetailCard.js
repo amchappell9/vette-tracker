@@ -40,7 +40,7 @@ export default function VetteDetailCard({ vetteData }) {
           <span>{`${vetteData.year} Corvette ${vetteData.submodel}`}</span>
         </div>
         <div className="font-bold text-xl">
-          <span>{`$${vetteData.cost}`}</span>
+          <span>{`$${parseInt(vetteData.cost).toLocaleString()}`}</span>
         </div>
         <div className="font-bold text-xl">
           <span>{`${vetteData.miles} Miles`}</span>
