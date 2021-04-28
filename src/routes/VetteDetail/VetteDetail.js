@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import { ArrowLeftIcon, PlusIcon, PencilIcon } from "@heroicons/react/outline";
-import SubmodelInfo from "./SubmodelInfo";
-import TrimInfo from "./TrimInfo";
-import PackagesList from "./PackagesList";
-
-const fakeVetteData = {
-  year: "2014",
-  miles: "500",
-  cost: "45000",
-  transmissionType: "Manual",
-  exteriorColor: "Artic White",
-  interiorColor: "Red",
-  submodel: "Z51",
-  trim: "2LT",
-  packages: ["MRC", "NPP", "PDR"],
-};
+import useGetVette from "../../hooks/useGetVette";
+import Alert, { ALERT_TYPES } from "../../components/Alert";
+import VetteDetailCard from "./VetteDetailCard";
 
 const VetteDetail = () => {
   let { vetteId } = useParams();
   let location = useLocation();
 
-  const [vetteData, setVetteData] = useState(null);
   const [isConfirmationView, setIsConfirmationView] = useState(
     location.state && location.state.isConfirmationView ? true : false
   );
+  const [
+    { isLoading, hasError, errorMessage, success, vetteData },
+    setVetteId,
+  ] = useGetVette(vetteId);
 
-  // Get Vette Detail by ID
   useEffect(() => {
-    setTimeout(() => setVetteData(fakeVetteData), 750);
-  }, [vetteId]);
+    setVetteId(vetteId);
+  }, [setVetteId, vetteId]);
 
-  // See which version needs to be displayed
+  // See if confirmation view needs to be shown
   useEffect(() => {
     setIsConfirmationView(
       location.state && location.state.isConfirmationView ? true : false
     );
   }, [location]);
+
+  let output;
+
+  if (isLoading) {
+    output = <div>Loading...</div>;
+  } else if (hasError) {
+    output = <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />;
+  } else if (success) {
+    output = <VetteDetailCard vetteData={vetteData} />;
+  }
 
   return (
     <div className="min-main-height flex justify-center">
@@ -49,7 +49,7 @@ const VetteDetail = () => {
         </div>
         <div className="flex justify-between items-center">
           <h1 className="text-white text-3xl font-bold">
-            {vetteData
+            {success
               ? `${vetteData.year} Corvette ${vetteData.submodel}`
               : "Vette Information"}
           </h1>
@@ -73,80 +73,7 @@ const VetteDetail = () => {
             )}
           </div>
         </div>
-        <div className="rounded bg-white w-full shadow-lg mt-4">
-          {vetteData ? (
-            <div className="px-16 pt-6 pb-8">
-              <div className="flex justify-between">
-                <div className="text-gray-500">
-                  <span>Added on 12/28/1994</span>
-                  <span className="px-2">|</span>
-                  <a
-                    href="https://www.google.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline"
-                  >
-                    Listing Link
-                  </a>
-                </div>
-                <div>
-                  <button className="underline">Delete Listing</button>
-                </div>
-              </div>
-              {/* Main Info */}
-              <div className="bg-gray-50 mt-6 px-4 py-6 flex justify-between">
-                <div className="font-bold text-xl">
-                  <span>2014 Corvette Z51</span>
-                </div>
-                <div className="font-bold text-xl">
-                  <span>$41,500</span>
-                </div>
-                <div className="font-bold text-xl">
-                  <span>14,258 Miles</span>
-                </div>
-              </div>
-              {/* Secondary Info */}
-              <div className="mt-6 grid grid-cols-3 gap-16">
-                <div className="col-span-1">
-                  <span className="block text-gray-600">Transmission</span>
-                  <span className="block text-gray-800 text-lg font-bold">
-                    Manual
-                  </span>
-                </div>
-                <div className="col-span-1">
-                  <span className="block text-gray-600">Exterior Color</span>
-                  <span className="block text-gray-800 text-lg font-bold">
-                    Artic White
-                  </span>
-                </div>
-                <div className="col-span-1">
-                  <span className="block text-gray-600">Interior Color</span>
-                  <span className="block text-gray-800 text-lg font-bold">
-                    Red
-                  </span>
-                </div>
-              </div>
-              {/* Submodel and Trim Info */}
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="col-span-1">
-                  <span className="block text-gray-600 mb-1">Submodel</span>
-                  <SubmodelInfo vetteSubmodel={vetteData.submodel} />
-                </div>
-                <div className="col-span-1">
-                  <span className="block text-gray-600 mb-1">Trim</span>
-                  <TrimInfo vetteTrim={vetteData.trim} />
-                </div>
-              </div>
-              {/* Packages */}
-              <div className="mt-12">
-                <span className="block text-gray-600">Packages</span>
-                <PackagesList vettePackages={vetteData.packages} />
-              </div>
-            </div>
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
+        {output}
       </div>
     </div>
   );

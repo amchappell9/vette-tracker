@@ -24,7 +24,7 @@ const persistUserInfo = (userInfo) => {
 
 const getUserInfoFromLocalStorage = () => {
   if (localStorage.getItem("userInfo")) {
-    return JSON.stringify(localStorage.getItem("userInfo"));
+    return JSON.parse(localStorage.getItem("userInfo"));
   }
 
   return null;
