@@ -1,4 +1,5 @@
 import { TrashIcon } from "@heroicons/react/outline";
+import * as dayjs from "dayjs";
 import Card from "../../components/Card";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
@@ -9,7 +10,9 @@ export default function VetteDetailCard({ vetteData }) {
     <Card>
       <div className="flex justify-between">
         <div className="text-gray-500">
-          <span>Added on {vetteData.date}</span>
+          <span>
+            Added on {dayjs(vetteData.date, "MM-DD-YYYY").format("MM/DD/YYYY")}
+          </span>
           {vetteData.link && (
             <>
               <span className="px-2">|</span>
