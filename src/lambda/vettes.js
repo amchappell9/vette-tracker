@@ -89,7 +89,7 @@ const getVetteByID = (id, userInfo) => {
     .then((response) => {
       if (
         response.data.length > 0 &&
-        response.data[0].userId === userInfo.sub
+        response.data[0].data.userId === userInfo.sub
       ) {
         return {
           statusCode: 200,
