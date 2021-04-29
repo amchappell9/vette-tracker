@@ -63,13 +63,20 @@ const VetteDetail = () => {
                 Add Another Vette
               </Link>
             ) : (
-              <Link
-                to={{ pathname: "/add-vette", state: { vetteToEdit: vetteId } }}
-                className="px-4 py-2 text-white bg-red-500 rounded"
-              >
-                <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
-                Edit Vette
-              </Link>
+              <>
+                {success && (
+                  <Link
+                    to={{
+                      pathname: "/add-vette",
+                      state: { vetteToEdit: vetteData },
+                    }}
+                    className="px-4 py-2 text-white bg-red-500 rounded disabled:opacity-50"
+                  >
+                    <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                    Edit Vette
+                  </Link>
+                )}
+              </>
             )}
           </div>
         </div>

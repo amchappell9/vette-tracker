@@ -8,7 +8,7 @@ const ACTION_TYPES = {
   ERROR: "ERROR",
 };
 
-const addVetteReducer = (state, action) => {
+const updateVetteReducer = (state, action) => {
   switch (action.type) {
     case ACTION_TYPES.INIT:
       return { ...state, isLoading: true };
@@ -17,7 +17,7 @@ const addVetteReducer = (state, action) => {
         ...state,
         isLoading: false,
         success: true,
-        submissionResponse: action.payload,
+        response: action.payload,
       };
     case ACTION_TYPES.ERROR:
       return {
@@ -32,28 +32,29 @@ const addVetteReducer = (state, action) => {
   }
 };
 
-const useAddVette = () => {
-  const [vetteInfo, setVetteInfo] = useState(null);
-  const [state, dispatch] = useReducer(addVetteReducer, {
+const useUpdateVette = () => {
+  const [vetteUpdateValues, setVetteUpdateValues] = useState(null);
+  const [vetteId, setVetteId] = useState(null);
+  const [state, dispatch] = useReducer(updateVetteReducer, {
     isLoading: false,
     hasError: false,
     errorMessage: "",
     success: false,
-    submissionResponse: {},
+    response: {},
   });
   const userInfo = useContext(UserInfoContext);
 
   useEffect(() => {
     let requestCancelled = false;
 
-    const callAddVette = async () => {
+    const callUpdateVette = async () => {
       dispatch({ type: ACTION_TYPES.INIT });
 
       try {
         const response = await axios({
-          method: "post",
-          url: "/.netlify/functions/vettes",
-          data: vetteInfo,
+          method: "put",
+          url: `/.netlify/functions/vettes/${vetteId}`,
+          data: vetteUpdateValues,
           headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
         });
 
@@ -63,24 +64,36 @@ const useAddVette = () => {
       } catch (error) {
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          dispatch({
+            type: ACTION_TYPES.ERROR,
+            payload: error.response.data.message,
+          });
+        } else {
+          dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
+        }
       }
     };
 
-    if (vetteInfo) {
-      callAddVette();
+    if (vetteUpdateValues && vetteId) {
+      callUpdateVette();
     }
 
     return () => {
       requestCancelled = true;
     };
-  }, [vetteInfo, userInfo]);
+  }, [vetteUpdateValues, vetteId, userInfo]);
 
-  const addVette = (vette) => {
-    setVetteInfo(vette);
+  const updateVette = (id, values) => {
+    setVetteUpdateValues(values);
+    setVetteId(id);
   };
 
-  return [state, addVette];
+  return [state, updateVette];
 };
 
-export default useAddVette;
+export default useUpdateVette;
