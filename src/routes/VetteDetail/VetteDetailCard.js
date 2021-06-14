@@ -1,13 +1,21 @@
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
+import Alert, { ALERT_TYPES } from "../../components/Alert";
 import Card from "../../components/Card";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
 
-export default function VetteDetailCard({ vetteData }) {
+export default function VetteDetailCard({ vetteData, wasUpdated }) {
   return (
     <Card>
+      {wasUpdated && (
+        <Alert
+          alertType={ALERT_TYPES.SUCCESS}
+          message="Your Vette was successfully updated!"
+          className="mb-4"
+        />
+      )}
       <div className="flex justify-between">
         <div className="text-gray-500">
           <span>

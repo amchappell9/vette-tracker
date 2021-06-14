@@ -39,7 +39,12 @@ const VetteDetail = () => {
       </div>
     );
   } else if (success) {
-    output = <VetteDetailCard vetteData={vetteData} />;
+    output = (
+      <VetteDetailCard
+        vetteData={vetteData}
+        wasUpdated={location?.state?.isUpdate}
+      />
+    );
   }
 
   return (
