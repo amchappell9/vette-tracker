@@ -33,7 +33,11 @@ const VetteDetail = () => {
   if (isLoading) {
     output = <div>Loading...</div>;
   } else if (hasError) {
-    output = <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />;
+    output = (
+      <div className="mt-4">
+        <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
+      </div>
+    );
   } else if (success) {
     output = <VetteDetailCard vetteData={vetteData} />;
   }
