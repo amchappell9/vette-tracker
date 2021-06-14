@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
+import DeleteVetteModal from "./DeleteVetteModal";
 
 export default function VetteDetailCard({ vetteData, wasUpdated }) {
   return (
@@ -91,6 +92,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
         <span className="block text-gray-600">Packages</span>
         <PackagesList vettePackages={vetteData.packages} />
       </div>
+      <DeleteVetteModal />
     </Card>
   );
 }
