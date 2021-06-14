@@ -242,7 +242,7 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
             variant="primary"
             disabled={formik.isSubmitting ? true : false}
           >
-            Add Vette
+            {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
           </Button>
         </div>
       </form>
