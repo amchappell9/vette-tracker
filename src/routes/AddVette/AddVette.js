@@ -63,9 +63,7 @@ const AddVette = () => {
       />
     );
   } else if (success || updateSuccessful) {
-    const vetteId = submissionResponse
-      ? submissionResponse.id
-      : updateResponse.id;
+    const vetteId = success ? submissionResponse.id : updateResponse.id;
     const isUpdate = updateSuccessful;
 
     output = (
