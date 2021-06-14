@@ -4,7 +4,6 @@ import UserInfoContext from "./contexts/UserInfoContext";
 
 const AuthenticatedRoute = ({ children, ...rest }) => {
   const userInfo = useContext(UserInfoContext);
-  console.log(useParams());
 
   return (
     <Route
