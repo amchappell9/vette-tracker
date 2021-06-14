@@ -17,12 +17,12 @@ import PACKAGES from "../../constants/PACKAGES";
 const addVetteFormValidationSchema = Yup.object({
   year: Yup.string().required(),
   miles: Yup.number("Miles must be a number").required("Please enter miles"),
-  cost: Yup.number().required(),
+  cost: Yup.number().required("Please enter cost of Vette"),
   transmissionType: Yup.string().required(),
   exteriorColor: Yup.string().required(),
   interiorColor: Yup.string().required(),
-  submodel: Yup.string().required(),
-  trim: Yup.string().required(),
+  submodel: Yup.string().required("Please select a submodel"),
+  trim: Yup.string().required("Please select a trim"),
 });
 
 const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
