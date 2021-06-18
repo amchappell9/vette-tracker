@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
@@ -8,6 +9,8 @@ import TrimInfo from "./TrimInfo";
 import DeleteVetteModal from "./DeleteVetteModal";
 
 export default function VetteDetailCard({ vetteData, wasUpdated }) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <Card>
       {wasUpdated && (
@@ -37,7 +40,10 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
           )}
         </div>
         <div>
-          <button className="underline group text-gray-700 hover:text-red-600 transition">
+          <button
+            onClick={() => !showDeleteModal && setShowDeleteModal(true)}
+            className="underline group text-gray-700 hover:text-red-600 transition"
+          >
             <TrashIcon className="inline align-text-bottom text-gray-500 group-hover:text-red-500 transition h-5 w-5 mr-1" />
             Delete Listing
           </button>
@@ -92,7 +98,11 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
         <span className="block text-gray-600">Packages</span>
         <PackagesList vettePackages={vetteData.packages} />
       </div>
-      <DeleteVetteModal />
+      <DeleteVetteModal
+        open={showDeleteModal}
+        setOpen={setShowDeleteModal}
+        vetteData={vetteData}
+      />
     </Card>
   );
 }
