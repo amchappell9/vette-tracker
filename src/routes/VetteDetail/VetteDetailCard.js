@@ -58,7 +58,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
           <span>{`$${parseInt(vetteData.cost).toLocaleString()}`}</span>
         </div>
         <div className="font-bold text-xl">
-          <span>{`${vetteData.miles} Miles`}</span>
+          <span>{`${parseInt(vetteData.miles).toLocaleString()} Miles`}</span>
         </div>
       </div>
       {/* Secondary Info */}
