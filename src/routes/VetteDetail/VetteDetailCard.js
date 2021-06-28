@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
@@ -10,9 +11,21 @@ import DeleteVetteModal from "./DeleteVetteModal";
 
 export default function VetteDetailCard({ vetteData, wasUpdated }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [vetteDeleted, setVetteDeleted] = useState(false);
 
   return (
     <Card>
+      {/* Once vette is deleted redirect to vette list */}
+      {vetteDeleted && (
+        <Redirect
+          to={{
+            pathname: `/vettes`,
+            state: { vetteDeleted: true },
+          }}
+        />
+      )}
+
+      {/* Show alert if vette was updated */}
       {wasUpdated && (
         <Alert
           alertType={ALERT_TYPES.SUCCESS}
@@ -20,6 +33,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
           className="mb-4"
         />
       )}
+
       <div className="flex justify-between">
         <div className="text-gray-500">
           <span>
@@ -102,6 +116,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
         open={showDeleteModal}
         setOpen={setShowDeleteModal}
         vetteData={vetteData}
+        setVetteDeleted={setVetteDeleted}
       />
     </Card>
   );

@@ -215,7 +215,10 @@ const deleteVette = async (id, userInfo) => {
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
-      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+      .then(
+        (response) =>
+          (userIDMatches = response.data[0].data.userId === userInfo.sub)
+      );
 
     if (userIDMatches) {
       client.query(
