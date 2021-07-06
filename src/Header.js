@@ -1,6 +1,6 @@
 import React from "react";
-// import logo from './vette-logo.jpg';
 import { NavLink, Link, useLocation } from "react-router-dom";
+import { ReactComponent as Logo } from "./vetteFlagLogo.svg";
 
 /**
  * This is a pain in the ass and needs to be refactored
@@ -63,8 +63,17 @@ const Header = ({ isAuthenticated, handleLogout }) => {
       <header
         className={`${headerStyles} grid grid-cols-12 gap-4 bg-gray-700 pb`}
       >
-        <div>
-          <Link to="/" className="block h-16 w-24 bg-red-500"></Link>
+        <div className="col-span-2">
+          <Link to="/">
+            <div className="flex">
+              <Logo />
+              <div className="ml-6 flex items-center">
+                <span className="text-gray-50 text-xl font-bold">
+                  Vette Tracker
+                </span>
+              </div>
+            </div>
+          </Link>
         </div>
         <nav className="col-span-3 pt-3 pl-6">
           <ul>
@@ -72,8 +81,8 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               <li className="inline" key={link.path}>
                 <NavLink
                   to={link.path}
-                  className="px-4 py-2 mr-4 text-xl text-gray-50 hover:bg-gray-800 hover:rounded"
-                  activeClassName="bg-gray-800 rounded"
+                  className="px-4 py-2 mr-4 text-xl text-gray-50 hover:bg-red-500 rounded"
+                  activeClassName="bg-red-500 rounded"
                 >
                   {link.linkName}
                 </NavLink>
