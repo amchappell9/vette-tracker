@@ -17,6 +17,7 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
+import Page from "./components/Page";
 
 const persistUserInfo = (userInfo) => {
   localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -109,10 +110,14 @@ function App() {
               <AllVettes />
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/trends">
-              <Trends />
+              <Page>
+                <Trends />
+              </Page>
             </AuthenticatedRoute>
             <AuthenticatedRoute path="/resources">
-              <Resources />
+              <Page>
+                <Resources />
+              </Page>
             </AuthenticatedRoute>
             <Route exact path="/">
               <Home />

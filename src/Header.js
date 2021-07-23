@@ -19,6 +19,8 @@ const getStylesByPath = (path) => {
     case "/vettes":
     case "/add-vette":
     case "/vettes/":
+    case "/trends":
+    case "/resources":
       styles = "pt-6 pb-48 px-16";
       break;
 
