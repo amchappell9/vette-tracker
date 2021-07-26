@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../../components/Input";
@@ -21,9 +21,10 @@ const signUpFormValidationSchema = Yup.object({
 
 const SignUp = ({ handleSignUp }) => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const handleSuccess = () => {
-    alert("User signed up!");
+    setSignUpSuccess(true);
   };
 
   const handleError = (error) => {
@@ -56,118 +57,134 @@ const SignUp = ({ handleSignUp }) => {
     },
   });
 
-  return (
-    <div className="min-main-height mb-8 flex justify-center items-center">
-      <div className="block max-w-4xl w-full">
-        <h1 className="text-3xl font-bold text-gray-700">Sign Up</h1>
-        {errorMessage && (
-          <Alert
-            alertType={ALERT_TYPES.DANGER}
-            message={errorMessage}
-            className="mt-4"
-          />
-        )}
-        <form onSubmit={formik.handleSubmit}>
-          <div className="mt-4 mb-8 px-8 bg-white rounded shadow-lg grid grid-cols-3 gap-8">
-            <div className="pt-8">
-              <h2 className="font-bold text-xl text-gray-600">Profile</h2>
-              <p className="text-gray-500">Enter information about yourself.</p>
-            </div>
-            <div className="col-span-2 py-8">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="">
-                  <label className="block mb-2 font-gray-600">First Name</label>
+  if (signUpSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: `/sign-in}`,
+        }}
+      />
+    );
+  } else {
+    return (
+      <div className="min-main-height mb-8 flex justify-center items-center">
+        <div className="block max-w-4xl w-full">
+          <h1 className="text-3xl font-bold text-gray-700">Sign Up</h1>
+          {errorMessage && (
+            <Alert
+              alertType={ALERT_TYPES.DANGER}
+              message={errorMessage}
+              className="mt-4"
+            />
+          )}
+          <form onSubmit={formik.handleSubmit}>
+            <div className="mt-4 mb-8 px-8 bg-white rounded shadow-lg grid grid-cols-3 gap-8">
+              <div className="pt-8">
+                <h2 className="font-bold text-xl text-gray-600">Profile</h2>
+                <p className="text-gray-500">
+                  Enter information about yourself.
+                </p>
+              </div>
+              <div className="col-span-2 py-8">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="">
+                    <label className="block mb-2 font-gray-600">
+                      First Name
+                    </label>
+                    <Input
+                      name="firstName"
+                      className="w-full bg-gray-50 py-1 px-4"
+                      {...formik.getFieldProps("firstName")}
+                    />
+                    {formik.touched.firstName && formik.errors.firstName ? (
+                      <FormFieldErrorMessage
+                        errorMessage={formik.errors.firstName}
+                        className="mt-1"
+                      />
+                    ) : null}
+                  </div>
+                  <div className="">
+                    <label className="block mb-2 font-gray-600">
+                      Last Name
+                    </label>
+                    <Input
+                      name="lastName"
+                      className="w-full bg-gray-50 py-1 px-4"
+                      {...formik.getFieldProps("lastName")}
+                    />
+                    {formik.touched.lastName && formik.errors.lastName ? (
+                      <FormFieldErrorMessage
+                        errorMessage={formik.errors.lastName}
+                        className="mt-1"
+                      />
+                    ) : null}
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <label className="block mb-2 font-gray-600">
+                    Email Address
+                  </label>
                   <Input
-                    name="firstName"
+                    name="emailAddress"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("firstName")}
+                    {...formik.getFieldProps("emailAddress")}
                   />
-                  {formik.touched.firstName && formik.errors.firstName ? (
+                  {formik.touched.emailAddress && formik.errors.emailAddress ? (
                     <FormFieldErrorMessage
-                      errorMessage={formik.errors.firstName}
+                      errorMessage={formik.errors.emailAddress}
                       className="mt-1"
                     />
                   ) : null}
                 </div>
-                <div className="">
-                  <label className="block mb-2 font-gray-600">Last Name</label>
+                <div className="mt-4">
+                  <label className="block mb-2 font-gray-600">Password</label>
                   <Input
-                    name="lastName"
+                    type="password"
+                    name="password"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("lastName")}
+                    {...formik.getFieldProps("password")}
                   />
-                  {formik.touched.lastName && formik.errors.lastName ? (
+                  {formik.touched.password && formik.errors.password ? (
                     <FormFieldErrorMessage
-                      errorMessage={formik.errors.lastName}
+                      errorMessage={formik.errors.password}
+                      className="mt-1"
+                    />
+                  ) : null}
+                </div>
+                <div className="mt-4">
+                  <label className="block mb-2 font-gray-600">
+                    Confirm Password
+                  </label>
+                  <Input
+                    type="password"
+                    name="confirmPassword"
+                    className="w-full bg-gray-50 py-1 px-4"
+                    {...formik.getFieldProps("confirmPassword")}
+                  />
+                  {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword ? (
+                    <FormFieldErrorMessage
+                      errorMessage={formik.errors.confirmPassword}
                       className="mt-1"
                     />
                   ) : null}
                 </div>
               </div>
-              <div className="mt-4">
-                <label className="block mb-2 font-gray-600">
-                  Email Address
-                </label>
-                <Input
-                  name="emailAddress"
-                  className="w-full bg-gray-50 py-1 px-4"
-                  {...formik.getFieldProps("emailAddress")}
-                />
-                {formik.touched.emailAddress && formik.errors.emailAddress ? (
-                  <FormFieldErrorMessage
-                    errorMessage={formik.errors.emailAddress}
-                    className="mt-1"
-                  />
-                ) : null}
-              </div>
-              <div className="mt-4">
-                <label className="block mb-2 font-gray-600">Password</label>
-                <Input
-                  type="password"
-                  name="password"
-                  className="w-full bg-gray-50 py-1 px-4"
-                  {...formik.getFieldProps("password")}
-                />
-                {formik.touched.password && formik.errors.password ? (
-                  <FormFieldErrorMessage
-                    errorMessage={formik.errors.password}
-                    className="mt-1"
-                  />
-                ) : null}
-              </div>
-              <div className="mt-4">
-                <label className="block mb-2 font-gray-600">
-                  Confirm Password
-                </label>
-                <Input
-                  type="password"
-                  name="confirmPassword"
-                  className="w-full bg-gray-50 py-1 px-4"
-                  {...formik.getFieldProps("confirmPassword")}
-                />
-                {formik.touched.confirmPassword &&
-                formik.errors.confirmPassword ? (
-                  <FormFieldErrorMessage
-                    errorMessage={formik.errors.confirmPassword}
-                    className="mt-1"
-                  />
-                ) : null}
-              </div>
             </div>
-          </div>
-          <div className="text-right">
-            <Link
-              to="/"
-              className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 text-lg mr-2"
-            >
-              Cancel
-            </Link>
-            <Button type="submit">Sign Up</Button>
-          </div>
-        </form>
+            <div className="text-right">
+              <Link
+                to="/"
+                className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 text-lg mr-2"
+              >
+                Cancel
+              </Link>
+              <Button type="submit">Sign Up</Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default SignUp;
