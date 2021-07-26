@@ -2,7 +2,7 @@
 
 # Vette Tracker
 
-A tool to track corvette prices over time. Built using React, Netlify Functions, and FaunaDB.
+A tool to track Corvette prices over time. Built using React, Tailwind CSS, Netlify Functions, and FaunaDB.
 
 ## Use
 
