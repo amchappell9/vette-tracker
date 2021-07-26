@@ -4,10 +4,19 @@
 
 A tool to track corvette prices over time. Built using React, Netlify Functions, and FaunaDB.
 
+## Use
+
+### Installation
+
+Clone the repo, then run `yarn build`.
+
+### Local Development
+
+Install netlify-cli globally by running `npm i -g netlify-cli`. Then run `netlify dev` from the root folder.
+
 ## React
 
 - [React Docs](https://reactjs.org/)
-- [React Bootstrap](https://react-bootstrap.github.io/)
 - [React Router](https://reactrouter.com/)
 
 ## Netlify Functions
@@ -24,3 +33,7 @@ A tool to track corvette prices over time. Built using React, Netlify Functions,
 
 - [FaunaDB Documentation](https://docs.fauna.com/fauna/current/start/cloud)
 - [How to use FaunaDB with Netlify](https://docs.fauna.com/fauna/current/integrations/netlify.html)
+
+## Tailwind CSS
+
+- [Tailwindcss Documentation](https://tailwindcss.com/docs)

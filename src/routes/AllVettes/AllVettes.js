@@ -1,126 +1,107 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-// import { fakeVettes } from '../../data/fakeCorvettes';
-import { Spinner } from "react-bootstrap";
+import React from "react";
+import { Link } from "react-router-dom";
+import { PlusIcon } from "@heroicons/react/outline";
+
 import ListOfVettes from "./ListOfVettes";
-import DeleteVetteModal from "./DeleteVetteModal";
-import UserInfoContext from "../../contexts/UserInfoContext";
+import Alert, { ALERT_TYPES } from "../../components/Alert";
+import useGetAllVettes from "../../hooks/useGetAllVettes";
+import AddFirstVetteMessage from "./AddFirstVetteMessage";
+// import PaginationControls from "./PaginationControls";
+// import VetteFilter from "./VetteFilter";
+// import FILTER_TYPES from "../../constants/filterTypes";
+
+// const filters = [
+//   {
+//     name: "Year",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["2019", "2018", "2017", "2016", "2015", "2014"],
+//   },
+//   {
+//     name: "Date",
+//     type: FILTER_TYPES.DATE,
+//   },
+//   {
+//     name: "Price",
+//     type: FILTER_TYPES.SLIDER,
+//   },
+//   {
+//     name: "Model",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["ZR1", "Z06", "Grand Sport", "Z51", "Base"],
+//   },
+//   {
+//     name: "Trim",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["3LT", "2LT", "1LT"],
+//   },
+//   {
+//     name: "Miles",
+//     type: FILTER_TYPES.SLIDER,
+//   },
+//   {
+//     name: "Exterior Color",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["Artic White", "Torch Red"],
+//   },
+//   {
+//     name: "Interior Color",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["Black", "Red"],
+//   },
+//   {
+//     name: "Packages",
+//     type: FILTER_TYPES.SELECT,
+//     values: ["NPP", "MRC", "PDR"],
+//   },
+// ];
 
 const AllVettes = () => {
-  const [allVettes, setAllVettes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [filterValues, setFilterValues] = useState({});
+  const { isLoading, hasError, errorMessage, vettes } = useGetAllVettes();
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [vetteToDelete, setVetteToDelete] = useState(null);
-
-  const userInfo = useContext(UserInfoContext);
-
-  console.log("Context in all vettes", userInfo);
-
-  useEffect(() => {
-    async function getAllVettes() {
-      try {
-        let response = await axios({
-          url: "/.netlify/functions/vettes",
-          method: "get",
-          headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
-        });
-        setIsLoading(false);
-        setAllVettes(response.data.vettes);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    setIsLoading(true);
-
-    if (vetteToDelete === null) {
-      getAllVettes();
-    } else {
-      setIsLoading(false);
-    }
-  }, [vetteToDelete, userInfo.token.access_token]);
-
-  const handleShowDeleteModal = (vette) => {
-    console.log(vette);
-    setShowDeleteModal(true);
-    setVetteToDelete(vette);
-  };
-
-  const handleHideDeleteModal = () => {
-    setShowDeleteModal(false);
-    setVetteToDelete(null);
-  };
-
-  const deleteVette = async () => {
-    console.log(`Deleteing vete with id: ${vetteToDelete.id}`);
-
-    // Call delete endpoint
-    try {
-      await axios({
-        method: "delete",
-        url: "/.netlify/functions/vettes",
-        data: {
-          id: vetteToDelete.id,
-        },
-        headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
-      });
-    } catch (error) {
-      console.error(error);
-    }
-
-    setVetteToDelete(null);
+  const getFilteredVettes = (vettes) => {
+    // Filter vettes based on filters
+    return vettes;
   };
 
   let output;
 
   if (isLoading) {
-    output = (
-      <div className="text-center mt-5">
-        <Spinner animation="border" role="status" variant="primary">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </div>
-    );
-  } else {
+    output = <div>Loading...</div>;
+  } else if (hasError) {
+    output = <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />;
+  } else if (vettes.length === 0) {
+    output = <AddFirstVetteMessage />;
+  } else if (vettes.length > 0) {
     output = (
       <>
-        <ListOfVettes
-          vettesArray={allVettes}
-          handleShowDeleteModal={handleShowDeleteModal}
-        />
-        <DeleteVetteModal
-          show={showDeleteModal}
-          handleClose={handleHideDeleteModal}
-          vette={vetteToDelete}
-          deleteVette={deleteVette}
-        />
+        {/* <VetteFilter filters={filters} onFilterChange={onFilterChange} /> */}
+        <ListOfVettes vettesArray={getFilteredVettes(vettes)} />
+        {/* <PaginationControls /> */}
       </>
     );
   }
 
   return (
-    <div>
-      <h1>All Vettes</h1>
-      <p>View all the Vettes you've entered here.</p>
-      {false && process.env.NODE_ENV === "development" && (
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                allVettes: allVettes,
-                isLoading: isLoading,
-                showDeleteModal: showDeleteModal,
-                vetteToDelete: vetteToDelete,
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
-      )}
-      {output}
-    </div>
+    <>
+      <div className="min-main-height flex justify-center">
+        <div className="max-w-4xl w-full -mt-32 mb-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-white text-3xl font-bold">View Vettes</h1>
+            <div className="text-right">
+              <Link
+                to="/add-vette"
+                className="px-4 py-2 text-white bg-red-500 rounded"
+              >
+                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                Add Vette
+              </Link>
+            </div>
+          </div>
+          <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
+        </div>
+      </div>
+    </>
   );
 };
 

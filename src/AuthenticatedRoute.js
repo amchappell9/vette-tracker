@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
+import UserInfoContext from "./contexts/UserInfoContext";
 
-const AuthenticatedRoute = ({ isAuthenticated, children }) => {
+const AuthenticatedRoute = ({ children, ...rest }) => {
+  const userInfo = useContext(UserInfoContext);
+
   return (
     <Route
+      {...rest}
       render={({ location }) =>
-        isAuthenticated ? (
+        !!userInfo ? (
           children
         ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          <Redirect to={{ pathname: "/sign-in", state: { from: location } }} />
         )
       }
     />

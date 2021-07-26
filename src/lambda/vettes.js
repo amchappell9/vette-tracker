@@ -89,7 +89,7 @@ const getVetteByID = (id, userInfo) => {
     .then((response) => {
       if (
         response.data.length > 0 &&
-        response.data[0].userId === userInfo.sub
+        response.data[0].data.userId === userInfo.sub
       ) {
         return {
           statusCode: 200,
@@ -167,7 +167,10 @@ const updateVette = async (id, vetteData, userInfo) => {
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
-      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+      .then(
+        (response) =>
+          (userIDMatches = response.data[0].data.userId === userInfo.sub)
+      );
 
     if (userIDMatches) {
       await client.query(
@@ -212,7 +215,10 @@ const deleteVette = async (id, userInfo) => {
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
-      .then((response) => (userIDMatches = response.userId === userInfo.sub));
+      .then(
+        (response) =>
+          (userIDMatches = response.data[0].data.userId === userInfo.sub)
+      );
 
     if (userIDMatches) {
       client.query(
