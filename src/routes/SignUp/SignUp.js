@@ -61,7 +61,7 @@ const SignUp = ({ handleSignUp }) => {
     return (
       <Redirect
         to={{
-          pathname: `/sign-in}`,
+          pathname: `/sign-in`,
         }}
       />
     );
