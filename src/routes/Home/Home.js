@@ -31,16 +31,16 @@ const Home = () => {
       <section className="h-32 bg-white -mt-32"></section>
       <section className="flex justify-between bg-white px-40 py-48">
         <FeatureCard
-          title="Helps You Do This"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
+          title="Track Vettes"
+          description="Find Vettes from local listings and add them to your list of Vettes to track."
         />
         <FeatureCard
-          title="And This"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
+          title="Analyze Trends"
+          description="Spot pricing trends using our analytics tools!"
         />
         <FeatureCard
-          title="And This Too!"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac nisl eget quam pellentesque imperdiet sed eget magna. "
+          title="Find Deals"
+          description="Follow trends over time to find the best deals!"
         />
       </section>
     </div>
