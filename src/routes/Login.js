@@ -18,7 +18,10 @@ const Login = ({ handleAuth }) => {
   let history = useHistory();
   let location = useLocation();
 
-  let { from } = location.state || { from: { pathname: "/vettes" } };
+  let { from, userSignedUp } = location.state || {
+    from: { pathname: "/vettes" },
+    userSignedUp: false,
+  };
 
   const handleSuccess = (response) => {
     history.replace(from);
@@ -63,6 +66,14 @@ const Login = ({ handleAuth }) => {
           </div>
           {errorMessage && (
             <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
+          )}
+          {userSignedUp && (
+            <Alert
+              alertType={ALERT_TYPES.SUCCESS}
+              message={
+                "You've successfully signed up! Sign in with your email address and password below."
+              }
+            />
           )}
           <div>
             <form onSubmit={formik.handleSubmit}>
