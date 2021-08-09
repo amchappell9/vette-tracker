@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 const getBorderStylesByIndex = (totalLength, index) => {
   let styles = "";
 
-  if (index === 0) {
+  if (index === 0 && totalLength !== 1) {
     styles = "border rounded-t border-b-0";
   } else if (index > 0 && index !== totalLength - 1) {
     styles = "border-b-0";
-  } else if (index === totalLength - 1) {
+  } else if (index === totalLength - 1 && totalLength !== 1) {
     styles = "border rounded-b";
+  } else if (index === 0 && totalLength === 1) {
+    styles = "border rounded";
   }
 
   return styles;

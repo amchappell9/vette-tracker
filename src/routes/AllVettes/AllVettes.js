@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/outline";
 
@@ -6,7 +6,8 @@ import ListOfVettes from "./ListOfVettes";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
 import useGetAllVettes from "../../hooks/useGetAllVettes";
 import AddFirstVetteMessage from "./AddFirstVetteMessage";
-// import PaginationControls from "./PaginationControls";
+import PaginationControls from "../../components/PaginationControls";
+
 // import VetteFilter from "./VetteFilter";
 // import FILTER_TYPES from "../../constants/filterTypes";
 
@@ -55,14 +56,24 @@ import AddFirstVetteMessage from "./AddFirstVetteMessage";
 //   },
 // ];
 
+const PAGE_SIZE = 5;
+
 const AllVettes = () => {
   // const [filterValues, setFilterValues] = useState({});
   const { isLoading, hasError, errorMessage, vettes } = useGetAllVettes();
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const getFilteredVettes = (vettes) => {
-    // Filter vettes based on filters
-    return vettes;
-  };
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
+    const lastPageIndex = firstPageIndex + PAGE_SIZE;
+
+    return vettes.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, vettes]);
+
+  // const getFilteredVettes = (vettes) => {
+  //   // Filter vettes based on filters
+  //   return vettes;
+  // };
 
   let output;
 
@@ -76,32 +87,36 @@ const AllVettes = () => {
     output = (
       <>
         {/* <VetteFilter filters={filters} onFilterChange={onFilterChange} /> */}
-        <ListOfVettes vettesArray={getFilteredVettes(vettes)} />
-        {/* <PaginationControls /> */}
+        {/* <ListOfVettes vettesArray={getFilteredVettes(vettes)} /> */}
+        <ListOfVettes vettesArray={currentTableData} />
+        <PaginationControls
+          currentPage={currentPage}
+          totalCount={vettes.length}
+          pageSize={PAGE_SIZE}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </>
     );
   }
 
   return (
-    <>
-      <div className="min-main-height flex justify-center">
-        <div className="max-w-4xl w-full -mt-32 mb-8">
-          <div className="flex justify-between items-center">
-            <h1 className="text-white text-3xl font-bold">View Vettes</h1>
-            <div className="text-right">
-              <Link
-                to="/add-vette"
-                className="px-4 py-2 text-white bg-red-500 rounded"
-              >
-                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
-                Add Vette
-              </Link>
-            </div>
+    <div className="min-main-height flex justify-center">
+      <div className="max-w-4xl w-full -mt-32 mb-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-3xl font-bold">View Vettes</h1>
+          <div className="text-right">
+            <Link
+              to="/add-vette"
+              className="px-4 py-2 text-white bg-red-500 rounded"
+            >
+              <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+              Add Vette
+            </Link>
           </div>
-          <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
         </div>
+        <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
       </div>
-    </>
+    </div>
   );
 };
 
