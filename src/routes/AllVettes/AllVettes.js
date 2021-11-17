@@ -1,6 +1,4 @@
 import React, { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "./ListOfVettes";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
@@ -99,25 +97,7 @@ const AllVettes = () => {
     );
   }
 
-  return (
-    <div className="min-main-height flex justify-center">
-      <div className="max-w-4xl w-full -mt-32 mb-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-3xl font-bold">View Vettes</h1>
-          <div className="text-right">
-            <Link
-              to="/add-vette"
-              className="px-4 py-2 text-white bg-red-500 rounded"
-            >
-              <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
-              Add Vette
-            </Link>
-          </div>
-        </div>
-        <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
-      </div>
-    </div>
-  );
+  return <>{output}</>;
 };
 
 export default AllVettes;

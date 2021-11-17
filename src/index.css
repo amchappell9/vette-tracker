@@ -36,3 +36,11 @@
 .packageCheckbox:last-of-type {
   @apply border-b border-l border-r border-gray-100;
 }
+
+.main-nav-active:hover {
+  @apply: bg-red-500;
+}
+
+.main-nav-active {
+  @apply bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500;
+}

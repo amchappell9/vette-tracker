@@ -1,6 +1,7 @@
 import React from "react";
 import FeatureCard from "./FeatureCard";
 import { Link } from "react-router-dom";
+import Footer from "../../Footer";
 
 const Home = () => {
   return (
@@ -43,6 +44,7 @@ const Home = () => {
           description="Follow trends over time to find the best deals!"
         />
       </section>
+      <Footer />
     </div>
   );
 };

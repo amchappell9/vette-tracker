@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
-import Card from "../../components/Card";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
@@ -14,7 +13,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
   const [vetteDeleted, setVetteDeleted] = useState(false);
 
   return (
-    <Card>
+    <div className="p-8">
       {/* Once vette is deleted redirect to vette list */}
       {vetteDeleted && (
         <Redirect
@@ -118,6 +117,6 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
         vetteData={vetteData}
         setVetteDeleted={setVetteDeleted}
       />
-    </Card>
+    </div>
   );
 }

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
+import { PlusIcon } from "@heroicons/react/outline";
 import GoTrue from "gotrue-js";
 
-import Header from "./Header";
-import Footer from "./Footer";
 import Home from "./routes/Home/Home";
 // import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
@@ -17,7 +16,8 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-import Page from "./components/Page";
+import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
+import UnauthPage from "./components/layouts/UnauthPage";
 
 const persistUserInfo = (userInfo) => {
   localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -57,7 +57,7 @@ function App() {
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
   };
 
-  const logout = (callback) => {};
+  // const logout = (callback) => {};
 
   // If userInfo changes persist it to local storage
   useEffect(() => {
@@ -86,48 +86,84 @@ function App() {
   }, [location, history]);
 
   return (
-    <div className="min-h-screen">
+    <div>
       <UserInfoContext.Provider value={userInfo}>
-        <Header isAuthenticated={true} handleLogout={logout} />
-        <main>
-          <Switch>
-            <Route path="/sign-in">
-              <Login handleAuth={authenticate} />
-            </Route>
-            <Route path="/sign-up">
-              <SignUp handleSignUp={signUpNewUser} />
-            </Route>
-            <Route path="/sign-up-confirmation">
-              <SignUpConfirmation auth={auth} />
-            </Route>
-            <AuthenticatedRoute path="/add-vette">
-              <AddVette />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path="/vettes/:vetteId">
+        <Switch>
+          {/* Vette Detail */}
+          <AuthenticatedRoute path="/vettes/:vetteId">
+            <AuthenticatedPage
+              backLinkText="Back to All Vettes"
+              backLinkConfig="/vettes"
+            >
               <VetteDetail />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path="/vettes">
+            </AuthenticatedPage>
+          </AuthenticatedRoute>
+
+          {/* All Vettes */}
+          <AuthenticatedRoute path="/vettes">
+            <AuthenticatedPage
+              title="All Vettes"
+              linkConfig="/add-vette"
+              linkIcon={
+                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+              }
+              linkText="Add Vette"
+            >
               <AllVettes />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path="/trends">
-              <Page>
-                <Trends />
-              </Page>
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path="/resources">
-              <Page>
-                <Resources />
-              </Page>
-            </AuthenticatedRoute>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="*">
-              <NoMatch />
-            </Route>
-          </Switch>
-        </main>
-        <Footer />
+            </AuthenticatedPage>
+          </AuthenticatedRoute>
+
+          {/* Add/Edit Vette */}
+          <AuthenticatedRoute path="/add-vette">
+            <AuthenticatedPage>
+              <AddVette />
+            </AuthenticatedPage>
+          </AuthenticatedRoute>
+
+          {/* Trends */}
+          <AuthenticatedRoute path="/trends">
+            <AuthenticatedPage>
+              <Trends />
+            </AuthenticatedPage>
+          </AuthenticatedRoute>
+
+          {/* Resources */}
+          <AuthenticatedRoute path="/resources">
+            <AuthenticatedPage>
+              <Resources />
+            </AuthenticatedPage>
+          </AuthenticatedRoute>
+
+          {/* Home Page */}
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          {/* Sign In */}
+          <Route path="/sign-in">
+            <UnauthPage>
+              <Login handleAuth={authenticate} />
+            </UnauthPage>
+          </Route>
+
+          {/* Sign Up */}
+          <Route path="/sign-up">
+            <UnauthPage>
+              <SignUp handleSignUp={signUpNewUser} />
+            </UnauthPage>
+          </Route>
+
+          {/* Sign Up Confirmation */}
+          <Route path="/sign-up-confirmation">
+            <UnauthPage>
+              <SignUpConfirmation auth={auth} />
+            </UnauthPage>
+          </Route>
+
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
       </UserInfoContext.Provider>
     </div>
   );

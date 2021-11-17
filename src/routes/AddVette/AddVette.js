@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, Redirect, useLocation } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { Redirect, useLocation } from "react-router-dom";
 import AddVetteForm from "./AddVetteForm";
 import useAddVette from "../../hooks/useAddVette";
 import useUpdateVette from "../../hooks/useUpdateVette";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
 
-const AddVette = () => {
+const AddVette = ({ setTitle, setBackLinkText, setBackLinkConfig }) => {
   const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
   const [
     { isLoading, hasError, errorMessage, success, submissionResponse },
@@ -28,8 +27,15 @@ const AddVette = () => {
   useEffect(() => {
     if (location.state && location.state.vetteToEdit) {
       setVetteToEditInfo(location.state.vetteToEdit);
+      setTitle("Edit Vette");
+      setBackLinkText(`Back to ${location.state.vetteToEdit.year} Corvette`);
+      setBackLinkConfig(`/vettes/${location.state.vetteToEdit.id}`);
+    } else {
+      setTitle("Add Vette");
+      setBackLinkText("Back to All Vettes");
+      setBackLinkConfig("/vettes");
     }
-  }, [location]);
+  }, [location, setTitle, setBackLinkText, setBackLinkConfig]);
 
   const onSubmit = async (values) => {
     if (vetteToEditInfo) {
@@ -38,8 +44,6 @@ const AddVette = () => {
       addVette(values);
     }
   };
-
-  let output;
 
   // Combining the two hook responses below is a little clunky, probably should be refactored into a single hook or something
   if (
@@ -50,13 +54,13 @@ const AddVette = () => {
     !success &&
     !updateSuccessful
   ) {
-    output = (
+    return (
       <AddVetteForm onSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
     );
   } else if (isLoading || updateIsLoading) {
-    output = <div>Loading...</div>;
+    return <div>Loading...</div>;
   } else if (hasError || updateHasError) {
-    output = (
+    return (
       <Alert
         alertType={ALERT_TYPES.DANGER}
         message={errorMessage !== "" ? errorMessage : updateErrorMessage}
@@ -66,7 +70,7 @@ const AddVette = () => {
     const vetteId = success ? submissionResponse.id : updateResponse.id;
     const isUpdate = updateSuccessful;
 
-    output = (
+    return (
       <Redirect
         to={{
           pathname: `/vettes/${vetteId}`,
@@ -75,30 +79,6 @@ const AddVette = () => {
       />
     );
   }
-
-  return (
-    <div className="min-main-height flex justify-center">
-      <div className="max-w-4xl w-full -mt-44 mb-8">
-        <div className="text-gray-300 hover:underline mb-8">
-          {vetteToEditInfo ? (
-            <Link to={`/vettes/${vetteToEditInfo.id}`}>
-              <ArrowLeftIcon className="inline align-text-bottom mr-1 w-5 h-5" />
-              {`Back to ${vetteToEditInfo.year} Corvette`}
-            </Link>
-          ) : (
-            <Link to="/vettes">
-              <ArrowLeftIcon className="inline align-text-bottom mr-1 w-5 h-5" />
-              Back to All Vettes
-            </Link>
-          )}
-        </div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-3xl font-bold">Add Vettes</h1>
-        </div>
-        <div className="rounded bg-white w-full shadow-lg mt-4">{output}</div>
-      </div>
-    </div>
-  );
 };
 
 export default AddVette;

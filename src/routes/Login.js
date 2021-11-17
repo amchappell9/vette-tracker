@@ -52,7 +52,7 @@ const Login = ({ handleAuth }) => {
   return (
     <>
       <div className="min-main-height flex justify-center items-center w-full h-full">
-        <div className="max-w-lg w-full space-y-8 -mt-48">
+        <div className="max-w-lg w-full space-y-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-800">
               Sign In to <span className="">Vette Tracker</span>
