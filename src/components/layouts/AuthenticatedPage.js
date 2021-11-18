@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon, ArrowLeftIcon } from "@heroicons/react/outline";
 import { Link, NavLink } from "react-router-dom";
@@ -45,17 +45,52 @@ function AuthenticatedPage({
   }, []);
 
   // Provide children components functions to set title and link button properties
+
+  /* Title State + Logic */
   const [titleState, setTitleState] = useState(title || "");
+
+  useEffect(() => {
+    setTitleState(title);
+  }, [title]);
+
+  /* Link State + Logic */
   const [linkTextState, setlinkTextState] = useState(linkText || "");
   const [linkConfigState, setLinkConfigState] = useState(linkConfig || {});
   const [linkIconState, setLinkIconState] = useState(linkIcon || null);
+
+  useEffect(() => {
+    setlinkTextState(linkText);
+  }, [linkText]);
+
+  useEffect(() => {
+    setLinkConfigState(linkConfig);
+  }, [linkConfig]);
+
+  useEffect(() => {
+    setLinkIconState(linkIcon);
+  }, [linkIcon]);
+
+  /* Back link State + Logic  */
   const [backLinkTextState, setBackLinkTextState] = useState(
     backLinkText || ""
   );
+
   const [backLinkConfigState, setBackLinkConfigState] = useState(
     backLinkConfig || {}
   );
 
+  // Do I really need a useEffect function to update each property? Feels like there
+  // should be a way to condense things
+  useEffect(() => {
+    setBackLinkTextState(backLinkText);
+  }, [backLinkText]);
+
+  useEffect(() => {
+    setBackLinkConfigState(backLinkConfig);
+  }, [backLinkConfig]);
+
+  // Pass setter functions to child component as props
+  // Not sure if this maintains props that were orginally passed
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       return React.cloneElement(child, {

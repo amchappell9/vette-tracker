@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/outline";
 import GoTrue from "gotrue-js";
 
