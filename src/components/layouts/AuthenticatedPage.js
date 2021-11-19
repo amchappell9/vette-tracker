@@ -135,6 +135,7 @@ function AuthenticatedPage({
                         <div className="ml-10 flex items-baseline space-x-4">
                           {navLinks.map((link) => (
                             <NavLink
+                              key={link.path}
                               to={link.path}
                               className="text-gray-300 text-lg hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium"
                               // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
@@ -232,6 +233,7 @@ function AuthenticatedPage({
                   {/* Mobile Menu Nav Links */}
                   {navLinks.map((link) => (
                     <NavLink
+                      key={link.path}
                       to={link.path}
                       className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                       activeClassName="bg-red-500 text-white block px-3 py-2 rounded-md text-base font-medium"
