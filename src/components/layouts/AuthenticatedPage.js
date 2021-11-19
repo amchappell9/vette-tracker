@@ -19,31 +19,6 @@ function AuthenticatedPage({
   backLinkText,
   backLinkConfig,
 }) {
-  // Dynamically calculate the min height of main so that the footer is at the bottom of the page unless there's enough
-  // content to push it under the fold
-  const headerRef = useRef();
-  const footerRef = useRef();
-  const [headerDimensions, setHeaderDimensions] = useState({
-    height: 0,
-  });
-  const [footerDimensions, setFooterDimensions] = useState({
-    height: 0,
-  });
-
-  useLayoutEffect(() => {
-    if (headerRef.current) {
-      setHeaderDimensions({
-        height: headerRef.current.offsetHeight,
-      });
-    }
-
-    if (footerRef.current) {
-      setFooterDimensions({
-        height: headerRef.current.offsetHeight,
-      });
-    }
-  }, []);
-
   // Provide children components functions to set title and link button properties
 
   /* Title State + Logic */
@@ -105,6 +80,32 @@ function AuthenticatedPage({
 
     return child;
   });
+
+  // Dynamically calculate the min height of main so that the footer is at the bottom of the page unless there's enough
+  // content to push it under the fold
+  const headerRef = useRef(null);
+  const footerRef = useRef(null);
+  const [headerDimensions, setHeaderDimensions] = useState({
+    height: 0,
+  });
+  const [footerDimensions, setFooterDimensions] = useState({
+    height: 0,
+  });
+
+  // Set header and footer heights. Dependent on title as recalculation is needed when going from page with title to page without, and vice versa.
+  useLayoutEffect(() => {
+    if (headerRef.current) {
+      setHeaderDimensions({
+        height: headerRef.current.offsetHeight,
+      });
+    }
+
+    if (footerRef.current) {
+      setFooterDimensions({
+        height: footerRef.current.offsetHeight,
+      });
+    }
+  }, [titleState]);
 
   return (
     <div>
@@ -316,9 +317,13 @@ function AuthenticatedPage({
         </header>
       </div>
 
+      {/* 
+        Min height is set on Main to ensure the footer lines up with bottom of the viewport even when there's not enough content.
+        Min height is equal to 100vh - (header height + footer height) + negative margin on main
+      */}
       <main
         style={{
-          minHeight: `calc(100vh - (${headerDimensions.height}px + ${footerDimensions.height}px) + 36px)`,
+          minHeight: `calc(100vh - (${headerDimensions.height}px + ${footerDimensions.height}px) + 8rem)`,
         }}
         className="-mt-32 "
       >
