@@ -327,7 +327,9 @@ function AuthenticatedPage({
         </div>
       </main>
 
-      <Footer ref={footerRef} />
+      <div ref={footerRef}>
+        <Footer />
+      </div>
     </div>
   );
 }
