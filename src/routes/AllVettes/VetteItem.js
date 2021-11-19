@@ -32,22 +32,22 @@ const VetteItem = ({ vette, index, listLength }) => {
           <p className="block text-gray-600 text-md">{`Added ${vette.date}`}</p>
         </div>
         <div className="col-span-3">
+          <p className="block text-gray-700 leading-tight font-bold">
+            {`$${parseInt(vette.cost).toLocaleString()}`}
+          </p>
           <p className="block text-gray-700 leading-tight">
             <span className="font-bold">
               {parseInt(vette.miles).toLocaleString()}
-            </span>
+            </span>{" "}
             Miles
-          </p>
-          <p className="block text-gray-700 leading-tight font-bold">
-            {`$${parseInt(vette.cost).toLocaleString()}`}
           </p>
         </div>
         <div className="col-span-3">
           <p className="block text-gray-700 leading-tight">
-            <span className="font-bold">{vette.submodel}</span> w/{" "}
+            <span className="font-bold">{vette.submodel}</span> with{" "}
             <span className="font-bold">{vette.trim}</span>
           </p>
-          <p className="block text-gray-700 leading-tight">{`${vette.exteriorColor} w/ ${vette.interiorColor}`}</p>
+          <p className="block text-gray-700 leading-tight">{`${vette.exteriorColor} on ${vette.interiorColor} Interior`}</p>
         </div>
         <div className="col-span-2 flex items-center">
           {vette.packages.map((option) => (
