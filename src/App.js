@@ -104,11 +104,11 @@ function App() {
           <AuthenticatedRoute path="/vettes">
             <AuthenticatedPage
               title="All Vettes"
+              linkText="Add Vette"
               linkConfig="/add-vette"
               linkIcon={
                 <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
               }
-              linkText="Add Vette"
             >
               <AllVettes />
             </AuthenticatedPage>
@@ -116,7 +116,7 @@ function App() {
 
           {/* Add/Edit Vette */}
           <AuthenticatedRoute path="/add-vette">
-            <AuthenticatedPage>
+            <AuthenticatedPage title="Add New Vette">
               <AddVette />
             </AuthenticatedPage>
           </AuthenticatedRoute>

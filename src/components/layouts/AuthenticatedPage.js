@@ -112,14 +112,14 @@ const AuthenticatedPage = ({
         dismiss={() => setMobileMenuOpen(false)}
       />
       {/* Header */}
-      <div ref={headerRef} className="bg-gray-700 pb-32 px-4 sm:px-6 md:px-8">
-        <header className="max-w-7xl mx-auto py-4 pt-6 border-b border-gray-600 flex">
+      <div ref={headerRef} className="px-4 pb-32 bg-gray-700 sm:px-6 md:px-8">
+        <header className="flex py-4 pt-6 mx-auto border-b border-gray-600 max-w-7xl">
           {/* Logo */}
           <div className="flex-1">
             <Link to="/" className="flex items-center">
               <Logo />
               <div className="ml-6">
-                <span className="text-gray-50 text-xl font-bold">
+                <span className="text-xl font-bold text-gray-50">
                   Vette Tracker
                 </span>
               </div>
@@ -132,7 +132,7 @@ const AuthenticatedPage = ({
               <NavLink
                 key={link.path}
                 to={link.path}
-                className="text-gray-300 text-lg hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium"
+                className="px-3 py-2 text-lg font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
                 // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
                 // conflict with the hover styles.
                 // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
@@ -144,13 +144,13 @@ const AuthenticatedPage = ({
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="sm:flex-1 flex justify-end align-baseline">
+          <div className="flex justify-end align-baseline sm:flex-1">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden inline-flex items-center justify-center p-2 -mr-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              className="inline-flex items-center justify-center p-2 -mr-2 text-gray-300 rounded-md lg:hidden hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
               <span className="sr-only">Open main menu</span>
-              <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+              <MenuIcon className="block w-6 h-6" aria-hidden="true" />
             </button>
           </div>
         </header>
@@ -158,13 +158,14 @@ const AuthenticatedPage = ({
         <div className="pt-6">
           {/* Back Link */}
           {backLinkTextState && backLinkConfigState && (
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-gray-300 hover:underline mb-4">
-                <Link to={backLinkConfigState}>
-                  <ArrowLeftIcon className="inline align-text-bottom mr-1 w-5 h-5" />
-                  {backLinkTextState}
-                </Link>
-              </div>
+            <div className="mx-auto mb-4 max-w-7xl">
+              <Link
+                to={backLinkConfigState}
+                className="text-gray-300 hover:underline"
+              >
+                <ArrowLeftIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                {backLinkTextState}
+              </Link>
             </div>
           )}
 
@@ -191,7 +192,7 @@ const AuthenticatedPage = ({
         }}
         className="px-4 sm:px-6 md:px-8"
       >
-        <main className="max-w-7xl mx-auto -mt-32 pb-8">
+        <main className="pb-8 mx-auto -mt-32 max-w-7xl">
           <Card>{childrenWithProps}</Card>
         </main>
       </div>

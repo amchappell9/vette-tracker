@@ -13,7 +13,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
   const [vetteDeleted, setVetteDeleted] = useState(false);
 
   return (
-    <div className="p-8">
+    <div>
       {/* Once vette is deleted redirect to vette list */}
       {vetteDeleted && (
         <Redirect

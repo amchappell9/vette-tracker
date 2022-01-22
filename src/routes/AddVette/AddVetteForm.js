@@ -64,7 +64,7 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
   });
 
   return (
-    <div className="px-16 py-8">
+    <div className="px-16 py-4">
       <p className="text-gray-700 mb-8">
         Add your info about your potential Vette here. The more Vettes you
         enter, the easier it is to spot trends!
