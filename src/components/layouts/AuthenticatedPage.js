@@ -1,16 +1,14 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
-import { Disclosure } from "@headlessui/react";
-import { MenuIcon, XIcon, ArrowLeftIcon } from "@heroicons/react/outline";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../vetteFlagLogo.svg";
-import Footer from "../../Footer";
 import navLinks from "../../constants/navLinks";
+import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
+import MobileMenu from "./MobileMenu";
+import Footer from "../../Footer";
+import Card from "../Card";
 
-/**
- * Displays child content in a card overlapped with a dark background.
- */
-function AuthenticatedPage({
+const AuthenticatedPage = ({
   children,
   title,
   linkText,
@@ -18,8 +16,8 @@ function AuthenticatedPage({
   linkIcon,
   backLinkText,
   backLinkConfig,
-}) {
-  // Provide children components functions to set title and link button properties
+}) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   /* Title State + Logic */
   const [titleState, setTitleState] = useState(title || "");
@@ -108,187 +106,56 @@ function AuthenticatedPage({
   }, [titleState]);
 
   return (
-    <div>
-      <div ref={headerRef} className="bg-gray-700 pb-32">
-        <Disclosure as="nav" className="bg-gray-700">
-          {({ open }) => (
-            <>
-              <div className="max-w-full mx-auto py-4 sm:px-6 md:px-8 lg:px-16">
-                <div className="border-b border-gray-700">
-                  <div className="flex items-center justify-between h-16 px-4 sm:px-0">
-                    <div className="flex items-center">
-                      {/* Logo */}
-                      <div className="flex-shrink-0">
-                        <Link to="/">
-                          <div className="flex">
-                            <Logo />
-                            <div className="ml-6 flex items-center">
-                              <span className="text-gray-50 text-xl font-bold">
-                                Vette Tracker
-                              </span>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-
-                      {/* Large Viewport Nav items */}
-                      <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-4">
-                          {navLinks.map((link) => (
-                            <NavLink
-                              key={link.path}
-                              to={link.path}
-                              className="text-gray-300 text-lg hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium"
-                              // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
-                              // conflict with the hover styles.
-                              // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
-                              activeClassName="main-nav-active"
-                            >
-                              {link.linkName}
-                            </NavLink>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="hidden md:block">
-                      <div className="ml-4 flex items-center md:ml-6">
-                        {/* Notification Button */}
-                        {/* <button className="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                          <span className="sr-only">View notifications</span>
-                          <BellIcon className="h-6 w-6" aria-hidden="true" />
-                        </button> */}
-
-                        {/* Profile dropdown */}
-                        {/* <Menu as="div" className="ml-3 relative">
-                          {({ open }) => (
-                            <>
-                              <div>
-                                <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                                  <span className="sr-only">
-                                    Open user menu
-                                  </span>
-                                  <img
-                                    className="h-8 w-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt=""
-                                  />
-                                </Menu.Button>
-                              </div>
-                              <Transition
-                                show={open}
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                              >
-                                <Menu.Items
-                                  static
-                                  className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                >
-                                  {profile.map((item) => (
-                                    <Menu.Item key={item}>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active ? "bg-gray-100" : "",
-                                            "block px-4 py-2 text-sm text-gray-700"
-                                          )}
-                                        >
-                                          {item}
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                  ))}
-                                </Menu.Items>
-                              </Transition>
-                            </>
-                          )}
-                        </Menu> */}
-                      </div>
-                    </div>
-                    <div className="-mr-2 flex md:hidden">
-                      {/* Mobile menu button */}
-                      <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                        <span className="sr-only">Open main menu</span>
-                        {open ? (
-                          <XIcon className="block h-6 w-6" aria-hidden="true" />
-                        ) : (
-                          <MenuIcon
-                            className="block h-6 w-6"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Disclosure.Button>
-                    </div>
-                  </div>
-                </div>
+    <>
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        dismiss={() => setMobileMenuOpen(false)}
+      />
+      {/* Header */}
+      <div ref={headerRef} className="bg-gray-700 pb-32 px-4 sm:px-6 md:px-8">
+        <header className="max-w-7xl mx-auto py-4 pt-6 border-b border-gray-600 flex">
+          {/* Logo */}
+          <div className="flex-1">
+            <Link to="/" className="flex items-center">
+              <Logo />
+              <div className="ml-6">
+                <span className="text-gray-50 text-xl font-bold">
+                  Vette Tracker
+                </span>
               </div>
+            </Link>
+          </div>
 
-              <Disclosure.Panel className="border-b border-gray-700 md:hidden">
-                <div className="px-2 py-3 space-y-1 sm:px-3">
-                  {/* Mobile Menu Nav Links */}
-                  {navLinks.map((link) => (
-                    <NavLink
-                      key={link.path}
-                      to={link.path}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                      activeClassName="bg-red-500 text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      {link.linkName}
-                    </NavLink>
-                  ))}
-                </div>
-                <div className="pt-4 pb-3 border-t border-gray-700">
-                  {/* Mobile Menu Profile Info + Notifications */}
-                  {/* <div className="flex items-center px-5">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">
-                        Tom Cook
-                      </div>
-                      <div className="text-sm font-medium leading-none text-gray-400">
-                        tom@example.com
-                      </div>
-                    </div>
-                    <button className="ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div> */}
+          {/* Nav */}
+          <nav className="hidden lg:flex gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)]">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className="text-gray-300 text-lg hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium"
+                // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
+                // conflict with the hover styles.
+                // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
+                activeClassName="main-nav-active"
+              >
+                {link.linkName}
+              </NavLink>
+            ))}
+          </nav>
 
-                  {/* Mobile Menu Profile Links */}
-                  {/* <div className="mt-3 px-2 space-y-1">
-                    {profile.map((item) => (
-                      <a
-                        key={item}
-                        href="#"
-                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
-                      >
-                        {item}
-                      </a>
-                    ))}
-                  </div> */}
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <header
-          className={
-            backLinkTextState && backLinkConfigState ? "pb-4" : "pt-10 pb-4"
-          }
-        >
+          {/* Mobile Menu Button */}
+          <div className="sm:flex-1 flex justify-end align-baseline">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden inline-flex items-center justify-center p-2 -mr-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            >
+              <span className="sr-only">Open main menu</span>
+              <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+        </header>
+
+        <div className="pt-6">
           {/* Back Link */}
           {backLinkTextState && backLinkConfigState && (
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -301,7 +168,7 @@ function AuthenticatedPage({
             </div>
           )}
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between max-w-7xl sm:mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between max-w-7xl sm:mx-auto">
             {/* Title + Button */}
             <h1 className="text-3xl font-bold text-white">{titleState}</h1>
             {linkTextState && linkConfigState && (
@@ -314,36 +181,27 @@ function AuthenticatedPage({
               </Link>
             )}
           </div>
-        </header>
+        </div>
       </div>
 
-      {/* 
-        Min height is set on Main to ensure the footer lines up with bottom of the viewport even when there's not enough content.
-        Min height is equal to 100vh - (header height + footer height) + negative margin on main
-      */}
-      <main
+      {/* Main */}
+      <div
         style={{
-          minHeight: `calc(100vh - (${headerDimensions.height}px + ${footerDimensions.height}px) + 8rem)`,
+          minHeight: `calc(100vh - (${headerDimensions.height}px + ${footerDimensions.height}px) + 7rem)`,
         }}
-        className="-mt-32 "
+        className="px-4 sm:px-6 md:px-8"
       >
-        <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-          <div className="rounded bg-white w-full shadow-lg h-full">
-            {childrenWithProps}
-          </div>
-        </div>
-      </main>
+        <main className="max-w-7xl mx-auto -mt-32 pb-8">
+          <Card>{childrenWithProps}</Card>
+        </main>
+      </div>
 
+      {/* Footer */}
       <div ref={footerRef}>
         <Footer />
       </div>
-    </div>
+    </>
   );
-}
-
-// AuthenticatedPage.propTypes = {
-//   children: PropTypes.element.isRequired,
-//   title: PropTypes.string,
-// };
+};
 
 export default AuthenticatedPage;

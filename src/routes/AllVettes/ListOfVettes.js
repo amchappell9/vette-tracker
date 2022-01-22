@@ -3,7 +3,7 @@ import VetteItem from "./VetteItem";
 
 const ListOfVettes = ({ vettesArray }) => {
   return (
-    <ul className="p-8">
+    <ul>
       {vettesArray.map((vette, index) => (
         <VetteItem
           key={vette.id}

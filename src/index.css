@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 .home-triangle-left {
   @apply w-0 h-0;
 
@@ -43,4 +49,8 @@
 
 .main-nav-active {
   @apply bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500;
+}
+
+.mobile-nav-active {
+  @apply bg-red-500 rounded-md py-2 px-2 -my-2 -ml-2;
 }

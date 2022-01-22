@@ -16,8 +16,9 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
+// import AuthenticatedPage from "./components/layouts/AuthenticatedPage-old";
 import UnauthPage from "./components/layouts/UnauthPage";
+import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 
 const persistUserInfo = (userInfo) => {
   localStorage.setItem("userInfo", JSON.stringify(userInfo));
