@@ -188,7 +188,7 @@ const AuthenticatedPage = ({
       {/* Main */}
       <div
         style={{
-          minHeight: `calc(100vh - (${headerDimensions.height}px + ${footerDimensions.height}px) + 7rem)`,
+          minHeight: `calc(100% - (${headerDimensions.height}px + ${footerDimensions.height}px) + 7rem)`,
         }}
         className="px-4 sm:px-6 md:px-8"
       >
