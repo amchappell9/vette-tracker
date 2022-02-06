@@ -87,7 +87,7 @@ function App() {
   }, [location, history]);
 
   return (
-    <div>
+    <>
       <UserInfoContext.Provider value={userInfo}>
         <Switch>
           {/* Vette Detail */}
@@ -107,7 +107,7 @@ function App() {
               linkText="Add Vette"
               linkConfig="/add-vette"
               linkIcon={
-                <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
               }
             >
               <AllVettes />
@@ -166,7 +166,7 @@ function App() {
           </Route>
         </Switch>
       </UserInfoContext.Provider>
-    </div>
+    </>
   );
 }
 

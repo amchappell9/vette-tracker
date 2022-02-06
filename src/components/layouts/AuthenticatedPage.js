@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../vetteFlagLogo.svg";
@@ -79,41 +79,15 @@ const AuthenticatedPage = ({
     return child;
   });
 
-  // Dynamically calculate the min height of main so that the footer is at the bottom of the page unless there's enough
-  // content to push it under the fold
-  const headerRef = useRef(null);
-  const footerRef = useRef(null);
-  const [headerDimensions, setHeaderDimensions] = useState({
-    height: 0,
-  });
-  const [footerDimensions, setFooterDimensions] = useState({
-    height: 0,
-  });
-
-  // Set header and footer heights. Dependent on title as recalculation is needed when going from page with title to page without, and vice versa.
-  useLayoutEffect(() => {
-    if (headerRef.current) {
-      setHeaderDimensions({
-        height: headerRef.current.offsetHeight,
-      });
-    }
-
-    if (footerRef.current) {
-      setFooterDimensions({
-        height: footerRef.current.offsetHeight,
-      });
-    }
-  }, [titleState]);
-
   return (
-    <>
+    <div className="flex h-full flex-col">
       <MobileMenu
         isOpen={mobileMenuOpen}
         dismiss={() => setMobileMenuOpen(false)}
       />
       {/* Header */}
-      <div ref={headerRef} className="px-4 pb-32 bg-gray-700 sm:px-6 md:px-8">
-        <header className="flex py-4 pt-6 mx-auto border-b border-gray-600 max-w-7xl">
+      <div className="bg-gray-700 px-4 pb-32 sm:px-6 md:px-8">
+        <header className="mx-auto flex max-w-7xl border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
           <div className="flex-1">
             <Link to="/" className="flex items-center">
@@ -127,12 +101,12 @@ const AuthenticatedPage = ({
           </div>
 
           {/* Nav */}
-          <nav className="hidden lg:flex gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)]">
+          <nav className="hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
-                className="px-3 py-2 text-lg font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
                 // conflict with the hover styles.
                 // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
@@ -147,10 +121,10 @@ const AuthenticatedPage = ({
           <div className="flex justify-end align-baseline sm:flex-1">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="inline-flex items-center justify-center p-2 -mr-2 text-gray-300 rounded-md lg:hidden hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              className="-mr-2 inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 lg:hidden"
             >
               <span className="sr-only">Open main menu</span>
-              <MenuIcon className="block w-6 h-6" aria-hidden="true" />
+              <MenuIcon className="block h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </header>
@@ -163,19 +137,19 @@ const AuthenticatedPage = ({
                 to={backLinkConfigState}
                 className="text-gray-300 hover:underline"
               >
-                <ArrowLeftIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+                <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
                 {backLinkTextState}
               </Link>
             </div>
           )}
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between max-w-7xl sm:mx-auto">
+          <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
             <h1 className="text-3xl font-bold text-white">{titleState}</h1>
             {linkTextState && linkConfigState && (
               <Link
                 to={linkConfigState}
-                className="inline-flex items-center justify-center px-4 py-2 text-white bg-red-500 rounded disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white disabled:opacity-50"
               >
                 {linkIconState}
                 {linkTextState}
@@ -186,22 +160,17 @@ const AuthenticatedPage = ({
       </div>
 
       {/* Main */}
-      <div
-        style={{
-          minHeight: `calc(100% - (${headerDimensions.height}px + ${footerDimensions.height}px) + 7rem)`,
-        }}
-        className="px-4 sm:px-6 md:px-8"
-      >
-        <main className="pb-8 mx-auto -mt-32 max-w-7xl">
+      <div className="flex-1 px-4 sm:px-6 md:px-8">
+        <main className="mx-auto -mt-32 max-w-7xl pb-8">
           <Card>{childrenWithProps}</Card>
         </main>
       </div>
 
       {/* Footer */}
-      <div ref={footerRef}>
+      <div>
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 
