@@ -54,16 +54,16 @@ const VetteItem = ({ vette, index, listLength }) => {
             <p className="font-bold leading-none text-gray-700">{`$${parseInt(
               vette.cost
             ).toLocaleString()}`}</p>
-            <p className="block  leading-none text-gray-700">
+            <p className="block leading-none text-gray-700">
               <strong>{parseInt(vette.miles).toLocaleString()}</strong> Miles
             </p>
           </div>
-          <div className=" hidden flex-1 flex-col gap-y-1 md:flex">
-            <p>
+          <div className="hidden flex-1 flex-col gap-y-1 md:flex">
+            <p className="leading-none">
               <span className="font-bold">{vette.submodel}</span> with{" "}
               <span className="font-bold">{vette.trim}</span>
             </p>
-            <p className="truncate">{`${vette.exteriorColor} on ${vette.interiorColor} Interior`}</p>
+            <p className="truncate leading-none">{`${vette.exteriorColor} on ${vette.interiorColor} Interior`}</p>
           </div>
           <div className="hidden basis-40 lg:block">
             {vette.packages.map((option) => (
