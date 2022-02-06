@@ -64,16 +64,16 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
   });
 
   return (
-    <div className="px-16 py-4">
-      <p className="text-gray-700 mb-8">
+    <div className="sm:py-4 sm:px-4 lg:px-16">
+      <p className="mb-8 text-gray-700">
         Add your info about your potential Vette here. The more Vettes you
         enter, the easier it is to spot trends!
       </p>
       <form onSubmit={formik.handleSubmit} className="grid grid-cols-6 gap-8">
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Year</label>
+          <label className="mb-1 block text-lg font-bold">Year</label>
           <Select
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             options={["2014", "2015", "2016", "2017", "2018", "2019"]}
             {...formik.getFieldProps("year")}
           />
@@ -85,13 +85,13 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Miles</label>
+          <label className="mb-1 block text-lg font-bold">Miles</label>
           <Input
             id="miles"
             name="miles"
             haserror={formik.touched.miles && formik.errors.miles}
             {...formik.getFieldProps("miles")}
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
           />
           {formik.touched.miles && formik.errors.miles ? (
             <FormFieldErrorMessage
@@ -101,11 +101,11 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Cost</label>
+          <label className="mb-1 block text-lg font-bold">Cost</label>
           <Input
             id="cost"
             name="cost"
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             {...formik.getFieldProps("cost")}
           />
           {formik.touched.cost && formik.errors.cost ? (
@@ -116,9 +116,9 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Transmission</label>
+          <label className="mb-1 block text-lg font-bold">Transmission</label>
           <Select
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             options={["Manual", "Automatic"]}
             {...formik.getFieldProps("transmissionType")}
           />
@@ -130,9 +130,9 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Exterior Color</label>
+          <label className="mb-1 block text-lg font-bold">Exterior Color</label>
           <Select
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             options={["Artic White"]}
             {...formik.getFieldProps("exteriorColor")}
           />
@@ -144,9 +144,9 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Interior Color</label>
+          <label className="mb-1 block text-lg font-bold">Interior Color</label>
           <Select
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             options={["Red"]}
             {...formik.getFieldProps("interiorColor")}
           />
@@ -158,8 +158,8 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Submodel</label>
-          <div className="grid grid-cols-2 gap-8">
+          <label className="mb-1 block text-lg font-bold">Submodel</label>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             {SUBMODELS.map((submodel) => (
               <SubModelRadioButton
                 key={submodel.title}
@@ -184,8 +184,8 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Trim</label>
-          <div className="grid grid-cols-3 gap-8">
+          <label className="mb-1 block text-lg font-bold">Trim</label>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {TRIMS.map((trim) => (
               <TrimRadioButton
                 key={trim.title}
@@ -207,7 +207,7 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           ) : null}
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Packages</label>
+          <label className="mb-1 block text-lg font-bold">Packages</label>
           <div className="shadow">
             {PACKAGES.map((packageObj) => (
               <PackageCheckbox
@@ -225,15 +225,15 @@ const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
           </div>
         </div>
         <div className="col-span-6">
-          <label className="block font-bold text-lg mb-1">Link</label>
+          <label className="mb-1 block text-lg font-bold">Link</label>
           <Input
             id="link"
             name="link"
-            className="w-full bg-gray-50 text-lg py-2 px-4"
+            className="w-full bg-gray-50 py-2 px-4 text-lg"
             {...formik.getFieldProps("link")}
           />
         </div>
-        <div className="col-span-6 text-right">
+        <div className="col-span-6 flex justify-between md:justify-end">
           <Button type="reset" variant="secondary" className="mr-2">
             Clear
           </Button>
