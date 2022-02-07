@@ -12,18 +12,23 @@ const getPackageInfoByKey = (key) => {
 
 const PackagesList = ({ vettePackages }) => {
   if (vettePackages.length > 0) {
-    return vettePackages.map((vettePackage) => {
-      const packageInfo = getPackageInfoByKey(vettePackage);
-      return (
-        <PackageItem
-          key={packageInfo.title}
-          title={packageInfo.title}
-          description={packageInfo.description}
-        />
-      );
-    });
+    return (
+      <div className="flex flex-col gap-4">
+        {vettePackages.map((vettePackage) => {
+          const packageInfo = getPackageInfoByKey(vettePackage);
+
+          return (
+            <PackageItem
+              key={packageInfo.title}
+              title={packageInfo.title}
+              description={packageInfo.description}
+            />
+          );
+        })}
+      </div>
+    );
   } else {
-    return <div>This vette has no packages (make this nice looking)</div>;
+    return <div>This vette has no packages 🙁</div>;
   }
 };
 
