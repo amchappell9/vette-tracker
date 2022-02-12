@@ -21,8 +21,8 @@ const SubModelRadioButton = ({
 
   return (
     <label
-      className={`${className} rounded border border-gray-100 shadow hover:shadow-lg transition-shadow cursor-pointer ${
-        isActive ? "ring-2 ring-offset-2 ring-red-500 ring-opacity-80" : ""
+      className={`${className} flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow transition-shadow hover:shadow-lg ${
+        isActive ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
       }`}
     >
       <input
@@ -34,25 +34,28 @@ const SubModelRadioButton = ({
         onBlur={onBlur}
       />
       <div className="px-4 py-3">
-        <span className="text-gray-900 text-lg font-bold">{title}</span>
+        <span className="text-lg font-bold text-gray-900">{title}</span>
       </div>
-      <div className="bg-gray-50 h px-4 py-2">
-        <span className="block text-gray-900 text-lg">{engine} Engine</span>
+      <div className="flex-1 bg-gray-50 px-4 py-2">
+        <span className="block text-lg text-gray-900">{engine} Engine</span>
         <span className="block text-gray-600">
           {hp} HP | {torque} LBS/FT
         </span>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        <ul className="mt-2 grid grid-cols-[repeat(auto-fill,_minmax(150px,_1fr))] gap-y-2 gap-x-4">
           {features.map((feature) => (
-            <div key={`${title}-${feature}`} className="col-span-1">
-              <span className="text-gray-900">
-                <PlusIcon className="inline mr-1 h-5 w-5 text-gray-400 align-text-bottom" />
-                {feature}
-              </span>
-            </div>
+            <li key={`${title}-${feature}`} className="col-span-1 flex">
+              <div>
+                <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom text-gray-400" />
+              </div>
+              <div className="flex-1 text-gray-900">{feature}</div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </label>
+
+    // grid-template-columns:
+    //   repeat(auto-fill, minmax(150px, 1fr));
   );
 };
 

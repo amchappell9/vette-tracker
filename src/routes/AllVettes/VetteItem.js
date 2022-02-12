@@ -25,42 +25,56 @@ const VetteItem = ({ vette, index, listLength }) => {
         className={` ${getBorderStylesByIndex(
           listLength,
           index
-        )} border border-gray-200 w-full grid grid-cols-12 p-4 hover:bg-gray-50`}
+        )} block w-full  border border-gray-200 p-4 hover:bg-gray-50`}
       >
-        <div className="col-span-3">
-          <p className="block font-bold text-lg leading-none text-gray-800">{`${vette.year} Corvette`}</p>
-          <p className="block text-gray-600 text-md">{`Added ${vette.date}`}</p>
-        </div>
-        <div className="col-span-3">
-          <p className="block text-gray-700 leading-tight">
-            <span className="font-bold">
-              {parseInt(vette.miles).toLocaleString()}
-            </span>
-            Miles
-          </p>
-          <p className="block text-gray-700 leading-tight font-bold">
-            {`$${parseInt(vette.cost).toLocaleString()}`}
-          </p>
-        </div>
-        <div className="col-span-3">
-          <p className="block text-gray-700 leading-tight">
-            <span className="font-bold">{vette.submodel}</span> w/{" "}
-            <span className="font-bold">{vette.trim}</span>
-          </p>
-          <p className="block text-gray-700 leading-tight">{`${vette.exteriorColor} w/ ${vette.interiorColor}`}</p>
-        </div>
-        <div className="col-span-2 flex items-center">
-          {vette.packages.map((option) => (
-            <p
-              key={option}
-              className="inline px-2 py-1 mr-2 bg-red-500 text-white text-sm rounded-xl"
-            >
-              {option.toUpperCase()}
+        {/* Mobile List Styles */}
+        <div className="flex justify-between sm:hidden">
+          <div className="flex flex-col gap-y-1">
+            <p className="text-lg font-bold leading-none text-gray-800">{`${vette.year} Corvette ${vette.submodel}`}</p>
+            <p className="text-md leading-none text-gray-600">
+              <span className="after:mx-1 after:content-['|']">{`$${parseInt(
+                vette.cost
+              ).toLocaleString()}`}</span>
+
+              <span>{parseInt(vette.miles).toLocaleString()} Miles</span>
             </p>
-          ))}
+          </div>
+          <div className="">{">"}</div>
         </div>
-        <div className="flex items-center flex-row-reverse text-gray-500">
-          {">"}
+        {/* Desktop List Styles */}
+        <div className="hidden justify-between sm:flex">
+          <div className="flex flex-1 flex-col gap-1 ">
+            <p className="text-lg font-bold leading-none text-gray-800">
+              {`${vette.year} Corvette`}
+              <span className="md:hidden">{` ${vette.submodel}`}</span>
+            </p>
+            <p className="text-md leading-none text-gray-600">{`Added ${vette.date}`}</p>
+          </div>
+          <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
+            <p className="font-bold leading-none text-gray-700">{`$${parseInt(
+              vette.cost
+            ).toLocaleString()}`}</p>
+            <p className="block leading-none text-gray-700">
+              <strong>{parseInt(vette.miles).toLocaleString()}</strong> Miles
+            </p>
+          </div>
+          <div className="hidden flex-1 flex-col gap-y-1 md:flex">
+            <p className="leading-none">
+              <span className="font-bold">{vette.submodel}</span> with{" "}
+              <span className="font-bold">{vette.trim}</span>
+            </p>
+            <p className="truncate leading-none">{`${vette.exteriorColor} on ${vette.interiorColor} Interior`}</p>
+          </div>
+          <div className="hidden basis-40 lg:block">
+            {vette.packages.map((option) => (
+              <span
+                key={option}
+                className="mr-2 inline rounded-xl bg-red-500 px-2 py-1 text-sm text-white"
+              >
+                {option.toUpperCase()}
+              </span>
+            ))}
+          </div>
         </div>
       </Link>
     </li>

@@ -10,7 +10,7 @@ const getTrimInfoByKey = (key) => {
   }
 };
 
-const TrimInfo = ({ vetteTrim }) => {
+const TrimInfo = ({ vetteTrim, className }) => {
   const [trimInfo, setTrimInfo] = useState(getTrimInfoByKey(vetteTrim));
 
   useEffect(() => {
@@ -18,19 +18,19 @@ const TrimInfo = ({ vetteTrim }) => {
   }, [vetteTrim]);
 
   return (
-    <div className="bg-gray-50 h-full p-4">
-      <span className="block mb-2 text-lg font-bold text-gray-800">
+    <div className={`rounded bg-gray-50 p-4 ${className}`}>
+      <span className="mb-2 block text-lg font-bold text-gray-800">
         {trimInfo.title}
       </span>
       <hr />
-      <div className="mt-2">
+      <ul className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
         {trimInfo.features.map((feature) => (
-          <span key={feature} className="block mb-1">
-            <PlusIcon className="inline w-4 h-4 mr-1 align-text-bottom" />
-            {feature}
-          </span>
+          <li key={feature} className="mb-1 flex items-center gap-x-1">
+            <PlusIcon className="inline h-4 w-4 translate-y-px" />
+            <span className="flex-1">{feature}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

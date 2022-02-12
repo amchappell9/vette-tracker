@@ -1,8 +1,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     colors: {
       red: {
@@ -17,17 +16,12 @@ module.exports = {
         800: "#8A041A",
         900: "#610316",
       },
-      gray: colors.warmGray,
+      gray: colors.stone,
       yellow: colors.amber,
       green: colors.green,
       white: "#FFFFFF",
     },
     extend: {},
-  },
-  variants: {
-    extend: {
-      opacity: ["disabled"],
-    },
   },
   plugins: [],
 };

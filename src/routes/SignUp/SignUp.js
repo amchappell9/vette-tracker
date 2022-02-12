@@ -68,8 +68,8 @@ const SignUp = ({ handleSignUp }) => {
     );
   } else {
     return (
-      <div className="min-main-height mb-8 flex justify-center items-center">
-        <div className="block max-w-4xl w-full">
+      <div className="mb-8 flex items-center justify-center">
+        <div className="block w-full max-w-4xl">
           <h1 className="text-3xl font-bold text-gray-700">Sign Up</h1>
           {errorMessage && (
             <Alert
@@ -79,50 +79,46 @@ const SignUp = ({ handleSignUp }) => {
             />
           )}
           <form onSubmit={formik.handleSubmit}>
-            <div className="mt-4 mb-8 px-8 bg-white rounded shadow-lg grid grid-cols-3 gap-8">
-              <div className="pt-8">
-                <h2 className="font-bold text-xl text-gray-600">Profile</h2>
+            <div className="mt-4 mb-8 grid grid-cols-1 rounded bg-white px-8 drop-shadow-md md:grid-cols-3 md:gap-x-8">
+              <div className="border-b border-gray-200 pt-8 pb-4 md:border-none">
+                <h2 className="text-xl font-bold text-gray-600">Profile</h2>
                 <p className="text-gray-500">
                   Enter information about yourself.
                 </p>
               </div>
-              <div className="col-span-2 py-8">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="">
-                    <label className="block mb-2 font-gray-600">
-                      First Name
-                    </label>
-                    <Input
-                      name="firstName"
-                      className="w-full bg-gray-50 py-1 px-4"
-                      {...formik.getFieldProps("firstName")}
+              <div className="col-span-2 grid grid-cols-2 gap-4 py-8">
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="font-gray-600 mb-2 block">First Name</label>
+                  <Input
+                    name="firstName"
+                    className="w-full bg-gray-50 py-1 px-4"
+                    {...formik.getFieldProps("firstName")}
+                  />
+                  {formik.touched.firstName && formik.errors.firstName ? (
+                    <FormFieldErrorMessage
+                      errorMessage={formik.errors.firstName}
+                      className="mt-1"
                     />
-                    {formik.touched.firstName && formik.errors.firstName ? (
-                      <FormFieldErrorMessage
-                        errorMessage={formik.errors.firstName}
-                        className="mt-1"
-                      />
-                    ) : null}
-                  </div>
-                  <div className="">
-                    <label className="block mb-2 font-gray-600">
-                      Last Name
-                    </label>
-                    <Input
-                      name="lastName"
-                      className="w-full bg-gray-50 py-1 px-4"
-                      {...formik.getFieldProps("lastName")}
-                    />
-                    {formik.touched.lastName && formik.errors.lastName ? (
-                      <FormFieldErrorMessage
-                        errorMessage={formik.errors.lastName}
-                        className="mt-1"
-                      />
-                    ) : null}
-                  </div>
+                  ) : null}
                 </div>
-                <div className="mt-4">
-                  <label className="block mb-2 font-gray-600">
+
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="font-gray-600 mb-2 block">Last Name</label>
+                  <Input
+                    name="lastName"
+                    className="w-full bg-gray-50 py-1 px-4"
+                    {...formik.getFieldProps("lastName")}
+                  />
+                  {formik.touched.lastName && formik.errors.lastName ? (
+                    <FormFieldErrorMessage
+                      errorMessage={formik.errors.lastName}
+                      className="mt-1"
+                    />
+                  ) : null}
+                </div>
+
+                <div className="col-span-2">
+                  <label className="font-gray-600 mb-2 block">
                     Email Address
                   </label>
                   <Input
@@ -137,8 +133,9 @@ const SignUp = ({ handleSignUp }) => {
                     />
                   ) : null}
                 </div>
-                <div className="mt-4">
-                  <label className="block mb-2 font-gray-600">Password</label>
+
+                <div className="col-span-2">
+                  <label className="font-gray-600 mb-2 block">Password</label>
                   <Input
                     type="password"
                     name="password"
@@ -152,8 +149,9 @@ const SignUp = ({ handleSignUp }) => {
                     />
                   ) : null}
                 </div>
-                <div className="mt-4">
-                  <label className="block mb-2 font-gray-600">
+
+                <div className="col-span-2">
+                  <label className="font-gray-600 mb-2 block">
                     Confirm Password
                   </label>
                   <Input
@@ -172,10 +170,10 @@ const SignUp = ({ handleSignUp }) => {
                 </div>
               </div>
             </div>
-            <div className="text-right">
+            <div className="flex flex-col-reverse gap-2 md:flex-row md:justify-end">
               <Link
                 to="/"
-                className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-2 text-lg mr-2"
+                className="flex items-center justify-center border border-gray-300 bg-white px-6 py-2 text-lg text-gray-800 hover:bg-gray-100"
               >
                 Cancel
               </Link>
