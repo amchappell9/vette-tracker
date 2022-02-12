@@ -50,76 +50,74 @@ const Login = ({ handleAuth }) => {
   });
 
   return (
-    <>
-      <div className="min-main-height flex justify-center items-center w-full h-full">
-        <div className="max-w-lg w-full space-y-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-800">
-              Sign In to <span className="">Vette Tracker</span>
-            </h1>
-            <p className="mt-2 text-xl text-gray-800">
-              Don't have an account?{" "}
-              <Link to="/sign-up" className="text-red-500">
-                Click here to sign up!
-              </Link>
-            </p>
-          </div>
-          {errorMessage && (
-            <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
-          )}
-          {userSignedUp && (
-            <Alert
-              alertType={ALERT_TYPES.SUCCESS}
-              message={
-                "You've successfully signed up! Sign in with your email address and password below."
-              }
+    <div className="flex h-full items-center justify-center">
+      <div className="max-w-lg space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl">
+            Sign In to <span className="">Vette Tracker</span>
+          </h1>
+          <p className="mt-2 text-lg text-gray-800 sm:text-xl">
+            Don't have an account?{" "}
+            <Link to="/sign-up" className="text-red-500">
+              Click here to sign up!
+            </Link>
+          </p>
+        </div>
+        {errorMessage && (
+          <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
+        )}
+        {userSignedUp && (
+          <Alert
+            alertType={ALERT_TYPES.SUCCESS}
+            message={
+              "You've successfully signed up! Sign in with your email address and password below."
+            }
+          />
+        )}
+        <div>
+          <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="email" className="mb-2 block text-lg font-bold">
+              Email Address:
+            </label>
+            <Input
+              id="email"
+              type="text"
+              autoComplete="email"
+              className="w-full py-1 px-4"
+              {...formik.getFieldProps("email")}
             />
-          )}
-          <div>
-            <form onSubmit={formik.handleSubmit}>
-              <label htmlFor="email" className="block mb-2 font-bold text-lg">
-                Email Address:
-              </label>
-              <Input
-                id="email"
-                type="text"
-                autoComplete="email"
-                className="w-full py-1 px-4"
-                {...formik.getFieldProps("email")}
+            {formik.touched.email && formik.errors.email ? (
+              <FormFieldErrorMessage
+                errorMessage={formik.errors.email}
+                className="mt-1"
               />
-              {formik.touched.email && formik.errors.email ? (
-                <FormFieldErrorMessage
-                  errorMessage={formik.errors.email}
-                  className="mt-1"
-                />
-              ) : null}
-              <label
-                htmlFor="password"
-                className="block mb-2 mt-4 font-bold text-lg"
-              >
-                Password:
-              </label>
-              <Input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                className="w-full py-1 px-4"
-                {...formik.getFieldProps("password")}
+            ) : null}
+            <label
+              htmlFor="password"
+              className="mb-2 mt-4 block text-lg font-bold"
+            >
+              Password:
+            </label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              className="w-full py-1 px-4"
+              {...formik.getFieldProps("password")}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <FormFieldErrorMessage
+                errorMessage={formik.errors.password}
+                className="mt-1"
               />
-              {formik.touched.password && formik.errors.password ? (
-                <FormFieldErrorMessage
-                  errorMessage={formik.errors.password}
-                  className="mt-1"
-                />
-              ) : null}
-              <Button type="submit" size="full" className="mt-4">
-                Sign In
-              </Button>
-            </form>
-          </div>
+            ) : null}
+            <Button type="submit" size="full" className="mt-4">
+              Sign In
+            </Button>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
