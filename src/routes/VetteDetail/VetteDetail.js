@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PlusIcon, PencilIcon } from "@heroicons/react/outline";
 import useGetVette from "../../hooks/useGetVette";
@@ -27,7 +27,7 @@ const VetteDetail = ({ setTitle, setlinkText, setLinkConfig, setLinkIcon }) => {
         state: { vetteToEdit: vetteData },
       });
       setLinkIcon(
-        <PencilIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+        <PencilIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
       );
     }
   }, [vetteData, success, setTitle, setlinkText, setLinkConfig, setLinkIcon]);
@@ -48,7 +48,7 @@ const VetteDetail = ({ setTitle, setlinkText, setLinkConfig, setLinkIcon }) => {
       setlinkText("Add Another Vette");
       setLinkConfig("/add-vette");
       setLinkIcon(
-        <PlusIcon className="inline w-5 h-5 mr-1 align-text-bottom" />
+        <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
       );
     }
   }, [location, setlinkText, setLinkConfig, setLinkIcon]);
