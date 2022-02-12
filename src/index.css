@@ -9,7 +9,7 @@ body,
 }
 
 .home-triangle-left {
-  @apply w-0 h-0;
+  @apply h-0 w-0;
 
   border-top: 8rem solid transparent;
   border-bottom: 8rem solid transparent;
@@ -18,7 +18,7 @@ body,
 }
 
 .home-triangle-right {
-  @apply w-0 h-0;
+  @apply h-0 w-0;
 
   border-top: 8rem solid transparent;
   border-bottom: 8rem solid transparent;
@@ -26,13 +26,8 @@ body,
   border-right-width: 50vw;
 }
 
-/* Sets the height to the full height of the screen minus the header and footer */
-.min-main-height {
-  min-height: calc(100vh - 96px - 92px);
-}
-
 .packageCheckbox:first-of-type {
-  @apply border rounded border-gray-100;
+  @apply rounded border border-gray-100;
 }
 
 .packageCheckbox:not(:first-of-type) {
@@ -48,9 +43,9 @@ body,
 }
 
 .main-nav-active {
-  @apply bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500;
+  @apply rounded-md bg-red-500 px-3 py-2 font-medium text-white hover:bg-red-500;
 }
 
 .mobile-nav-active {
-  @apply bg-red-500 rounded-md py-2 px-2 -my-2 -ml-2;
+  @apply -my-2 -ml-2 rounded-md bg-red-500 py-2 px-2;
 }
