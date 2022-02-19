@@ -58,7 +58,13 @@ function App() {
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
   };
 
-  // const logout = (callback) => {};
+  const handleLogout = () => {
+    const user = auth.currentUser();
+
+    user.logout().then(() => {
+      setUserInfo(null);
+    });
+  };
 
   // If userInfo changes persist it to local storage
   useEffect(() => {
@@ -93,6 +99,7 @@ function App() {
           {/* Vette Detail */}
           <AuthenticatedRoute path="/vettes/:vetteId">
             <AuthenticatedPage
+              handleLogout={handleLogout}
               backLinkText="Back to All Vettes"
               backLinkConfig="/vettes"
             >
@@ -103,6 +110,7 @@ function App() {
           {/* All Vettes */}
           <AuthenticatedRoute path="/vettes">
             <AuthenticatedPage
+              handleLogout={handleLogout}
               title="All Vettes"
               linkText="Add Vette"
               linkConfig="/add-vette"
@@ -116,21 +124,24 @@ function App() {
 
           {/* Add/Edit Vette */}
           <AuthenticatedRoute path="/add-vette">
-            <AuthenticatedPage title="Add New Vette">
+            <AuthenticatedPage
+              handleLogout={handleLogout}
+              title="Add New Vette"
+            >
               <AddVette />
             </AuthenticatedPage>
           </AuthenticatedRoute>
 
           {/* Trends */}
           <AuthenticatedRoute path="/trends">
-            <AuthenticatedPage>
+            <AuthenticatedPage handleLogout={handleLogout}>
               <Trends />
             </AuthenticatedPage>
           </AuthenticatedRoute>
 
           {/* Resources */}
           <AuthenticatedRoute path="/resources">
-            <AuthenticatedPage>
+            <AuthenticatedPage handleLogout={handleLogout}>
               <Resources />
             </AuthenticatedPage>
           </AuthenticatedRoute>
