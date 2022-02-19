@@ -8,7 +8,7 @@ A tool to track Corvette prices over time. Built using React, Tailwind CSS, Netl
 
 ### Installation
 
-Clone the repo, then run `yarn build`.
+Clone the repo, then run `npm build`.
 
 ### Local Development
 
