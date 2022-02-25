@@ -1,9 +1,9 @@
 import React from "react";
 import PackageItem from "./PackagesItem";
-import PACKAGES from "../../constants/PACKAGES";
+import packages from "../../constants/packages";
 
 const getPackageInfoByKey = (key) => {
-  for (const packageInfo of PACKAGES) {
+  for (const packageInfo of packages) {
     if (key === packageInfo.value) {
       return packageInfo;
     }

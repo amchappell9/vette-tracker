@@ -1,29 +1,15 @@
-import React from "react";
+import { useField } from "formik";
 
-const PackageCheckbox = ({
-  className,
-  name,
-  title,
-  value,
-  checked,
-  description,
-  onChange,
-  onBlur,
-}) => {
+const PackageCheckbox = ({ className, name, title, value, description }) => {
+  const [field] = useField({ name: name, type: "checkbox", value: value });
+
   return (
-    <div className={`${className} flex p-4 packageCheckbox`}>
+    <div className={`${className} packageCheckbox flex p-4`}>
       <div className="pr-4">
-        <input
-          type="checkbox"
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
+        <input type="checkbox" name={name} value={value} {...field} />
       </div>
       <div>
-        <span className="block text-gray-800 text-lg font-bold">{title}</span>
+        <span className="block text-lg font-bold text-gray-800">{title}</span>
         <span className="block text-gray-600">{description}</span>
       </div>
     </div>

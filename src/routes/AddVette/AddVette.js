@@ -55,7 +55,7 @@ const AddVette = ({ setTitle, setBackLinkText, setBackLinkConfig }) => {
     !updateSuccessful
   ) {
     return (
-      <AddVetteForm onSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
+      <AddVetteForm handleSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
     );
   } else if (isLoading || updateIsLoading) {
     return <div>Loading...</div>;

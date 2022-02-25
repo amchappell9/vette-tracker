@@ -1,4 +1,4 @@
-const PACKAGES = [
+const packages = [
   {
     title: "Magnetic Ride Control",
     value: "MRC",
@@ -19,4 +19,4 @@ const PACKAGES = [
   },
 ];
 
-export default PACKAGES;
+export default packages;

@@ -1,18 +1,20 @@
-import React from "react";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
-import Input from "../../components/Input";
-import Select from "../../components/Select";
 import Button from "../../components/Button";
-import FormFieldErrorMessage from "../../components/FormFieldErrorMessage";
 import SubModelRadioButton from "./SubModelRadioButton";
 import TrimRadioButton from "./TrimRadioButton";
 import PackageCheckbox from "./PackageCheckbox";
-
-import SUBMODELS from "../../constants/SUBMODELS";
-import TRIMS from "../../constants/TRIMS";
-import PACKAGES from "../../constants/PACKAGES";
+import exteriorColors from "../../constants/exteriorColors";
+import interiorColors from "../../constants/interiorColors";
+import submodels from "../../constants/submodels";
+import trims from "../../constants/trims";
+import packages from "../../constants/packages";
+import FormInput from "../../components/forms/FormInput";
+import FormSelect from "../../components/forms/FormSelect";
+import FormRadioGroup from "../../components/forms/FormRadioGroup";
+import FormCheckboxGroup from "../../components/forms/FormCheckboxGroup";
+import ExteriorColorSelect from "./ExteriorColorSelect";
 
 const addVetteFormValidationSchema = Yup.object({
   year: Yup.string().required(),
@@ -25,227 +27,205 @@ const addVetteFormValidationSchema = Yup.object({
   trim: Yup.string().required("Please select a trim"),
 });
 
-const AddVetteForm = ({ onSubmit, vetteToEditInfo }) => {
-  const formik = useFormik({
-    initialValues: {
-      year:
-        vetteToEditInfo && vetteToEditInfo.year ? vetteToEditInfo.year : "2014",
-      miles:
-        vetteToEditInfo && vetteToEditInfo.miles ? vetteToEditInfo.miles : "",
-      cost: vetteToEditInfo && vetteToEditInfo.cost ? vetteToEditInfo.cost : "",
-      transmissionType:
-        vetteToEditInfo && vetteToEditInfo.transmissionType
-          ? vetteToEditInfo.transmissionType
-          : "Manual",
-      exteriorColor:
-        vetteToEditInfo && vetteToEditInfo.exteriorColor
-          ? vetteToEditInfo.exteriorColor
-          : "Artic White",
-      interiorColor:
-        vetteToEditInfo && vetteToEditInfo.interiorColor
-          ? vetteToEditInfo.interiorColor
-          : "Red",
-      submodel:
-        vetteToEditInfo && vetteToEditInfo.submodel
-          ? vetteToEditInfo.submodel
-          : "",
-      trim: vetteToEditInfo && vetteToEditInfo.trim ? vetteToEditInfo.trim : "",
-      packages:
-        vetteToEditInfo && vetteToEditInfo.packages
-          ? vetteToEditInfo.packages
-          : [],
-      link: vetteToEditInfo && vetteToEditInfo.link ? vetteToEditInfo.link : "",
-    },
-    enableReinitialize: true,
-    validationSchema: addVetteFormValidationSchema,
-    onSubmit: (values) => {
-      onSubmit(values);
-    },
-  });
-
+const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
   return (
     <div className="sm:py-4 sm:px-4 lg:px-16">
       <p className="mb-8 text-gray-700">
         Add your info about your potential Vette here. The more Vettes you
         enter, the easier it is to spot trends!
       </p>
-      <form onSubmit={formik.handleSubmit} className="grid grid-cols-6 gap-8">
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Year</label>
-          <Select
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            options={["2014", "2015", "2016", "2017", "2018", "2019"]}
-            {...formik.getFieldProps("year")}
-          />
-          {formik.touched.year && formik.errors.year ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.year}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Miles</label>
-          <Input
-            id="miles"
-            name="miles"
-            haserror={formik.touched.miles && formik.errors.miles}
-            {...formik.getFieldProps("miles")}
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-          />
-          {formik.touched.miles && formik.errors.miles ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.miles}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Cost</label>
-          <Input
-            id="cost"
-            name="cost"
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            {...formik.getFieldProps("cost")}
-          />
-          {formik.touched.cost && formik.errors.cost ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.cost}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Transmission</label>
-          <Select
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            options={["Manual", "Automatic"]}
-            {...formik.getFieldProps("transmissionType")}
-          />
-          {formik.touched.transmissionType && formik.errors.transmissionType ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.transmissionType}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Exterior Color</label>
-          <Select
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            options={["Artic White"]}
-            {...formik.getFieldProps("exteriorColor")}
-          />
-          {formik.touched.exteriorColor && formik.errors.exteriorColor ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.exteriorColor}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Interior Color</label>
-          <Select
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            options={["Red"]}
-            {...formik.getFieldProps("interiorColor")}
-          />
-          {formik.touched.interiorColor && formik.errors.interiorColor ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.interiorColor}
-              className="mt-1"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Submodel</label>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {SUBMODELS.map((submodel) => (
-              <SubModelRadioButton
-                key={submodel.title}
-                name="submodel"
-                className="col-span-1"
-                title={submodel.title}
-                engine={submodel.engine}
-                hp={submodel.hp}
-                torque={submodel.torque}
-                features={submodel.features}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                selectedValue={formik.values.submodel}
-              />
-            ))}
-          </div>
-          {formik.touched.submodel && formik.errors.submodel ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.submodel}
-              className="mt-2"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Trim</label>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {TRIMS.map((trim) => (
-              <TrimRadioButton
-                key={trim.title}
-                name="trim"
-                className=""
-                title={trim.title}
-                features={trim.features}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                selectedValue={formik.values.trim}
-              />
-            ))}
-          </div>
-          {formik.touched.trim && formik.errors.trim ? (
-            <FormFieldErrorMessage
-              errorMessage={formik.errors.trim}
-              className="mt-2"
-            />
-          ) : null}
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Packages</label>
-          <div className="shadow">
-            {PACKAGES.map((packageObj) => (
-              <PackageCheckbox
-                key={packageObj.value}
-                name="packages"
-                className=""
-                title={packageObj.title}
-                value={packageObj.value}
-                checked={formik.values.packages.includes(packageObj.value)}
-                description={packageObj.description}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="col-span-6">
-          <label className="mb-1 block text-lg font-bold">Link</label>
-          <Input
-            id="link"
-            name="link"
-            className="w-full bg-gray-50 py-2 px-4 text-lg"
-            {...formik.getFieldProps("link")}
-          />
-        </div>
-        <div className="col-span-6 flex justify-between md:justify-end">
-          <Button type="reset" variant="secondary" className="mr-2">
-            Clear
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={formik.isSubmitting ? true : false}
+      <Formik
+        initialValues={{
+          year:
+            vetteToEditInfo && vetteToEditInfo.year
+              ? vetteToEditInfo.year
+              : "2014",
+          miles:
+            vetteToEditInfo && vetteToEditInfo.miles
+              ? vetteToEditInfo.miles
+              : "",
+          cost:
+            vetteToEditInfo && vetteToEditInfo.cost ? vetteToEditInfo.cost : "",
+          transmissionType:
+            vetteToEditInfo && vetteToEditInfo.transmissionType
+              ? vetteToEditInfo.transmissionType
+              : "Manual",
+          exteriorColor:
+            vetteToEditInfo && vetteToEditInfo.exteriorColor
+              ? vetteToEditInfo.exteriorColor
+              : "Artic White",
+          interiorColor:
+            vetteToEditInfo && vetteToEditInfo.interiorColor
+              ? vetteToEditInfo.interiorColor
+              : "Red",
+          submodel:
+            vetteToEditInfo && vetteToEditInfo.submodel
+              ? vetteToEditInfo.submodel
+              : "",
+          trim:
+            vetteToEditInfo && vetteToEditInfo.trim ? vetteToEditInfo.trim : "",
+          packages:
+            vetteToEditInfo && vetteToEditInfo.packages
+              ? vetteToEditInfo.packages
+              : [],
+          link:
+            vetteToEditInfo && vetteToEditInfo.link ? vetteToEditInfo.link : "",
+        }}
+        enableReinitialize={true}
+        validationSchema={addVetteFormValidationSchema}
+        onSubmit={(values) => handleSubmit(values)}
+      >
+        {(props) => (
+          <form
+            onSubmit={props.handleSubmit}
+            className="grid grid-cols-6 gap-8"
           >
-            {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
-          </Button>
-        </div>
-      </form>
+            {/* Year */}
+            <div className="col-span-6">
+              <FormSelect
+                label="Year"
+                name="year"
+                options={[
+                  { label: "2014", value: "2014" },
+                  { label: "2015", value: "2015" },
+                  { label: "2016", value: "2016" },
+                  { label: "2017", value: "2017" },
+                  { label: "2018", value: "2018" },
+                  { label: "2019", value: "2019" },
+                ]}
+              />
+            </div>
+
+            {/* Miles */}
+            <div className="col-span-6">
+              <FormInput name="miles" type="text" label="Miles" />
+            </div>
+
+            {/* Cost */}
+            <div className="col-span-6">
+              <FormInput name="cost" type="text" label="Cost" />
+            </div>
+
+            {/* Tranmission */}
+            <div className="col-span-6">
+              <FormSelect
+                label="Transmission"
+                name="transmissionType"
+                options={[
+                  { label: "Manual", value: "Manual" },
+                  { label: "Automatic", value: "Automatic" },
+                ]}
+              />
+            </div>
+
+            {/* Exterior Color */}
+            <div className="col-span-6">
+              <ExteriorColorSelect
+                label="Exterior Color"
+                name="exteriorColor"
+                allExteriorColorOptions={exteriorColors}
+              />
+            </div>
+
+            {/* Interior Color */}
+            <div className="col-span-6">
+              <FormSelect
+                label="Interior Color"
+                name="interiorColor"
+                options={interiorColors.map((ic) => {
+                  return { label: ic, value: ic };
+                })}
+              />
+            </div>
+
+            {/* Submodel */}
+            <div className="col-span-6">
+              <FormRadioGroup
+                name="submodel"
+                label="Submodel"
+                radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-2"
+              >
+                {(name) =>
+                  submodels
+                    .filter((submodel) =>
+                      submodel.years.includes(props.values.year)
+                    )
+                    .map((submodel) => (
+                      <SubModelRadioButton
+                        key={submodel.title}
+                        name={name}
+                        className="col-span-1"
+                        title={submodel.title}
+                        engine={submodel.engine}
+                        hp={submodel.hp}
+                        torque={submodel.torque}
+                        features={submodel.features}
+                      />
+                    ))
+                }
+              </FormRadioGroup>
+            </div>
+
+            {/* Trim */}
+            <div className="col-span-6">
+              <FormRadioGroup
+                name="trim"
+                label="Trim"
+                radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-3"
+              >
+                {(name) =>
+                  trims.map((trim) => (
+                    <TrimRadioButton
+                      key={trim.title}
+                      name={name}
+                      className=""
+                      title={trim.title}
+                      features={trim.features}
+                    />
+                  ))
+                }
+              </FormRadioGroup>
+            </div>
+
+            {/* Packages */}
+            <div className="col-span-6">
+              <FormCheckboxGroup name="packages" label="Packages">
+                {(name) =>
+                  packages.map((packageObj) => (
+                    <PackageCheckbox
+                      key={packageObj.value}
+                      name={name}
+                      className=""
+                      title={packageObj.title}
+                      value={packageObj.value}
+                      description={packageObj.description}
+                    />
+                  ))
+                }
+              </FormCheckboxGroup>
+            </div>
+
+            {/* Link */}
+            <div className="col-span-6">
+              <FormInput name="link" type="text" label="Link" />
+            </div>
+
+            {/* Submission Buttons */}
+            <div className="col-span-6 flex flex-row-reverse justify-between gap-2 md:justify-start">
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={props.isSubmitting ? true : false}
+              >
+                {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
+              </Button>
+              <Button type="reset" variant="secondary">
+                Clear
+              </Button>
+            </div>
+          </form>
+        )}
+      </Formik>
     </div>
   );
 };

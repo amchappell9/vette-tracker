@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useField } from "formik";
 
-const TrimRadioButton = ({
-  name,
-  className,
-  title,
-  features,
-  onChange,
-  onBlur,
-  selectedValue,
-}) => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    setIsActive(selectedValue === title);
-  }, [selectedValue, title]);
+const TrimRadioButton = ({ name, className, title, features }) => {
+  const [field] = useField({ name: name, type: "radio", value: title });
 
   return (
     <label
       className={`${className} flex cursor-pointer flex-col overflow-y-hidden rounded border-gray-100 shadow transition-shadow hover:shadow-lg ${
-        isActive ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
+        field.checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
       }`}
     >
       <input
@@ -26,8 +14,7 @@ const TrimRadioButton = ({
         name={name}
         value={title}
         className="hidden"
-        onChange={onChange}
-        onBlur={onBlur}
+        {...field}
       />
       <div className="px-4 py-3">
         <span className="text-lg font-bold text-gray-900">{title}</span>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
-import SUBMODELS from "../../constants/SUBMODELS";
+import submodels from "../../constants/submodels";
 
 const getSubmodelInfoByKey = (key) => {
-  for (const submodel of SUBMODELS) {
+  for (const submodel of submodels) {
     if (key === submodel.title) {
       return submodel;
     }

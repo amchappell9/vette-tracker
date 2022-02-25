@@ -1,4 +1,4 @@
-const TRIMS = [
+const trims = [
   {
     title: "1LT",
     features: [
@@ -31,4 +31,4 @@ const TRIMS = [
   },
 ];
 
-export default TRIMS;
+export default trims;

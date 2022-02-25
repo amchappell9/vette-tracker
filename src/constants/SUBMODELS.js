@@ -1,4 +1,4 @@
-const SUBMODELS = [
+const submodels = [
   {
     title: "Stringray",
     engine: "LT1",
@@ -11,6 +11,7 @@ const SUBMODELS = [
       "5 Drive Modes",
       "Dual Exhaust",
     ],
+    years: ["2014", "2015", "2016", "2017", "2018", "2019"],
   },
   {
     title: "Z51",
@@ -25,6 +26,7 @@ const SUBMODELS = [
       "Trans + Diff Cooler",
       "19” / 20” Wheels",
     ],
+    years: ["2014", "2015", "2016", "2017", "2018", "2019"],
   },
   {
     title: "Grand Sport",
@@ -39,6 +41,7 @@ const SUBMODELS = [
       "Dry Sump Oil System",
       "Trans + Diff Cooler",
     ],
+    years: ["2017", "2018", "2019"],
   },
   {
     title: "Z06",
@@ -53,6 +56,7 @@ const SUBMODELS = [
       "Dry Sump Oil System",
       "Trans + Diff Cooler",
     ],
+    years: ["2015", "2016", "2017", "2018", "2019"],
   },
   {
     title: "ZR1",
@@ -60,7 +64,8 @@ const SUBMODELS = [
     hp: "755",
     torque: "715",
     features: ["Z06 Features", "Improved Cooling", "Ceramic Brakes"],
+    years: ["2019"],
   },
 ];
 
-export default SUBMODELS;
+export default submodels;

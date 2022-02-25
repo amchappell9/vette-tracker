@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { PlusIcon } from "@heroicons/react/outline";
+import { useField } from "formik";
 
 const SubModelRadioButton = ({
   name,
@@ -9,20 +10,14 @@ const SubModelRadioButton = ({
   hp,
   torque,
   features,
-  onChange,
-  onBlur,
-  selectedValue,
 }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    setIsActive(selectedValue === title);
-  }, [selectedValue, title]);
+  // The type and the value are important to making the radio buttons work
+  const [field] = useField({ name: name, type: "radio", value: title });
 
   return (
     <label
       className={`${className} flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow transition-shadow hover:shadow-lg ${
-        isActive ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
+        field.checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
       }`}
     >
       <input
@@ -30,8 +25,7 @@ const SubModelRadioButton = ({
         name={name}
         value={title}
         className="hidden"
-        onChange={onChange}
-        onBlur={onBlur}
+        {...field}
       />
       <div className="px-4 py-3">
         <span className="text-lg font-bold text-gray-900">{title}</span>
@@ -53,9 +47,6 @@ const SubModelRadioButton = ({
         </ul>
       </div>
     </label>
-
-    // grid-template-columns:
-    //   repeat(auto-fill, minmax(150px, 1fr));
   );
 };
 

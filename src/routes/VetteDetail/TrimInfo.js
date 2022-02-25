@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
-import TRIMS from "../../constants/TRIMS";
+import trims from "../../constants/trims";
 
 const getTrimInfoByKey = (key) => {
-  for (const trim of TRIMS) {
+  for (const trim of trims) {
     if (key === trim.title) {
       return trim;
     }
