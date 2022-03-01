@@ -5,7 +5,7 @@ const TrimRadioButton = ({ name, className, title, features }) => {
 
   return (
     <label
-      className={`${className} flex cursor-pointer flex-col overflow-y-hidden rounded border-gray-100 shadow transition-shadow hover:shadow-lg ${
+      className={`${className} flex cursor-pointer flex-col overflow-y-hidden rounded border-gray-100 shadow transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${
         field.checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
       }`}
     >

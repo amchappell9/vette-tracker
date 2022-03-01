@@ -16,8 +16,10 @@ const SubModelRadioButton = ({
 
   return (
     <label
-      className={`${className} flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow transition-shadow hover:shadow-lg ${
-        field.checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
+      className={`${className} flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow transition duration-300 hover:-translate-y-0.5 hover:shadow-lg  ${
+        field.checked
+          ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2 "
+          : ""
       }`}
     >
       <input
@@ -30,7 +32,7 @@ const SubModelRadioButton = ({
       <div className="px-4 py-3">
         <span className="text-lg font-bold text-gray-900">{title}</span>
       </div>
-      <div className="flex-1 bg-gray-50 px-4 py-2">
+      <div className="flex-1 bg-gray-50 px-4 pt-2 pb-6">
         <span className="block text-lg text-gray-900">{engine} Engine</span>
         <span className="block text-gray-600">
           {hp} HP | {torque} LBS/FT

@@ -19,9 +19,9 @@ const Home = () => {
         <div className="mt-6 block">
           <Link
             to="/sign-in"
-            className="rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white shadow-md hover:bg-red-600"
+            className="inline-block rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition duration-200 hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow active:duration-75"
           >
-            Get Started
+            <span className="inline-block -translate-y-px">Get Started</span>
           </Link>
         </div>
       </section>
