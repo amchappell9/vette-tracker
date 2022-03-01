@@ -27,7 +27,7 @@ body,
 }
 
 .packageCheckbox:first-of-type {
-  @apply rounded border border-gray-100;
+  @apply rounded-t border border-gray-100;
 }
 
 .packageCheckbox:not(:first-of-type) {
@@ -35,7 +35,7 @@ body,
 }
 
 .packageCheckbox:last-of-type {
-  @apply border-b border-l border-r border-gray-100;
+  @apply rounded-b border-b border-l border-r border-gray-100;
 }
 
 .main-nav-active:hover {
