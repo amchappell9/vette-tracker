@@ -80,6 +80,11 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
             onSubmit={props.handleSubmit}
             className="grid grid-cols-6 gap-8"
           >
+            {/* Link */}
+            <div className="col-span-6">
+              <FormInput name="link" type="text" label="Link" />
+            </div>
+
             {/* Year */}
             <div className="col-span-6">
               <FormSelect
@@ -93,48 +98,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
                   { label: "2018", value: "2018" },
                   { label: "2019", value: "2019" },
                 ]}
-              />
-            </div>
-
-            {/* Miles */}
-            <div className="col-span-6">
-              <FormInput name="miles" type="text" label="Miles" />
-            </div>
-
-            {/* Cost */}
-            <div className="col-span-6">
-              <FormInput name="cost" type="text" label="Cost" />
-            </div>
-
-            {/* Tranmission */}
-            <div className="col-span-6">
-              <FormSelect
-                label="Transmission"
-                name="transmissionType"
-                options={[
-                  { label: "Manual", value: "Manual" },
-                  { label: "Automatic", value: "Automatic" },
-                ]}
-              />
-            </div>
-
-            {/* Exterior Color */}
-            <div className="col-span-6">
-              <ExteriorColorSelect
-                label="Exterior Color"
-                name="exteriorColor"
-                allExteriorColorOptions={exteriorColors}
-              />
-            </div>
-
-            {/* Interior Color */}
-            <div className="col-span-6">
-              <FormSelect
-                label="Interior Color"
-                name="interiorColor"
-                options={interiorColors.map((ic) => {
-                  return { label: ic, value: ic };
-                })}
               />
             </div>
 
@@ -205,9 +168,46 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
               </FormCheckboxGroup>
             </div>
 
-            {/* Link */}
+            {/* Tranmission */}
             <div className="col-span-6">
-              <FormInput name="link" type="text" label="Link" />
+              <FormSelect
+                label="Transmission"
+                name="transmissionType"
+                options={[
+                  { label: "Manual", value: "Manual" },
+                  { label: "Automatic", value: "Automatic" },
+                ]}
+              />
+            </div>
+
+            {/* Exterior Color */}
+            <div className="col-span-6">
+              <ExteriorColorSelect
+                label="Exterior Color"
+                name="exteriorColor"
+                allExteriorColorOptions={exteriorColors}
+              />
+            </div>
+
+            {/* Interior Color */}
+            <div className="col-span-6">
+              <FormSelect
+                label="Interior Color"
+                name="interiorColor"
+                options={interiorColors.map((ic) => {
+                  return { label: ic, value: ic };
+                })}
+              />
+            </div>
+
+            {/* Miles */}
+            <div className="col-span-6">
+              <FormInput name="miles" type="text" label="Miles" />
+            </div>
+
+            {/* Cost */}
+            <div className="col-span-6">
+              <FormInput name="cost" type="text" label="Cost" />
             </div>
 
             {/* Submission Buttons */}
