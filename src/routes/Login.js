@@ -58,7 +58,7 @@ const Login = ({ handleAuth }) => {
           </h1>
           <p className="mt-2 text-lg text-gray-800 sm:text-xl">
             Don't have an account?{" "}
-            <Link to="/sign-up" className="text-red-500">
+            <Link to="/sign-up" className="text-red-500 hover:underline">
               Click here to sign up!
             </Link>
           </p>

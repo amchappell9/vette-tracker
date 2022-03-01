@@ -25,7 +25,7 @@ const VetteItem = ({ vette, index, listLength }) => {
         className={` ${getBorderStylesByIndex(
           listLength,
           index
-        )} block w-full  border border-gray-200 p-4 hover:bg-gray-50`}
+        )} block w-full  border border-gray-200 p-4 transition-colors hover:bg-gray-50`}
       >
         {/* Mobile List Styles */}
         <div className="flex justify-between sm:hidden">

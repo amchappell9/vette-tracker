@@ -109,7 +109,7 @@ const AuthenticatedPage = ({
               <NavLink
                 key={link.path}
                 to={link.path}
-                className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
                 // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
                 // conflict with the hover styles.
                 // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
@@ -188,7 +188,7 @@ const AuthenticatedPage = ({
             {linkTextState && linkConfigState && (
               <Link
                 to={linkConfigState}
-                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white drop-shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
               >
                 {linkIconState}
                 {linkTextState}
