@@ -5,7 +5,7 @@ import useAddVette from "../../hooks/useAddVette";
 import useUpdateVette from "../../hooks/useUpdateVette";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
 
-const AddVette = ({ setTitle, setBackLinkText, setBackLinkConfig }) => {
+const AddVette = ({ setHeaderInfo }) => {
   const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
   const [
     { isLoading, hasError, errorMessage, success, submissionResponse },
@@ -27,15 +27,19 @@ const AddVette = ({ setTitle, setBackLinkText, setBackLinkConfig }) => {
   useEffect(() => {
     if (location.state && location.state.vetteToEdit) {
       setVetteToEditInfo(location.state.vetteToEdit);
-      setTitle("Edit Vette");
-      setBackLinkText(`Back to ${location.state.vetteToEdit.year} Corvette`);
-      setBackLinkConfig(`/vettes/${location.state.vetteToEdit.id}`);
+      setHeaderInfo({
+        title: "Edit Vette",
+        backLinkText: `Back to ${location.state.vetteToEdit.year} Corvette`,
+        backLinkConfig: `/vettes/${location.state.vetteToEdit.id}`,
+      });
     } else {
-      setTitle("Add Vette");
-      setBackLinkText("Back to All Vettes");
-      setBackLinkConfig("/vettes");
+      setHeaderInfo({
+        title: "Add New Vette",
+        backLinkText: "Back to All Vettes",
+        backLinkConfig: "/vettes",
+      });
     }
-  }, [location, setTitle, setBackLinkText, setBackLinkConfig]);
+  }, [location, setHeaderInfo]);
 
   const onSubmit = async (values) => {
     if (vetteToEditInfo) {

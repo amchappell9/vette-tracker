@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "./ListOfVettes";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
@@ -56,7 +57,7 @@ import PaginationControls from "../../components/PaginationControls";
 
 const PAGE_SIZE = 5;
 
-const AllVettes = () => {
+const AllVettes = ({ setHeaderInfo }) => {
   // const [filterValues, setFilterValues] = useState({});
   const { isLoading, hasError, errorMessage, vettes } = useGetAllVettes();
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,6 +68,18 @@ const AllVettes = () => {
 
     return vettes.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, vettes]);
+
+  useEffect(() => {
+    setHeaderInfo({
+      title: "All Vettes",
+      linkText: "Add Vette",
+      linkConfig: "/add-vette",
+      linkIcon: <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />,
+    });
+
+    // Only want this to run once on render
+    // eslint-disable-next-line
+  }, []);
 
   // const getFilteredVettes = (vettes) => {
   //   // Filter vettes based on filters

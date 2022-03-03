@@ -1,57 +1,84 @@
 import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { PlusIcon, PencilIcon } from "@heroicons/react/outline";
+import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
 import useGetVette from "../../hooks/useGetVette";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
 import VetteDetailCard from "./VetteDetailCard";
 
-const VetteDetail = ({ setTitle, setlinkText, setLinkConfig, setLinkIcon }) => {
+const getHeaderInfoByState = (state, vetteData) => {
+  switch (state) {
+    case "confirmation-view":
+      return {
+        title: `${vetteData.year} Corvette ${vetteData.submodel}`,
+        linkText: "Add Another Vette",
+        linkConfig: "/add-vette",
+        linkIcon: (
+          <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+        ),
+        backLinkText: "Back to All Vettes",
+        backLinkConfig: "/vettes",
+      };
+
+    case "vette-info":
+      return {
+        title: `${vetteData.year} Corvette ${vetteData.submodel}`,
+        linkText: "Edit Vette",
+        linkConfig: {
+          pathname: "/add-vette",
+          state: { vetteToEdit: vetteData },
+        },
+        linkIcon: (
+          <PencilIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+        ),
+        backLinkText: "Back to All Vettes",
+        backLinkConfig: "/vettes",
+      };
+
+    case "loading":
+      return {
+        title: "Loading Vette...",
+        backLinkText: "Back to All Vettes",
+        backLinkConfig: "/vettes",
+      };
+
+    case "error":
+      return {
+        title: "Vette Info",
+        backLinkText: "Back to All Vettes",
+        backLinkConfig: "/vettes",
+      };
+
+    default:
+      throw new Error("Invalid state type");
+  }
+};
+
+const VetteDetail = ({ setHeaderInfo }) => {
   let { vetteId } = useParams();
   let location = useLocation();
 
-  // const [isConfirmationView, setIsConfirmationView] = useState(
-  //   location.state && location.state.isConfirmationView ? true : false
-  // );
   const [
     { isLoading, hasError, errorMessage, success, vetteData },
     setVetteId,
   ] = useGetVette(vetteId);
 
-  // Set title and button properties in AuthenticatedPage once VetteData has been retreived
-  useEffect(() => {
-    if (success) {
-      setTitle(`${vetteData.year} Corvette ${vetteData.submodel}`);
-      setlinkText("Edit Vette");
-      setLinkConfig({
-        pathname: "/add-vette",
-        state: { vetteToEdit: vetteData },
-      });
-      setLinkIcon(
-        <PencilIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-      );
-    }
-  }, [vetteData, success, setTitle, setlinkText, setLinkConfig, setLinkIcon]);
-
   useEffect(() => {
     setVetteId(vetteId);
   }, [setVetteId, vetteId]);
 
-  // See if confirmation view needs to be shown
   useEffect(() => {
-    // setIsConfirmationView(
-    //   location.state && location.state.isConfirmationView ? true : false
-    // );
-
-    // Will need to revisit this. Need to see if this works, if so I can get rid of confirmation view.
-    // Might not work though, since the other useEffect might overwrite it
-    if (location.state && location.state.isConfirmationView) {
-      setlinkText("Add Another Vette");
-      setLinkConfig("/add-vette");
-      setLinkIcon(
-        <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-      );
+    if (success && vetteData) {
+      if (location?.state?.isConfirmationView) {
+        setHeaderInfo(getHeaderInfoByState("confirmation-view", vetteData));
+      } else {
+        setHeaderInfo(getHeaderInfoByState("vette-info", vetteData));
+      }
+    } else if (isLoading) {
+      setHeaderInfo(getHeaderInfoByState("loading", vetteData));
+    } else if (hasError) {
+      setHeaderInfo(getHeaderInfoByState("error", vetteData));
     }
-  }, [location, setlinkText, setLinkConfig, setLinkIcon]);
+  }, [vetteData, location, success, isLoading, hasError, setHeaderInfo]);
 
   let output;
 
@@ -71,8 +98,6 @@ const VetteDetail = ({ setTitle, setlinkText, setLinkConfig, setLinkIcon }) => {
       />
     );
   }
-
-  // Need to add back button and confirmation view
 
   return <>{output}</>;
 };

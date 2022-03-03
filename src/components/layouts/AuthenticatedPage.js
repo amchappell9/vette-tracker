@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
@@ -9,72 +9,23 @@ import MobileMenu from "./MobileMenu";
 import Footer from "../../Footer";
 import Card from "../Card";
 
-const AuthenticatedPage = ({
-  children,
-  title,
-  linkText,
-  linkConfig,
-  linkIcon,
-  backLinkText,
-  backLinkConfig,
-  handleLogout,
-}) => {
+const AuthenticatedPage = ({ children, handleLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  /* Title State + Logic */
-  const [titleState, setTitleState] = useState(title || "");
-
-  useEffect(() => {
-    setTitleState(title);
-  }, [title]);
-
-  /* Link State + Logic */
-  const [linkTextState, setlinkTextState] = useState(linkText || "");
-  const [linkConfigState, setLinkConfigState] = useState(linkConfig || {});
-  const [linkIconState, setLinkIconState] = useState(linkIcon || null);
-
-  useEffect(() => {
-    setlinkTextState(linkText);
-  }, [linkText]);
-
-  useEffect(() => {
-    setLinkConfigState(linkConfig);
-  }, [linkConfig]);
-
-  useEffect(() => {
-    setLinkIconState(linkIcon);
-  }, [linkIcon]);
-
-  /* Back link State + Logic  */
-  const [backLinkTextState, setBackLinkTextState] = useState(
-    backLinkText || ""
-  );
-
-  const [backLinkConfigState, setBackLinkConfigState] = useState(
-    backLinkConfig || {}
-  );
-
-  // Do I really need a useEffect function to update each property? Feels like there
-  // should be a way to condense things
-  useEffect(() => {
-    setBackLinkTextState(backLinkText);
-  }, [backLinkText]);
-
-  useEffect(() => {
-    setBackLinkConfigState(backLinkConfig);
-  }, [backLinkConfig]);
+  const [headerInfo, setHeaderInfo] = useState({
+    title: "",
+    linkText: "",
+    linkConfig: null, // string or obj
+    linkIcon: null, // jsx
+    backLinkText: "",
+    backLinkConfig: "",
+  });
 
   // Pass setter functions to child component as props
   // Not sure if this maintains props that were orginally passed
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       return React.cloneElement(child, {
-        setTitle: setTitleState,
-        setlinkText: setlinkTextState,
-        setLinkConfig: setLinkConfigState,
-        setLinkIcon: setLinkIconState,
-        setBackLinkText: setBackLinkTextState,
-        setBackLinkConfig: setBackLinkConfigState,
+        setHeaderInfo,
       });
     }
 
@@ -170,28 +121,30 @@ const AuthenticatedPage = ({
 
         <div className="pt-6">
           {/* Back Link */}
-          {backLinkTextState && backLinkConfigState && (
+          {headerInfo.backLinkText && headerInfo.backLinkConfig && (
             <div className="mx-auto mb-4 max-w-7xl">
               <Link
-                to={backLinkConfigState}
+                to={headerInfo.backLinkConfig}
                 className="text-gray-300 hover:underline"
               >
                 <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-                {backLinkTextState}
+                {headerInfo.backLinkText}
               </Link>
             </div>
           )}
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
-            <h1 className="text-3xl font-bold text-white">{titleState}</h1>
-            {linkTextState && linkConfigState && (
+            <h1 className="text-3xl font-bold text-white">
+              {headerInfo.title}
+            </h1>
+            {headerInfo.linkText && headerInfo.linkConfig && (
               <Link
-                to={linkConfigState}
+                to={headerInfo.linkConfig}
                 className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white drop-shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
               >
-                {linkIconState}
-                {linkTextState}
+                {headerInfo.linkIcon}
+                {headerInfo.linkText}
               </Link>
             )}
           </div>

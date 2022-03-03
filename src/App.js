@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/outline";
 import GoTrue from "gotrue-js";
 
 import Home from "./routes/Home/Home";
-// import AllVettes from "./routes/AllVettes/AllVettes";
 import Trends from "./routes/Trends";
 import Resources from "./routes/Resources";
 import VetteDetail from "./routes/VetteDetail/VetteDetail";
@@ -16,7 +14,6 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-// import AuthenticatedPage from "./components/layouts/AuthenticatedPage-old";
 import UnauthPage from "./components/layouts/UnauthPage";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 
@@ -98,36 +95,21 @@ function App() {
         <Switch>
           {/* Vette Detail */}
           <AuthenticatedRoute path="/vettes/:vetteId">
-            <AuthenticatedPage
-              handleLogout={handleLogout}
-              backLinkText="Back to All Vettes"
-              backLinkConfig="/vettes"
-            >
+            <AuthenticatedPage handleLogout={handleLogout}>
               <VetteDetail />
             </AuthenticatedPage>
           </AuthenticatedRoute>
 
           {/* All Vettes */}
           <AuthenticatedRoute path="/vettes">
-            <AuthenticatedPage
-              handleLogout={handleLogout}
-              title="All Vettes"
-              linkText="Add Vette"
-              linkConfig="/add-vette"
-              linkIcon={
-                <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-              }
-            >
+            <AuthenticatedPage handleLogout={handleLogout}>
               <AllVettes />
             </AuthenticatedPage>
           </AuthenticatedRoute>
 
           {/* Add/Edit Vette */}
           <AuthenticatedRoute path="/add-vette">
-            <AuthenticatedPage
-              handleLogout={handleLogout}
-              title="Add New Vette"
-            >
+            <AuthenticatedPage handleLogout={handleLogout}>
               <AddVette />
             </AuthenticatedPage>
           </AuthenticatedRoute>
