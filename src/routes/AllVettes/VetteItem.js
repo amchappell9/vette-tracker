@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import * as dayjs from "dayjs";
 
 const getBorderStylesByIndex = (totalLength, index) => {
   let styles = "";
@@ -48,7 +48,10 @@ const VetteItem = ({ vette, index, listLength }) => {
               {`${vette.year} Corvette`}
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
-            <p className="text-md leading-none text-gray-600">{`Added ${vette.date}`}</p>
+            <p className="text-md leading-none text-gray-600">{`Added ${dayjs(
+              vette.date,
+              "MM-DD-YYYY"
+            ).format("MM/DD/YYYY")}`}</p>
           </div>
           <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
             <p className="font-bold leading-none text-gray-700">{`$${parseInt(
