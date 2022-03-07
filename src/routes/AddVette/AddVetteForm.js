@@ -107,6 +107,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
                 name="submodel"
                 label="Submodel"
                 radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-2"
+                labelClassName="font-bold mb-2 text-lg block"
               >
                 {(name) =>
                   submodels
