@@ -1,24 +1,26 @@
-import { useState } from "react";
 import { useField } from "formik";
-import { v4 as uuidv4 } from "uuid";
+import { RadioGroup } from "@headlessui/react";
 import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
-const FormRadioGroup = ({ name, label, radioGroupClassName, children }) => {
-  // Needs a unique ID for the radio button group
-  const [id] = useState(uuidv4());
-
-  // I don't know how to only get the second value from the array...
-  // eslint-disable-next-line
-  const [field, meta] = useField(name);
+const FormRadioGroup = ({
+  name,
+  label,
+  radioGroupClassName,
+  labelClassName,
+  children,
+}) => {
+  //  eslint-disable-next-line
+  const [field, meta, helpers] = useField({
+    name: name,
+    type: "radio",
+  });
 
   return (
     <>
-      <div id={id} className="mb-1 block text-lg font-bold">
-        {label}
-      </div>
-      <div role="group" aria-labelledby={id} className={radioGroupClassName}>
-        {children(name)}
-      </div>
+      <RadioGroup value={meta.value} onChange={helpers.setValue}>
+        <RadioGroup.Label className={labelClassName}>{label}</RadioGroup.Label>
+        <div className={radioGroupClassName}>{children(name)}</div>
+      </RadioGroup>
       {meta.touched && meta.error ? (
         <FormFieldErrorMessage errorMessage={meta.error} className="mt-2" />
       ) : null}
