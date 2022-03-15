@@ -10,6 +10,7 @@ import interiorColors from "../../constants/interiorColors";
 import submodels from "../../constants/submodels";
 import trims from "../../constants/trims";
 import packages from "../../constants/packages";
+import { INPUT_TYPES } from "../../components/Input";
 import FormInput from "../../components/forms/FormInput";
 import FormSelect from "../../components/forms/FormSelect";
 import FormRadioGroup from "../../components/forms/FormRadioGroup";
@@ -18,8 +19,12 @@ import ExteriorColorSelect from "./ExteriorColorSelect";
 
 const addVetteFormValidationSchema = Yup.object({
   year: Yup.string().required(),
-  miles: Yup.number("Miles must be a number").required("Please enter miles"),
-  cost: Yup.number().required("Please enter cost of Vette"),
+  miles: Yup.string("Miles must be a number")
+    .matches(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
+    .required("Please enter miles"),
+  cost: Yup.string()
+    .matches(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
+    .required("Please enter cost of Vette"),
   transmissionType: Yup.string().required(),
   exteriorColor: Yup.string().required(),
   interiorColor: Yup.string().required(),
@@ -203,12 +208,22 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
 
             {/* Miles */}
             <div className="col-span-6">
-              <FormInput name="miles" type="text" label="Miles" />
+              <FormInput
+                maskType={INPUT_TYPES.MILES}
+                name="miles"
+                type="text"
+                label="Miles"
+              />
             </div>
 
             {/* Cost */}
             <div className="col-span-6">
-              <FormInput name="cost" type="text" label="Cost" />
+              <FormInput
+                maskType={INPUT_TYPES.DOLLAR_AMOUNT}
+                name="cost"
+                type="text"
+                label="Cost"
+              />
             </div>
 
             {/* Submission Buttons */}

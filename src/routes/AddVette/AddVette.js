@@ -5,6 +5,18 @@ import useAddVette from "../../hooks/useAddVette";
 import useUpdateVette from "../../hooks/useUpdateVette";
 import Alert, { ALERT_TYPES } from "../../components/Alert";
 
+const formatValues = (values) => {
+  let formattedValues = values;
+
+  // Strip commas from miles
+  formattedValues.miles = formattedValues.miles.replace(",", "");
+
+  // Strip dollar sign and commas from cost
+  formattedValues.cost = formattedValues.cost.replace(",", "").replace("$", "");
+
+  return formattedValues;
+};
+
 const AddVette = ({ setHeaderInfo }) => {
   const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
   const [
@@ -42,10 +54,12 @@ const AddVette = ({ setHeaderInfo }) => {
   }, [location, setHeaderInfo]);
 
   const onSubmit = async (values) => {
+    const formattedValues = formatValues(values);
+
     if (vetteToEditInfo) {
-      updateVette(vetteToEditInfo.id, values);
+      updateVette(vetteToEditInfo.id, formattedValues);
     } else {
-      addVette(values);
+      addVette(formattedValues);
     }
   };
 
