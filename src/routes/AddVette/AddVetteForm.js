@@ -17,19 +17,27 @@ import FormRadioGroup from "../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../components/forms/FormCheckboxGroup";
 import ExteriorColorSelect from "./ExteriorColorSelect";
 
+const VALIDATION_MESSAGES = {
+  REQUIRED: "This field is required",
+  YEAR: "Please enter a year",
+  MILES: "Miles must be a number",
+};
+
 const addVetteFormValidationSchema = Yup.object({
-  year: Yup.string().required(),
-  miles: Yup.string("Miles must be a number")
+  year: Yup.string(VALIDATION_MESSAGES.YEAR).required(
+    VALIDATION_MESSAGES.REQUIRED
+  ),
+  miles: Yup.string(VALIDATION_MESSAGES.MILES)
     .matches(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
-    .required("Please enter miles"),
+    .required(VALIDATION_MESSAGES.REQUIRED),
   cost: Yup.string()
     .matches(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
-    .required("Please enter cost of Vette"),
-  transmissionType: Yup.string().required(),
-  exteriorColor: Yup.string().required(),
-  interiorColor: Yup.string().required(),
-  submodel: Yup.string().required("Please select a submodel"),
-  trim: Yup.string().required("Please select a trim"),
+    .required(VALIDATION_MESSAGES.REQUIRED),
+  transmissionType: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+  exteriorColor: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+  interiorColor: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+  submodel: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+  trim: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
 });
 
 const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
@@ -235,7 +243,11 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
               >
                 {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
               </Button>
-              <Button type="reset" variant="secondary">
+              <Button
+                onClick={props.handleReset}
+                type="reset"
+                variant="secondary"
+              >
                 Clear
               </Button>
             </div>
