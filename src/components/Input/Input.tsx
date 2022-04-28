@@ -5,7 +5,15 @@ export const INPUT_TYPES = {
   DOLLAR_AMOUNT: "dollar",
 };
 
-const Input = ({ className, haserror, maskType, ...props }) => {
+type InputType = "miles" | "dollar";
+
+type InputProps = {
+  className: string;
+  haserror: boolean;
+  maskType: InputType;
+};
+
+const Input = ({ className, haserror, maskType, ...props }: InputProps) => {
   const classes = `${className} rounded border border-solid border-gray-300 text-lg outline-none focus:ring-2 focus:ring-red-500 ${
     haserror ? "border-red-500" : null
   }`;

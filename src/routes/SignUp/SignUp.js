@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Input from "../../components/Input";
+import Input from "../../components/Input/Input";
 import Button from "../../components/Button";
 import FormFieldErrorMessage from "../../components/FormFieldErrorMessage";
 import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
