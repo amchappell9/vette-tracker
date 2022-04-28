@@ -1,15 +1,24 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
-import { useDetectOutsideClick } from "../hooks/useDetectOutsideClick";
-import FILTER_TYPES from "../constants/filterTypes";
+import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
+import FILTER_TYPES from "../../constants/filterTypes";
 
-const DropdownBtn = ({ filter, onFilterChange }) => {
+type DropdownBtnProps = {
+  filter: {
+    name: string;
+    type: string;
+    values: string[];
+  };
+  onFilterChange: () => void;
+};
+
+const DropdownBtn = ({ filter, onFilterChange }: DropdownBtnProps) => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
-  const handleChange = (value) => {
+  const handleChange = (value: string) => {
     setSelectedValue(value);
     setIsActive(false);
 
@@ -22,7 +31,7 @@ const DropdownBtn = ({ filter, onFilterChange }) => {
     <div className="relative inline-block text-left">
       <button
         type="button"
-        className="inline-flex justify-center rounded-lg px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-100 focus:ring-red-300"
+        className="focus:ring-offset-100 inline-flex justify-center rounded-lg px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-300"
         aria-haspopup="true"
         aria-expanded="true"
         onClick={() => setIsActive(!isActive)}
@@ -34,7 +43,7 @@ const DropdownBtn = ({ filter, onFilterChange }) => {
       {/* Select Menu */}
       {filter.type === FILTER_TYPES.SELECT && (
         <div
-          className={`origin-top-left absolute left-0 mt-1 rounded-md shadow-lg bg-white ${
+          className={`absolute left-0 mt-1 origin-top-left rounded-md bg-white shadow-lg ${
             isActive ? "" : "hidden"
           }`}
           ref={dropdownRef}
@@ -48,7 +57,7 @@ const DropdownBtn = ({ filter, onFilterChange }) => {
             {filter.values.map((value) => (
               <button
                 key={value}
-                className="block text-sm py-2 pl-4 pr-10 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className="block py-2 pl-4 pr-10 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 role="menuitem"
                 onClick={() => handleChange(value)}
               >
