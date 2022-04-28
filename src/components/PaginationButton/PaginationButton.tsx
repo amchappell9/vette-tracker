@@ -1,13 +1,21 @@
-import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
-export const BUTTON_STATES = {
+type ButtonState = "default" | "previous" | "next";
+
+// This seems... unnecessary
+type ButtonStates = {
+  DEFAULT: ButtonState;
+  PREV: ButtonState;
+  NEXT: ButtonState;
+};
+
+export const BUTTON_STATES: ButtonStates = {
   DEFAULT: "default",
   PREV: "previous",
   NEXT: "next",
 };
 
-const getButtonTextByState = (state, number) => {
+const getButtonTextByState = (state: ButtonState, number?: number) => {
   if (state === BUTTON_STATES.PREV) {
     return (
       <>
@@ -27,7 +35,7 @@ const getButtonTextByState = (state, number) => {
   }
 };
 
-const getClassNameByState = (state, active) => {
+const getClassNameByState = (state: ButtonState, active: boolean) => {
   if (state === BUTTON_STATES.PREV) {
     return "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50";
   } else if (state === BUTTON_STATES.NEXT) {
@@ -39,13 +47,21 @@ const getClassNameByState = (state, active) => {
   }
 };
 
+type PaginationButtonProps = {
+  active: boolean;
+  onChange: () => void;
+  state: ButtonState;
+  number?: number;
+  disabled: boolean;
+};
+
 const PaginationButton = ({
   active,
   onChange,
   state = BUTTON_STATES.DEFAULT,
   number,
   disabled,
-}) => {
+}: PaginationButtonProps) => {
   return (
     <button
       aria-current={active ? "page" : undefined}
