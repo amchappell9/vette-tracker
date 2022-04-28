@@ -1,6 +1,15 @@
-import React from "react";
-import PaginationButton, { BUTTON_STATES } from "./PaginationButton";
-import usePagination, { DOTS } from "../hooks/usePagination";
+import PaginationButton, {
+  BUTTON_STATES,
+} from "../PaginationButton/PaginationButton";
+import usePagination, { DOTS } from "../../hooks/usePagination";
+
+type PaginationControlsProps = {
+  currentPage: number;
+  totalCount: number;
+  siblingCount?: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+};
 
 const PaginationControls = ({
   currentPage,
@@ -8,7 +17,7 @@ const PaginationControls = ({
   siblingCount = 1,
   pageSize,
   onPageChange,
-}) => {
+}: PaginationControlsProps) => {
   const paginationRange = usePagination({
     currentPage,
     totalCount,
@@ -24,7 +33,10 @@ const PaginationControls = ({
     onPageChange(currentPage + 1);
   };
 
-  let lastPage = paginationRange[paginationRange.length - 1];
+  let lastPage =
+    typeof paginationRange !== "undefined"
+      ? paginationRange[paginationRange.length - 1]
+      : null;
 
   const lowerRange = (currentPage - 1) * pageSize + 1;
   const upperRange =
@@ -71,25 +83,26 @@ const PaginationControls = ({
             />
 
             {/* Numbered Buttons */}
-            {paginationRange.map((pageNumber) => {
-              if (pageNumber === DOTS) {
+            {paginationRange &&
+              paginationRange.map((pageNumber) => {
+                if (pageNumber === DOTS) {
+                  return (
+                    <PaginationButton
+                      key={pageNumber}
+                      state={BUTTON_STATES.DOTS}
+                    />
+                  );
+                }
+
                 return (
                   <PaginationButton
                     key={pageNumber}
-                    state={BUTTON_STATES.DOTS}
+                    active={pageNumber === currentPage}
+                    number={pageNumber}
+                    onChange={() => onPageChange(pageNumber)}
                   />
                 );
-              }
-
-              return (
-                <PaginationButton
-                  key={pageNumber}
-                  active={pageNumber === currentPage}
-                  number={pageNumber}
-                  onChange={() => onPageChange(pageNumber)}
-                />
-              );
-            })}
+              })}
 
             {/* Next Button */}
             <PaginationButton

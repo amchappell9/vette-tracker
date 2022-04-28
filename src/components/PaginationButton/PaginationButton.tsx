@@ -1,16 +1,18 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
-type ButtonState = "default" | "previous" | "next";
+type ButtonState = "default" | "previous" | "next" | "dots";
 
 // This seems... unnecessary
 type ButtonStates = {
   DEFAULT: ButtonState;
+  DOTS: ButtonState;
   PREV: ButtonState;
   NEXT: ButtonState;
 };
 
 export const BUTTON_STATES: ButtonStates = {
   DEFAULT: "default",
+  DOTS: "dots",
   PREV: "previous",
   NEXT: "next",
 };
@@ -48,19 +50,19 @@ const getClassNameByState = (state: ButtonState, active: boolean) => {
 };
 
 type PaginationButtonProps = {
-  active: boolean;
-  onChange: () => void;
-  state: ButtonState;
+  active?: boolean;
+  onChange?: () => void;
+  state?: ButtonState;
   number?: number;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 const PaginationButton = ({
-  active,
+  active = false,
   onChange,
   state = BUTTON_STATES.DEFAULT,
   number,
-  disabled,
+  disabled = false,
 }: PaginationButtonProps) => {
   return (
     <button
@@ -72,7 +74,7 @@ const PaginationButton = ({
         active
       )} transition-colors focus:border-red-500 focus:outline-none disabled:opacity-40 disabled:hover:bg-white`}
       onClick={() => {
-        if (!disabled) onChange();
+        if (!disabled && typeof onChange === "function") onChange();
       }}
     >
       {getButtonTextByState(state, number)}
