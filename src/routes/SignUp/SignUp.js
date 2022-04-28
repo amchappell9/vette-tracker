@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button";
-import FormFieldErrorMessage from "../../components/FormFieldErrorMessage";
+import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
 import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 
 const signUpFormValidationSchema = Yup.object({

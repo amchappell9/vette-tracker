@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import Alert, { ALERT_TYPES } from "../components/Alert/Alert";
 import Button from "../components/Button";
 import Input from "../components/Input/Input";
-import FormFieldErrorMessage from "../components/FormFieldErrorMessage";
+import FormFieldErrorMessage from "../components/forms/FormFieldErrorMessage";
 
 const LoginFormValidationSchema = Yup.object({
   email: Yup.string().required("Please enter your email address"),

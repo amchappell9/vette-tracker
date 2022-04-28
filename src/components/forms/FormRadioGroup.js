@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import { RadioGroup } from "@headlessui/react";
-import FormFieldErrorMessage from "../FormFieldErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 
 const FormRadioGroup = ({
   name,

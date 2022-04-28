@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-import FormFieldErrorMessage from "../FormFieldErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 
 const FormSelect = ({
   label,

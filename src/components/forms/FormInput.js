@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import Input from "../Input/Input";
-import FormFieldErrorMessage from "../FormFieldErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage/";
 
 const FormInput = ({ label, name, ...props }) => {
   const [field, meta] = useField(name);
