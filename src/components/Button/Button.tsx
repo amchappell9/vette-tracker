@@ -1,17 +1,28 @@
-const BUTTON_SIZES = {
+type ButtonSize = "normal" | "large" | "full";
+
+type ButtonSizes = {
+  NORMAL: ButtonSize;
+  LARGE: ButtonSize;
+  FULL: ButtonSize;
+};
+
+const BUTTON_SIZES: ButtonSizes = {
   NORMAL: "normal",
   LARGE: "large",
   FULL: "full",
 };
 
-type ButtonSize = "normal" | "large" | "full";
+type ButtonVariant = "red" | "secondary";
 
-const BUTTON_VARIANTS = {
+type ButtonVariants = {
+  RED: ButtonVariant;
+  SECONDARY: ButtonVariant;
+};
+
+const BUTTON_VARIANTS: ButtonVariants = {
   RED: "red",
   SECONDARY: "secondary",
 };
-
-type ButtonVariant = "red" | "secondary";
 
 const getSizeClasses = (size: ButtonSize) => {
   let sizeClasses = "";
@@ -55,16 +66,16 @@ const getVariantClasses = (variant: ButtonVariant) => {
 
 type ButtonProps = {
   children: React.ReactNode;
-  size: ButtonSize;
-  variant: ButtonVariant;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  className: string;
+  size?: ButtonSize;
+  variant?: ButtonVariant;
+  className?: string;
 };
 
 const Button = ({
   children,
-  size,
-  variant,
+  size = BUTTON_SIZES.NORMAL,
+  variant = BUTTON_VARIANTS.RED,
   onClick,
   className,
   ...props
