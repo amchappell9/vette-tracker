@@ -56,7 +56,7 @@ const getIconByType = (alertType) => {
     case ALERT_TYPES.INFO:
       return (
         <InformationCircleIcon
-          className="h-5 w-5 text-blue-400"
+          className="text-blue-400 h-5 w-5"
           aria-hidden="true"
         />
       );
@@ -93,7 +93,7 @@ const getIconByType = (alertType) => {
 const Alert = ({ alertType, message, className }) => {
   return (
     <div
-      className={`border-l-4 rounded p-4 ${getMainStylesByType(
+      className={`rounded border-l-4 p-4 ${getMainStylesByType(
         alertType
       )} ${className}`}
     >
