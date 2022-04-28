@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import FormFieldErrorMessage from "../../components/FormFieldErrorMessage";
-import Alert, { ALERT_TYPES } from "../../components/Alert";
+import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 
 const signUpFormValidationSchema = Yup.object({
   firstName: Yup.string().required("This field is required"),

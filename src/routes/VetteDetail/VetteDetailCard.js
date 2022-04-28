@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
-import Alert, { ALERT_TYPES } from "../../components/Alert";
+import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";

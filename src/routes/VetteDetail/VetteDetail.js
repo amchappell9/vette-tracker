@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
 import useGetVette from "../../hooks/useGetVette";
-import Alert, { ALERT_TYPES } from "../../components/Alert";
+import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 import VetteDetailCard from "./VetteDetailCard";
 
 const getHeaderInfoByState = (state, vetteData) => {

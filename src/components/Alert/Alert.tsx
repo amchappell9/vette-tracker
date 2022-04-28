@@ -1,10 +1,11 @@
-import React from "react";
 import {
   ExclamationIcon,
   ExclamationCircleIcon,
   CheckCircleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
+
+type AlertType = "info" | "success" | "warning" | "danger";
 
 export const ALERT_TYPES = {
   INFO: "info",
@@ -13,7 +14,7 @@ export const ALERT_TYPES = {
   DANGER: "danger",
 };
 
-const getMainStylesByType = (alertType) => {
+const getMainStylesByType = (alertType: AlertType) => {
   switch (alertType) {
     case ALERT_TYPES.INFO:
       return "bg-blue-50 border-blue-400";
@@ -28,11 +29,11 @@ const getMainStylesByType = (alertType) => {
       return "bg-red-50 border-red-400";
 
     default:
-      break;
+      return "";
   }
 };
 
-const getTextStylesByType = (alertType) => {
+const getTextStylesByType = (alertType: AlertType) => {
   switch (alertType) {
     case ALERT_TYPES.INFO:
       return "text-blue-700";
@@ -47,11 +48,11 @@ const getTextStylesByType = (alertType) => {
       return "text-red-700";
 
     default:
-      break;
+      return "";
   }
 };
 
-const getIconByType = (alertType) => {
+const getIconByType = (alertType: AlertType) => {
   switch (alertType) {
     case ALERT_TYPES.INFO:
       return (
@@ -90,7 +91,13 @@ const getIconByType = (alertType) => {
   }
 };
 
-const Alert = ({ alertType, message, className }) => {
+type AlertProps = {
+  alertType: AlertType;
+  message: string;
+  className: string;
+};
+
+const Alert = ({ alertType, message, className }: AlertProps) => {
   return (
     <div
       className={`rounded border-l-4 p-4 ${getMainStylesByType(

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "./ListOfVettes";
-import Alert, { ALERT_TYPES } from "../../components/Alert";
+import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 import useGetAllVettes from "../../hooks/useGetAllVettes";
 import AddFirstVetteMessage from "./AddFirstVetteMessage";
 import PaginationControls from "../../components/PaginationControls";

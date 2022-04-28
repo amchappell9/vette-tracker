@@ -3,7 +3,7 @@ import { Redirect, useLocation } from "react-router-dom";
 import AddVetteForm from "./AddVetteForm";
 import useAddVette from "../../hooks/useAddVette";
 import useUpdateVette from "../../hooks/useUpdateVette";
-import Alert, { ALERT_TYPES } from "../../components/Alert";
+import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
 
 const formatValues = (values) => {
   let formattedValues = values;
