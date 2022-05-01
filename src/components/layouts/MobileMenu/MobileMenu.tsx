@@ -3,9 +3,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon, CogIcon } from "@heroicons/react/outline";
 import { NavLink } from "react-router-dom";
 
-import navLinks from "../../constants/navLinks";
+import navLinks from "../../../constants/navLinks";
 
-const MobileMenu = ({ isOpen, dismiss, handleLogout }) => {
+type MobileMenuPros = {
+  isOpen: boolean;
+  dismiss: () => void;
+  handleLogout: () => void;
+};
+
+const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog

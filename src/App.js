@@ -14,7 +14,7 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-import UnauthPage from "./components/layouts/UnauthPage";
+import UnauthPage from "./components/layouts/UnauthPage/";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 
 const persistUserInfo = (userInfo) => {

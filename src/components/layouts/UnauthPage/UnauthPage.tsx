@@ -1,10 +1,14 @@
-import React from "react";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as Logo } from "../../vetteFlagLogo-dark.svg";
-import Footer from "../../Footer";
+import { ReactComponent as Logo } from "../../../vetteFlagLogo-dark.svg";
+import Footer from "../../../Footer";
 
-const UnauthPage = ({ children }) => {
+type UnauthPageProps = {
+  children: ReactNode;
+};
+
+const UnauthPage = ({ children }: UnauthPageProps) => {
   return (
     <div className="flex min-h-full flex-col">
       <header>
