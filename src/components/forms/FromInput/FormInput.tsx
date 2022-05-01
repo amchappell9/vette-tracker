@@ -1,8 +1,13 @@
 import { useField } from "formik";
-import Input from "../Input/Input";
-import FormFieldErrorMessage from "./FormFieldErrorMessage/";
+import Input from "../../Input";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
-const FormInput = ({ label, name, ...props }) => {
+type FormInputProps = {
+  label: string;
+  name: string;
+};
+
+const FormInput = ({ label, name, ...props }: FormInputProps) => {
   const [field, meta] = useField(name);
 
   return (
@@ -11,9 +16,9 @@ const FormInput = ({ label, name, ...props }) => {
         {label}
       </label>
       <Input
-        name={name}
         {...field}
         {...props}
+        name={name}
         className="w-full bg-gray-50 py-2 px-4 text-lg"
       />
       {meta.touched && meta.error ? (

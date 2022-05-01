@@ -11,7 +11,7 @@ import submodels from "../../constants/submodels";
 import trims from "../../constants/trims";
 import packages from "../../constants/packages";
 import { INPUT_TYPES } from "../../components/Input/Input";
-import FormInput from "../../components/forms/FormInput";
+import FormInput from "../../components/forms/FromInput";
 import FormSelect from "../../components/forms/FormSelect";
 import FormRadioGroup from "../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../components/forms/FormCheckboxGroup";
