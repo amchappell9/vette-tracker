@@ -1,6 +1,14 @@
 import { useField } from "formik";
 import { RadioGroup } from "@headlessui/react";
-import FormFieldErrorMessage from "./FormFieldErrorMessage";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
+
+type FormRadioGroupProps = {
+  name: string;
+  label: string;
+  radioGroupClassName: string;
+  labelClassName: string;
+  children: (name: string) => React.ReactNode;
+};
 
 const FormRadioGroup = ({
   name,
@@ -8,7 +16,7 @@ const FormRadioGroup = ({
   radioGroupClassName,
   labelClassName,
   children,
-}) => {
+}: FormRadioGroupProps) => {
   //  eslint-disable-next-line
   const [field, meta, helpers] = useField({
     name: name,
