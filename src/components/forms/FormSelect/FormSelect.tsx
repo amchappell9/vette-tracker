@@ -1,15 +1,24 @@
 import { useField } from "formik";
 
-import FormFieldErrorMessage from "./FormFieldErrorMessage";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
+
+type FormSelectProps = {
+  label: string;
+  name: string;
+  options: {
+    label: string;
+    value: string;
+  }[];
+  className: string;
+};
 
 const FormSelect = ({
   label,
   name,
   options,
   className,
-  children,
   ...props
-}) => {
+}: FormSelectProps) => {
   const [field, meta] = useField(name);
 
   let selectOptions;
@@ -20,8 +29,6 @@ const FormSelect = ({
         {label}
       </option>
     ));
-  } else if (children) {
-    selectOptions = children;
   } else {
     throw new Error("No options provided");
   }
@@ -32,9 +39,9 @@ const FormSelect = ({
         {label}
       </label>
       <select
-        name={name}
         {...field}
         {...props}
+        name={name}
         className={`${className} w-full rounded border border-solid border-gray-300 bg-gray-50 py-2 px-4 text-lg outline-none focus:ring-2 focus:ring-red-500`}
       >
         {selectOptions}
