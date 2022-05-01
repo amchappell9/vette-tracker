@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
-import { ReactComponent as Logo } from "../../vetteFlagLogo.svg";
+import { ReactComponent as Logo } from "../../../vetteFlagLogo.svg";
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";

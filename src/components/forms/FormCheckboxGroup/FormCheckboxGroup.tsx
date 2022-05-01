@@ -1,9 +1,21 @@
 import { useField } from "formik";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import FormFieldErrorMessage from "./FormFieldErrorMessage";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
-const FormCheckboxGroup = ({ label, name, groupClassName, children }) => {
+type FormCheckboxGroupProps = {
+  label: string;
+  name: string;
+  groupClassName: string;
+  children: (name: string) => React.ReactNode;
+};
+
+const FormCheckboxGroup = ({
+  label,
+  name,
+  groupClassName,
+  children,
+}: FormCheckboxGroupProps) => {
   // Needs a unique ID for the radio button group
   const [id] = useState(uuidv4());
 
