@@ -1,6 +1,15 @@
-import React from "react";
 import { PlusIcon, CheckCircleIcon } from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
+
+type SubModelRadioButtonProps = {
+  name: string;
+  className: string;
+  title: string;
+  engine: string;
+  hp: string;
+  torque: string;
+  features: string[];
+};
 
 const SubModelRadioButton = ({
   name,
@@ -10,7 +19,7 @@ const SubModelRadioButton = ({
   hp,
   torque,
   features,
-}) => {
+}: SubModelRadioButtonProps) => {
   return (
     <RadioGroup.Option
       key={name}
