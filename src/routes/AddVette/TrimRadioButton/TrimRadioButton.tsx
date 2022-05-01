@@ -1,7 +1,19 @@
 import { RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 
-const TrimRadioButton = ({ name, className, title, features }) => {
+type TrimRadioButtonProps = {
+  name: string;
+  className: string;
+  title: string;
+  features: string[];
+};
+
+const TrimRadioButton = ({
+  name,
+  className,
+  title,
+  features,
+}: TrimRadioButtonProps) => {
   return (
     <RadioGroup.Option
       key={name}
