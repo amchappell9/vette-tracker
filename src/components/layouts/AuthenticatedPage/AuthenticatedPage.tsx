@@ -3,13 +3,21 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
 import { ReactComponent as Logo } from "../../vetteFlagLogo.svg";
-import navLinks from "../../constants/navLinks";
+import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
-import MobileMenu from "./MobileMenu";
-import Footer from "../../Footer";
-import Card from "../Card";
+import MobileMenu from "../MobileMenu";
+import Footer from "../../../Footer";
+import Card from "../../Card";
 
-const AuthenticatedPage = ({ children, handleLogout }) => {
+type AuthenticatedPageProps = {
+  children: React.ReactNode;
+  handleLogout: () => void;
+};
+
+const AuthenticatedPage = ({
+  children,
+  handleLogout,
+}: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerInfo, setHeaderInfo] = useState({
     title: "",
