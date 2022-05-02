@@ -1,6 +1,9 @@
-import React from "react";
+type FeatureCardProps = {
+  title: string;
+  description: string;
+};
 
-const FeatureCard = ({ title, description }) => {
+const FeatureCard = ({ title, description }: FeatureCardProps) => {
   return (
     <div className="max-w-[400px] flex-1 bg-gray-300 py-8 px-2 sm:px-4">
       <div className="flex justify-center">
