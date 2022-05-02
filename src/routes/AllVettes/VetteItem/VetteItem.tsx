@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import * as dayjs from "dayjs";
+import { default as dayjs } from "dayjs";
+import { VetteObject } from "../../../types/VetteObject";
 
-const getBorderStylesByIndex = (totalLength, index) => {
+const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";
 
   if (index === 0 && totalLength !== 1) {
@@ -17,7 +18,13 @@ const getBorderStylesByIndex = (totalLength, index) => {
   return styles;
 };
 
-const VetteItem = ({ vette, index, listLength }) => {
+type VetteItemProps = {
+  vette: VetteObject;
+  index: number;
+  listLength: number;
+};
+
+const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
   return (
     <li>
       <Link

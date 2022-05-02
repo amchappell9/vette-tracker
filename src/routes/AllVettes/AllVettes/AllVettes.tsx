@@ -1,11 +1,11 @@
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
 
-import ListOfVettes from "./ListOfVettes";
-import Alert from "../../components/Alert/Alert";
-import useGetAllVettes from "../../hooks/useGetAllVettes";
-import AddFirstVetteMessage from "./AddFirstVetteMessage";
-import PaginationControls from "../../components/PaginationControls";
+import ListOfVettes from "../ListOfVettes";
+import Alert from "../../../components/Alert/Alert";
+import useGetAllVettes from "../../../hooks/useGetAllVettes";
+import AddFirstVetteMessage from "../AddFirstVetteMessage/AddFirstVetteMessage";
+import PaginationControls from "../../../components/PaginationControls";
 
 // import VetteFilter from "./VetteFilter";
 // import FILTER_TYPES from "../../constants/filterTypes";
@@ -57,7 +57,18 @@ import PaginationControls from "../../components/PaginationControls";
 
 const PAGE_SIZE = 5;
 
-const AllVettes = ({ setHeaderInfo }) => {
+type AllVettesProps = {
+  setHeaderInfo: (headerInfo: {
+    title: string;
+    linkText: string;
+    linkConfig: string;
+    linkIcon: React.ReactNode;
+    backLinkText?: string;
+    backLinkConfig?: string;
+  }) => void;
+};
+
+const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
   // const [filterValues, setFilterValues] = useState({});
   const { isLoading, hasError, errorMessage, vettes } = useGetAllVettes();
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,7 +115,7 @@ const AllVettes = ({ setHeaderInfo }) => {
           currentPage={currentPage}
           totalCount={vettes.length}
           pageSize={PAGE_SIZE}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={(page: number) => setCurrentPage(page)}
         />
       </>
     );

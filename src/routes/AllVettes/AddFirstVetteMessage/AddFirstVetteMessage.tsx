@@ -1,10 +1,8 @@
-import React from "react";
-
 export default function AddFirstVetteMessage() {
   return (
-    <div className="px-8 py-16 flex justify-center items-center">
+    <div className="flex items-center justify-center px-8 py-16">
       <div className="text-center">
-        <span className="block mb-2 font-bold text-3xl text-gray-700">
+        <span className="mb-2 block text-3xl font-bold text-gray-700">
           Add your first Vette!
         </span>
         <span className="block text-xl text-gray-600">

@@ -1,7 +1,11 @@
-import React from "react";
-import VetteItem from "./VetteItem";
+import { VetteObject } from "../../../types/VetteObject";
+import VetteItem from "../VetteItem";
 
-const ListOfVettes = ({ vettesArray }) => {
+type ListOfVettesProps = {
+  vettesArray: VetteObject[];
+};
+
+const ListOfVettes = ({ vettesArray }: ListOfVettesProps) => {
   return (
     <ul>
       {vettesArray.map((vette, index) => (
