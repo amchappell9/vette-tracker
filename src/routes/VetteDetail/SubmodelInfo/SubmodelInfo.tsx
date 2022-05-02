@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
-import submodels from "../../constants/submodels";
+import submodels, { SubmodelType } from "../../../constants/submodels";
 
-const getSubmodelInfoByKey = (key) => {
+const getSubmodelInfoByKey = (key: string): SubmodelType | undefined => {
   for (const submodel of submodels) {
     if (key === submodel.title) {
       return submodel;
     }
   }
+
+  console.error("Unknown submodel key: ", key);
 };
 
-const SubmodelInfo = ({ vetteSubmodel, className }) => {
-  const [submodelInfo, setsubmodelInfo] = useState(
-    getSubmodelInfoByKey(vetteSubmodel)
-  );
+type SubmodelInfoProps = {
+  vetteSubmodel: string;
+  className: string;
+};
 
-  useEffect(() => {
-    setsubmodelInfo(getSubmodelInfoByKey(vetteSubmodel));
-  }, [vetteSubmodel]);
+const SubmodelInfo = ({ vetteSubmodel, className }: SubmodelInfoProps) => {
+  const submodelInfo = getSubmodelInfoByKey(vetteSubmodel);
+
+  if (submodelInfo == null) {
+    return <></>;
+  }
 
   return (
     <div className={`rounded bg-gray-50 p-4 ${className}`}>

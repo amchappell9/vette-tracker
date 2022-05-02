@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
-import useGetVette from "../../hooks/useGetVette";
-import Alert from "../../components/Alert/Alert";
-import VetteDetailCard from "./VetteDetailCard";
+import useGetVette from "../../../hooks/useGetVette";
+import Alert from "../../../components/Alert/Alert";
+import VetteDetailCard from "../VetteDetailCard";
+import { VetteObject } from "../../../types/VetteObject";
 
-const getHeaderInfoByState = (state, vetteData) => {
+type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
+
+const getHeaderInfoByState = (state: UIState, vetteData: VetteObject) => {
   switch (state) {
     case "confirmation-view":
       return {
@@ -53,9 +56,26 @@ const getHeaderInfoByState = (state, vetteData) => {
   }
 };
 
-const VetteDetail = ({ setHeaderInfo }) => {
-  let { vetteId } = useParams();
-  let location = useLocation();
+type VetteDetailProps = {
+  setHeaderInfo: (headerInfo: {
+    title: string;
+    backLinkText: string;
+    backLinkConfig: string;
+  }) => void;
+};
+
+interface ParamModel {
+  vetteId?: string;
+}
+
+interface LocationModel {
+  isConfirmationView: boolean;
+  isUpdate: boolean;
+}
+
+const VetteDetail = ({ setHeaderInfo }: VetteDetailProps) => {
+  let { vetteId } = useParams<ParamModel>();
+  let location = useLocation<LocationModel>();
 
   const [
     { isLoading, hasError, errorMessage, success, vetteData },

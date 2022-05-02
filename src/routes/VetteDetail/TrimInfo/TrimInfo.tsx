@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
-import trims from "../../constants/trims";
+import trims, { TrimsType } from "../../../constants/trims";
 
-const getTrimInfoByKey = (key) => {
+const getTrimInfoByKey = (key: string): TrimsType | undefined => {
   for (const trim of trims) {
     if (key === trim.title) {
       return trim;
     }
   }
+
+  console.error("Unknown trim key: ", key);
 };
 
-const TrimInfo = ({ vetteTrim, className }) => {
-  const [trimInfo, setTrimInfo] = useState(getTrimInfoByKey(vetteTrim));
+type TrimInfoProps = {
+  vetteTrim: string;
+  className: string;
+};
 
-  useEffect(() => {
-    setTrimInfo(getTrimInfoByKey(vetteTrim));
-  }, [vetteTrim]);
+const TrimInfo = ({ vetteTrim, className }: TrimInfoProps) => {
+  const trimInfo = getTrimInfoByKey(vetteTrim);
+
+  if (trimInfo == null) {
+    return <></>;
+  }
 
   return (
     <div className={`rounded bg-gray-50 p-4 ${className}`}>

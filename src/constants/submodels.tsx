@@ -1,6 +1,18 @@
-const submodels = [
+type TitleModel = "Stingray" | "Z51" | "Grand Sport" | "Z06" | "ZR1";
+type EngineModel = "LT1" | "LT4" | "LT5";
+
+export interface SubmodelType {
+  title: TitleModel;
+  engine: EngineModel;
+  hp: string;
+  torque: string;
+  features: string[];
+  years: string[];
+}
+
+const submodels: SubmodelType[] = [
   {
-    title: "Stringray",
+    title: "Stingray",
     engine: "LT1",
     hp: "455",
     torque: "460",

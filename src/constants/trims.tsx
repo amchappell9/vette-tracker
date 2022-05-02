@@ -1,4 +1,9 @@
-const trims = [
+export interface TrimsType {
+  title: "1LT" | "2LT" | "3LT";
+  features: string[];
+}
+
+const trims: TrimsType[] = [
   {
     title: "1LT",
     features: [

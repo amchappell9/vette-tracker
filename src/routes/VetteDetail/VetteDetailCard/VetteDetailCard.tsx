@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
-import * as dayjs from "dayjs";
-import Alert from "../../components/Alert/Alert";
-import PackagesList from "./PackagesList";
-import SubmodelInfo from "./SubmodelInfo";
-import TrimInfo from "./TrimInfo";
-import DeleteVetteModal from "./DeleteVetteModal";
+import { default as dayjs } from "dayjs";
+import Alert from "../../../components/Alert/Alert";
+import PackagesList from "../PackagesList";
+import SubmodelInfo from "../SubmodelInfo";
+import TrimInfo from "../TrimInfo";
+import DeleteVetteModal from "../DeleteVetteModal";
+import { VetteObject } from "../../../types/VetteObject";
 
-export default function VetteDetailCard({ vetteData, wasUpdated }) {
+type VetteDetailCardProps = {
+  vetteData: VetteObject;
+  wasUpdated: boolean;
+};
+
+export default function VetteDetailCard({
+  vetteData,
+  wasUpdated,
+}: VetteDetailCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [vetteDeleted, setVetteDeleted] = useState(false);
 

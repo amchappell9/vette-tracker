@@ -1,4 +1,10 @@
-const packages = [
+export interface PackageType {
+  title: string;
+  value: string;
+  description: string;
+}
+
+const packages: PackageType[] = [
   {
     title: "Magnetic Ride Control",
     value: "MRC",
