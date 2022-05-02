@@ -1,21 +1,21 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import Button from "../../components/Button";
-import SubModelRadioButton from "./SubModelRadioButton";
-import TrimRadioButton from "./TrimRadioButton";
-import PackageCheckbox from "./PackageCheckbox";
-import exteriorColors from "../../constants/exteriorColors";
-import interiorColors from "../../constants/interiorColors";
-import submodels from "../../constants/submodels";
-import trims from "../../constants/trims";
-import packages from "../../constants/packages";
-import { INPUT_TYPES } from "../../components/Input/Input";
-import FormInput from "../../components/forms/FromInput";
-import FormSelect from "../../components/forms/FormSelect";
-import FormRadioGroup from "../../components/forms/FormRadioGroup";
-import FormCheckboxGroup from "../../components/forms/FormCheckboxGroup";
-import ExteriorColorSelect from "./ExteriorColorSelect";
+import Button from "../../../components/Button";
+import SubModelRadioButton from "../SubModelRadioButton";
+import TrimRadioButton from "../TrimRadioButton";
+import PackageCheckbox from "../PackageCheckbox";
+import exteriorColors from "../../../constants/exteriorColors";
+import interiorColors from "../../../constants/interiorColors";
+import submodels from "../../../constants/submodels";
+import trims from "../../../constants/trims";
+import packages from "../../../constants/packages";
+import { INPUT_TYPES } from "../../../components/Input/Input";
+import FormInput from "../../../components/forms/FromInput";
+import FormSelect from "../../../components/forms/FormSelect";
+import FormRadioGroup from "../../../components/forms/FormRadioGroup";
+import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
+import ExteriorColorSelect from "../ExteriorColorSelect";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
@@ -24,10 +24,8 @@ const VALIDATION_MESSAGES = {
 };
 
 const addVetteFormValidationSchema = Yup.object({
-  year: Yup.string(VALIDATION_MESSAGES.YEAR).required(
-    VALIDATION_MESSAGES.REQUIRED
-  ),
-  miles: Yup.string(VALIDATION_MESSAGES.MILES)
+  year: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+  miles: Yup.string()
     .matches(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
     .required(VALIDATION_MESSAGES.REQUIRED),
   cost: Yup.string()
@@ -40,7 +38,28 @@ const addVetteFormValidationSchema = Yup.object({
   trim: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
 });
 
-const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
+type VetteInfo = {
+  year: string;
+  miles: string;
+  cost: string;
+  transmissionType: string;
+  exteriorColor: string;
+  interiorColor: string;
+  submodel: string;
+  trim: string;
+  packages: string[];
+  link: string;
+  id?: string;
+  date?: string;
+  userId?: string;
+};
+
+type AddVetteFormProps = {
+  handleSubmit: (values: VetteInfo) => void;
+  vetteToEditInfo: VetteInfo;
+};
+
+const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
   return (
     <div className="sm:py-4 sm:px-4 lg:px-16">
       <p className="mb-8 text-gray-700">
@@ -122,7 +141,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
                 radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-2"
                 labelClassName="font-bold mb-2 text-lg block"
               >
-                {(name) =>
+                {(name: string) =>
                   submodels
                     .filter((submodel) =>
                       submodel.years.includes(props.values.year)
@@ -150,7 +169,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
                 label="Trim"
                 radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-3"
               >
-                {(name) =>
+                {(name: string) =>
                   trims.map((trim) => (
                     <TrimRadioButton
                       key={trim.title}
@@ -167,7 +186,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }) => {
             {/* Packages */}
             <div className="col-span-6">
               <FormCheckboxGroup name="packages" label="Packages">
-                {(name) =>
+                {(name: string) =>
                   packages.map((packageObj) => (
                     <PackageCheckbox
                       key={packageObj.value}
