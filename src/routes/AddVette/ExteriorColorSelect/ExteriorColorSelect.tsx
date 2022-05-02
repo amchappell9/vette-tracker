@@ -1,11 +1,27 @@
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import FormSelect from "../../components/forms/FormSelect";
+import FormSelect from "../../../components/forms/FormSelect";
+
+type ExteriorColorOption = {
+  colorName: string;
+  /** The years the color was produced */
+  years: string[];
+};
+
+type ExteriorColorSelectProps = {
+  label: string;
+  name: string;
+  allExteriorColorOptions: ExteriorColorOption[];
+};
 
 /**
  * A select component that only renders the exterior colors available in the selected year.
  */
-const ExteriorColorSelect = ({ label, name, allExteriorColorOptions }) => {
+const ExteriorColorSelect = ({
+  label,
+  name,
+  allExteriorColorOptions,
+}: ExteriorColorSelectProps) => {
   const {
     values: { year },
   } = useFormikContext();
@@ -28,7 +44,7 @@ const ExteriorColorSelect = ({ label, name, allExteriorColorOptions }) => {
   );
 };
 
-const getOptionsByYear = (options, year) => {
+const getOptionsByYear = (options: ExteriorColorOption[], year: string) => {
   return options.filter((option) => option.years.includes(year));
 };
 
