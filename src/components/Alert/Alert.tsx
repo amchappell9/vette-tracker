@@ -5,27 +5,20 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/outline";
 
-type AlertType = "info" | "success" | "warning" | "danger";
-
-export const ALERT_TYPES = {
-  INFO: "info",
-  SUCCESS: "success",
-  WARNING: "warning",
-  DANGER: "danger",
-};
+export declare type AlertType = "info" | "success" | "warning" | "danger";
 
 const getMainStylesByType = (alertType: AlertType) => {
   switch (alertType) {
-    case ALERT_TYPES.INFO:
+    case "info":
       return "bg-blue-50 border-blue-400";
 
-    case ALERT_TYPES.SUCCESS:
+    case "success":
       return "bg-green-50 border-green-400";
 
-    case ALERT_TYPES.WARNING:
+    case "warning":
       return "bg-yellow-50 border-yellow-400";
 
-    case ALERT_TYPES.DANGER:
+    case "danger":
       return "bg-red-50 border-red-400";
 
     default:
@@ -35,16 +28,16 @@ const getMainStylesByType = (alertType: AlertType) => {
 
 const getTextStylesByType = (alertType: AlertType) => {
   switch (alertType) {
-    case ALERT_TYPES.INFO:
+    case "info":
       return "text-blue-700";
 
-    case ALERT_TYPES.SUCCESS:
+    case "success":
       return "text-green-700";
 
-    case ALERT_TYPES.WARNING:
+    case "warning":
       return "text-yellow-700";
 
-    case ALERT_TYPES.DANGER:
+    case "danger":
       return "text-red-700";
 
     default:
@@ -54,7 +47,7 @@ const getTextStylesByType = (alertType: AlertType) => {
 
 const getIconByType = (alertType: AlertType) => {
   switch (alertType) {
-    case ALERT_TYPES.INFO:
+    case "info":
       return (
         <InformationCircleIcon
           className="text-blue-400 h-5 w-5"
@@ -62,7 +55,7 @@ const getIconByType = (alertType: AlertType) => {
         />
       );
 
-    case ALERT_TYPES.SUCCESS:
+    case "success":
       return (
         <CheckCircleIcon
           className="h-5 w-5 text-green-500"
@@ -70,7 +63,7 @@ const getIconByType = (alertType: AlertType) => {
         />
       );
 
-    case ALERT_TYPES.WARNING:
+    case "warning":
       return (
         <ExclamationIcon
           className="h-5 w-5 text-yellow-400"
@@ -78,7 +71,7 @@ const getIconByType = (alertType: AlertType) => {
         />
       );
 
-    case ALERT_TYPES.DANGER:
+    case "danger":
       return (
         <ExclamationCircleIcon
           className="h-5 w-5 text-red-400"
@@ -94,7 +87,7 @@ const getIconByType = (alertType: AlertType) => {
 type AlertProps = {
   alertType: AlertType;
   message: string;
-  className: string;
+  className?: string;
 };
 
 const Alert = ({ alertType, message, className }: AlertProps) => {

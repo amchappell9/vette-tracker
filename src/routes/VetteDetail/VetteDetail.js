@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
 import useGetVette from "../../hooks/useGetVette";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import Alert from "../../components/Alert/Alert";
 import VetteDetailCard from "./VetteDetailCard";
 
 const getHeaderInfoByState = (state, vetteData) => {
@@ -87,7 +87,7 @@ const VetteDetail = ({ setHeaderInfo }) => {
   } else if (hasError) {
     output = (
       <div className="mt-4">
-        <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
+        <Alert alertType={"danger"} message={errorMessage} />
       </div>
     );
   } else if (success) {

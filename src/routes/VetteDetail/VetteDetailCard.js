@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
 import * as dayjs from "dayjs";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import Alert from "../../components/Alert/Alert";
 import PackagesList from "./PackagesList";
 import SubmodelInfo from "./SubmodelInfo";
 import TrimInfo from "./TrimInfo";
@@ -27,7 +27,7 @@ export default function VetteDetailCard({ vetteData, wasUpdated }) {
       {/* Show alert if vette was updated */}
       {wasUpdated && (
         <Alert
-          alertType={ALERT_TYPES.SUCCESS}
+          alertType={"success"}
           message="Your Vette was successfully updated!"
           className="mb-4"
         />

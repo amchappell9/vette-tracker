@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
-import AddVetteForm from "./AddVetteForm";
-import useAddVette from "../../hooks/useAddVette";
-import useUpdateVette from "../../hooks/useUpdateVette";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import AddVetteForm from "../AddVetteForm";
+import useAddVette from "../../../hooks/useAddVette";
+import useUpdateVette from "../../../hooks/useUpdateVette";
+import Alert from "../../../components/Alert/Alert";
+import { VetteObject } from "../../../types/VetteObject";
 
-const formatValues = (values) => {
+const formatValues = (values: VetteObject) => {
   let formattedValues = values;
 
   // Strip commas from miles
@@ -17,8 +18,22 @@ const formatValues = (values) => {
   return formattedValues;
 };
 
-const AddVette = ({ setHeaderInfo }) => {
-  const [vetteToEditInfo, setVetteToEditInfo] = useState(null);
+type AddVetteProps = {
+  setHeaderInfo: (headerInfo: {
+    title: string;
+    backLinkText: string;
+    backLinkConfig: string;
+  }) => void;
+};
+
+interface LocationState {
+  vetteToEdit: VetteObject;
+}
+
+const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
+  const [vetteToEditInfo, setVetteToEditInfo] = useState<VetteObject | null>(
+    null
+  );
   const [
     { isLoading, hasError, errorMessage, success, submissionResponse },
     addVette,
@@ -34,15 +49,16 @@ const AddVette = ({ setHeaderInfo }) => {
     updateVette,
   ] = useUpdateVette();
 
-  let location = useLocation();
+  const location = useLocation<LocationState>();
+  const { vetteToEdit } = location.state;
 
   useEffect(() => {
-    if (location.state && location.state.vetteToEdit) {
-      setVetteToEditInfo(location.state.vetteToEdit);
+    if (vetteToEdit) {
+      setVetteToEditInfo(vetteToEdit);
       setHeaderInfo({
         title: "Edit Vette",
-        backLinkText: `Back to ${location.state.vetteToEdit.year} Corvette`,
-        backLinkConfig: `/vettes/${location.state.vetteToEdit.id}`,
+        backLinkText: `Back to ${vetteToEdit.year} Corvette`,
+        backLinkConfig: `/vettes/${vetteToEdit.id}`,
       });
     } else {
       setHeaderInfo({
@@ -51,9 +67,9 @@ const AddVette = ({ setHeaderInfo }) => {
         backLinkConfig: "/vettes",
       });
     }
-  }, [location, setHeaderInfo]);
+  }, [vetteToEdit, setHeaderInfo]);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: VetteObject) => {
     const formattedValues = formatValues(values);
 
     if (vetteToEditInfo) {
@@ -80,7 +96,7 @@ const AddVette = ({ setHeaderInfo }) => {
   } else if (hasError || updateHasError) {
     return (
       <Alert
-        alertType={ALERT_TYPES.DANGER}
+        alertType={"danger"}
         message={errorMessage !== "" ? errorMessage : updateErrorMessage}
       />
     );

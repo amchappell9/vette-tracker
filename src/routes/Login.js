@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Alert, { ALERT_TYPES } from "../components/Alert/Alert";
+import Alert from "../components/Alert/Alert";
 import Button from "../components/Button";
 import Input from "../components/Input/Input";
 import FormFieldErrorMessage from "../components/forms/FormFieldErrorMessage";
@@ -63,12 +63,10 @@ const Login = ({ handleAuth }) => {
             </Link>
           </p>
         </div>
-        {errorMessage && (
-          <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />
-        )}
+        {errorMessage && <Alert alertType={"danger"} message={errorMessage} />}
         {userSignedUp && (
           <Alert
-            alertType={ALERT_TYPES.SUCCESS}
+            alertType={"success"}
             message={
               "You've successfully signed up! Sign in with your email address and password below."
             }

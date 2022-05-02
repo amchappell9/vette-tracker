@@ -16,6 +16,7 @@ import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect";
+import { VetteObject } from "../../../types/VetteObject";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
@@ -38,25 +39,9 @@ const addVetteFormValidationSchema = Yup.object({
   trim: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
 });
 
-type VetteInfo = {
-  year: string;
-  miles: string;
-  cost: string;
-  transmissionType: string;
-  exteriorColor: string;
-  interiorColor: string;
-  submodel: string;
-  trim: string;
-  packages: string[];
-  link: string;
-  id?: string;
-  date?: string;
-  userId?: string;
-};
-
 type AddVetteFormProps = {
-  handleSubmit: (values: VetteInfo) => void;
-  vetteToEditInfo: VetteInfo;
+  handleSubmit: (values: VetteObject) => void;
+  vetteToEditInfo: VetteObject;
 };
 
 const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "./ListOfVettes";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import Alert from "../../components/Alert/Alert";
 import useGetAllVettes from "../../hooks/useGetAllVettes";
 import AddFirstVetteMessage from "./AddFirstVetteMessage";
 import PaginationControls from "../../components/PaginationControls";
@@ -91,7 +91,7 @@ const AllVettes = ({ setHeaderInfo }) => {
   if (isLoading) {
     output = <div>Loading...</div>;
   } else if (hasError) {
-    output = <Alert alertType={ALERT_TYPES.DANGER} message={errorMessage} />;
+    output = <Alert alertType={"danger"} message={errorMessage} />;
   } else if (vettes.length === 0) {
     output = <AddFirstVetteMessage />;
   } else if (vettes.length > 0) {

@@ -2,7 +2,7 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import useDeleteVette from "../../hooks/useDeleteVette";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import Alert from "../../components/Alert/Alert";
 
 export default function DeleteVetteModal({
   open,
@@ -99,10 +99,7 @@ export default function DeleteVetteModal({
                   {/* Error */}
                   {hasError && (
                     <div className="mt-2">
-                      <Alert
-                        alertType={ALERT_TYPES.DANGER}
-                        message={errorMessage}
-                      />
+                      <Alert alertType={"danger"} message={errorMessage} />
                     </div>
                   )}
                 </div>

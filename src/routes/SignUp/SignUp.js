@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button";
 import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
-import Alert, { ALERT_TYPES } from "../../components/Alert/Alert";
+import Alert from "../../components/Alert/Alert";
 
 const signUpFormValidationSchema = Yup.object({
   firstName: Yup.string().required("This field is required"),
@@ -73,7 +73,7 @@ const SignUp = ({ handleSignUp }) => {
           <h1 className="text-3xl font-bold text-gray-700">Sign Up</h1>
           {errorMessage && (
             <Alert
-              alertType={ALERT_TYPES.DANGER}
+              alertType={"danger"}
               message={errorMessage}
               className="mt-4"
             />
