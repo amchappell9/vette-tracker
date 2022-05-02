@@ -27,7 +27,7 @@ type AddVetteProps = {
 };
 
 interface LocationState {
-  vetteToEdit: VetteObject;
+  vetteToEdit?: VetteObject;
 }
 
 const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
@@ -50,10 +50,11 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
   ] = useUpdateVette();
 
   const location = useLocation<LocationState>();
-  const { vetteToEdit } = location.state;
 
   useEffect(() => {
-    if (vetteToEdit) {
+    if (location.state != null && location.state.vetteToEdit) {
+      const { vetteToEdit } = location.state;
+
       setVetteToEditInfo(vetteToEdit);
       setHeaderInfo({
         title: "Edit Vette",
@@ -67,7 +68,7 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
         backLinkConfig: "/vettes",
       });
     }
-  }, [vetteToEdit, setHeaderInfo]);
+  }, [location, setHeaderInfo]);
 
   const onSubmit = async (values: VetteObject) => {
     const formattedValues = formatValues(values);
