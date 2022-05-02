@@ -7,13 +7,25 @@ export const INPUT_TYPES = {
 
 type InputType = "miles" | "dollar";
 
+// I need some way to pass props straight through to the <input /> without defining them, but I'm not sure how to do that yet
 type InputProps = {
-  className: string;
-  haserror: boolean;
-  maskType: InputType;
+  id?: string;
+  type?: string;
+  autoComplete?: string;
+  className?: string;
+  haserror?: boolean;
+  maskType?: InputType;
 };
 
-const Input = ({ className, haserror, maskType, ...props }: InputProps) => {
+const Input = ({
+  id,
+  type,
+  autoComplete,
+  className,
+  haserror = false,
+  maskType,
+  ...props
+}: InputProps) => {
   const classes = `${className} rounded border border-solid border-gray-300 text-lg outline-none focus:ring-2 focus:ring-red-500 ${
     haserror ? "border-red-500" : null
   }`;
@@ -33,9 +45,19 @@ const Input = ({ className, haserror, maskType, ...props }: InputProps) => {
   }
 
   if (maskType) {
-    return <NumberFormat {...maskOptions} className={classes} {...props} />;
+    return (
+      <NumberFormat id={id} {...maskOptions} className={classes} {...props} />
+    );
   } else {
-    return <input className={classes} {...props} />;
+    return (
+      <input
+        id={id}
+        type={type}
+        autoComplete={autoComplete}
+        className={classes}
+        {...props}
+      />
+    );
   }
 };
 

@@ -1,33 +1,57 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Alert from "../components/Alert/Alert";
-import Button from "../components/Button";
-import Input from "../components/Input/Input";
-import FormFieldErrorMessage from "../components/forms/FormFieldErrorMessage";
+import Alert from "../../components/Alert/Alert";
+import Button from "../../components/Button";
+import Input from "../../components/Input/Input";
+import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
 
 const LoginFormValidationSchema = Yup.object({
   email: Yup.string().required("Please enter your email address"),
   password: Yup.string().required("Please enter your password"),
 });
 
-const Login = ({ handleAuth }) => {
-  const [errorMessage, setErrorMessage] = useState(null);
+type LoginProps = {
+  handleAuth: (
+    email: string,
+    password: string,
+    // TODO: figure out these param types
+    handleSuccess: () => void,
+    handleError: (response: any) => void
+  ) => void;
+};
 
-  let history = useHistory();
-  let location = useLocation();
+interface HistoryModel {}
+
+interface LocationModel {
+  from: string;
+  userSignedUp: boolean;
+}
+
+interface ErrorResponseModel {
+  json?: {
+    error_description?: string;
+    msg?: string;
+  };
+}
+
+const Login = ({ handleAuth }: LoginProps) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  let history = useHistory<HistoryModel>();
+  let location = useLocation<LocationModel>();
 
   let { from, userSignedUp } = location.state || {
     from: { pathname: "/vettes" },
     userSignedUp: false,
   };
 
-  const handleSuccess = (response) => {
+  const handleSuccess = () => {
     history.replace(from);
   };
 
-  const handleError = (error) => {
+  const handleError = (error: ErrorResponseModel) => {
     if (error.json && error.json.error_description) {
       setErrorMessage(error.json.error_description);
     } else if (error.json && error.json.msg) {
