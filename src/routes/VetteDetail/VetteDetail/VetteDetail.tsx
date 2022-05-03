@@ -4,7 +4,7 @@ import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
 import useGetVette from "../../../hooks/useGetVette";
 import Alert from "../../../components/Alert/Alert";
 import VetteDetailCard from "../VetteDetailCard";
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 
 type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
 

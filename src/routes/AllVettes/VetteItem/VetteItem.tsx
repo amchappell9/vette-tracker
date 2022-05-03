@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { default as dayjs } from "dayjs";
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";

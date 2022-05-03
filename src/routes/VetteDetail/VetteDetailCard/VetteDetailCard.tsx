@@ -7,7 +7,7 @@ import PackagesList from "../PackagesList";
 import SubmodelInfo from "../SubmodelInfo";
 import TrimInfo from "../TrimInfo";
 import DeleteVetteModal from "../DeleteVetteModal";
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 
 type VetteDetailCardProps = {
   vetteData: VetteObject;

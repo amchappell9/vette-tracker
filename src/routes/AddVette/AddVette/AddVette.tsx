@@ -4,7 +4,7 @@ import AddVetteForm from "../AddVetteForm";
 import useAddVette from "../../../hooks/useAddVette";
 import useUpdateVette from "../../../hooks/useUpdateVette";
 import Alert from "../../../components/Alert/Alert";
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 
 const formatValues = (values: VetteObject) => {
   let formattedValues = values;

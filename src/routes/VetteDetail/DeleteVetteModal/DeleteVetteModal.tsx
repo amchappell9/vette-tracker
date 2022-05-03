@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import useDeleteVette from "../../../hooks/useDeleteVette";
 import Alert from "../../../components/Alert/Alert";
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 
 type DeleteVetteModalProps = {
   open: boolean;

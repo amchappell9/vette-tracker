@@ -1,4 +1,4 @@
-import { VetteObject } from "../../../types/VetteObject";
+import { VetteObject } from "../../../types/types";
 import VetteItem from "../VetteItem";
 
 type ListOfVettesProps = {
