@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from "../../../vetteFlagLogo.svg";
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
-import Footer from "../../../Footer";
+import Footer from "../../Footer";
 import Card from "../../Card";
 
 type AuthenticatedPageProps = {

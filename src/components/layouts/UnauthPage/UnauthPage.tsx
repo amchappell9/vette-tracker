@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../../vetteFlagLogo-dark.svg";
-import Footer from "../../../Footer";
+import Footer from "../../Footer";
 
 type UnauthPageProps = {
   children: ReactNode;
