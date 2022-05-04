@@ -6,6 +6,8 @@ import Alert from "../../components/Alert/Alert";
 import Button from "../../components/Button";
 import Input from "../../components/Input/Input";
 import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
+import { ErrorResponseModel } from "../../App";
+import { User } from "gotrue-js";
 
 const LoginFormValidationSchema = Yup.object({
   email: Yup.string().required("Please enter your email address"),
@@ -16,9 +18,8 @@ type LoginProps = {
   handleAuth: (
     email: string,
     password: string,
-    // TODO: figure out these param types
-    handleSuccess: () => void,
-    handleError: (response: any) => void
+    handleSuccess: (response: User) => void,
+    handleError: (response: ErrorResponseModel) => void
   ) => void;
 };
 
@@ -27,13 +28,6 @@ interface HistoryModel {}
 interface LocationModel {
   from: string;
   userSignedUp: boolean;
-}
-
-interface ErrorResponseModel {
-  json?: {
-    error_description?: string;
-    msg?: string;
-  };
 }
 
 const Login = ({ handleAuth }: LoginProps) => {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
-import GoTrue from "gotrue-js";
+import GoTrue, { User } from "gotrue-js";
 
 import Home from "./routes/Home/Home";
 import Trends from "./routes/Trends";
@@ -14,16 +14,34 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
-import UnauthPage from "./components/layouts/UnauthPage/";
+import UnauthPage from "./components/layouts/UnauthPage";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 
-const persistUserInfo = (userInfo) => {
+/**
+ * Structure of the error that could be returned by the Netlify go-true API.
+ *
+ * Tried to mimic the error responses from the micro-api-client API. Unfortunately it doesn't have types built in...
+ * https://github.com/netlify/micro-api-client#class-httperror-extends-error
+ */
+export interface ErrorResponseModel extends Error {
+  stack: any;
+  status: string;
+  data?: any;
+  json?: {
+    error_description?: string;
+    msg?: string;
+  };
+}
+
+const persistUserInfo = (userInfo: User) => {
   localStorage.setItem("userInfo", JSON.stringify(userInfo));
 };
 
-const getUserInfoFromLocalStorage = () => {
-  if (localStorage.getItem("userInfo")) {
-    return JSON.parse(localStorage.getItem("userInfo"));
+const getUserInfoFromLocalStorage = (): User | null => {
+  const userInfo = localStorage.getItem("userInfo");
+
+  if (userInfo != null) {
+    return JSON.parse(userInfo);
   }
 
   return null;
@@ -38,14 +56,24 @@ function App() {
     APIUrl: "https://vette-tracker.netlify.app/.netlify/identity",
   });
 
-  const signUpNewUser = (email, password, handleSuccess, handleError) => {
+  const signUpNewUser = (
+    email: string,
+    password: string,
+    handleSuccess: (response: User) => void,
+    handleError: (error: ErrorResponseModel) => void
+  ) => {
     auth
       .signup(email, password)
       .then((response) => handleSuccess(response))
       .catch((error) => handleError(JSON.parse(JSON.stringify(error))));
   };
 
-  const authenticate = (email, password, handleSuccess, handleError) => {
+  const authenticate = (
+    email: string,
+    password: string,
+    handleSuccess: (response: User) => void,
+    handleError: (error: ErrorResponseModel) => void
+  ) => {
     auth
       .login(email, password, true)
       .then((response) => {
@@ -57,6 +85,11 @@ function App() {
 
   const handleLogout = () => {
     const user = auth.currentUser();
+
+    if (user == null) {
+      console.error("Null user value");
+      return;
+    }
 
     user.logout().then(() => {
       setUserInfo(null);
