@@ -102,7 +102,10 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
       />
     );
   } else if (success || updateSuccessful) {
-    const vetteId = success ? submissionResponse.id : updateResponse.id;
+    const vetteId =
+      success && !!submissionResponse
+        ? submissionResponse.id
+        : updateResponse.id;
     const isUpdate = updateSuccessful;
 
     return (
