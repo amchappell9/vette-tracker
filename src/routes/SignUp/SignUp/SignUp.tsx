@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button";
-import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
-import Alert from "../../components/Alert/Alert";
+import { User } from "gotrue-js";
+import Input from "../../../components/Input/Input";
+import Button from "../../../components/Button";
+import FormFieldErrorMessage from "../../../components/forms/FormFieldErrorMessage";
+import Alert from "../../../components/Alert/Alert";
+import { ErrorResponseModel } from "../../../App";
 
 const signUpFormValidationSchema = Yup.object({
   firstName: Yup.string().required("This field is required"),
@@ -19,15 +21,24 @@ const signUpFormValidationSchema = Yup.object({
     .required("This field is required"),
 });
 
-const SignUp = ({ handleSignUp }) => {
-  const [errorMessage, setErrorMessage] = useState(null);
+type SignUpProps = {
+  handleSignUp: (
+    email: string,
+    password: string,
+    handleSuccess: (response: User) => void,
+    handleError: (error: ErrorResponseModel) => void
+  ) => void;
+};
+
+const SignUp = ({ handleSignUp }: SignUpProps) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const handleSuccess = () => {
     setSignUpSuccess(true);
   };
 
-  const handleError = (error) => {
+  const handleError = (error: ErrorResponseModel) => {
     if (error.json && error.json.error_description) {
       setErrorMessage(error.json.error_description);
     } else if (error.json && error.json.msg) {
@@ -90,9 +101,9 @@ const SignUp = ({ handleSignUp }) => {
                 <div className="col-span-2 sm:col-span-1">
                   <label className="font-gray-600 mb-2 block">First Name</label>
                   <Input
+                    {...formik.getFieldProps("firstName")}
                     name="firstName"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("firstName")}
                   />
                   {formik.touched.firstName && formik.errors.firstName ? (
                     <FormFieldErrorMessage
@@ -105,9 +116,9 @@ const SignUp = ({ handleSignUp }) => {
                 <div className="col-span-2 sm:col-span-1">
                   <label className="font-gray-600 mb-2 block">Last Name</label>
                   <Input
+                    {...formik.getFieldProps("lastName")}
                     name="lastName"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("lastName")}
                   />
                   {formik.touched.lastName && formik.errors.lastName ? (
                     <FormFieldErrorMessage
@@ -122,9 +133,9 @@ const SignUp = ({ handleSignUp }) => {
                     Email Address
                   </label>
                   <Input
+                    {...formik.getFieldProps("emailAddress")}
                     name="emailAddress"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("emailAddress")}
                   />
                   {formik.touched.emailAddress && formik.errors.emailAddress ? (
                     <FormFieldErrorMessage
@@ -137,10 +148,10 @@ const SignUp = ({ handleSignUp }) => {
                 <div className="col-span-2">
                   <label className="font-gray-600 mb-2 block">Password</label>
                   <Input
+                    {...formik.getFieldProps("password")}
                     type="password"
                     name="password"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("password")}
                   />
                   {formik.touched.password && formik.errors.password ? (
                     <FormFieldErrorMessage
@@ -155,10 +166,10 @@ const SignUp = ({ handleSignUp }) => {
                     Confirm Password
                   </label>
                   <Input
+                    {...formik.getFieldProps("confirmPassword")}
                     type="password"
                     name="confirmPassword"
                     className="w-full bg-gray-50 py-1 px-4"
-                    {...formik.getFieldProps("confirmPassword")}
                   />
                   {formik.touched.confirmPassword &&
                   formik.errors.confirmPassword ? (

@@ -1,21 +1,35 @@
-import React, { useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { CheckCircleIcon, ExclamationIcon } from "@heroicons/react/outline";
 import { Link, useLocation } from "react-router-dom";
+import GoTrue from "gotrue-js";
 
-const confirmationReducer = (state, action) => {
+type StateTypes = "INIT" | "SUCCESS" | "ERROR";
+
+type ActionObject = {
+  type: StateTypes;
+  errorMessage?: string | null;
+};
+
+type StateObject = {
+  isLoading: boolean;
+  errorMessage?: string | null;
+  isSuccess: boolean;
+};
+
+const confirmationReducer = (state: StateObject, action: ActionObject) => {
   switch (action.type) {
     case "INIT":
       return {
         ...state,
         isLoading: true,
-        errorMessage: false,
+        errorMessage: null,
         isSuccess: false,
       };
     case "SUCCESS":
       return {
         ...state,
         isLoading: false,
-        errorMessage: false,
+        errorMessage: null,
         isSuccess: true,
       };
     case "ERROR":
@@ -31,21 +45,25 @@ const confirmationReducer = (state, action) => {
   }
 };
 
-const SignUpConfirmation = ({ auth }) => {
+type SignUpConfirmationProps = {
+  auth: GoTrue;
+};
+
+const SignUpConfirmation = ({ auth }: SignUpConfirmationProps) => {
   const [state, dispatch] = useReducer(confirmationReducer, {
     isLoading: false,
-    errorMessage: false,
+    errorMessage: null,
     isSuccess: false,
   });
   const location = useLocation();
 
   useEffect(() => {
-    const confirmUser = (token) => {
+    const confirmUser = (token: string) => {
       dispatch({ type: "INIT" });
 
       auth
         .confirm(token)
-        .then((response) => dispatch({ type: "SUCCESS" }))
+        .then(() => dispatch({ type: "SUCCESS" }))
         .catch((error) => {
           const parsedError = JSON.parse(JSON.stringify(error));
 
@@ -66,11 +84,11 @@ const SignUpConfirmation = ({ auth }) => {
   }, [location, auth]);
 
   return (
-    <div className="min-main-height flex justify-center items-center">
-      <div className="max-w-2xl w-full">
+    <div className="min-main-height flex items-center justify-center">
+      <div className="w-full max-w-2xl">
         {!state.errorMessage ? (
           <>
-            <CheckCircleIcon className="text-green-600 h-24 mx-auto" />
+            <CheckCircleIcon className="mx-auto h-24 text-green-600" />
             <h1 className="mt-4 text-center text-3xl font-bold text-gray-900">
               Email Confirmed!
             </h1>
@@ -81,7 +99,7 @@ const SignUpConfirmation = ({ auth }) => {
             <div className="mt-8 text-center">
               <Link
                 to="/vettes"
-                className="px-8 py-4 mt-8 font-bold text-2xl shadow-md bg-red-500 hover:bg-red-600 text-white rounded"
+                className="mt-8 rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white shadow-md hover:bg-red-600"
               >
                 Get Started
               </Link>
@@ -89,7 +107,7 @@ const SignUpConfirmation = ({ auth }) => {
           </>
         ) : (
           <>
-            <ExclamationIcon className="text-yellow-500 h-24 mx-auto" />
+            <ExclamationIcon className="mx-auto h-24 text-yellow-500" />
             <h1 className="mt-4 text-center text-3xl font-bold text-gray-700">
               There's been an issue.
             </h1>

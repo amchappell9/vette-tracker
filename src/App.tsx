@@ -9,11 +9,11 @@ import VetteDetail from "./routes/VetteDetail/VetteDetail";
 import AddVette from "./routes/AddVette/AddVette";
 import NoMatch from "./routes/NoMatch";
 import Login from "./routes/Login";
-import SignUp from "./routes/SignUp/SignUp";
+import SignUp from "./routes/SignUp/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
-import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
+import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation/SignUpConfirmation";
 import UnauthPage from "./components/layouts/UnauthPage";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 

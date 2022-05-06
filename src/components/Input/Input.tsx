@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from "react";
 import NumberFormat from "react-number-format";
 
 export const INPUT_TYPES = {
@@ -8,18 +9,14 @@ export const INPUT_TYPES = {
 type InputType = "miles" | "dollar";
 
 // I need some way to pass props straight through to the <input /> without defining them, but I'm not sure how to do that yet
-type InputProps = {
-  id?: string;
-  type?: string;
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   autoComplete?: string;
   className?: string;
   haserror?: boolean;
   maskType?: InputType;
-};
+}
 
 const Input = ({
-  id,
-  type,
   autoComplete,
   className,
   haserror = false,
@@ -45,19 +42,9 @@ const Input = ({
   }
 
   if (maskType) {
-    return (
-      <NumberFormat id={id} {...maskOptions} className={classes} {...props} />
-    );
+    return <NumberFormat {...maskOptions} className={classes} />;
   } else {
-    return (
-      <input
-        id={id}
-        type={type}
-        autoComplete={autoComplete}
-        className={classes}
-        {...props}
-      />
-    );
+    return <input autoComplete={autoComplete} className={classes} {...props} />;
   }
 };
 
