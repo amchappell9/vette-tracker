@@ -1,13 +1,25 @@
 import { useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
+import { VetteObject } from "../types/types";
 
-const ACTION_TYPES = {
-  INIT: "INIT",
-  SUCCESS: "SUCCESS",
-  ERROR: "ERROR",
-  RESET: "RESET",
-};
+type ActionType =
+  | {
+      type: "INIT";
+    }
+  | {
+      type: "SUCCESS";
+      payload: {
+        msg: string;
+      };
+    }
+  | {
+      type: "ERROR";
+      payload: string;
+    }
+  | {
+      type: "RESET";
+    };
 
 const initialState = {
   isLoading: false,
@@ -17,25 +29,28 @@ const initialState = {
   submissionResponse: {},
 };
 
-const deleteVetteReducer = (state, action) => {
+const deleteVetteReducer = (state: typeof initialState, action: ActionType) => {
   switch (action.type) {
-    case ACTION_TYPES.INIT:
+    case "INIT":
       return { ...state, isLoading: true };
-    case ACTION_TYPES.SUCCESS:
+
+    case "SUCCESS":
       return {
         ...state,
         isLoading: false,
         success: true,
         submissionResponse: action.payload,
       };
-    case ACTION_TYPES.ERROR:
+
+    case "ERROR":
       return {
         ...state,
         isLoading: false,
         hasError: true,
         errorMessage: action.payload,
       };
-    case ACTION_TYPES.RESET:
+
+    case "RESET":
       return initialState;
 
     default:
@@ -44,7 +59,7 @@ const deleteVetteReducer = (state, action) => {
 };
 
 const useDeleteVette = () => {
-  const [vetteInfo, setVetteInfo] = useState(null);
+  const [vetteInfo, setVetteInfo] = useState<VetteObject | null>(null);
   const [state, dispatch] = useReducer(deleteVetteReducer, initialState);
   const userInfo = useContext(UserInfoContext);
 
@@ -52,23 +67,27 @@ const useDeleteVette = () => {
     let requestCancelled = false;
 
     const callDeleteVette = async () => {
-      dispatch({ type: ACTION_TYPES.INIT });
+      dispatch({ type: "INIT" });
 
       try {
         const response = await axios({
           method: "DELETE",
           url: "/.netlify/functions/vettes",
           data: vetteInfo,
-          headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+          headers: { Authorization: `Bearer ${userInfo?.token.access_token}` },
         });
 
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.SUCCESS, payload: response.data });
+        dispatch({ type: "SUCCESS", payload: response.data });
       } catch (error) {
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
+        if (error instanceof Error) {
+          dispatch({ type: "ERROR", payload: error.message });
+        } else {
+          dispatch({ type: "ERROR", payload: "An error has happened" });
+        }
       }
     };
 
@@ -81,17 +100,17 @@ const useDeleteVette = () => {
     };
   }, [vetteInfo, userInfo]);
 
-  const deleteVette = (vette) => {
+  const deleteVette = (vette: VetteObject) => {
     if (!vetteInfo) {
       setVetteInfo(vette);
     } else {
       // On retry reset the state, then set vette info to a "new" object so it triggers useEffect
-      dispatch({ type: ACTION_TYPES.RESET });
+      dispatch({ type: "RESET" });
       setVetteInfo({ ...vette });
     }
   };
 
-  return [state, deleteVette];
+  return [state, deleteVette] as const;
 };
 
 export default useDeleteVette;
