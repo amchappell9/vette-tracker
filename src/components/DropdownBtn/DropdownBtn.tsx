@@ -13,8 +13,10 @@ type DropdownBtnProps = {
   onFilterChange: () => void;
 };
 
+// This could be refactored into a Menu component from Headless UI, then you wouldn't need
+// useDetectOutsideClick
 const DropdownBtn = ({ filter, onFilterChange }: DropdownBtnProps) => {
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
 

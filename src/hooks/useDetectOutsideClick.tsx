@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, RefObject } from "react";
 
-export const useDetectOutsideClick = (el, initialState) => {
+/**
+ * https://gist.github.com/jmblog/fb05eaba27a8993749145adc898f9bcb
+ */
+export const useDetectOutsideClick = (
+  el: RefObject<HTMLElement>,
+  initialState: boolean
+) => {
   const [isActive, setIsActive] = useState(initialState);
 
   useEffect(() => {
-    const pageClickEvent = (e) => {
+    const pageClickEvent = (e: MouseEvent) => {
       // If the active element exists and is clicked outside of
-      if (el.current !== null && !el.current.contains(e.target)) {
+      if (el.current !== null && !el.current.contains(e.target as Node)) {
         setIsActive(!isActive);
       }
     };
@@ -21,5 +27,5 @@ export const useDetectOutsideClick = (el, initialState) => {
     };
   }, [isActive, el]);
 
-  return [isActive, setIsActive];
+  return [isActive, setIsActive] as const;
 };
