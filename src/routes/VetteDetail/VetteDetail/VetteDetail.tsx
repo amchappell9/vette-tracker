@@ -8,11 +8,11 @@ import { VetteObject } from "../../../types/types";
 
 type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
 
-const getHeaderInfoByState = (state: UIState, vetteData: VetteObject) => {
+const getHeaderInfoByState = (state: UIState, vetteData?: VetteObject) => {
   switch (state) {
     case "confirmation-view":
       return {
-        title: `${vetteData.year} Corvette ${vetteData.submodel}`,
+        title: `${vetteData?.year} Corvette ${vetteData?.submodel}`,
         linkText: "Add Another Vette",
         linkConfig: "/add-vette",
         linkIcon: (
@@ -24,7 +24,7 @@ const getHeaderInfoByState = (state: UIState, vetteData: VetteObject) => {
 
     case "vette-info":
       return {
-        title: `${vetteData.year} Corvette ${vetteData.submodel}`,
+        title: `${vetteData?.year} Corvette ${vetteData?.submodel}`,
         linkText: "Edit Vette",
         linkConfig: {
           pathname: "/add-vette",
@@ -94,9 +94,9 @@ const VetteDetail = ({ setHeaderInfo }: VetteDetailProps) => {
         setHeaderInfo(getHeaderInfoByState("vette-info", vetteData));
       }
     } else if (isLoading) {
-      setHeaderInfo(getHeaderInfoByState("loading", vetteData));
+      setHeaderInfo(getHeaderInfoByState("loading"));
     } else if (hasError) {
-      setHeaderInfo(getHeaderInfoByState("error", vetteData));
+      setHeaderInfo(getHeaderInfoByState("error"));
     }
   }, [vetteData, location, success, isLoading, hasError, setHeaderInfo]);
 

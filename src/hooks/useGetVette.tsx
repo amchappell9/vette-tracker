@@ -1,25 +1,33 @@
 import { useState, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
+import { VetteObject } from "../types/types";
 
-const ACTION_TYPES = {
-  INIT: "INIT",
-  SUCCESS: "SUCCESS",
-  ERROR: "ERROR",
+type ActionType =
+  | { type: "INIT" }
+  | { type: "SUCCESS"; payload: VetteObject }
+  | { type: "ERROR"; payload: string };
+
+type StateObject = {
+  isLoading: boolean;
+  hasError: boolean;
+  errorMessage: string;
+  success: boolean;
+  vetteData: VetteObject | null;
 };
 
-const getVetteReducer = (state, action) => {
+const getVetteReducer = (state: StateObject, action: ActionType) => {
   switch (action.type) {
-    case ACTION_TYPES.INIT:
+    case "INIT":
       return { ...state, isLoading: true };
-    case ACTION_TYPES.SUCCESS:
+    case "SUCCESS":
       return {
         ...state,
         isLoading: false,
         success: true,
         vetteData: action.payload,
       };
-    case ACTION_TYPES.ERROR:
+    case "ERROR":
       return {
         ...state,
         isLoading: false,
@@ -32,7 +40,7 @@ const getVetteReducer = (state, action) => {
   }
 };
 
-const useGetVette = (vetteIdParam) => {
+const useGetVette = (vetteIdParam: string | undefined) => {
   const [vetteId, setVetteId] = useState(vetteIdParam);
   const userInfo = useContext(UserInfoContext);
   const [state, dispatch] = useReducer(getVetteReducer, {
@@ -40,38 +48,42 @@ const useGetVette = (vetteIdParam) => {
     hasError: false,
     errorMessage: "",
     success: false,
-    vetteData: {},
+    vetteData: null,
   });
 
   useEffect(() => {
     let requestCancelled = false;
     const getVette = async () => {
-      dispatch({ type: ACTION_TYPES.INIT });
+      dispatch({ type: "INIT" });
 
       try {
         let response = await axios({
           url: `/.netlify/functions/vettes/${vetteId}`,
           method: "get",
-          headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+          headers: { Authorization: `Bearer ${userInfo?.token.access_token}` },
         });
 
         if (requestCancelled) return;
 
         if (response.data.msg) {
           dispatch({
-            type: ACTION_TYPES.ERROR,
+            type: "ERROR",
             payload: response.data.msg,
           });
         } else {
           dispatch({
-            type: ACTION_TYPES.SUCCESS,
+            type: "SUCCESS",
             payload: response.data,
           });
         }
       } catch (error) {
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
+        if (error instanceof Error) {
+          dispatch({ type: "ERROR", payload: error.message });
+        } else {
+          dispatch({ type: "ERROR", payload: "An error has happened" });
+        }
       }
     };
 
@@ -82,7 +94,7 @@ const useGetVette = (vetteIdParam) => {
     };
   }, [vetteId, userInfo]);
 
-  return [state, setVetteId];
+  return [state, setVetteId] as const;
 };
 
 export default useGetVette;
