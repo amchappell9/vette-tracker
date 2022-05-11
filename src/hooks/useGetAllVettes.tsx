@@ -1,22 +1,29 @@
 import { useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
+import { VetteObject } from "../types/types";
 
-const ACTION_TYPES = {
-  INIT: "INIT",
-  SUCCESS: "SUCCESS",
-  ERROR: "ERROR",
+type ActionType =
+  | { type: "INIT" }
+  | { type: "SUCCESS"; payload: VetteObject[] }
+  | { type: "ERROR"; payload: string };
+
+type StateObject = {
+  isLoading: boolean;
+  hasError: boolean;
+  errorMessage: string;
+  vettes: VetteObject[];
 };
 
-const getVettesReducer = (state, action) => {
+const getVettesReducer = (state: StateObject, action: ActionType) => {
   switch (action.type) {
-    case ACTION_TYPES.INIT:
+    case "INIT":
       return { ...state, isLoading: true };
 
-    case ACTION_TYPES.SUCCESS:
+    case "SUCCESS":
       return { ...state, isLoading: false, vettes: action.payload };
 
-    case ACTION_TYPES.ERROR:
+    case "ERROR":
       return {
         ...state,
         isLoading: false,
@@ -42,21 +49,26 @@ const useGetAllVettes = () => {
     let requestCancelled = false;
 
     const getAllVettes = async () => {
-      dispatch({ type: ACTION_TYPES.INIT });
+      dispatch({ type: "INIT" });
 
       try {
         let response = await axios({
           url: "/.netlify/functions/vettes",
           method: "get",
-          headers: { Authorization: `Bearer ${userInfo.token.access_token}` },
+          headers: { Authorization: `Bearer ${userInfo?.token.access_token}` },
         });
 
         if (requestCancelled) return;
 
-        dispatch({ type: ACTION_TYPES.SUCCESS, payload: response.data.vettes });
+        dispatch({ type: "SUCCESS", payload: response.data.vettes });
       } catch (error) {
         if (requestCancelled) return;
-        dispatch({ type: ACTION_TYPES.ERROR, payload: error.message });
+
+        if (error instanceof Error) {
+          dispatch({ type: "ERROR", payload: error.message });
+        } else {
+          dispatch({ type: "ERROR", payload: "An error has happened" });
+        }
       }
     };
 
