@@ -1,7 +1,7 @@
 import PaginationButton, {
   BUTTON_STATES,
 } from "../PaginationButton/PaginationButton";
-import usePagination, { DOTS } from "../../hooks/usePagination";
+import usePagination from "../../hooks/usePagination";
 
 type PaginationControlsProps = {
   currentPage: number;
@@ -85,7 +85,8 @@ const PaginationControls = ({
             {/* Numbered Buttons */}
             {paginationRange &&
               paginationRange.map((pageNumber) => {
-                if (pageNumber === DOTS) {
+                if (typeof pageNumber === "string") {
+                  // pageNumber === DOTS
                   return (
                     <PaginationButton
                       key={pageNumber}
