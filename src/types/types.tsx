@@ -1,4 +1,4 @@
-export interface VetteObject {
+export interface VetteValues {
   year: string;
   miles: string;
   cost: string;
@@ -9,7 +9,10 @@ export interface VetteObject {
   trim: string;
   packages: string[];
   link: string;
-  id?: string;
-  date?: string;
-  userId?: string;
+}
+
+export interface VetteObject extends VetteValues {
+  id: string;
+  date: string;
+  userId: string;
 }

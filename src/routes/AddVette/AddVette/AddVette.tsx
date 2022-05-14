@@ -73,7 +73,7 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
   const onSubmit = async (values: VetteObject) => {
     const formattedValues = formatValues(values);
 
-    if (vetteToEditInfo) {
+    if (vetteToEditInfo != null) {
       updateVette(vetteToEditInfo.id, formattedValues);
     } else {
       addVette(formattedValues);
@@ -102,10 +102,16 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
       />
     );
   } else if (success || updateSuccessful) {
-    const vetteId =
-      success && !!submissionResponse
-        ? submissionResponse.id
-        : updateResponse.id;
+    let vetteId;
+
+    if (success && submissionResponse != null) {
+      vetteId = submissionResponse.id;
+    } else if (updateSuccessful && updateResponse != null) {
+      vetteId = updateResponse.id;
+    } else {
+      throw new Error("Something in the state is mismatched");
+    }
+
     const isUpdate = updateSuccessful;
 
     return (
