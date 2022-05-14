@@ -2,6 +2,7 @@ import { useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
 import { VetteObject } from "../types/types";
+import { getErrorMessage } from "../utils/utils";
 
 type ActionType =
   | { type: "INIT" }
@@ -64,11 +65,7 @@ const useGetAllVettes = () => {
       } catch (error) {
         if (requestCancelled) return;
 
-        if (error instanceof Error) {
-          dispatch({ type: "ERROR", payload: error.message });
-        } else {
-          dispatch({ type: "ERROR", payload: "An error has happened" });
-        }
+        dispatch({ type: "ERROR", payload: getErrorMessage(error) });
       }
     };
 

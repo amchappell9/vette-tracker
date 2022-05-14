@@ -2,6 +2,7 @@ import { useState, useEffect, useReducer, useContext } from "react";
 import axios from "axios";
 import UserInfoContext from "../contexts/UserInfoContext";
 import { VetteObject } from "../types/types";
+import { getErrorMessage } from "../utils/utils";
 
 // interface ErrorResponse extends Error {
 //   response?: {
@@ -81,27 +82,7 @@ const useUpdateVette = () => {
       } catch (error) {
         if (requestCancelled) return;
 
-        // if (error instanceof Error) {
-        //   if (
-        //     error.response &&
-        //     error.response.data &&
-        //     error.response.data.message
-        //   ) {
-        //     dispatch({
-        //       type: "ERROR",
-        //       payload: error.response.data.message,
-        //     });
-        //   } else {
-        //     dispatch({ type: "ERROR", payload: error.message });
-        //   }
-        // } else {
-        // }
-
-        if (error instanceof Error) {
-          dispatch({ type: "ERROR", payload: error.message });
-        } else {
-          dispatch({ type: "ERROR", payload: "An error has happened" });
-        }
+        dispatch({ type: "ERROR", payload: getErrorMessage(error) });
       }
     };
 
