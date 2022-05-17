@@ -56,20 +56,16 @@ const getAllVettes = (userInfo) => {
   return client
     .query(
       q.Map(
-        q.Paginate(q.Match(q.Index("all_vettes"))),
+        q.Paginate(q.Match(q.Index("vettes_by_user"), userInfo.sub)),
         q.Lambda("X", q.Get(q.Var("X")))
       )
     )
     .then((response) => {
-      const vettes = [];
-
-      response.data.map((value) => {
-        return value.data.userId === userInfo.sub && vettes.push(value.data);
-      });
-
       return {
         statusCode: 200,
-        body: JSON.stringify({ vettes: vettes }),
+        body: JSON.stringify({
+          vettes: response.data.map((value) => value.data),
+        }),
       };
     });
 };
@@ -83,7 +79,7 @@ const getVetteByID = (id, userInfo) => {
   return client
     .query(
       q.Map(
-        q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+        q.Paginate(q.Match(q.Index("vette_by_id"), id)),
         q.Lambda("X", q.Get(q.Var("X")))
       )
     )
