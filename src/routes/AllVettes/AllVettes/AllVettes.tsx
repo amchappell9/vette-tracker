@@ -1,11 +1,11 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "../ListOfVettes";
 import Alert from "../../../components/Alert/Alert";
-import useGetAllVettes from "../../../hooks/useGetAllVettes";
 import AddFirstVetteMessage from "../AddFirstVetteMessage/AddFirstVetteMessage";
 import PaginationControls from "../../../components/PaginationControls";
+import { useAllVettes } from "../api/getAllVettes";
 
 // import VetteFilter from "./VetteFilter";
 // import FILTER_TYPES from "../../constants/filterTypes";
@@ -70,15 +70,11 @@ type AllVettesProps = {
 
 const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
   // const [filterValues, setFilterValues] = useState({});
-  const { isLoading, hasError, errorMessage, vettes } = useGetAllVettes();
+  const { data, isLoading, error } = useAllVettes();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
-    const lastPageIndex = firstPageIndex + PAGE_SIZE;
-
-    return vettes.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, vettes]);
+  const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
+  const lastPageIndex = firstPageIndex + PAGE_SIZE;
 
   useEffect(() => {
     setHeaderInfo({
@@ -97,23 +93,37 @@ const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
   //   return vettes;
   // };
 
-  let output;
-
+  // Loading
   if (isLoading) {
-    output = <div>Loading...</div>;
-  } else if (hasError) {
-    output = <Alert alertType={"danger"} message={errorMessage} />;
-  } else if (vettes.length === 0) {
-    output = <AddFirstVetteMessage />;
-  } else if (vettes.length > 0) {
-    output = (
+    return <div>Loading...</div>;
+  }
+
+  // Error
+  if (error) {
+    if (error instanceof Error) {
+      return <Alert alertType={"danger"} message={error.message} />;
+    } else {
+      return <Alert alertType={"danger"} message={"An error has happened"} />;
+    }
+  }
+
+  // Empty State
+  if (data && data.vettes.length === 0) {
+    return <AddFirstVetteMessage />;
+  }
+
+  // Has data
+  if (data && data.vettes.length > 0) {
+    const currentTableData = data.vettes.slice(firstPageIndex, lastPageIndex);
+
+    return (
       <>
         {/* <VetteFilter filters={filters} onFilterChange={onFilterChange} /> */}
         {/* <ListOfVettes vettesArray={getFilteredVettes(vettes)} /> */}
         <ListOfVettes vettesArray={currentTableData} />
         <PaginationControls
           currentPage={currentPage}
-          totalCount={vettes.length}
+          totalCount={data.vettes.length}
           pageSize={PAGE_SIZE}
           onPageChange={(page: number) => setCurrentPage(page)}
         />
@@ -121,7 +131,7 @@ const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
     );
   }
 
-  return <>{output}</>;
+  return <></>;
 };
 
 export default AllVettes;
