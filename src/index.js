@@ -1,20 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClientProvider } from "react-query";
+
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-// import netlifyIdentity from "netlify-identity-widget";
-
-// window.netlifyIdentity = netlifyIdentity;
-// netlifyIdentity.init();
+import { queryClient } from "./lib/react-query";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
