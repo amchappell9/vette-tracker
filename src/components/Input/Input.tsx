@@ -8,12 +8,16 @@ export const INPUT_TYPES = {
 
 type InputType = "miles" | "dollar";
 
-// I need some way to pass props straight through to the <input /> without defining them, but I'm not sure how to do that yet
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   autoComplete?: string;
   className?: string;
   haserror?: boolean;
   maskType?: InputType;
+  // These are just to convert the types from InputHTMLAttributes to ones
+  // acceptable by NumberFormatProps
+  value?: string | number;
+  defaultValue?: string | number;
+  type?: "text" | "tel" | "password";
 }
 
 const Input = ({
@@ -21,10 +25,15 @@ const Input = ({
   className,
   haserror = false,
   maskType,
+  value,
+  defaultValue,
+  type,
   ...props
 }: InputProps) => {
-  const classes = `${className} rounded border border-solid border-gray-300 text-lg outline-none focus:ring-2 focus:ring-red-500 ${
-    haserror ? "border-red-500" : null
+  const classes = `${
+    !!className ? className : ""
+  } rounded border border-solid border-gray-300 text-lg outline-none focus:ring-2 focus:ring-red-500 ${
+    haserror ? "border-red-500" : ""
   }`;
 
   let maskOptions = {};
@@ -42,9 +51,18 @@ const Input = ({
   }
 
   if (maskType) {
-    return <NumberFormat {...maskOptions} className={classes} />;
+    return (
+      <NumberFormat
+        {...maskOptions}
+        {...props}
+        className={classes}
+        value={value}
+        defaultValue={defaultValue}
+        type={type}
+      />
+    );
   } else {
-    return <input autoComplete={autoComplete} className={classes} {...props} />;
+    return <input {...props} autoComplete={autoComplete} className={classes} />;
   }
 };
 

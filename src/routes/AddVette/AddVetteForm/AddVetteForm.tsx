@@ -117,7 +117,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 ]}
               />
             </div>
-
             {/* Submodel */}
             <div className="col-span-6">
               <FormRadioGroup
@@ -146,7 +145,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 }
               </FormRadioGroup>
             </div>
-
             {/* Trim */}
             <div className="col-span-6">
               <FormRadioGroup
@@ -167,7 +165,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 }
               </FormRadioGroup>
             </div>
-
             {/* Packages */}
             <div className="col-span-6">
               <FormCheckboxGroup name="packages" label="Packages">
@@ -185,7 +182,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 }
               </FormCheckboxGroup>
             </div>
-
             {/* Tranmission */}
             <div className="col-span-6">
               <FormSelect
@@ -197,7 +193,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 ]}
               />
             </div>
-
             {/* Exterior Color */}
             <div className="col-span-6">
               <ExteriorColorSelect
@@ -206,7 +201,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 allExteriorColorOptions={exteriorColors}
               />
             </div>
-
             {/* Interior Color */}
             <div className="col-span-6">
               <FormSelect
@@ -217,7 +211,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 })}
               />
             </div>
-
             {/* Miles */}
             <div className="col-span-6">
               <FormInput
@@ -227,7 +220,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 label="Miles"
               />
             </div>
-
             {/* Cost */}
             <div className="col-span-6">
               <FormInput
@@ -237,7 +229,6 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 label="Cost"
               />
             </div>
-
             {/* Submission Buttons */}
             <div className="col-span-6 flex flex-row-reverse justify-between gap-2 md:justify-start">
               <Button
