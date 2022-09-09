@@ -96,6 +96,7 @@ const Alert = ({ alertType, message, className }: AlertProps) => {
       className={`rounded border-l-4 p-4 ${getMainStylesByType(
         alertType
       )} ${className}`}
+      role="alert"
     >
       <div className="flex">
         <div className="flex-shrink-0">{getIconByType(alertType)}</div>
