@@ -7,12 +7,14 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { queryClient } from "./lib/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
+        <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>,
