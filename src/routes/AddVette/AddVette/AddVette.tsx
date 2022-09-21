@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import AddVetteForm from "../AddVetteForm";
-import useAddVette from "../../../hooks/useAddVette";
-import useUpdateVette from "../../../hooks/useUpdateVette";
 import Alert from "../../../components/Alert/Alert";
-import { VetteObject } from "../../../types/types";
+import { VetteObject, VetteValues } from "../../../types/types";
+import { useCreateOrUpdateVette } from "../api/addVette";
 
-const formatValues = (values: VetteObject) => {
+const formatValues = (values: VetteValues) => {
   let formattedValues = values;
 
   // Strip commas from miles
@@ -34,20 +33,9 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
   const [vetteToEditInfo, setVetteToEditInfo] = useState<VetteObject | null>(
     null
   );
-  const [
-    { isLoading, hasError, errorMessage, success, submissionResponse },
-    addVette,
-  ] = useAddVette();
-  const [
-    {
-      isLoading: updateIsLoading,
-      hasError: updateHasError,
-      errorMessage: updateErrorMessage,
-      success: updateSuccessful,
-      response: updateResponse,
-    },
-    updateVette,
-  ] = useUpdateVette();
+
+  const { isSuccess, data, isError, error, isLoading, mutate } =
+    useCreateOrUpdateVette();
 
   const location = useLocation<LocationState>();
 
@@ -70,49 +58,39 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
     }
   }, [location, setHeaderInfo]);
 
-  const onSubmit = async (values: VetteObject) => {
+  const onSubmit = async (values: VetteValues) => {
     const formattedValues = formatValues(values);
 
-    if (vetteToEditInfo != null) {
-      updateVette(vetteToEditInfo.id, formattedValues);
-    } else {
-      addVette(formattedValues);
-    }
+    mutate({
+      vette: formattedValues,
+      id: vetteToEditInfo?.id,
+    });
   };
 
-  // Combining the two hook responses below is a little clunky, probably should be refactored into a single hook or something
-  if (
-    !isLoading &&
-    !updateIsLoading &&
-    !hasError &&
-    !updateHasError &&
-    !success &&
-    !updateSuccessful
-  ) {
+  if (!isLoading && !isError && !isSuccess) {
     return (
       <AddVetteForm handleSubmit={onSubmit} vetteToEditInfo={vetteToEditInfo} />
     );
-  } else if (isLoading || updateIsLoading) {
-    return <div>Loading...</div>;
-  } else if (hasError || updateHasError) {
-    return (
-      <Alert
-        alertType={"danger"}
-        message={errorMessage !== "" ? errorMessage : updateErrorMessage}
-      />
-    );
-  } else if (success || updateSuccessful) {
-    let vetteId;
+  }
 
-    if (success && submissionResponse != null) {
-      vetteId = submissionResponse.id;
-    } else if (updateSuccessful && updateResponse != null) {
-      vetteId = updateResponse.id;
-    } else {
-      throw new Error("Something in the state is mismatched");
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    let errorMessage = "An error has happened";
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
     }
 
-    const isUpdate = updateSuccessful;
+    return <Alert alertType={"danger"} message={errorMessage} />;
+  }
+
+  if (isSuccess) {
+    // Get ID from response
+    const vetteId = data.id;
+    const isUpdate = vetteToEditInfo !== null;
 
     return (
       <Redirect
