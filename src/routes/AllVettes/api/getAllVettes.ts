@@ -13,7 +13,8 @@ export const getAllVettes = (): Promise<VettesResponse> => {
 
 export const useAllVettes = () => {
   return useQuery({
-    queryKey: ["allVettes"],
+    queryKey: ["vettes"],
     queryFn: () => getAllVettes(),
+    staleTime: 5 * 60 * 1000,
   });
 };
