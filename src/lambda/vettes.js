@@ -160,7 +160,7 @@ const updateVette = async (id, vetteData, userInfo) => {
     await client
       .query(
         q.Map(
-          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
@@ -171,7 +171,7 @@ const updateVette = async (id, vetteData, userInfo) => {
 
     if (userIDMatches) {
       await client.query(
-        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
+        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), id))), {
           data: vetteData,
         })
       );
