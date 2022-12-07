@@ -1,9 +1,12 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import useDeleteVette from "../../../hooks/useDeleteVette";
+// import useDeleteVette from "../../../hooks/useDeleteVette";
+
 import Alert from "../../../components/Alert/Alert";
 import { VetteObject } from "../../../types/types";
+import { useDeleteVette } from "../api/deleteVette";
+import { getErrorMessage } from "../../../utils/utils";
 
 type DeleteVetteModalProps = {
   open: boolean;
@@ -19,8 +22,10 @@ export default function DeleteVetteModal({
   setVetteDeleted,
 }: DeleteVetteModalProps) {
   const cancelButtonRef = useRef(null);
-  const [{ isLoading, hasError, errorMessage, success }, deleteVette] =
-    useDeleteVette();
+  // const [{ isLoading, hasError, errorMessage, success }, deleteVette] =
+  //   useDeleteVette();
+
+  const { isSuccess, isLoading, isError, error, mutate } = useDeleteVette();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -78,7 +83,7 @@ export default function DeleteVetteModal({
                   </Dialog.Title>
 
                   {/* Default State */}
-                  {!isLoading && !hasError && !success && (
+                  {!isLoading && !isError && !isSuccess && (
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Are you sure you want to delete your
@@ -96,7 +101,7 @@ export default function DeleteVetteModal({
                   )}
 
                   {/* Success */}
-                  {success && (
+                  {isSuccess && (
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Your Vette has been deleted!
@@ -105,21 +110,24 @@ export default function DeleteVetteModal({
                   )}
 
                   {/* Error */}
-                  {hasError && (
+                  {isError && (
                     <div className="mt-2">
-                      <Alert alertType={"danger"} message={errorMessage} />
+                      <Alert
+                        alertType={"danger"}
+                        message={getErrorMessage(error)}
+                      />
                     </div>
                   )}
                 </div>
               </div>
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 {/* Default State */}
-                {!isLoading && !hasError && !success && (
+                {!isLoading && !isError && !isSuccess && (
                   <>
                     <button
                       type="button"
                       className="border-transparent inline-flex w-full justify-center rounded-md border bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                      onClick={() => deleteVette(vetteData)}
+                      onClick={() => mutate(vetteData)}
                     >
                       Delete
                     </button>
@@ -135,7 +143,7 @@ export default function DeleteVetteModal({
                 )}
 
                 {/* Success */}
-                {success && (
+                {isSuccess && (
                   <button
                     type="button"
                     className="focus:ring-indigo-500 mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
@@ -147,13 +155,13 @@ export default function DeleteVetteModal({
                 )}
 
                 {/* Error */}
-                {hasError && (
+                {isError && (
                   <>
                     <button
                       type="button"
                       className="border-transparent inline-flex w-full justify-center rounded-md border bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={() => {
-                        deleteVette(vetteData);
+                        mutate(vetteData);
                       }}
                     >
                       Try Again
