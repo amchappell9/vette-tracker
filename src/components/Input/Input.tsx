@@ -62,7 +62,14 @@ const Input = ({
       />
     );
   } else {
-    return <input {...props} autoComplete={autoComplete} className={classes} />;
+    return (
+      <input
+        {...props}
+        autoComplete={autoComplete}
+        className={classes}
+        type={type}
+      />
+    );
   }
 };
 
