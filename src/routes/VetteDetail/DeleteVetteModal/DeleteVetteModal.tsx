@@ -1,7 +1,6 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-// import useDeleteVette from "../../../hooks/useDeleteVette";
 
 import Alert from "../../../components/Alert/Alert";
 import { VetteObject } from "../../../types/types";
@@ -22,8 +21,6 @@ export default function DeleteVetteModal({
   setVetteDeleted,
 }: DeleteVetteModalProps) {
   const cancelButtonRef = useRef(null);
-  // const [{ isLoading, hasError, errorMessage, success }, deleteVette] =
-  //   useDeleteVette();
 
   const { isSuccess, isLoading, isError, error, mutate } = useDeleteVette();
 
