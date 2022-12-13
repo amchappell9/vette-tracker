@@ -92,13 +92,13 @@ const getVetteByID = (id, userInfo) => {
           statusCode: 200,
           body: JSON.stringify(response.data[0].data),
         };
-      } else {
-        // Should be a 404 but there's an issue causing netlify functions not to work
-        return {
-          statusCode: 200,
-          body: JSON.stringify({ msg: "Vette not found" }),
-        };
       }
+
+      // No vette found (or no access)
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ msg: "Vette not found" }),
+      };
     })
     .catch((error) => {
       console.error(error);
