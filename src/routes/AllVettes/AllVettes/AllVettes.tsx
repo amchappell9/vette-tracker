@@ -6,6 +6,7 @@ import Alert from "../../../components/Alert/Alert";
 import AddFirstVetteMessage from "../AddFirstVetteMessage/AddFirstVetteMessage";
 import PaginationControls from "../../../components/PaginationControls";
 import { useAllVettes } from "../api/getAllVettes";
+import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 
 // import VetteFilter from "./VetteFilter";
 // import FILTER_TYPES from "../../constants/filterTypes";
@@ -58,14 +59,7 @@ import { useAllVettes } from "../api/getAllVettes";
 const PAGE_SIZE = 5;
 
 type AllVettesProps = {
-  setHeaderInfo: (headerInfo: {
-    title: string;
-    linkText: string;
-    linkConfig: string;
-    linkIcon: React.ReactNode;
-    backLinkText?: string;
-    backLinkConfig?: string;
-  }) => void;
+  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
 };
 
 const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {

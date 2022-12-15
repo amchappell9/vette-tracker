@@ -9,6 +9,59 @@ import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
 import Card from "../../Card";
 
+/**
+ * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
+ * official definition anywhere. I think this one has a problem with the state as
+ * autocomplete isn't working
+ */
+type LinkConfig<StateObj> =
+  | string
+  | {
+      pathname?: string;
+      search?: string;
+      hash?: string;
+      state?: StateObj;
+    };
+
+/**
+ * Type used in setting of Header Info. Title is always required. LinkText,
+ * linkConfig, and LinkIcon are required together. BackLinkText and BackLinkConfig are
+ * required together.
+ */
+export type HeaderInfoObject<StateObj = {}> =
+  | {
+      title: string;
+      linkText?: never;
+      linkConfig?: never;
+      linkIcon?: never;
+      backLinkText?: never;
+      backLinkConfig?: never;
+    }
+  | {
+      title: string;
+      linkText: string;
+      linkConfig: LinkConfig<StateObj>;
+      linkIcon: React.ReactNode;
+      backLinkText?: never;
+      backLinkConfig?: never;
+    }
+  | {
+      title: string;
+      linkText?: never;
+      linkConfig?: never;
+      linkIcon?: never;
+      backLinkText: string;
+      backLinkConfig: string;
+    }
+  | {
+      title: string;
+      linkText: string;
+      linkConfig: LinkConfig<StateObj>;
+      linkIcon: React.ReactNode;
+      backLinkText: string;
+      backLinkConfig: string;
+    };
+
 type AuthenticatedPageProps = {
   children: React.ReactNode;
   handleLogout: () => void;
@@ -19,22 +72,13 @@ const AuthenticatedPage = ({
   handleLogout,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerInfo, setHeaderInfo] = useState({
-    title: "",
-    linkText: "",
-    linkConfig: null, // string or obj
-    linkIcon: null, // jsx
-    backLinkText: "",
-    backLinkConfig: "",
-  });
+  const [headerInfo, setHeaderInfo] = useState<HeaderInfoObject>({ title: "" });
 
-  // Pass setter functions to child component as props
+  // Pass the setHeader function to child component as a prop so that any children component can update the header
   // Not sure if this maintains props that were orginally passed
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, {
-        setHeaderInfo,
-      });
+      return React.cloneElement(child as React.ReactElement, { setHeaderInfo });
     }
 
     return child;
@@ -129,7 +173,7 @@ const AuthenticatedPage = ({
 
         <div className="pt-6">
           {/* Back Link */}
-          {headerInfo.backLinkText && headerInfo.backLinkConfig && (
+          {headerInfo && headerInfo.backLinkText && headerInfo.backLinkConfig && (
             <div className="mx-auto mb-4 max-w-7xl">
               <Link
                 to={headerInfo.backLinkConfig}
