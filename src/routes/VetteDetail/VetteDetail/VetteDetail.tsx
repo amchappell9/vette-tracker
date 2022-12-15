@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
-import useGetVette from "../../../hooks/useGetVette";
 import Alert from "../../../components/Alert/Alert";
 import VetteDetailCard from "../VetteDetailCard";
 import { VetteObject } from "../../../types/types";
+import { useVette } from "../api/getVette";
+import { getErrorMessage } from "../../../utils/utils";
 
 type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
 
@@ -65,7 +66,7 @@ type VetteDetailProps = {
 };
 
 interface ParamModel {
-  vetteId?: string;
+  vetteId: string;
 }
 
 interface LocationModel {
@@ -74,52 +75,50 @@ interface LocationModel {
 }
 
 const VetteDetail = ({ setHeaderInfo }: VetteDetailProps) => {
-  let { vetteId } = useParams<ParamModel>();
+  const { vetteId } = useParams<ParamModel>();
   let location = useLocation<LocationModel>();
 
-  const [
-    { isLoading, hasError, errorMessage, success, vetteData },
-    setVetteId,
-  ] = useGetVette(vetteId);
+  const { data, isLoading, error } = useVette({ vetteId });
 
+  // Update header info based on state
   useEffect(() => {
-    setVetteId(vetteId);
-  }, [setVetteId, vetteId]);
-
-  useEffect(() => {
-    if (success && vetteData) {
+    if (data) {
       if (location?.state?.isConfirmationView) {
-        setHeaderInfo(getHeaderInfoByState("confirmation-view", vetteData));
+        setHeaderInfo(getHeaderInfoByState("confirmation-view", data));
       } else {
-        setHeaderInfo(getHeaderInfoByState("vette-info", vetteData));
+        setHeaderInfo(getHeaderInfoByState("vette-info", data));
       }
     } else if (isLoading) {
       setHeaderInfo(getHeaderInfoByState("loading"));
-    } else if (hasError) {
+    } else if (error) {
       setHeaderInfo(getHeaderInfoByState("error"));
     }
-  }, [vetteData, location, success, isLoading, hasError, setHeaderInfo]);
-
-  let output;
+  }, [data, isLoading, error, setHeaderInfo, location.state]);
 
   if (isLoading) {
-    output = <div>Loading...</div>;
-  } else if (hasError) {
-    output = (
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    const errorMessage = getErrorMessage(error);
+
+    return (
       <div className="mt-4">
         <Alert alertType={"danger"} message={errorMessage} />
       </div>
     );
-  } else if (success) {
-    output = (
+  }
+
+  if (data) {
+    return (
       <VetteDetailCard
-        vetteData={vetteData}
+        vetteData={data}
         wasUpdated={location?.state?.isUpdate}
       />
     );
   }
 
-  return <>{output}</>;
+  return null;
 };
 
 export default VetteDetail;
