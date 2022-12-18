@@ -1,10 +1,4 @@
-export interface PackageType {
-  title: string;
-  value: string;
-  description: string;
-}
-
-const packages: PackageType[] = [
+const packages = [
   {
     title: "Magnetic Ride Control",
     value: "MRC",
@@ -24,5 +18,9 @@ const packages: PackageType[] = [
       "Record high-definition video with telemetry overlays of your driving experiences on and off the track, while also providing an analysis of the run.",
   },
 ];
+
+export type PackageType = typeof packages[number];
+
+export type Packages = typeof packages[number]["value"];
 
 export default packages;

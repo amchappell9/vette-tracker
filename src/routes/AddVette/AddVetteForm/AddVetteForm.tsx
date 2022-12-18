@@ -15,7 +15,7 @@ import FormInput from "../../../components/forms/FromInput";
 import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
-import ExteriorColorSelect from "../ExteriorColorSelect";
+import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
 
 const VALIDATION_MESSAGES = {
@@ -90,7 +90,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
         }}
         enableReinitialize={true}
         validationSchema={addVetteFormValidationSchema}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values: VetteValues) => handleSubmit(values)}
       >
         {(props) => (
           <form
