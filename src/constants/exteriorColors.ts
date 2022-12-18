@@ -41,4 +41,6 @@ const exteriorColors = [
 // Make a type "ExteriorColor" that is a union of all the color names
 export type ExteriorColors = typeof exteriorColors[number]["colorName"];
 
+export type ExteriorColorOption = typeof exteriorColors[number];
+
 export default exteriorColors;

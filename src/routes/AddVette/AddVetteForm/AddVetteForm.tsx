@@ -5,7 +5,7 @@ import Button from "../../../components/Button";
 import SubModelRadioButton from "../SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton";
 import PackageCheckbox from "../PackageCheckbox";
-// import exteriorColors from "../../../constants/exteriorColors";
+import exteriorColors from "../../../constants/exteriorColors";
 import interiorColors from "../../../constants/interiorColors";
 import submodels from "../../../constants/submodels";
 import trims from "../../../constants/trims";
@@ -200,6 +200,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 label="Exterior Color"
                 name="exteriorColor"
                 year={props.values.year}
+                exteriorColors={exteriorColors}
               />
             </div>
             {/* Interior Color */}
