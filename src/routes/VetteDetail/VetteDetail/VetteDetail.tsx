@@ -5,6 +5,7 @@ import Alert from "../../../components/Alert/Alert";
 import VetteDetailCard from "../VetteDetailCard";
 import { VetteObject } from "../../../types/types";
 import { useVette } from "../api/getVette";
+import { getErrorMessage } from "../../../utils/utils";
 
 type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
 
@@ -99,13 +100,7 @@ const VetteDetail = ({ setHeaderInfo }: VetteDetailProps) => {
   }
 
   if (error) {
-    let errorMessage = "";
-
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    } else {
-      errorMessage = "An error has happened.";
-    }
+    const errorMessage = getErrorMessage(error);
 
     return (
       <div className="mt-4">
