@@ -8,6 +8,7 @@ import SubmodelInfo from "../SubmodelInfo";
 import TrimInfo from "../TrimInfo";
 import DeleteVetteModal from "../DeleteVetteModal";
 import { VetteObject } from "../../../types/types";
+import { queryClient } from "../../../lib/react-query";
 
 type VetteDetailCardProps = {
   vetteData: VetteObject;
@@ -21,18 +22,22 @@ export default function VetteDetailCard({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [vetteDeleted, setVetteDeleted] = useState(false);
 
+  if (vetteDeleted) {
+    // Remove vette from cache
+    queryClient.removeQueries(["vette", vetteData.id]);
+
+    return (
+      <Redirect
+        to={{
+          pathname: `/vettes`,
+          state: { vetteDeleted: true },
+        }}
+      />
+    );
+  }
+
   return (
     <div>
-      {/* Once vette is deleted redirect to vette list */}
-      {vetteDeleted && (
-        <Redirect
-          to={{
-            pathname: `/vettes`,
-            state: { vetteDeleted: true },
-          }}
-        />
-      )}
-
       {/* Show alert if vette was updated */}
       {wasUpdated && (
         <Alert
@@ -129,7 +134,7 @@ export default function VetteDetailCard({
         open={showDeleteModal}
         setOpen={setShowDeleteModal}
         vetteData={vetteData}
-        setVetteDeleted={setVetteDeleted}
+        onUserAcknowledgedDelete={setVetteDeleted}
       />
     </div>
   );
