@@ -151,6 +151,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 name="trim"
                 label="Trim"
                 radioGroupClassName="grid grid-cols-1 gap-8 lg:grid-cols-3"
+                labelClassName="font-bold mb-2 text-lg block"
               >
                 {(name: string) =>
                   trims.map((trim) => (
