@@ -13,6 +13,9 @@ const storage = {
   persistUserInfo: (userInfo: User) => {
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
+  clearUserInfo: () => {
+    localStorage.removeItem("userInfo");
+  },
 };
 
 export default storage;

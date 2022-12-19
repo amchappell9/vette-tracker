@@ -79,35 +79,30 @@ function App() {
     }
 
     user.logout().then(() => {
+      storage.clearUserInfo();
       setUserInfo(null);
     });
   };
 
-  // If userInfo changes persist it to local storage
-  useEffect(() => {
-    if (userInfo) {
-      storage.persistUserInfo(userInfo);
-    }
-  }, [userInfo]);
+  // Persist user info to local storage
+  if (userInfo) {
+    storage.persistUserInfo(userInfo);
+  }
 
   // Redirect user to Vettes page if they're logged in
-  useEffect(() => {
-    if (
-      !!userInfo &&
-      (location.pathname === "/" ||
-        location.pathname === "/sign-in" ||
-        location.pathname === "/sign-up")
-    ) {
-      history.push({ pathname: "/vettes" });
-    }
-  }, [userInfo, location, history]);
+  if (
+    userInfo &&
+    (location.pathname === "/" ||
+      location.pathname === "/sign-in" ||
+      location.pathname === "/sign-up")
+  ) {
+    history.push({ pathname: "/vettes" });
+  }
 
   // Check for confirmation token in hash. If it's there redirect them to the confirmation page to be confirmed
-  useEffect(() => {
-    if (location.hash && location.hash.indexOf("#confirmation_token") !== -1) {
-      history.push({ pathname: "/sign-up-confirmation" });
-    }
-  }, [location, history]);
+  if (location.hash && location.hash.indexOf("#confirmation_token") !== -1) {
+    history.push({ pathname: "/sign-up-confirmation" });
+  }
 
   return (
     <>
