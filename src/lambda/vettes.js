@@ -208,7 +208,7 @@ const deleteVette = async (id, userInfo) => {
     await client
       .query(
         q.Map(
-          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
@@ -219,7 +219,7 @@ const deleteVette = async (id, userInfo) => {
 
     if (userIDMatches) {
       client.query(
-        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
+        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), id))))
       );
 
       return {
