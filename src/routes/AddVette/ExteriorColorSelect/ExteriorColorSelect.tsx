@@ -1,6 +1,5 @@
-import { useFormikContext } from "formik";
-import { useEffect, useState } from "react";
 import FormSelect from "../../../components/forms/FormSelect";
+import exteriorColors from "../../../constants/exteriorColors";
 
 type ExteriorColorOption = {
   colorName: string;
@@ -11,7 +10,7 @@ type ExteriorColorOption = {
 type ExteriorColorSelectProps = {
   label: string;
   name: string;
-  allExteriorColorOptions: ExteriorColorOption[];
+  year: string;
 };
 
 /**
@@ -20,18 +19,9 @@ type ExteriorColorSelectProps = {
 const ExteriorColorSelect = ({
   label,
   name,
-  allExteriorColorOptions,
+  year,
 }: ExteriorColorSelectProps) => {
-  const {
-    values: { year },
-  } = useFormikContext();
-  const [colorOptions, setColorOptions] = useState(allExteriorColorOptions);
-
-  useEffect(() => {
-    if (year.trim() !== "") {
-      setColorOptions(getOptionsByYear(allExteriorColorOptions, year));
-    }
-  }, [year, allExteriorColorOptions]);
+  const colorOptions = getOptionsByYear(exteriorColors, year);
 
   return (
     <FormSelect
