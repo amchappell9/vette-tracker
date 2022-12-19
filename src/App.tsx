@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import GoTrue, { User } from "gotrue-js";
 
