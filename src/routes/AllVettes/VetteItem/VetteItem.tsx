@@ -20,7 +20,11 @@ const getBorderStylesByIndex = (totalLength: number, index: number) => {
 
 type VetteItemProps = {
   vette: VetteObject;
+
+  /** Index of the vette in the array. Used to determine if border should be rounded or not. */
   index: number;
+
+  /** Length of the array of vettes. */
   listLength: number;
 };
 
