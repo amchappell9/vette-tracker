@@ -99,9 +99,15 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
               </div>
               <div className="col-span-2 grid grid-cols-2 gap-4 py-8">
                 <div className="col-span-2 sm:col-span-1">
-                  <label className="font-gray-600 mb-2 block">First Name</label>
+                  <label
+                    htmlFor="firstName"
+                    className="font-gray-600 mb-2 block"
+                  >
+                    First Name
+                  </label>
                   <Input
                     {...formik.getFieldProps("firstName")}
+                    id="firstName"
                     name="firstName"
                     className="w-full bg-gray-50 py-1 px-4"
                   />
@@ -114,9 +120,15 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                 </div>
 
                 <div className="col-span-2 sm:col-span-1">
-                  <label className="font-gray-600 mb-2 block">Last Name</label>
+                  <label
+                    htmlFor="lastName"
+                    className="font-gray-600 mb-2 block"
+                  >
+                    Last Name
+                  </label>
                   <Input
                     {...formik.getFieldProps("lastName")}
+                    id="lastName"
                     name="lastName"
                     className="w-full bg-gray-50 py-1 px-4"
                   />
@@ -129,11 +141,15 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="font-gray-600 mb-2 block">
+                  <label
+                    htmlFor="emailAddress"
+                    className="font-gray-600 mb-2 block"
+                  >
                     Email Address
                   </label>
                   <Input
                     {...formik.getFieldProps("emailAddress")}
+                    id="emailAddress"
                     name="emailAddress"
                     className="w-full bg-gray-50 py-1 px-4"
                   />
@@ -146,10 +162,16 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="font-gray-600 mb-2 block">Password</label>
+                  <label
+                    htmlFor="password"
+                    className="font-gray-600 mb-2 block"
+                  >
+                    Password
+                  </label>
                   <Input
                     {...formik.getFieldProps("password")}
                     type="password"
+                    id="password"
                     name="password"
                     className="w-full bg-gray-50 py-1 px-4"
                   />
@@ -162,12 +184,16 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="font-gray-600 mb-2 block">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="font-gray-600 mb-2 block"
+                  >
                     Confirm Password
                   </label>
                   <Input
                     {...formik.getFieldProps("confirmPassword")}
                     type="password"
+                    id="confirmPassword"
                     name="confirmPassword"
                     className="w-full bg-gray-50 py-1 px-4"
                   />
