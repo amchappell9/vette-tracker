@@ -210,7 +210,7 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
             <div className="flex flex-col-reverse gap-2 md:flex-row md:justify-end">
               <Link
                 to="/"
-                className="flex items-center justify-center border border-gray-300 bg-white px-6 py-2 text-lg text-gray-800 hover:bg-gray-100"
+                className="flex items-center justify-center rounded border border-gray-300 bg-white px-6 py-2 text-lg text-gray-800 hover:bg-gray-100"
               >
                 Cancel
               </Link>
