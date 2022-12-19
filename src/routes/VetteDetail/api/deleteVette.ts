@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { axios } from "../../../lib/axios";
 import { queryClient } from "../../../lib/react-query";
 import { VetteObject } from "../../../types/types";
+import { VettesResponse } from "../../AllVettes/api/getAllVettes";
 
 /**
  * The object that will be return from the server upon successful deletion
@@ -22,17 +23,20 @@ export const useDeleteVette = () => {
   return useMutation({
     onSuccess: (data, vetteInfo, context) => {
       // Remove vette from all vettes cache
-      const previousVettes = queryClient.getQueryData<{
-        vettes: Array<VetteObject>;
-      }>(["vettes"]);
+      const previousVettes = queryClient.getQueryData<VettesResponse>([
+        "vettes",
+      ]);
       const updatedVettes = previousVettes?.vettes.filter(
         (vette) => vette.id !== vetteInfo.id
       );
 
-      // Something is blowing up here, not sure what
+      queryClient.setQueryData(["vettes"], {
+        vettes: updatedVettes,
+      });
 
-      queryClient.setQueryData(["vettes"], updatedVettes);
-      queryClient.invalidateQueries(["vette", vetteInfo.id]);
+      // If you invalidate the query here it causes the detail card to start refetching,
+      // which causes a 404 error. Only invalidate once you're navigated away
+      // queryClient.invalidateQueries(["vette", vetteInfo.id]);
     },
     mutationFn: deleteVette,
   });
