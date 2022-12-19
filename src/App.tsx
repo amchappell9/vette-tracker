@@ -16,6 +16,7 @@ import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation/SignUpConfirmation";
 import UnauthPage from "./components/layouts/UnauthPage";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
+import storage from "./storage/storage";
 
 /**
  * Structure of the error that could be returned by the Netlify go-true API.
@@ -33,22 +34,8 @@ export interface ErrorResponseModel extends Error {
   };
 }
 
-const persistUserInfo = (userInfo: User) => {
-  localStorage.setItem("userInfo", JSON.stringify(userInfo));
-};
-
-const getUserInfoFromLocalStorage = (): User | null => {
-  const userInfo = localStorage.getItem("userInfo");
-
-  if (userInfo != null) {
-    return JSON.parse(userInfo);
-  }
-
-  return null;
-};
-
 function App() {
-  const [userInfo, setUserInfo] = useState(getUserInfoFromLocalStorage());
+  const [userInfo, setUserInfo] = useState(storage.getUserInfo());
   let location = useLocation();
   let history = useHistory();
 
@@ -99,7 +86,7 @@ function App() {
   // If userInfo changes persist it to local storage
   useEffect(() => {
     if (userInfo) {
-      persistUserInfo(userInfo);
+      storage.persistUserInfo(userInfo);
     }
   }, [userInfo]);
 

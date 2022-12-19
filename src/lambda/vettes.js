@@ -92,13 +92,13 @@ const getVetteByID = (id, userInfo) => {
           statusCode: 200,
           body: JSON.stringify(response.data[0].data),
         };
-      } else {
-        // Should be a 404 but there's an issue causing netlify functions not to work
-        return {
-          statusCode: 200,
-          body: JSON.stringify({ msg: "Vette not found" }),
-        };
       }
+
+      // No vette found (or no access)
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ msg: "Vette not found" }),
+      };
     })
     .catch((error) => {
       console.error(error);
@@ -160,7 +160,7 @@ const updateVette = async (id, vetteData, userInfo) => {
     await client
       .query(
         q.Map(
-          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
@@ -171,7 +171,7 @@ const updateVette = async (id, vetteData, userInfo) => {
 
     if (userIDMatches) {
       await client.query(
-        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))), {
+        q.Update(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), id))), {
           data: vetteData,
         })
       );
@@ -208,7 +208,7 @@ const deleteVette = async (id, userInfo) => {
     await client
       .query(
         q.Map(
-          q.Paginate(q.Match(q.Index("vettes_by_id"), id)),
+          q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
         )
       )
@@ -219,7 +219,7 @@ const deleteVette = async (id, userInfo) => {
 
     if (userIDMatches) {
       client.query(
-        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vettes_by_id"), id))))
+        q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), id))))
       );
 
       return {
