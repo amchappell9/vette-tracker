@@ -6,6 +6,7 @@ import VetteDetailCard from "../VetteDetailCard";
 import { VetteObject } from "../../../types/types";
 import { useVette } from "../api/getVette";
 import { getErrorMessage } from "../../../utils/utils";
+import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 
 type UIState = "confirmation-view" | "vette-info" | "loading" | "error";
 
@@ -58,11 +59,7 @@ const getHeaderInfoByState = (state: UIState, vetteData?: VetteObject) => {
 };
 
 type VetteDetailProps = {
-  setHeaderInfo: (headerInfo: {
-    title: string;
-    backLinkText: string;
-    backLinkConfig: string;
-  }) => void;
+  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
 };
 
 interface ParamModel {

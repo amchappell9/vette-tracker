@@ -4,6 +4,7 @@ import AddVetteForm from "../AddVetteForm";
 import Alert from "../../../components/Alert/Alert";
 import { VetteObject, VetteValues } from "../../../types/types";
 import { useCreateOrUpdateVette } from "../api/addVette";
+import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 
 const formatValues = (values: VetteValues) => {
   let formattedValues = values;
@@ -18,11 +19,7 @@ const formatValues = (values: VetteValues) => {
 };
 
 type AddVetteProps = {
-  setHeaderInfo: (headerInfo: {
-    title: string;
-    backLinkText: string;
-    backLinkConfig: string;
-  }) => void;
+  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
 };
 
 interface LocationState {
