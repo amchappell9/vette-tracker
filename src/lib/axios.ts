@@ -15,6 +15,8 @@ function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
   return config;
 }
 
+alert(process.env.REACT_APP_API_URL);
+
 export const axios = Axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
