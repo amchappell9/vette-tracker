@@ -1,16 +1,11 @@
 import FormSelect from "../../../components/forms/FormSelect";
-import exteriorColors from "../../../constants/exteriorColors";
-
-type ExteriorColorOption = {
-  colorName: string;
-  /** The years the color was produced */
-  years: string[];
-};
+import { ExteriorColorOption } from "../../../constants/exteriorColors";
 
 type ExteriorColorSelectProps = {
   label: string;
   name: string;
   year: string;
+  exteriorColors: ExteriorColorOption[];
 };
 
 /**
@@ -20,6 +15,7 @@ const ExteriorColorSelect = ({
   label,
   name,
   year,
+  exteriorColors,
 }: ExteriorColorSelectProps) => {
   const colorOptions = getOptionsByYear(exteriorColors, year);
 
