@@ -11,17 +11,16 @@ type DeleteVetteModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   vetteData: VetteObject;
-  setVetteDeleted: (deleted: boolean) => void;
+  onUserAcknowledgedDelete: (deleted: boolean) => void;
 };
 
 export default function DeleteVetteModal({
   open,
   setOpen,
   vetteData,
-  setVetteDeleted,
+  onUserAcknowledgedDelete,
 }: DeleteVetteModalProps) {
   const cancelButtonRef = useRef(null);
-
   const { isSuccess, isLoading, isError, error, mutate } = useDeleteVette();
 
   return (
@@ -144,10 +143,10 @@ export default function DeleteVetteModal({
                   <button
                     type="button"
                     className="focus:ring-indigo-500 mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={() => setVetteDeleted(true)}
+                    onClick={() => onUserAcknowledgedDelete(true)}
                     ref={cancelButtonRef}
                   >
-                    Cancel
+                    Go to Vettes
                   </button>
                 )}
 
