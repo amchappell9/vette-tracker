@@ -6,7 +6,7 @@ import FormFieldErrorMessage from "../FormFieldErrorMessage";
 type FormCheckboxGroupProps = {
   label: string;
   name: string;
-  groupClassName: string;
+  groupClassName?: string;
   children: (name: string) => React.ReactNode;
 };
 

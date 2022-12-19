@@ -14,7 +14,7 @@ import { INPUT_TYPES } from "../../../components/Input/Input";
 import FormInput from "../../../components/forms/FromInput";
 import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
-import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
+import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
 
