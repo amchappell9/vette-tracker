@@ -15,5 +15,6 @@ export const useVette = ({ vetteId }: { vetteId: string }) => {
     queryKey: ["vette", vetteId],
     queryFn: () => getVette({ vetteId }),
     staleTime: 5 * 60 * 1000,
+    retryDelay: 1000,
   });
 };
