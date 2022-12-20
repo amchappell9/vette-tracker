@@ -33,7 +33,6 @@
       </pattern>
     </defs>
   </svg>
-  <!-- I think this is for the background -->
   <rect
     x="0"
     y="0"
@@ -48,8 +47,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     x="0"
     y="0"
-    width="64"
-    height="48"
+    width="800"
+    height="600"
     viewBox="0 0 340.000000 250.000000"
     preserveAspectRatio="xMidYMid meet"
     color-interpolation-filters="sRGB"
