@@ -190,7 +190,7 @@ const AuthenticatedPage = ({
             {headerInfo.linkText && headerInfo.linkConfig && (
               <Link
                 to={headerInfo.linkConfig}
-                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white drop-shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
               >
                 {headerInfo.linkIcon}
                 {headerInfo.linkText}
