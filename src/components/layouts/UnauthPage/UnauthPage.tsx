@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as Logo } from "../../../vetteFlagLogo-dark.svg";
 import Footer from "../../Footer";
+import Logo from "../../Logo/Logo";
 
 type UnauthPageProps = {
   children: ReactNode;
@@ -16,14 +16,7 @@ const UnauthPage = ({ children }: UnauthPageProps) => {
           <div className="flex items-center justify-between px-4 sm:px-0">
             {/* Logo */}
             <Link to="/">
-              <div className="flex">
-                <Logo />
-                <div className="ml-6 flex items-center">
-                  <span className="text-grey-700 text-xl font-bold">
-                    Vette Tracker
-                  </span>
-                </div>
-              </div>
+              <Logo variant="inverted" className="h-8 sm:h-10" />
             </Link>
           </div>
         </div>

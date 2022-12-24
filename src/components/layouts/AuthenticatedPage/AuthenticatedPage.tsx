@@ -2,12 +2,12 @@ import React, { useState, Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
-import { ReactComponent as Logo } from "../../../vetteFlagLogo.svg";
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
 import Card from "../../Card";
+import Logo from "../../Logo/Logo";
 
 /**
  * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
@@ -97,12 +97,7 @@ const AuthenticatedPage = ({
           {/* Logo */}
           <div className="flex-1">
             <Link to="/" className="flex w-max items-center">
-              <Logo />
-              <div className="ml-6">
-                <span className="text-xl font-bold text-gray-50">
-                  Vette Tracker
-                </span>
-              </div>
+              <Logo variant="default" className="h-8 sm:h-10" />
             </Link>
           </div>
 
@@ -173,17 +168,19 @@ const AuthenticatedPage = ({
 
         <div className="pt-6">
           {/* Back Link */}
-          {headerInfo && headerInfo.backLinkText && headerInfo.backLinkConfig && (
-            <div className="mx-auto mb-4 max-w-7xl">
-              <Link
-                to={headerInfo.backLinkConfig}
-                className="text-gray-300 hover:underline"
-              >
-                <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-                {headerInfo.backLinkText}
-              </Link>
-            </div>
-          )}
+          {headerInfo &&
+            headerInfo.backLinkText &&
+            headerInfo.backLinkConfig && (
+              <div className="mx-auto mb-4 max-w-7xl">
+                <Link
+                  to={headerInfo.backLinkConfig}
+                  className="text-gray-300 hover:underline"
+                >
+                  <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+                  {headerInfo.backLinkText}
+                </Link>
+              </div>
+            )}
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
