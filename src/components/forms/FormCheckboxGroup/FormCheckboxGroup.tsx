@@ -1,6 +1,5 @@
 import { useField } from "formik";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useId } from "react";
 import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
 type FormCheckboxGroupProps = {
@@ -17,7 +16,7 @@ const FormCheckboxGroup = ({
   children,
 }: FormCheckboxGroupProps) => {
   // Needs a unique ID for the radio button group
-  const [id] = useState(uuidv4());
+  const id = useId();
 
   // I don't know how to only get the second value from the array...
   // eslint-disable-next-line

@@ -1,6 +1,5 @@
 import { useField } from "formik";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useId } from "react";
 
 type PackageCheckboxProps = {
   className: string;
@@ -18,7 +17,7 @@ const PackageCheckbox = ({
   description,
 }: PackageCheckboxProps) => {
   const [field] = useField({ name: name, type: "checkbox", value: value });
-  const [id] = useState(uuidv4());
+  const id = useId();
 
   return (
     <div
