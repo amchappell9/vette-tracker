@@ -30,11 +30,11 @@ const PackageCheckbox = ({
           type="checkbox"
           name={name}
           value={value}
-          className="h-4 w-4 rounded accent-red-500 focus:ring-red-500"
+          className="h-4 w-4 cursor-pointer rounded accent-red-500 focus:ring-red-500"
         />
       </div>
       <div>
-        <label htmlFor={id}>
+        <label htmlFor={id} className="cursor-pointer">
           <span className="block text-lg font-bold text-gray-800">{title}</span>
           <span className="block text-gray-600">{description}</span>
         </label>

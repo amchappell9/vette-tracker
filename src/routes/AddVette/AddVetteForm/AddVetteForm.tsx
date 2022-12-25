@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import Button from "../../../components/Button";
 import SubModelRadioButton from "../SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton";
-import PackageCheckbox from "../PackageCheckbox";
+import PackageCheckbox from "../PackageCheckbox/PackageCheckbox";
 import exteriorColors from "../../../constants/exteriorColors";
 import interiorColors from "../../../constants/interiorColors";
 import submodels from "../../../constants/submodels";
