@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
-import { default as dayjs } from "dayjs";
 import Alert from "../../../components/Alert/Alert";
 import PackagesList from "../PackagesList";
 import SubmodelInfo from "../SubmodelInfo";
@@ -9,6 +8,7 @@ import TrimInfo from "../TrimInfo";
 import DeleteVetteModal from "../DeleteVetteModal";
 import { VetteObject } from "../../../types/types";
 import { queryClient } from "../../../lib/react-query";
+import { format } from "date-fns";
 
 type VetteDetailCardProps = {
   vetteData: VetteObject;
@@ -50,7 +50,8 @@ export default function VetteDetailCard({
       <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between sm:gap-y-0">
         <div className="text-gray-500">
           <span>
-            Added on {dayjs(vetteData.date, "MM-DD-YYYY").format("MM/DD/YYYY")}
+            Added on{" "}
+            {format(new Date(Date.parse(vetteData.date)), "MM/dd/yyyy")}
           </span>
           {vetteData.link && (
             <>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { default as dayjs } from "dayjs";
 import { VetteObject } from "../../../types/types";
+import { format } from "date-fns";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";
@@ -59,10 +59,10 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
               {`${vette.year} Corvette`}
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
-            <p className="text-md leading-none text-gray-600">{`Added ${dayjs(
-              vette.date,
-              "MM-DD-YYYY"
-            ).format("MM/DD/YYYY")}`}</p>
+            <p className="text-md leading-none text-gray-600">{`Added ${format(
+              new Date(Date.parse(vette.date)),
+              "MM/dd/yyyy"
+            )}`}</p>
           </div>
           <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
             <p className="font-bold leading-none text-gray-700">{`$${parseInt(

@@ -1,5 +1,5 @@
 import faunadb from "faunadb";
-import * as dayjs from "dayjs";
+import { format } from "date-fns";
 
 exports.handler = async function (event, context) {
   const id = getIDFromPathname(event.path);
@@ -121,7 +121,7 @@ const createNewVette = async (vetteData, userInfo) => {
     await client.query(q.NewId()).then((id) => (vetteData.id = id));
 
     // Add Date
-    vetteData.date = dayjs().format("MM-DD-YYYY");
+    vetteData.date = format(new Date(), "MM-dd-yyyy");
 
     // Add user ID
     vetteData.userId = userInfo.sub;
@@ -154,7 +154,7 @@ const updateVette = async (id, vetteData, userInfo) => {
 
   // Add id and update date
   vetteData.id = id;
-  vetteData.date = dayjs().format("MM-DD-YYYY");
+  vetteData.date = format(new Date(), "MM-dd-yyyy");
 
   try {
     await client
