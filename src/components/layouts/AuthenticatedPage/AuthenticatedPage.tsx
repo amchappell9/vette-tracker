@@ -7,7 +7,8 @@ import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
-import Card from "../../Card";
+import Card from "../../Card/Card";
+import { CardPaddingVariants } from "../../Card/Card";
 
 /**
  * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
@@ -65,11 +66,13 @@ export type HeaderInfoObject<StateObj = {}> =
 type AuthenticatedPageProps = {
   children: React.ReactNode;
   handleLogout: () => void;
+  cardPadding?: CardPaddingVariants;
 };
 
 const AuthenticatedPage = ({
   children,
   handleLogout,
+  cardPadding,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerInfo, setHeaderInfo] = useState<HeaderInfoObject>({ title: "" });
@@ -173,17 +176,19 @@ const AuthenticatedPage = ({
 
         <div className="pt-6">
           {/* Back Link */}
-          {headerInfo && headerInfo.backLinkText && headerInfo.backLinkConfig && (
-            <div className="mx-auto mb-4 max-w-7xl">
-              <Link
-                to={headerInfo.backLinkConfig}
-                className="text-gray-300 hover:underline"
-              >
-                <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-                {headerInfo.backLinkText}
-              </Link>
-            </div>
-          )}
+          {headerInfo &&
+            headerInfo.backLinkText &&
+            headerInfo.backLinkConfig && (
+              <div className="mx-auto mb-4 max-w-7xl">
+                <Link
+                  to={headerInfo.backLinkConfig}
+                  className="text-gray-300 hover:underline"
+                >
+                  <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+                  {headerInfo.backLinkText}
+                </Link>
+              </div>
+            )}
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
@@ -206,7 +211,7 @@ const AuthenticatedPage = ({
       {/* Main */}
       <div className="flex-1 px-4 sm:px-6 md:px-8">
         <main className="mx-auto -mt-32 max-w-7xl pb-8">
-          <Card>{childrenWithProps}</Card>
+          <Card padding={cardPadding}>{childrenWithProps}</Card>
         </main>
       </div>
 
