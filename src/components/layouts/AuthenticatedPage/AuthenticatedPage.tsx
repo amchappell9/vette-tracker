@@ -2,12 +2,12 @@ import React, { useState, Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
-import { ReactComponent as Logo } from "../../../vetteFlagLogo.svg";
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
-import Card from "../../Card/Card";
+import Card from "../../Card";
+import Logo from "../../Logo/Logo";
 import { CardPaddingVariants } from "../../Card/Card";
 
 /**
@@ -100,12 +100,7 @@ const AuthenticatedPage = ({
           {/* Logo */}
           <div className="flex-1">
             <Link to="/" className="flex w-max items-center">
-              <Logo />
-              <div className="ml-6">
-                <span className="text-xl font-bold text-gray-50">
-                  Vette Tracker
-                </span>
-              </div>
+              <Logo variant="default" className="h-8 sm:h-10" />
             </Link>
           </div>
 
@@ -198,7 +193,7 @@ const AuthenticatedPage = ({
             {headerInfo.linkText && headerInfo.linkConfig && (
               <Link
                 to={headerInfo.linkConfig}
-                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white drop-shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
               >
                 {headerInfo.linkIcon}
                 {headerInfo.linkText}

@@ -1,11 +1,22 @@
-import FeatureCard from "../FeatureCard";
 import { Link } from "react-router-dom";
+import FeatureCard from "../FeatureCard";
 import Footer from "../../../components/Footer";
+import Logo from "../../../components/Logo/Logo";
 
 const Home = () => {
   return (
     <div className="bg-gray-700">
-      <section className="mb-20 px-8 pt-40 text-center">
+      <header>
+        <div className="mx-auto max-w-full py-6 sm:px-6 md:px-8 lg:px-16">
+          <div className="flex items-center justify-between px-4 sm:px-0">
+            {/* Logo */}
+            <Link to="/">
+              <Logo variant="default" className="h-8 sm:h-10" />
+            </Link>
+          </div>
+        </div>
+      </header>
+      <section className="mb-20 px-8 pt-20 text-center">
         <h1 className="pb-6 text-[clamp(_3rem,_4.8vw_+_1rem,_4.5rem)] font-bold leading-none text-white">
           Looking for a new Vette?
         </h1>
