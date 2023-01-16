@@ -4,46 +4,36 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
+import { cva, VariantProps } from "class-variance-authority";
 
-export declare type AlertType = "info" | "success" | "warning" | "danger";
+const alertStyles = cva("rounded border-l-4 p-4", {
+  variants: {
+    alertType: {
+      info: "bg-blue-50 border-blue-400",
+      success: "bg-green-50 border-green-400",
+      warning: "bg-yellow-50 border-yellow-400",
+      danger: "bg-red-50 border-red-400",
+    },
+  },
+  defaultVariants: {
+    alertType: "danger",
+  },
+});
 
-const getMainStylesByType = (alertType: AlertType) => {
-  switch (alertType) {
-    case "info":
-      return "bg-blue-50 border-blue-400";
+const alertTextStyles = cva("text-sm", {
+  variants: {
+    alertType: {
+      info: "text-blue-700",
+      success: "text-green-700",
+      warning: "text-yellow-700",
+      danger: "text-red-700",
+    },
+  },
+});
 
-    case "success":
-      return "bg-green-50 border-green-400";
+type AlertStyles = VariantProps<typeof alertStyles>;
 
-    case "warning":
-      return "bg-yellow-50 border-yellow-400";
-
-    case "danger":
-      return "bg-red-50 border-red-400";
-
-    default:
-      return "";
-  }
-};
-
-const getTextStylesByType = (alertType: AlertType) => {
-  switch (alertType) {
-    case "info":
-      return "text-blue-700";
-
-    case "success":
-      return "text-green-700";
-
-    case "warning":
-      return "text-yellow-700";
-
-    case "danger":
-      return "text-red-700";
-
-    default:
-      return "";
-  }
-};
+type AlertType = AlertStyles["alertType"];
 
 const getIconByType = (alertType: AlertType) => {
   switch (alertType) {
@@ -92,18 +82,11 @@ type AlertProps = {
 
 const Alert = ({ alertType, message, className }: AlertProps) => {
   return (
-    <div
-      className={`rounded border-l-4 p-4 ${getMainStylesByType(
-        alertType
-      )} ${className}`}
-      role="alert"
-    >
+    <div className={alertStyles({ alertType, className })} role="alert">
       <div className="flex">
         <div className="flex-shrink-0">{getIconByType(alertType)}</div>
         <div className="ml-3">
-          <p className={`text-sm ${getTextStylesByType(alertType)}`}>
-            {message}
-          </p>
+          <p className={alertTextStyles({ alertType })}>{message}</p>
         </div>
       </div>
     </div>

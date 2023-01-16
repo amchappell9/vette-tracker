@@ -59,7 +59,7 @@ it("is accessible", async () => {
 
   // Variants
   rerender(
-    <Button variant="red" onClick={mockCallback}>
+    <Button intent="primary" onClick={mockCallback}>
       Accessible Button
     </Button>
   );
@@ -67,7 +67,7 @@ it("is accessible", async () => {
   expect(results).toHaveNoViolations();
 
   rerender(
-    <Button variant="secondary" onClick={mockCallback}>
+    <Button intent="secondary" onClick={mockCallback}>
       Accessible Button
     </Button>
   );
