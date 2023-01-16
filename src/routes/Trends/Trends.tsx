@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Alert from "../../components/Alert/Alert";
 import { HeaderInfoObject } from "../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 import { Submodels } from "../../constants/submodels";
 import AddFirstVetteMessage from "../AllVettes/AddFirstVetteMessage/AddFirstVetteMessage";
@@ -26,8 +27,9 @@ const Trends = ({ setHeaderInfo }: TrendsProps) => {
 
   if (error) {
     if (error instanceof Error) {
-      // TODO: Make an alert
-      return <div>{error.message}</div>;
+      return <Alert alertType={"danger"} message={error.message} />;
+    } else {
+      return <Alert alertType={"danger"} message={"An error has happened"} />;
     }
   }
 
