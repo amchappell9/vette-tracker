@@ -8,6 +8,7 @@ import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
 import Card from "../../Card";
 import Logo from "../../Logo/Logo";
+import { CardPaddingVariants } from "../../Card/Card";
 
 /**
  * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
@@ -65,11 +66,13 @@ export type HeaderInfoObject<StateObj = {}> =
 type AuthenticatedPageProps = {
   children: React.ReactNode;
   handleLogout: () => void;
+  cardPadding?: CardPaddingVariants;
 };
 
 const AuthenticatedPage = ({
   children,
   handleLogout,
+  cardPadding,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerInfo, setHeaderInfo] = useState<HeaderInfoObject>({ title: "" });
@@ -203,7 +206,7 @@ const AuthenticatedPage = ({
       {/* Main */}
       <div className="flex-1 px-4 sm:px-6 md:px-8">
         <main className="mx-auto -mt-32 max-w-7xl pb-8">
-          <Card>{childrenWithProps}</Card>
+          <Card padding={cardPadding}>{childrenWithProps}</Card>
         </main>
       </div>
 

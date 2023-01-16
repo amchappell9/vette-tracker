@@ -9,6 +9,7 @@ function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
   }
 
   if (userInfo) {
+    // @ts-expect-error - This is an issue with the current Axios release
     config.headers.Authorization = `Bearer ${userInfo.token.access_token}`;
   }
 

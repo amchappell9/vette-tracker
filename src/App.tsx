@@ -15,7 +15,7 @@ import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation/SignUpConfirmation";
 import UnauthPage from "./components/layouts/UnauthPage";
-import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
+import AuthenticatedPage from "./components/layouts/AuthenticatedPage/AuthenticatedPage";
 import storage from "./storage/storage";
 
 /**
@@ -131,7 +131,7 @@ function App() {
 
           {/* Trends */}
           <AuthenticatedRoute path="/trends">
-            <AuthenticatedPage handleLogout={handleLogout}>
+            <AuthenticatedPage handleLogout={handleLogout} cardPadding="none">
               <Trends />
             </AuthenticatedPage>
           </AuthenticatedRoute>
