@@ -61,10 +61,17 @@ const getAllVettes = (userInfo) => {
       )
     )
     .then((response) => {
+      const vettes = response.data.map((value) => value.data);
+
+      // Return newest vettes first
+      const sortedVettes = vettes.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+
       return {
         statusCode: 200,
         body: JSON.stringify({
-          vettes: response.data.map((value) => value.data),
+          vettes: sortedVettes,
         }),
       };
     });
