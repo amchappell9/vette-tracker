@@ -1,10 +1,23 @@
+import { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
 import faunadb from "faunadb";
 import { format } from "date-fns";
+import { User } from "gotrue-js";
+import { VetteObject, VetteValues } from "../types/types";
 
-exports.handler = async function (event, context) {
+const client = new faunadb.Client({
+  secret: process.env.FAUNADB_SECRET_KEY as string,
+});
+
+const handler: Handler = async function (
+  event: HandlerEvent,
+  context: HandlerContext
+) {
   const id = getIDFromPathname(event.path);
-  const { identity, user } = context.clientContext;
-  console.log({ identity, user });
+  // const { identity, user } = context.clientContext;
+  // const identity = context.clientContext?.identity;
+  const user = context.clientContext?.user as User;
+
+  console.log(user);
 
   if (!userIsValid(user)) {
     return {
@@ -13,33 +26,51 @@ exports.handler = async function (event, context) {
     };
   }
 
-  switch (event.httpMethod) {
-    case "GET":
-      return id ? getVetteByID(id, user) : getAllVettes(user);
-
-    case "POST":
-      return createNewVette(JSON.parse(event.body), user);
-
-    case "PUT":
-      return updateVette(id, JSON.parse(event.body), user);
-
-    case "DELETE":
-      const body = JSON.parse(event.body);
-      return deleteVette(body.id, user);
-
-    default:
-      return {
-        statusCode: 405,
-        body: JSON.stringify({ message: "Method not allowed" }),
-      };
+  if (event.httpMethod === "GET") {
+    return id ? getVetteByID(id, user) : getAllVettes(user);
   }
+
+  if (event.httpMethod === "POST" && event.body) {
+    return createNewVette(JSON.parse(event.body), user);
+  } else if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "Please provide a body" }),
+    };
+  }
+
+  if (event.httpMethod === "PUT" && event.body && id) {
+    return updateVette(id, JSON.parse(event.body), user);
+  } else if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "Please provide a body" }),
+    };
+  } else if (!id) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "Please provide an ID" }),
+    };
+  }
+
+  if (event.httpMethod === "DELETE" && event.body) {
+    const body = JSON.parse(event.body);
+    return deleteVette(body.id, user);
+  }
+
+  return {
+    statusCode: 405,
+    body: JSON.stringify({ message: "Method not allowed" }),
+  };
 };
 
-const userIsValid = (user) => {
+export { handler };
+
+const userIsValid = (user: User) => {
   return typeof user !== "undefined";
 };
 
-const getIDFromPathname = (path) => {
+const getIDFromPathname = (path: string) => {
   const pathArray = path.split("/");
 
   return pathArray.indexOf("vettes") === pathArray.length - 2
@@ -47,16 +78,20 @@ const getIDFromPathname = (path) => {
     : null;
 };
 
-const getAllVettes = (userInfo) => {
+type AllVettesResponse = {
+  data: VetteObject[];
+};
+
+const getAllVettes = (userInfo: User) => {
   const q = faunadb.query;
-  const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET_KEY,
-  });
+
+  // If there's an issue see if userInfo.sub equals userInfo.id
+  // userInfo.sub doesn't exist on the type but does exist on the object
 
   return client
-    .query(
+    .query<AllVettesResponse>(
       q.Map(
-        q.Paginate(q.Match(q.Index("vettes_by_user"), userInfo.sub)),
+        q.Paginate(q.Match(q.Index("vettes_by_user"), userInfo.id)),
         q.Lambda("X", q.Get(q.Var("X")))
       )
     )
@@ -65,7 +100,10 @@ const getAllVettes = (userInfo) => {
 
       // Return newest vettes first
       const sortedVettes = vettes.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+
+        return dateB.getTime() - dateA.getTime();
       });
 
       return {
@@ -77,11 +115,8 @@ const getAllVettes = (userInfo) => {
     });
 };
 
-const getVetteByID = (id, userInfo) => {
+const getVetteByID = (id: string, userInfo: User) => {
   const q = faunadb.query;
-  const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET_KEY,
-  });
 
   return client
     .query(
@@ -117,25 +152,34 @@ const getVetteByID = (id, userInfo) => {
     });
 };
 
-const createNewVette = async (vetteData, userInfo) => {
+type PreSubmitVetteObject = Omit<VetteObject, "id">;
+
+const createNewVette = async (vetteData: VetteValues, userInfo: User) => {
   const q = faunadb.query;
-  const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET_KEY,
-  });
 
   try {
     // Generate ID
     await client.query(q.NewId()).then((id) => (vetteData.id = id));
 
+    const vetteObj: PreSubmitVetteObject = {
+      // Add Date
+      date: format(new Date(), "MM-dd-yyyy"),
+
+      // Add user ID
+      userId: userInfo.id,
+
+      ...vetteData,
+    };
+
     // Add Date
-    vetteData.date = format(new Date(), "MM-dd-yyyy");
+    // vetteData.date = format(new Date(), "MM-dd-yyyy");
 
     // Add user ID
-    vetteData.userId = userInfo.sub;
+    // vetteData.userId = userInfo.sub;
 
     // Add record
     const response = await client.query(
-      q.Create(q.Collection("Vettes"), { data: vetteData })
+      q.Create(q.Collection("Vettes"), { data: vetteObj })
     );
 
     return {
@@ -152,11 +196,12 @@ const createNewVette = async (vetteData, userInfo) => {
   }
 };
 
-const updateVette = async (id, vetteData, userInfo) => {
+const updateVette = async (
+  id: string,
+  vetteData: VetteValues,
+  userInfo: User
+) => {
   const q = faunadb.query;
-  const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET_KEY,
-  });
   let userIDMatches = false;
 
   // Add id and update date
@@ -203,11 +248,8 @@ const updateVette = async (id, vetteData, userInfo) => {
   }
 };
 
-const deleteVette = async (id, userInfo) => {
+const deleteVette = async (id: string, userInfo: User) => {
   const q = faunadb.query;
-  const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET_KEY,
-  });
   let userIDMatches = false;
 
   // Validate user has access to vette
