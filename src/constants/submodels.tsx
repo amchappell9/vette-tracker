@@ -68,10 +68,16 @@ const submodels = [
   },
 ];
 
-export type SubmodelType = typeof submodels[number];
+// If you make it as const, the AddVetteForm.tsx will complain about the
+// submodels.filter() method. The years property becomes a type of
+// years: readonly ["2014", "2015", "2016", "2017", "2018", "2019"] | readonly ["2017", "2018", "2019"] | readonly ["2015", "2016", "2017", "2018", "2019"] | readonly ["2019"]
+// I still don't know how to get a union type for titles and engines, or years. I could make
+// a type for property then stich it together, but I should just be able to derive it from that array.
 
-export type Submodels = typeof submodels[number]["title"];
+export type SubmodelType = (typeof submodels)[number];
 
-export type Engines = typeof submodels[number]["engine"];
+export type Submodels = SubmodelType["title"];
+
+export type Engines = SubmodelType["engine"];
 
 export default submodels;
