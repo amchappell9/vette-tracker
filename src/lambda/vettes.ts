@@ -4,6 +4,29 @@ import { format } from "date-fns";
 import { User } from "gotrue-js";
 import { VetteObject, VetteValues } from "../types/types";
 
+/**
+ * The GoTrue User type doesn't have the sub property,
+ * but it does exist on the property and the documentation references it.
+ * This type extends that user object to include the sub property.
+ */
+type UserWithSub = User & { sub: string };
+
+/**
+ * The response wrapper that comes back from FaunaDB
+ */
+type QueryResponse<T> = {
+  data: DBObject<T>[];
+};
+
+/**
+ * An object that gets returned from FaunaDB
+ */
+type DBObject<T> = {
+  ref: Object;
+  ts: number;
+  data: T;
+};
+
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY as string,
 });
@@ -15,7 +38,7 @@ const handler: Handler = async function (
   const id = getIDFromPathname(event.path);
   // const { identity, user } = context.clientContext;
   // const identity = context.clientContext?.identity;
-  const user = context.clientContext?.user as User;
+  const user = context.clientContext?.user as UserWithSub;
 
   console.log(user);
 
@@ -78,20 +101,13 @@ const getIDFromPathname = (path: string) => {
     : null;
 };
 
-type AllVettesResponse = {
-  data: VetteObject[];
-};
-
-const getAllVettes = (userInfo: User) => {
+const getAllVettes = (userInfo: UserWithSub) => {
   const q = faunadb.query;
 
-  // If there's an issue see if userInfo.sub equals userInfo.id
-  // userInfo.sub doesn't exist on the type but does exist on the object
-
   return client
-    .query<AllVettesResponse>(
+    .query<QueryResponse<VetteObject>>(
       q.Map(
-        q.Paginate(q.Match(q.Index("vettes_by_user"), userInfo.id)),
+        q.Paginate(q.Match(q.Index("vettes_by_user"), userInfo.sub)),
         q.Lambda("X", q.Get(q.Var("X")))
       )
     )
@@ -115,7 +131,7 @@ const getAllVettes = (userInfo: User) => {
     });
 };
 
-const getVetteByID = (id: string, userInfo: User) => {
+const getVetteByID = (id: string, userInfo: UserWithSub) => {
   const q = faunadb.query;
 
   return client
@@ -154,7 +170,10 @@ const getVetteByID = (id: string, userInfo: User) => {
 
 type PreSubmitVetteObject = Omit<VetteObject, "id">;
 
-const createNewVette = async (vetteData: VetteValues, userInfo: User) => {
+const createNewVette = async (
+  vetteData: VetteValues,
+  userInfo: UserWithSub
+) => {
   const q = faunadb.query;
 
   try {
@@ -199,7 +218,7 @@ const createNewVette = async (vetteData: VetteValues, userInfo: User) => {
 const updateVette = async (
   id: string,
   vetteData: VetteValues,
-  userInfo: User
+  userInfo: UserWithSub
 ) => {
   const q = faunadb.query;
   let userIDMatches = false;
@@ -248,7 +267,7 @@ const updateVette = async (
   }
 };
 
-const deleteVette = async (id: string, userInfo: User) => {
+const deleteVette = async (id: string, userInfo: UserWithSub) => {
   const q = faunadb.query;
   let userIDMatches = false;
 
