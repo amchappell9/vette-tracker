@@ -43,7 +43,7 @@ const PaginationControls = ({
     currentPage * pageSize > totalCount ? totalCount : currentPage * pageSize;
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white py-3">
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white pt-3">
       {/* Mobile Buttons */}
       <div className="flex flex-1 justify-between sm:hidden">
         <button
