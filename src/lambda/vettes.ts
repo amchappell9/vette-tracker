@@ -29,7 +29,13 @@ type DBObject<T> = {
   data: T;
 };
 
-type DBError = {};
+type DBError = {
+  requestResult: {
+    statusCode: string;
+  };
+  description?: string;
+  message?: string;
+};
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY as string,
@@ -103,6 +109,30 @@ const getIDFromPathname = (path: string) => {
   return pathArray.indexOf("vettes") === pathArray.length - 2
     ? pathArray[pathArray.length - 1]
     : null;
+};
+
+const isDBError = (error: any): error is DBError => {
+  const statusCodeExists =
+    typeof error.requestResult.statusCode !== "undefined";
+  const descriptionOrMessageExists =
+    typeof error.description !== "undefined" ||
+    typeof error.message !== "undefined";
+
+  return statusCodeExists && descriptionOrMessageExists;
+};
+
+const handleError = (error: unknown) => {
+  if (isDBError(error)) {
+    return {
+      statusCode: error.requestResult.statusCode,
+      body: error.message ? error.message : error.description,
+    };
+  }
+
+  return {
+    statusCode: 500,
+    body: JSON.stringify({ msg: "Something went wrong" }),
+  };
 };
 
 const getAllVettes = (userInfo: UserWithSub) => {
@@ -202,10 +232,7 @@ const createNewVette = async (
   } catch (error) {
     console.error("In error:", error);
 
-    return {
-      statusCode: error.requestResult.statusCode,
-      body: error.message,
-    };
+    return handleError(error);
   }
 };
 
@@ -217,15 +244,16 @@ const updateVette = async (
   const q = faunadb.query;
   let userIDMatches = false;
 
-  // Do I really not send the userID, id, and date?
-
-  // Add id and update date
-  vetteData.id = id;
-  vetteData.date = format(new Date(), "MM-dd-yyyy");
+  const vetteObj: VetteObject = {
+    id: id,
+    date: format(new Date(), "MM-dd-yyyy"),
+    userId: userInfo.sub,
+    ...vetteData,
+  };
 
   try {
     await client
-      .query(
+      .query<QueryResponse<VetteObject>>(
         q.Map(
           q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
@@ -239,7 +267,7 @@ const updateVette = async (
     if (userIDMatches) {
       await client.query(
         q.Update(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), id))), {
-          data: vetteData,
+          data: vetteObj,
         })
       );
 
@@ -256,10 +284,7 @@ const updateVette = async (
   } catch (error) {
     console.error(error);
 
-    return {
-      statusCode: error.requestResult.statusCode,
-      body: error.message,
-    };
+    return handleError(error);
   }
 };
 
@@ -299,9 +324,6 @@ const deleteVette = async (id: string, userInfo: UserWithSub) => {
   } catch (error) {
     console.log(error);
 
-    return {
-      statusCode: error.requestResult.statusCode,
-      body: error.description,
-    };
+    return handleError(error);
   }
 };
