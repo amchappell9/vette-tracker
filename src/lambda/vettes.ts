@@ -9,7 +9,9 @@ import { VetteObject, VetteValues } from "../types/types";
  * but it does exist on the property and the documentation references it.
  * This type extends that user object to include the sub property.
  */
-type UserWithSub = User & { sub: string };
+interface UserWithSub extends User {
+  sub: string;
+}
 
 /**
  * The response wrapper that comes back from FaunaDB
@@ -26,6 +28,8 @@ type DBObject<T> = {
   ts: number;
   data: T;
 };
+
+type DBError = {};
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY as string,
@@ -135,7 +139,7 @@ const getVetteByID = (id: string, userInfo: UserWithSub) => {
   const q = faunadb.query;
 
   return client
-    .query(
+    .query<QueryResponse<VetteObject>>(
       q.Map(
         q.Paginate(q.Match(q.Index("vette_by_id"), id)),
         q.Lambda("X", q.Get(q.Var("X")))
@@ -168,8 +172,6 @@ const getVetteByID = (id: string, userInfo: UserWithSub) => {
     });
 };
 
-type PreSubmitVetteObject = Omit<VetteObject, "id">;
-
 const createNewVette = async (
   vetteData: VetteValues,
   userInfo: UserWithSub
@@ -178,26 +180,18 @@ const createNewVette = async (
 
   try {
     // Generate ID
-    await client.query(q.NewId()).then((id) => (vetteData.id = id));
+    const id = await client.query<number>(q.NewId());
 
-    const vetteObj: PreSubmitVetteObject = {
-      // Add Date
+    // Add ID, created date, and user id to complete the VetteObject
+    const vetteObj: VetteObject = {
+      id: id.toString(),
       date: format(new Date(), "MM-dd-yyyy"),
-
-      // Add user ID
-      userId: userInfo.id,
-
+      userId: userInfo.sub,
       ...vetteData,
     };
 
-    // Add Date
-    // vetteData.date = format(new Date(), "MM-dd-yyyy");
-
-    // Add user ID
-    // vetteData.userId = userInfo.sub;
-
     // Add record
-    const response = await client.query(
+    const response = await client.query<DBObject<VetteObject>>(
       q.Create(q.Collection("Vettes"), { data: vetteObj })
     );
 
@@ -222,6 +216,8 @@ const updateVette = async (
 ) => {
   const q = faunadb.query;
   let userIDMatches = false;
+
+  // Do I really not send the userID, id, and date?
 
   // Add id and update date
   vetteData.id = id;
@@ -274,7 +270,7 @@ const deleteVette = async (id: string, userInfo: UserWithSub) => {
   // Validate user has access to vette
   try {
     await client
-      .query(
+      .query<QueryResponse<VetteObject>>(
         q.Map(
           q.Paginate(q.Match(q.Index("vette_by_id"), id)),
           q.Lambda("X", q.Get(q.Var("X")))
