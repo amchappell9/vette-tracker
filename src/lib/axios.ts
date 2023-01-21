@@ -4,12 +4,7 @@ import storage from "../storage/storage";
 function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
   const userInfo = storage.getUserInfo();
 
-  if (!config.headers) {
-    config.headers = {};
-  }
-
   if (userInfo) {
-    // @ts-expect-error - This is an issue with the current Axios release
     config.headers.Authorization = `Bearer ${userInfo.token.access_token}`;
   }
 

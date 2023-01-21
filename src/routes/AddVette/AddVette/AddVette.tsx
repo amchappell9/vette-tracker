@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
-import AddVetteForm from "../AddVetteForm";
+import AddVetteForm from "../AddVetteForm/AddVetteForm";
 import Alert from "../../../components/Alert/Alert";
 import { VetteObject, VetteValues } from "../../../types/types";
 import { useCreateOrUpdateVette } from "../api/addVette";
@@ -27,9 +27,9 @@ interface LocationState {
 }
 
 const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
-  const [vetteToEditInfo, setVetteToEditInfo] = useState<VetteObject | null>(
-    null
-  );
+  const [vetteToEditInfo, setVetteToEditInfo] = useState<
+    VetteObject | undefined
+  >();
 
   const { isSuccess, data, isError, error, isLoading, mutate } =
     useCreateOrUpdateVette();

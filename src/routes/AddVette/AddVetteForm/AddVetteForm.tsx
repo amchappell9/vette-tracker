@@ -41,7 +41,7 @@ const addVetteFormValidationSchema = Yup.object({
 
 type AddVetteFormProps = {
   handleSubmit: (values: VetteValues) => void;
-  vetteToEditInfo: VetteObject;
+  vetteToEditInfo?: VetteObject;
 };
 
 const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
