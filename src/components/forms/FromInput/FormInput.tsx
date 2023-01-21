@@ -1,11 +1,14 @@
 import { useField } from "formik";
-import Input from "../../Input";
-import FormFieldErrorMessage from "../FormFieldErrorMessage";
+import Input, { InputType } from "../../Input/Input";
+import FormFieldErrorMessage from "../FormFieldErrorMessage/FormFieldErrorMessage";
 
-type FormInputProps = {
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
-};
+  type?: "password" | "tel" | "text" | undefined;
+  defaultValue?: string | number | undefined;
+  maskType?: InputType;
+}
 
 const FormInput = ({ label, name, ...props }: FormInputProps) => {
   const [field, meta] = useField(name);

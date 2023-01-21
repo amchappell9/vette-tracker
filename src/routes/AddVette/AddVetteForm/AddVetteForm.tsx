@@ -10,10 +10,9 @@ import interiorColors from "../../../constants/interiorColors";
 import submodels from "../../../constants/submodels";
 import trims from "../../../constants/trims";
 import packages from "../../../constants/packages";
-import { INPUT_TYPES } from "../../../components/Input/Input";
-import FormInput from "../../../components/forms/FromInput";
-import FormSelect from "../../../components/forms/FormSelect";
-import FormRadioGroup from "../../../components/forms/FormRadioGroup";
+import FormInput from "../../../components/forms/FromInput/FormInput";
+import FormSelect from "../../../components/forms/FormSelect/FormSelect";
+import FormRadioGroup from "../../../components/forms/FormRadioGroup/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
@@ -216,7 +215,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             {/* Miles */}
             <div className="col-span-6">
               <FormInput
-                maskType={INPUT_TYPES.MILES}
+                maskType="miles"
                 name="miles"
                 type="text"
                 label="Miles"
@@ -225,7 +224,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             {/* Cost */}
             <div className="col-span-6">
               <FormInput
-                maskType={INPUT_TYPES.DOLLAR_AMOUNT}
+                maskType="dollar"
                 name="cost"
                 type="text"
                 label="Cost"

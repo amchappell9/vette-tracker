@@ -1,12 +1,7 @@
 import { InputHTMLAttributes } from "react";
 import NumberFormat from "react-number-format";
 
-export const INPUT_TYPES = {
-  MILES: "miles",
-  DOLLAR_AMOUNT: "dollar",
-};
-
-type InputType = "miles" | "dollar";
+export type InputType = "miles" | "dollar";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   autoComplete?: string;
@@ -38,12 +33,12 @@ const Input = ({
 
   let maskOptions = {};
 
-  if (maskType === INPUT_TYPES.MILES) {
+  if (maskType === "miles") {
     maskOptions = {
       thousandSeparator: true,
       thousandsGroupStyle: ",",
     };
-  } else if (maskType === INPUT_TYPES.DOLLAR_AMOUNT) {
+  } else if (maskType === "dollar") {
     maskOptions = {
       thousandSeparator: true,
       prefix: "$",
