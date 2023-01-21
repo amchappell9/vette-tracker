@@ -1,6 +1,9 @@
 [dev]
   framework = "vite"
   targetPort = 3000
+
+[functions]
+  node_bundler = "esbuild"
   
 [build]
   command = "npm run build" # the command you run to build this file
