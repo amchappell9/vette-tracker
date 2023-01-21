@@ -5,7 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
-import Footer from "../../Footer";
+import Footer from "../../Footer/Footer";
 import Card from "../../Card/Card";
 import Logo from "../../Logo/Logo";
 import { CardPaddingVariants } from "../../Card/Card";
