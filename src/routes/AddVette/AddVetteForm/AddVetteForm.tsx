@@ -11,7 +11,7 @@ import submodels from "../../../constants/submodels";
 import trims from "../../../constants/trims";
 import packages from "../../../constants/packages";
 import FormInput from "../../../components/forms/FromInput/FormInput";
-import FormSelect from "../../../components/forms/FormSelect/FormSelect";
+import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
