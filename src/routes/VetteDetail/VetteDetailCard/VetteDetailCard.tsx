@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/outline";
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert";
 import PackagesList from "../PackagesList";
 import SubmodelInfo from "../SubmodelInfo";
 import TrimInfo from "../TrimInfo";

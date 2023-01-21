@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import AddVetteForm from "../AddVetteForm";
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert/";
 import { VetteObject, VetteValues } from "../../../types/types";
 import { useCreateOrUpdateVette } from "../api/addVette";
 import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";

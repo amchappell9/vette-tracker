@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Alert from "../../components/Alert/Alert";
+import Alert from "../../components/Alert";
 import { HeaderInfoObject } from "../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 import { Submodels } from "../../constants/submodels";
 import AddFirstVetteMessage from "../AllVettes/AddFirstVetteMessage/AddFirstVetteMessage";

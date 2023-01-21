@@ -6,7 +6,7 @@ import { User } from "gotrue-js";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import FormFieldErrorMessage from "../../../components/forms/FormFieldErrorMessage/FormFieldErrorMessage";
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert";
 import { ErrorResponseModel } from "../../../App";
 
 const signUpFormValidationSchema = Yup.object({

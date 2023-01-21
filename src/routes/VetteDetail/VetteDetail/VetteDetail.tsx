@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { PencilIcon, PlusIcon } from "@heroicons/react/outline";
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert";
 import VetteDetailCard from "../VetteDetailCard";
 import { VetteObject } from "../../../types/types";
 import { useVette } from "../api/getVette";
