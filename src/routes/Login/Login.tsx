@@ -3,7 +3,7 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Alert from "../../components/Alert/Alert";
-import Button from "../../components/Button";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
 import { ErrorResponseModel } from "../../App";
@@ -127,7 +127,7 @@ const Login = ({ handleAuth }: LoginProps) => {
                 className="mt-1"
               />
             ) : null}
-            <Button type="submit" size="full" className="mt-4">
+            <Button type="submit" buttonSize="full" className="mt-4">
               Sign In
             </Button>
           </form>

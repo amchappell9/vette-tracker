@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import Button from "../../../components/Button";
+import Button from "../../../components/Button/Button";
 import SubModelRadioButton from "../SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton";
 import PackageCheckbox from "../PackageCheckbox/PackageCheckbox";
@@ -235,7 +235,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             <div className="col-span-6 flex flex-row-reverse justify-between gap-2 md:justify-start">
               <Button
                 type="submit"
-                variant="primary"
+                intent="primary"
                 disabled={props.isSubmitting ? true : false}
               >
                 {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
@@ -243,7 +243,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
               <Button
                 onClick={props.handleReset}
                 type="reset"
-                variant="secondary"
+                intent="secondary"
               >
                 Clear
               </Button>
