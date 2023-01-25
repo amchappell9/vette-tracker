@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import AddVetteForm from "../AddVetteForm";
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert/";
 import { VetteObject, VetteValues } from "../../../types/types";
 import { useCreateOrUpdateVette } from "../api/addVette";
 import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";
@@ -19,7 +19,7 @@ const formatValues = (values: VetteValues) => {
 };
 
 type AddVetteProps = {
-  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
+  setHeaderInfo?: (headerInfo: HeaderInfoObject) => void;
 };
 
 interface LocationState {
@@ -27,31 +27,34 @@ interface LocationState {
 }
 
 const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
-  const [vetteToEditInfo, setVetteToEditInfo] = useState<VetteObject | null>(
-    null
-  );
+  const [vetteToEditInfo, setVetteToEditInfo] = useState<
+    VetteObject | undefined
+  >();
 
   const { isSuccess, data, isError, error, isLoading, mutate } =
     useCreateOrUpdateVette();
 
   const location = useLocation<LocationState>();
 
+  // I think this useEffect can be removed, since if location changes it will re-render the component
   useEffect(() => {
-    if (location.state != null && location.state.vetteToEdit) {
-      const { vetteToEdit } = location.state;
+    if (setHeaderInfo) {
+      if (location.state != null && location.state.vetteToEdit) {
+        const { vetteToEdit } = location.state;
 
-      setVetteToEditInfo(vetteToEdit);
-      setHeaderInfo({
-        title: "Edit Vette",
-        backLinkText: `Back to ${vetteToEdit.year} Corvette`,
-        backLinkConfig: `/vettes/${vetteToEdit.id}`,
-      });
-    } else {
-      setHeaderInfo({
-        title: "Add New Vette",
-        backLinkText: "Back to All Vettes",
-        backLinkConfig: "/vettes",
-      });
+        setVetteToEditInfo(vetteToEdit);
+        setHeaderInfo({
+          title: "Edit Vette",
+          backLinkText: `Back to ${vetteToEdit.year} Corvette`,
+          backLinkConfig: `/vettes/${vetteToEdit.id}`,
+        });
+      } else {
+        setHeaderInfo({
+          title: "Add New Vette",
+          backLinkText: "Back to All Vettes",
+          backLinkConfig: "/vettes",
+        });
+      }
     }
   }, [location, setHeaderInfo]);
 
@@ -98,6 +101,8 @@ const AddVette = ({ setHeaderInfo }: AddVetteProps) => {
       />
     );
   }
+
+  return <></>;
 };
 
 export default AddVette;

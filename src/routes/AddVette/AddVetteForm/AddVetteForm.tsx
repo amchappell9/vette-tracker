@@ -10,12 +10,11 @@ import interiorColors from "../../../constants/interiorColors";
 import submodels from "../../../constants/submodels";
 import trims from "../../../constants/trims";
 import packages from "../../../constants/packages";
-import { INPUT_TYPES } from "../../../components/Input/Input";
 import FormInput from "../../../components/forms/FromInput";
 import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
-import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
-import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
+import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
+import ExteriorColorSelect from "../ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
 
 const VALIDATION_MESSAGES = {
@@ -41,7 +40,7 @@ const addVetteFormValidationSchema = Yup.object({
 
 type AddVetteFormProps = {
   handleSubmit: (values: VetteValues) => void;
-  vetteToEditInfo: VetteObject;
+  vetteToEditInfo?: VetteObject;
 };
 
 const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
@@ -216,7 +215,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             {/* Miles */}
             <div className="col-span-6">
               <FormInput
-                maskType={INPUT_TYPES.MILES}
+                maskType="miles"
                 name="miles"
                 type="text"
                 label="Miles"
@@ -225,7 +224,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             {/* Cost */}
             <div className="col-span-6">
               <FormInput
-                maskType={INPUT_TYPES.DOLLAR_AMOUNT}
+                maskType="dollar"
                 name="cost"
                 type="text"
                 label="Cost"
@@ -235,7 +234,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             <div className="col-span-6 flex flex-row-reverse justify-between gap-2 md:justify-start">
               <Button
                 type="submit"
-                variant="primary"
+                intent="primary"
                 disabled={props.isSubmitting ? true : false}
               >
                 {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
@@ -243,7 +242,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
               <Button
                 onClick={props.handleReset}
                 type="reset"
-                variant="secondary"
+                intent="secondary"
               >
                 Clear
               </Button>

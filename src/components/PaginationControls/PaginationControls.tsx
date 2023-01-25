@@ -1,6 +1,4 @@
-import PaginationButton, {
-  BUTTON_STATES,
-} from "../PaginationButton/PaginationButton";
+import PaginationButton, { BUTTON_STATES } from "../PaginationButton";
 import usePagination from "../../hooks/usePagination";
 
 type PaginationControlsProps = {

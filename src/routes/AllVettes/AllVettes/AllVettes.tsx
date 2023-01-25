@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/outline";
 
 import ListOfVettes from "../ListOfVettes";
-import Alert from "../../../components/Alert/Alert";
-import AddFirstVetteMessage from "../AddFirstVetteMessage/AddFirstVetteMessage";
+import Alert from "../../../components/Alert/";
+import AddFirstVetteMessage from "../AddFirstVetteMessage";
 import PaginationControls from "../../../components/PaginationControls/PaginationControls";
 import { useAllVettes } from "../api/getAllVettes";
 import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/AuthenticatedPage";
@@ -59,7 +59,7 @@ import { HeaderInfoObject } from "../../../components/layouts/AuthenticatedPage/
 const PAGE_SIZE = 5;
 
 type AllVettesProps = {
-  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
+  setHeaderInfo?: (headerInfo: HeaderInfoObject) => void;
 };
 
 const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
@@ -71,12 +71,16 @@ const AllVettes = ({ setHeaderInfo }: AllVettesProps) => {
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
 
   useEffect(() => {
-    setHeaderInfo({
-      title: "All Vettes",
-      linkText: "Add Vette",
-      linkConfig: "/add-vette",
-      linkIcon: <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />,
-    });
+    if (setHeaderInfo) {
+      setHeaderInfo({
+        title: "All Vettes",
+        linkText: "Add Vette",
+        linkConfig: "/add-vette",
+        linkIcon: (
+          <PlusIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+        ),
+      });
+    }
 
     // Only want this to run once on render
     // eslint-disable-next-line

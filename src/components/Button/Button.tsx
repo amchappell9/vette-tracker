@@ -8,7 +8,7 @@ const buttonStyles = cva("", {
       secondary:
         "bg-white hover:bg-gray-100 text-gray-800 border rounded border-gray-300 transition-colors",
     },
-    size: {
+    buttonSize: {
       default: "px-6 py-2 text-lg drop-shadow-sm",
       large: "px-12 py-6 font-bold text-3xl drop-shadow-md",
       full: "w-full py-3 font-bold text-xl drop-shadow-sm",
@@ -16,23 +16,28 @@ const buttonStyles = cva("", {
   },
   defaultVariants: {
     intent: "primary",
-    size: "default",
+    buttonSize: "default",
   },
 });
 
-type ButtonStyleProps = VariantProps<typeof buttonStyles>;
+interface ButtonStyleProps extends VariantProps<typeof buttonStyles> {}
 
-type ButtonProps = ButtonStyleProps & {
+interface ButtonProps
+  extends React.HTMLProps<HTMLButtonElement>,
+    ButtonStyleProps {
   children: React.ReactNode;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+
+  // I don't know why this was necessary
+  type?: "button" | "submit" | "reset" | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   // intent?: "primary" | "secondary";
   // size?: "default" | "large" | "full";
-};
+}
 
 const Button = ({
   children,
-  size,
+  buttonSize,
   intent,
   onClick,
   className,
@@ -40,7 +45,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={buttonStyles({ size, intent, className })}
+      className={buttonStyles({ buttonSize, intent, className })}
       onClick={onClick}
       {...props}
     >

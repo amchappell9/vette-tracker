@@ -42,7 +42,7 @@ it("is accessible", async () => {
 
   // Sizes
   rerender(
-    <Button size="large" onClick={mockCallback}>
+    <Button buttonSize="large" onClick={mockCallback}>
       Accessible Button
     </Button>
   );
@@ -50,7 +50,7 @@ it("is accessible", async () => {
   expect(results).toHaveNoViolations();
 
   rerender(
-    <Button size="full" onClick={mockCallback}>
+    <Button buttonSize="full" onClick={mockCallback}>
       Accessible Button
     </Button>
   );

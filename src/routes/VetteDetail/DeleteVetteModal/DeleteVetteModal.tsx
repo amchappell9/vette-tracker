@@ -2,7 +2,7 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 
-import Alert from "../../../components/Alert/Alert";
+import Alert from "../../../components/Alert";
 import { VetteObject } from "../../../types/types";
 import { useDeleteVette } from "../api/deleteVette";
 import { getErrorMessage } from "../../../utils/utils";
