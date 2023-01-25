@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import FeatureCard from "../FeatureCard";
-import Footer from "../../../components/Footer/Footer";
+import Footer from "../../../components/Footer";
 import Logo from "../../../components/Logo/Logo";
 
 const Home = () => {

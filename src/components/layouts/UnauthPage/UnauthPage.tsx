@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import Footer from "../../Footer/Footer";
+import Footer from "../../Footer";
 import Logo from "../../Logo/Logo";
 
 type UnauthPageProps = {
