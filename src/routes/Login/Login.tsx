@@ -3,7 +3,7 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Alert from "../../components/Alert";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 import Input from "../../components/Input/Input";
 import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage/FormFieldErrorMessage";
 import { ErrorResponseModel } from "../../App";

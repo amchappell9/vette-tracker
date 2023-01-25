@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import Button from "../../../components/Button/Button";
+import Button from "../../../components/Button";
 import SubModelRadioButton from "../SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton";
 import PackageCheckbox from "../PackageCheckbox/PackageCheckbox";
