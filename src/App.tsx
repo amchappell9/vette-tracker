@@ -14,8 +14,8 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
 import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation/SignUpConfirmation";
-import UnauthPage from "./components/layouts/UnauthPage/UnauthPage";
-import AuthenticatedPage from "./components/layouts/AuthenticatedPage/AuthenticatedPage";
+import UnauthPage from "./components/layouts/UnauthPage";
+import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
 import storage from "./storage/storage";
 
 /**

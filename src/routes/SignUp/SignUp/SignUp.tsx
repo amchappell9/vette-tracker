@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { User } from "gotrue-js";
-import Input from "../../../components/Input/Input";
+import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import FormFieldErrorMessage from "../../../components/forms/FormFieldErrorMessage";
 import Alert from "../../../components/Alert";

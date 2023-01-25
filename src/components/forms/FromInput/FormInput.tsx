@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import Input, { InputType } from "../../Input/Input";
+import Input, { InputType } from "../../Input/";
 import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

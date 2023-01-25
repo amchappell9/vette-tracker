@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Alert from "../../components/Alert";
 import Button from "../../components/Button";
-import Input from "../../components/Input/Input";
+import Input from "../../components/Input";
 import FormFieldErrorMessage from "../../components/forms/FormFieldErrorMessage";
 import { ErrorResponseModel } from "../../App";
 import { User } from "gotrue-js";

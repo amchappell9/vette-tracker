@@ -4,7 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 
 import navLinks from "../../../constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
-import MobileMenu from "../MobileMenu/MobileMenu";
+import MobileMenu from "../MobileMenu";
 import Footer from "../../Footer";
 import Card from "../../Card";
 import Logo from "../../Logo/Logo";
