@@ -1,5 +1,3 @@
-import React from "react";
-
 const Resources = () => {
   return (
     <div className="px-8 py-16 text-center">

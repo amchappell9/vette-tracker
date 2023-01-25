@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import Alert from "../../components/Alert";
 import { HeaderInfoObject } from "../../components/layouts/AuthenticatedPage/AuthenticatedPage";
 import { Submodels } from "../../constants/submodels";
-import AddFirstVetteMessage from "../AllVettes/AddFirstVetteMessage/AddFirstVetteMessage";
+import AddFirstVetteMessage from "../AllVettes/AddFirstVetteMessage";
 import { useAllVettes } from "../AllVettes/api/getAllVettes";
 import PriceGraph from "./PriceGraph/PriceGraph";
 import SubmodelSelector from "./SubmodelSelector/SubmodelSelector";
 
 type TrendsProps = {
-  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
+  setHeaderInfo?: (headerInfo: HeaderInfoObject) => void;
 };
 
 const Trends = ({ setHeaderInfo }: TrendsProps) => {
@@ -17,7 +17,9 @@ const Trends = ({ setHeaderInfo }: TrendsProps) => {
     useState<Submodels>("Stingray");
 
   useEffect(() => {
-    setHeaderInfo({ title: "Trends" });
+    if (setHeaderInfo) {
+      setHeaderInfo({ title: "Trends" });
+    }
     // eslint-disable-next-line
   }, []);
 

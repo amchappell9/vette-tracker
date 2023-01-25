@@ -59,7 +59,7 @@ const getHeaderInfoByState = (state: UIState, vetteData?: VetteObject) => {
 };
 
 type VetteDetailProps = {
-  setHeaderInfo: (headerInfo: HeaderInfoObject) => void;
+  setHeaderInfo?: (headerInfo: HeaderInfoObject) => void;
 };
 
 interface ParamModel {
@@ -79,16 +79,18 @@ const VetteDetail = ({ setHeaderInfo }: VetteDetailProps) => {
 
   // Update header info based on state
   useEffect(() => {
-    if (data) {
-      if (location?.state?.isConfirmationView) {
-        setHeaderInfo(getHeaderInfoByState("confirmation-view", data));
-      } else {
-        setHeaderInfo(getHeaderInfoByState("vette-info", data));
+    if (setHeaderInfo) {
+      if (data) {
+        if (location?.state?.isConfirmationView) {
+          setHeaderInfo(getHeaderInfoByState("confirmation-view", data));
+        } else {
+          setHeaderInfo(getHeaderInfoByState("vette-info", data));
+        }
+      } else if (isLoading) {
+        setHeaderInfo(getHeaderInfoByState("loading"));
+      } else if (error) {
+        setHeaderInfo(getHeaderInfoByState("error"));
       }
-    } else if (isLoading) {
-      setHeaderInfo(getHeaderInfoByState("loading"));
-    } else if (error) {
-      setHeaderInfo(getHeaderInfoByState("error"));
     }
   }, [data, isLoading, error, setHeaderInfo, location.state]);
 
