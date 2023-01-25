@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import { useId } from "react";
-import FormFieldErrorMessage from "../FormFieldErrorMessage/FormFieldErrorMessage";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
 type FormCheckboxGroupProps = {
   label: string;

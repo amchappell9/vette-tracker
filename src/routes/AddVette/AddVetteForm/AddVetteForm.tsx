@@ -10,10 +10,10 @@ import interiorColors from "../../../constants/interiorColors";
 import submodels from "../../../constants/submodels";
 import trims from "../../../constants/trims";
 import packages from "../../../constants/packages";
-import FormInput from "../../../components/forms/FromInput/FormInput";
+import FormInput from "../../../components/forms/FromInput";
 import FormSelect from "../../../components/forms/FormSelect";
-import FormRadioGroup from "../../../components/forms/FormRadioGroup/FormRadioGroup";
-import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup/FormCheckboxGroup";
+import FormRadioGroup from "../../../components/forms/FormRadioGroup";
+import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
 

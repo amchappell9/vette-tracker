@@ -1,16 +1,6 @@
 import { useField } from "formik";
 
-import FormFieldErrorMessage from "../FormFieldErrorMessage/FormFieldErrorMessage";
-
-// type FormSelectProps = {
-//   label: string;
-//   name: string;
-//   options: {
-//     label: string;
-//     value: string;
-//   }[];
-//   className: string;
-// };
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
 interface FormSelectProps extends React.HTMLProps<HTMLSelectElement> {
   label: string;

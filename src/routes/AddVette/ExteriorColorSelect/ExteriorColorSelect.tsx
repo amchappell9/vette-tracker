@@ -1,4 +1,4 @@
-import FormSelect from "../../../components/forms/FormSelect/FormSelect";
+import FormSelect from "../../../components/forms/FormSelect";
 import { ExteriorColorOption } from "../../../constants/exteriorColors";
 
 type ExteriorColorSelectProps = {

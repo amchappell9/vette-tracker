@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { User } from "gotrue-js";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button";
-import FormFieldErrorMessage from "../../../components/forms/FormFieldErrorMessage/FormFieldErrorMessage";
+import FormFieldErrorMessage from "../../../components/forms/FormFieldErrorMessage";
 import Alert from "../../../components/Alert";
 import { ErrorResponseModel } from "../../../App";
 

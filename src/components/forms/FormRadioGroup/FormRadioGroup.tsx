@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import { RadioGroup } from "@headlessui/react";
-import FormFieldErrorMessage from "../FormFieldErrorMessage/FormFieldErrorMessage";
+import FormFieldErrorMessage from "../FormFieldErrorMessage";
 
 type FormRadioGroupProps = {
   name: string;
