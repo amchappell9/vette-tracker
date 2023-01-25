@@ -14,7 +14,7 @@ import FormInput from "../../../components/forms/FromInput";
 import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
-import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
+import ExteriorColorSelect from "../ExteriorColorSelect";
 import { VetteObject, VetteValues } from "../../../types/types";
 
 const VALIDATION_MESSAGES = {
@@ -40,7 +40,7 @@ const addVetteFormValidationSchema = Yup.object({
 
 type AddVetteFormProps = {
   handleSubmit: (values: VetteValues) => void;
-  vetteToEditInfo: VetteObject;
+  vetteToEditInfo?: VetteObject;
 };
 
 const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
