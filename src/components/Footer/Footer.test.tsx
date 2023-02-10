@@ -1,5 +1,6 @@
+import { expect, it } from "vitest";
 import { render } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe } from "vitest-axe";
 import Footer from "./Footer";
 
 it("renders my name", () => {

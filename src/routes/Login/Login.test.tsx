@@ -1,10 +1,11 @@
+import { test, vi, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import Login from "./Login";
 
 test("login form calls handle submit with correct values", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
 
   render(
     <MemoryRouter>

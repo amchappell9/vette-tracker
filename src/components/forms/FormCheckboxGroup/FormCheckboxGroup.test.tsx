@@ -1,3 +1,4 @@
+import { beforeEach, vi, test, expect } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import FormCheckboxGroup from "./FormCheckboxGroup";
@@ -7,10 +8,10 @@ import PackageCheckbox from "../../../routes/AddVette/PackageCheckbox/PackageChe
 
 // Reset the mock function before each test
 beforeEach(() => {
-  jest.resetAllMocks();
+  vi.resetAllMocks();
 });
 
-const handleSubmit = jest.fn();
+const handleSubmit = vi.fn();
 
 const ErrorMessage = "Please select at least one package";
 

@@ -1,3 +1,4 @@
+import { it } from "vitest";
 import { render } from "@testing-library/react";
 import Card from "./Card";
 

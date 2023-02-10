@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
 import { VetteObject } from "../../../types/types";
 import VetteItem from "./VetteItem";
+import { expect, it } from "vitest";
 
 const vette: VetteObject = {
   year: "2014",

@@ -2,10 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import SignUp from "./SignUp";
-import { axe } from "jest-axe";
+import { axe } from "vitest-axe";
+import { test, vi, expect, it } from "vitest";
 
 test("sign up form calls handle submit with correct values", async () => {
-  const handleSubmit = jest.fn();
+  const handleSubmit = vi.fn();
 
   render(
     <MemoryRouter>

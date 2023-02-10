@@ -1,22 +1,22 @@
 import { getByRole, render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { expect, test } from "vitest";
+import { axe } from "vitest-axe";
 import Alert from "./Alert";
 
-it("renders with correct text", () => {
+test("renders with correct text", () => {
   render(<Alert alertType="info" message="Here is a test!" />);
   expect(screen.getByText("Here is a test!")).toBeTruthy();
 });
 
-it("renders with correct role", () => {
+test("renders with correct role", () => {
   const { container } = render(
     <Alert alertType="warning" message="This is an alert" />
   );
 
-  // expect(getByRole(container, "alert")).toHaveTextContent(/this is an alert/i);
+  expect(getByRole(container, "alert")).toBeTruthy();
 });
 
-// variants render with the correct class names
-it("renders variants with correct backgrounds", () => {
+test("renders variants with correct backgrounds", () => {
   const { container, rerender } = render(
     <Alert alertType="info" message="Info component" />
   );
@@ -37,10 +37,8 @@ it("renders variants with correct backgrounds", () => {
   expect(container.getElementsByClassName("bg-red-50").length).toBe(1);
 });
 
-// variants render with the correct icons
-
 // component is accessible
-it("is accessible", async () => {
+test("is accessible", async () => {
   const { container, rerender } = render(
     <Alert alertType="success" message="Here is an alert!" />
   );

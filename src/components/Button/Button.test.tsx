@@ -1,10 +1,11 @@
+import { test, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { axe } from "jest-axe";
+import { axe } from "vitest-axe";
 import Button from "./Button";
 
-it("fires the onClick prop when clicked", async () => {
-  const mockCallback = jest.fn();
+test("fires the onClick prop when clicked", async () => {
+  const mockCallback = vi.fn();
   const user = userEvent.setup();
 
   render(<Button onClick={mockCallback}>Click Me!</Button>);
@@ -13,14 +14,14 @@ it("fires the onClick prop when clicked", async () => {
   expect(mockCallback).toBeCalledTimes(1);
 });
 
-it("renders the correct text", () => {
+test("renders the correct text", () => {
   const TEXT = "Test Text";
   const { getByText } = render(<Button onClick={() => {}}>{TEXT}</Button>);
 
   getByText(TEXT);
 });
 
-it("renders the classname prop", () => {
+test("renders the classname prop", () => {
   const { container } = render(
     <Button className="testClass" onClick={() => {}}>
       Here is a button
@@ -30,8 +31,8 @@ it("renders the classname prop", () => {
   expect(container.getElementsByClassName("testClass").length).toBe(1);
 });
 
-it("is accessible", async () => {
-  const mockCallback = jest.fn();
+test("is accessible", async () => {
+  const mockCallback = vi.fn();
 
   const { container, rerender } = render(
     <Button onClick={mockCallback}>Accessible Button</Button>
