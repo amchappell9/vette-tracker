@@ -12,7 +12,7 @@ import Login from "./routes/Login";
 import SignUp from "./routes/SignUp/SignUp";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UserInfoContext from "./contexts/UserInfoContext";
-import AllVettes from "../src/routes/AllVettes/AllVettes";
+import AllVettes from "./routes/AllVettes/AllVettes";
 import SignUpConfirmation from "./routes/SignUp/SignUpConfirmation";
 import UnauthPage from "./components/layouts/UnauthPage";
 import AuthenticatedPage from "./components/layouts/AuthenticatedPage";
