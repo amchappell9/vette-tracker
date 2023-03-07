@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.home-triangle-left {
+  @apply h-0 w-0;
+
+  border-top: 8rem solid transparent;
+  border-bottom: 8rem solid transparent;
+  border-left-style: solid;
+  border-left-width: 50vw;
+}
+
+.home-triangle-right {
+  @apply h-0 w-0;
+
+  border-top: 8rem solid transparent;
+  border-bottom: 8rem solid transparent;
+  border-right-style: solid;
+  border-right-width: 50vw;
+}
+
+.packageCheckbox:first-of-type {
+  @apply rounded-t border border-gray-100;
+}
+
+.packageCheckbox:not(:first-of-type) {
+  @apply border-l border-r border-b border-gray-100;
+}
+
+.packageCheckbox:last-of-type {
+  @apply rounded-b border-b border-l border-r border-gray-100;
+}
+
+.main-nav-active:hover {
+  @apply: bg-red-500;
+}
+
+.main-nav-active {
+  @apply rounded-md bg-red-500 px-3 py-2 font-medium text-white hover:bg-red-500;
+}
+
+.mobile-nav-active {
+  @apply -my-2 -ml-2 rounded-md bg-red-500 py-2 px-2;
+}

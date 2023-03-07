@@ -1,14 +1,14 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon, CogIcon } from "@heroicons/react/outline";
-import { NavLink } from "react-router-dom";
 
 import navLinks from "../../../constants/navLinks";
+import NavLink from "@/components/NavLink";
 
 type MobileMenuPros = {
   isOpen: boolean;
   dismiss: () => void;
-  handleLogout: () => void;
+  handleLogout?: () => void;
 };
 
 const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
@@ -63,16 +63,13 @@ const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
                   </div>
                   <div className="relative mt-8 flex-1 px-6 sm:px-6">
                     <div className="border-b border-gray-500 pb-6">
-                      <nav className="flex flex-col gap-4">
+                      <nav className="flex flex-col">
                         {navLinks.map((link) => (
                           <NavLink
+                            href={link.path}
                             key={link.path}
-                            to={link.path}
-                            className="focus:ring-white-500 -my-2 -ml-2 rounded-md py-2 px-2 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                            // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
-                            // conflict with the hover styles.
-                            // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
-                            activeClassName="mobile-nav-active"
+                            className="focus:ring-white-500 -ml-3 rounded-md py-2 px-3 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                            activeClassName="bg-red-500 text-white -mx-3 px-3 py-2 rounded-md font-medium hover:bg-red-500"
                           >
                             {link.linkName}
                           </NavLink>

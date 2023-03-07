@@ -1,14 +1,15 @@
 import React, { useState, Fragment } from "react";
-import { Link, NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
-import navLinks from "../../../constants/navLinks";
+import navLinks from "@/constants/navLinks";
 import { ArrowLeftIcon, MenuIcon, CogIcon } from "@heroicons/react/outline";
 import MobileMenu from "../MobileMenu";
-import Footer from "../../Footer";
+import Footer from "@/components/Footer";
 import Card from "../../Card";
 import Logo from "../../Logo/Logo";
 import { CardPaddingVariants } from "../../Card/Card";
+import Link from "next/link";
+import NavLink from "@/components/NavLink";
 
 /**
  * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
@@ -65,13 +66,11 @@ export type HeaderInfoObject<StateObj = {}> =
 
 type AuthenticatedPageProps = {
   children: React.ReactNode;
-  handleLogout: () => void;
   cardPadding?: CardPaddingVariants;
 };
 
 const AuthenticatedPage = ({
   children,
-  handleLogout,
   cardPadding,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -92,15 +91,17 @@ const AuthenticatedPage = ({
       <MobileMenu
         isOpen={mobileMenuOpen}
         dismiss={() => setMobileMenuOpen(false)}
-        handleLogout={handleLogout}
       />
       {/* Header */}
       <div className="bg-gray-700 px-4 pb-32 sm:px-6 md:px-8">
         <header className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
           <div className="flex-1">
-            <Link to="/" className="flex w-max items-center">
-              <Logo variant="default" className="h-8 sm:h-10" />
+            <Link href="/" className="relative">
+              <Logo
+                variant="inverted"
+                className="h-8 w-full object-cover sm:h-10"
+              />
             </Link>
           </div>
 
@@ -108,13 +109,10 @@ const AuthenticatedPage = ({
           <nav className="hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
             {navLinks.map((link) => (
               <NavLink
+                href={link.path}
                 key={link.path}
-                to={link.path}
                 className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-                // Since activeClassName appends to the base className instead of replacing entirely, a custom class is needed to avoid
-                // conflict with the hover styles.
-                // activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
-                activeClassName="main-nav-active"
+                activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
               >
                 {link.linkName}
               </NavLink>
@@ -144,7 +142,6 @@ const AuthenticatedPage = ({
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={handleLogout}
                         className={`block w-full rounded-md border-2 border-white px-4 py-1 ${
                           active
                             ? "border-2 border-gray-900 bg-gray-500 text-white"
@@ -175,13 +172,13 @@ const AuthenticatedPage = ({
             headerInfo.backLinkText &&
             headerInfo.backLinkConfig && (
               <div className="mx-auto mb-4 max-w-7xl">
-                <Link
+                {/* <Link
                   to={headerInfo.backLinkConfig}
                   className="text-gray-300 hover:underline"
                 >
                   <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
                   {headerInfo.backLinkText}
-                </Link>
+                </Link> */}
               </div>
             )}
 
@@ -191,13 +188,14 @@ const AuthenticatedPage = ({
               {headerInfo.title}
             </h1>
             {headerInfo.linkText && headerInfo.linkConfig && (
-              <Link
-                to={headerInfo.linkConfig}
-                className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
-              >
-                {headerInfo.linkIcon}
-                {headerInfo.linkText}
-              </Link>
+              // <Link
+              //   to={headerInfo.linkConfig}
+              //   className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
+              // >
+              //   {headerInfo.linkIcon}
+              //   {headerInfo.linkText}
+              // </Link>
+              <></>
             )}
           </div>
         </div>

@@ -1,17 +1,22 @@
-import Footer from "@/components/Footer/Footer";
-// import Head from "next/head";
 import Link from "next/link";
+import Footer from "@/components/Footer/Footer";
+import Head from "next/head";
+import Logo from "@/components/Logo/Logo";
 
 export default function Home() {
   return (
     <div className="bg-gray-700">
+      <Head>
+        <title>Vette Tracker</title>
+      </Head>
       <header>
         <div className="mx-auto max-w-full py-6 sm:px-6 md:px-8 lg:px-16">
           <div className="flex items-center justify-between px-4 sm:px-0">
-            {/* Logo */}
-            <Link href="/">
-              {/* <Logo variant="default" className="h-8 sm:h-10" /> */}
-              Logo
+            <Link href="/" className="relative">
+              <Logo
+                variant="inverted"
+                className="h-8 w-full object-cover sm:h-10"
+              />
             </Link>
           </div>
         </div>
@@ -27,12 +32,18 @@ export default function Home() {
           </span>
         </div>
         <div className="mt-6 block">
-          <Link
+          {/* <Link
             href="/sign-in"
             className="inline-block rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition duration-200 hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow active:duration-75"
           >
             <span className="inline-block -translate-y-px">Get Started</span>
-          </Link>
+          </Link> */}
+          <a
+            className="duration-20 inline-block rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow active:duration-75"
+            href="/api/auth/login"
+          >
+            Get Started
+          </a>
         </div>
       </section>
       <section className="flex h-64 justify-between overflow-x-hidden bg-gray-700">
