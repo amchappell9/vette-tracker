@@ -67,11 +67,13 @@ export type HeaderInfoObject<StateObj = {}> =
 type AuthenticatedPageProps = {
   children: React.ReactNode;
   cardPadding?: CardPaddingVariants;
+  title: string;
 };
 
 const AuthenticatedPage = ({
   children,
   cardPadding,
+  title,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerInfo, setHeaderInfo] = useState<HeaderInfoObject>({ title: "" });
@@ -86,6 +88,8 @@ const AuthenticatedPage = ({
     return child;
   });
 
+  console.log("title: ", title);
+
   return (
     <div className="flex h-full flex-col">
       <MobileMenu
@@ -99,7 +103,7 @@ const AuthenticatedPage = ({
           <div className="flex-1">
             <Link href="/" className="relative">
               <Logo
-                variant="inverted"
+                variant="default"
                 className="h-8 w-full object-cover sm:h-10"
               />
             </Link>
@@ -184,9 +188,7 @@ const AuthenticatedPage = ({
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
-            <h1 className="text-3xl font-bold text-white">
-              {headerInfo.title}
-            </h1>
+            <h1 className="text-3xl font-bold text-white">{title}</h1>
             {headerInfo.linkText && headerInfo.linkConfig && (
               // <Link
               //   to={headerInfo.linkConfig}

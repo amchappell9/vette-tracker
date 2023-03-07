@@ -6,5 +6,5 @@ export default function Vettes() {
 }
 
 Vettes.getLayout = function getLayout(page: ReactElement) {
-  return <AuthenticatedPage>{page}</AuthenticatedPage>;
+  return <AuthenticatedPage title="All Vettes">{page}</AuthenticatedPage>;
 };
