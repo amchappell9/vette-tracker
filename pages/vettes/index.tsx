@@ -1,10 +1,3 @@
-import AuthenticatedPage from "@/components/layouts/AuthenticatedPage";
-import { ReactElement } from "react";
+import AllVettes from "@/features/AllVettes";
 
-export default function Vettes() {
-  return <h1>Vettes</h1>;
-}
-
-Vettes.getLayout = function getLayout(page: ReactElement) {
-  return <AuthenticatedPage title="All Vettes">{page}</AuthenticatedPage>;
-};
+export default AllVettes;

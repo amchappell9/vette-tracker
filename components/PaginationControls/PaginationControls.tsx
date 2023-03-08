@@ -1,5 +1,5 @@
+import usePagination from "@/hooks/usePagination";
 import PaginationButton, { BUTTON_STATES } from "../PaginationButton";
-import usePagination from "../../hooks/usePagination";
 
 type PaginationControlsProps = {
   currentPage: number;

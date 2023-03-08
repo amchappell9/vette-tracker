@@ -88,8 +88,6 @@ const AuthenticatedPage = ({
     return child;
   });
 
-  console.log("title: ", title);
-
   return (
     <div className="flex h-full flex-col">
       <MobileMenu
@@ -100,7 +98,7 @@ const AuthenticatedPage = ({
       <div className="bg-gray-700 px-4 pb-32 sm:px-6 md:px-8">
         <header className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
-          <div className="flex-1">
+          <div className="">
             <Link href="/" className="relative">
               <Logo
                 variant="default"
@@ -110,13 +108,13 @@ const AuthenticatedPage = ({
           </div>
 
           {/* Nav */}
-          <nav className="hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
+          <nav className="mx-auto hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
             {navLinks.map((link) => (
               <NavLink
                 href={link.path}
                 key={link.path}
                 className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-                activeClassName="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500"
+                activeClassname="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500 text-lg"
               >
                 {link.linkName}
               </NavLink>
@@ -145,15 +143,14 @@ const AuthenticatedPage = ({
                 <Menu.Items className="ring-black absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
                   <Menu.Item>
                     {({ active }) => (
-                      <button
-                        className={`block w-full rounded-md border-2 border-white px-4 py-1 ${
-                          active
-                            ? "border-2 border-gray-900 bg-gray-500 text-white"
-                            : "text-gray-700"
-                        }`}
+                      <a
+                        href="/api/auth/logout"
+                        className={
+                          "block w-full rounded-md border-2 border-white px-4 py-1 hover:bg-gray-100"
+                        }
                       >
-                        <span className="block -translate-y-px">Logout</span>
-                      </button>
+                        Logout
+                      </a>
                     )}
                   </Menu.Item>
                 </Menu.Items>
