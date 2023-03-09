@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import Alert from "@/components/Alert";
 import AuthenticatedPage from "@/components/layouts/AuthenticatedPage";
 import PaginationControls from "@/components/PaginationControls/PaginationControls";
-import { useAllVettes } from "@/hooks/api/getAllVettes";
+import { useAllVettes } from "@/features/AllVettes/api/getAllVettes";
 import AddFirstVetteMessage from "./AddFirstVetteMessage/AddFirstVetteMessage";
 import ListOfVettes from "./ListOfVettes";
 
