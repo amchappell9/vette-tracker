@@ -3,17 +3,11 @@ import Axios, { InternalAxiosRequestConfig } from "axios";
 function requestInterceptor(
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig {
-  // const userInfo = storage.getUserInfo();
-
-  // if (userInfo) {
-  //   config.headers.Authorization = `Bearer ${userInfo.token.access_token}`;
-  // }
-
   return config;
 }
 
 export const axios = Axios.create({
-  // baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "/api",
 });
 
 axios.interceptors.request.use(requestInterceptor);
