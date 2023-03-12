@@ -14,14 +14,16 @@ const VetteDetail = () => {
     enabled: typeof vetteId === "string",
   });
 
+  let pageContent;
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    pageContent = <div>Loading...</div>;
   }
 
   if (error) {
     const errorMessage = getErrorMessage(error);
 
-    return (
+    pageContent = (
       <div className="mt-4">
         <Alert alertType={"danger"} message={errorMessage} />
       </div>
@@ -30,20 +32,20 @@ const VetteDetail = () => {
 
   // Need to always return AuthenticatedPage, and set the title dynamically
   if (data) {
-    return (
-      <AuthenticatedPage
-        title="Vette Detail"
-        backLinkConfig={{
-          backLinkText: "Back to All Vettes",
-          backLinkHref: "/vettes",
-        }}
-      >
-        <VetteDetailCard vetteData={data} wasUpdated={false} />
-      </AuthenticatedPage>
-    );
+    pageContent = <VetteDetailCard vetteData={data} wasUpdated={false} />;
   }
 
-  return null;
+  return (
+    <AuthenticatedPage
+      title="Vette Detail"
+      backLinkConfig={{
+        backLinkText: "Back to All Vettes",
+        backLinkHref: "/vettes",
+      }}
+    >
+      {pageContent}
+    </AuthenticatedPage>
+  );
 };
 
 // VetteDetail.getLayout = function getLayout(page: ReactElement) {
