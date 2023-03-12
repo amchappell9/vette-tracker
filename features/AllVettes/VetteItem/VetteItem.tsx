@@ -54,16 +54,20 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
         </div>
         {/* Desktop List Styles */}
         <div className="hidden justify-between sm:flex">
+          {/* Year, Submodel and Date */}
           <div className="flex flex-1 flex-col gap-1 ">
             <p className="text-lg font-bold leading-none text-gray-800">
               {`${vette.year} Corvette`}
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
+
             <p className="text-md leading-none text-gray-600">{`Added ${format(
               new Date(Date.parse(vette.date)),
               "MM/dd/yyyy"
             )}`}</p>
           </div>
+
+          {/* Cost and Miles */}
           <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
             <p className="font-bold leading-none text-gray-700">{`$${parseInt(
               vette.cost
@@ -72,6 +76,8 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
               <strong>{parseInt(vette.miles).toLocaleString()}</strong> Miles
             </p>
           </div>
+
+          {/* Exterior and Interior Colors */}
           <div className="hidden flex-1 flex-col gap-y-1 md:flex">
             <p className="leading-none">
               <span className="font-bold">{vette.submodel}</span> with{" "}
