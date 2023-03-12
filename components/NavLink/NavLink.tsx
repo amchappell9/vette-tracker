@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 type NavLinkProps = LinkProps & {
   children: React.ReactNode;
   className: string;
-  activeClassname: string;
+  activeclassname: string;
 };
 
 export default function NavLink(props: NavLinkProps) {
@@ -14,7 +14,7 @@ export default function NavLink(props: NavLinkProps) {
   return (
     <Link
       {...props}
-      className={isActive ? props.activeClassname : props.className}
+      className={isActive ? props.activeclassname : props.className}
     >
       {props.children}
     </Link>

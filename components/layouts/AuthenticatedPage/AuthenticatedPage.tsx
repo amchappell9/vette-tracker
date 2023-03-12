@@ -59,7 +59,7 @@ const AuthenticatedPage = ({
                 href={link.path}
                 key={link.path}
                 className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-                activeClassname="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500 text-lg"
+                activeclassname="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500 text-lg"
               >
                 {link.linkName}
               </NavLink>
