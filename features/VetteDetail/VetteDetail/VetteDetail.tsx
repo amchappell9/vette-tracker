@@ -1,9 +1,8 @@
+import { useRouter } from "next/router";
 import { getErrorMessage } from "@/utils/utils";
 import Alert from "@/components/Alert";
 import VetteDetailCard from "../VetteDetailCard";
 import { useVette } from "../api/getVette";
-import { useRouter } from "next/router";
-import { ReactElement } from "react";
 import AuthenticatedPage from "@/components/layouts/AuthenticatedPage";
 
 const VetteDetail = () => {
@@ -29,15 +28,26 @@ const VetteDetail = () => {
     );
   }
 
+  // Need to always return AuthenticatedPage, and set the title dynamically
   if (data) {
-    return <VetteDetailCard vetteData={data} wasUpdated={false} />;
+    return (
+      <AuthenticatedPage
+        title="Vette Detail"
+        backLinkConfig={{
+          backLinkText: "Back to All Vettes",
+          backLinkHref: "/vettes",
+        }}
+      >
+        <VetteDetailCard vetteData={data} wasUpdated={false} />
+      </AuthenticatedPage>
+    );
   }
 
   return null;
 };
 
-VetteDetail.getLayout = function getLayout(page: ReactElement) {
-  return <AuthenticatedPage title="Vette Detail">{page}</AuthenticatedPage>;
-};
+// VetteDetail.getLayout = function getLayout(page: ReactElement) {
+//   return <AuthenticatedPage title="Vette Detail">{page}</AuthenticatedPage>;
+// };
 
 export default VetteDetail;

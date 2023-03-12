@@ -11,82 +11,27 @@ import { CardPaddingVariants } from "../../Card/Card";
 import Link from "next/link";
 import NavLink from "@/components/NavLink";
 
-/**
- * The type of arguments that a Link's 'to' prop takes. Weirdly I couldn't find an
- * official definition anywhere. I think this one has a problem with the state as
- * autocomplete isn't working
- */
-type LinkConfig<StateObj> =
-  | string
-  | {
-      pathname?: string;
-      search?: string;
-      hash?: string;
-      state?: StateObj;
-    };
-
-/**
- * Type used in setting of Header Info. Title is always required. LinkText,
- * linkConfig, and LinkIcon are required together. BackLinkText and BackLinkConfig are
- * required together.
- */
-export type HeaderInfoObject<StateObj = {}> =
-  | {
-      title: string;
-      linkText?: never;
-      linkConfig?: never;
-      linkIcon?: never;
-      backLinkText?: never;
-      backLinkConfig?: never;
-    }
-  | {
-      title: string;
-      linkText: string;
-      linkConfig: LinkConfig<StateObj>;
-      linkIcon: React.ReactNode;
-      backLinkText?: never;
-      backLinkConfig?: never;
-    }
-  | {
-      title: string;
-      linkText?: never;
-      linkConfig?: never;
-      linkIcon?: never;
-      backLinkText: string;
-      backLinkConfig: string;
-    }
-  | {
-      title: string;
-      linkText: string;
-      linkConfig: LinkConfig<StateObj>;
-      linkIcon: React.ReactNode;
-      backLinkText: string;
-      backLinkConfig: string;
-    };
+type BackLinkConfig = {
+  backLinkText: string;
+  backLinkHref: string;
+};
 
 type AuthenticatedPageProps = {
   children: React.ReactNode;
   cardPadding?: CardPaddingVariants;
   title: string;
+  pageActionComponent?: React.ReactNode;
+  backLinkConfig?: BackLinkConfig;
 };
 
 const AuthenticatedPage = ({
   children,
   cardPadding,
   title,
+  pageActionComponent,
+  backLinkConfig,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerInfo, setHeaderInfo] = useState<HeaderInfoObject>({ title: "" });
-
-  // Pass the setHeader function to child component as a prop so that any children component can update the header
-  // Not sure if this maintains props that were orginally passed
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child as React.ReactElement, { setHeaderInfo });
-    }
-
-    return child;
-  });
 
   return (
     <div className="flex h-full flex-col">
@@ -169,33 +114,22 @@ const AuthenticatedPage = ({
 
         <div className="pt-6">
           {/* Back Link */}
-          {headerInfo &&
-            headerInfo.backLinkText &&
-            headerInfo.backLinkConfig && (
-              <div className="mx-auto mb-4 max-w-7xl">
-                {/* <Link
-                  to={headerInfo.backLinkConfig}
-                  className="text-gray-300 hover:underline"
-                >
-                  <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
-                  {headerInfo.backLinkText}
-                </Link> */}
-              </div>
-            )}
+          {backLinkConfig ? (
+            <div className="mx-auto mb-4 max-w-7xl">
+              <Link
+                href={backLinkConfig.backLinkHref}
+                className="text-gray-300 hover:underline"
+              >
+                <ArrowLeftIcon className="mr-1 inline h-5 w-5 align-text-bottom" />
+                {backLinkConfig.backLinkText}
+              </Link>
+            </div>
+          ) : null}
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
             <h1 className="text-3xl font-bold text-white">{title}</h1>
-            {headerInfo.linkText && headerInfo.linkConfig && (
-              // <Link
-              //   to={headerInfo.linkConfig}
-              //   className="inline-flex items-center justify-center rounded bg-red-500 px-4 py-2 text-white shadow-md transition-colors hover:bg-red-600 disabled:opacity-50"
-              // >
-              //   {headerInfo.linkIcon}
-              //   {headerInfo.linkText}
-              // </Link>
-              <></>
-            )}
+            {pageActionComponent ? pageActionComponent : null}
           </div>
         </div>
       </div>
@@ -203,7 +137,7 @@ const AuthenticatedPage = ({
       {/* Main */}
       <div className="flex-1 px-4 sm:px-6 md:px-8">
         <main className="mx-auto -mt-32 max-w-7xl pb-8">
-          <Card padding={cardPadding}>{childrenWithProps}</Card>
+          <Card padding={cardPadding}>{children}</Card>
         </main>
       </div>
 
