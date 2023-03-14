@@ -1,8 +1,7 @@
 import { VettesResponse } from "@/features/AllVettes/api/getAllVettes";
 import { axios } from "@/lib/axios";
-import { queryClient } from "@/lib/react-query";
 import { VetteObject } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**
  * The object that will be return from the server upon successful deletion
@@ -14,12 +13,16 @@ type SuccessfulResponseObject = {
 export const deleteVette = (
   vetteInfo: VetteObject
 ): Promise<SuccessfulResponseObject> => {
-  return axios.delete("/vettes", {
+  const url = `/vettes/${vetteInfo.id}`;
+
+  return axios.delete(url, {
     data: vetteInfo,
   });
 };
 
 export const useDeleteVette = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     onSuccess: (data, vetteInfo, context) => {
       // Remove vette from all vettes cache

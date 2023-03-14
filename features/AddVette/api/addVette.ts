@@ -1,7 +1,6 @@
 import { axios } from "@/lib/axios";
-import { queryClient } from "@/lib/react-query";
 import { VetteObject, VetteValues } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type CreateOrUpdateVetteDTO = {
   vette: VetteValues;
@@ -20,6 +19,8 @@ export const createVette = (
 };
 
 export const useCreateOrUpdateVette = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     onSuccess: (data) => {
       // Add new Vette detail to cache so an extra detail call doesn't need to be made
@@ -27,6 +28,9 @@ export const useCreateOrUpdateVette = () => {
 
       // Invalidate previous queries
       queryClient.invalidateQueries(["vettes"]);
+
+      // Refetch query
+      queryClient.prefetchQuery(["vettes"]);
     },
     mutationFn: createVette,
   });

@@ -2,13 +2,13 @@ import { useState } from "react";
 import { TrashIcon } from "@heroicons/react/outline";
 import { format } from "date-fns";
 import { VetteObject } from "@/types";
-import { queryClient } from "@/lib/react-query";
 import { useRouter } from "next/router";
 import Alert from "@/components/Alert";
 import SubmodelInfo from "../SubmodelInfo";
 import TrimInfo from "../TrimInfo";
 import PackagesList from "../PackagesList";
 import DeleteVetteModal from "../DeleteVetteModal";
+import { useQueryClient } from "@tanstack/react-query";
 
 type VetteDetailCardProps = {
   vetteData: VetteObject;
@@ -22,6 +22,7 @@ export default function VetteDetailCard({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [vetteDeleted, setVetteDeleted] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   if (vetteDeleted) {
     // Remove vette from cache
