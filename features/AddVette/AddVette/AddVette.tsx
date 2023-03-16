@@ -38,12 +38,12 @@ const AddVette = () => {
     });
   };
 
+  // This whole thing needs a redo
   if (!isLoading && !isError && !isSuccess) {
     // Check if a vette is being edited, and if data is available
     if (vetteToEditId) {
       // Wait for vetteToEditInfo to load
       if (vetteToEditInfo.data) {
-        console.log("sending vette to edit", vetteToEditInfo.data);
         return (
           <AuthenticatedPage
             title="Edit Vette"
@@ -61,11 +61,19 @@ const AddVette = () => {
       }
 
       if (vetteToEditInfo.isLoading) {
-        return <div>Loading...</div>;
+        return (
+          <AuthenticatedPage title="Adding Vette...">
+            <div>Loading...</div>
+          </AuthenticatedPage>
+        );
       }
 
-      if (vetteToEditInfo.isError) {
-        return ErrorAlert(vetteToEditInfo.error);
+      if (vetteToEditInfo.error) {
+        return (
+          <AuthenticatedPage title="Add Vette">
+            <ErrorAlert error={vetteToEditInfo.error} />
+          </AuthenticatedPage>
+        );
       }
     } else {
       // Create a new Vette
@@ -84,11 +92,19 @@ const AddVette = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <AuthenticatedPage title="Adding Vette...">
+        <div>Loading...</div>
+      </AuthenticatedPage>
+    );
   }
 
   if (isError) {
-    return ErrorAlert(error);
+    return (
+      <AuthenticatedPage title="Add Vette">
+        <ErrorAlert error={vetteToEditInfo.error} />
+      </AuthenticatedPage>
+    );
   }
 
   if (isSuccess) {
@@ -106,7 +122,7 @@ const AddVette = () => {
 
 export default AddVette;
 
-function ErrorAlert(error: unknown) {
+function ErrorAlert({ error }: { error: unknown }) {
   let errorMessage = "An error has happened";
 
   if (error instanceof Error) {
