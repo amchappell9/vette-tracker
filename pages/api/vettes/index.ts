@@ -3,7 +3,8 @@ import faunadb from "faunadb";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { VetteObject } from "@/types";
 import { format } from "date-fns";
-import { DBError, DBObject, QueryResponse } from "@/types/faunadb";
+import { DBObject, QueryResponse } from "@/types/faunadb";
+import { handleError } from "@/utils/apiUtils";
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY,
@@ -91,25 +92,5 @@ async function addVette(
 }
 
 function updateVette() {}
-
-const isDBError = (error: any): error is DBError => {
-  const statusCodeExists =
-    typeof error.requestResult.statusCode !== "undefined";
-  const descriptionOrMessageExists =
-    typeof error.description !== "undefined" ||
-    typeof error.message !== "undefined";
-
-  return statusCodeExists && descriptionOrMessageExists;
-};
-
-const handleError = (error: unknown, res: NextApiResponse) => {
-  if (isDBError(error)) {
-    return res.status(Number(error.requestResult.statusCode)).json({
-      message: error.message ? error.message : error.description,
-    });
-  }
-
-  return res.status(500).json({ message: "Error adding vette" });
-};
 
 export default withApiAuthRequired(handler);

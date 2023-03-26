@@ -3,6 +3,7 @@ import faunadb from "faunadb";
 import { QueryResponse } from "@/types/faunadb";
 import { VetteObject } from "@/types";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { handleError } from "@/utils/apiUtils";
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY,
@@ -27,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     return getVetteById(req, res, userID, vetteID);
   } else if (req.method === "DELETE") {
-    return res.status(200).json({ message: "Deleted" });
+    return deleteVette(req, res, userID, vetteID);
   }
 }
 
@@ -54,6 +55,46 @@ function getVetteById(
       // No vette found (or no access)
       return res.status(404).json({ msg: "Vette not found" });
     });
+}
+
+async function deleteVette(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  userId: string,
+  vetteId: string
+) {
+  const q = faunadb.query;
+  let userIDMatches = false;
+
+  // Validate user has access to vette
+  try {
+    await client
+      .query<QueryResponse<VetteObject>>(
+        q.Map(
+          q.Paginate(q.Match(q.Index("vette_by_id"), vetteId)),
+          q.Lambda("X", q.Get(q.Var("X")))
+        )
+      )
+      .then(
+        (response) => (userIDMatches = response.data[0].data.userId === userId)
+      );
+
+    if (userIDMatches) {
+      client.query(
+        q.Delete(
+          q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteId)))
+        )
+      );
+
+      return res.status(200).json({ msg: `Vette ${vetteId} deleted` });
+    } else {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return handleError(error, res);
+  }
 }
 
 export default withApiAuthRequired(handler);
