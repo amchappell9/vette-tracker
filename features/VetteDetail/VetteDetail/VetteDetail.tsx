@@ -25,7 +25,7 @@ const VetteDetail = () => {
           backLinkHref: "/vettes",
         }}
       >
-        <div>Loading...</div>;
+        <div>Loading...</div>
       </AuthenticatedPage>
     );
   }
