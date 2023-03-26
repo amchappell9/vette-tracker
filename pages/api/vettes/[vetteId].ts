@@ -27,7 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     return getVetteById(req, res, userID, vetteID);
   } else if (req.method === "DELETE") {
-    res.status(200).json({ message: "Deleted" });
+    return res.status(200).json({ message: "Deleted" });
   }
 }
 
@@ -48,11 +48,11 @@ function getVetteById(
     )
     .then((response) => {
       if (response.data.length > 0 && response.data[0].data.userId === userId) {
-        res.status(200).json(response.data[0].data);
+        return res.status(200).json(response.data[0].data);
       }
 
       // No vette found (or no access)
-      res.status(404).json({ msg: "Vette not found" });
+      return res.status(404).json({ msg: "Vette not found" });
     });
 }
 

@@ -17,8 +17,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(401).json({ message: "Not authorized" });
   }
 
-  console.log("User: ", session.user.sub);
-
   const userID = session.user.sub as string;
 
   if (req.method === "GET") {
