@@ -91,6 +91,4 @@ async function addVette(
   }
 }
 
-function updateVette() {}
-
 export default withApiAuthRequired(handler);
