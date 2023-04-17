@@ -4,9 +4,12 @@ const Footer = () => {
       <div className="mx-auto flex max-w-7xl">
         <span className="ml-auto text-xl font-bold text-white">
           Made by{" "}
-          <a href="https://github.com/amchappell9" className="text-red-500">
-            Austin Chappell{" "}
-          </a>{" "}
+          <a
+            href="https://github.com/amchappell9"
+            className="text-red-500 transition-colors hover:text-red-600"
+          >
+            Austin Chappell
+          </a>
         </span>
       </div>
     </footer>
