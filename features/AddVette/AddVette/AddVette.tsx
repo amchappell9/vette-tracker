@@ -38,59 +38,7 @@ const AddVette = () => {
     });
   };
 
-  // This whole thing needs a redo
-  if (!isLoading && !isError && !isSuccess) {
-    // Check if a vette is being edited, and if data is available
-    if (vetteToEditId) {
-      // Wait for vetteToEditInfo to load
-      if (vetteToEditInfo.data) {
-        return (
-          <AuthenticatedPage
-            title="Edit Vette"
-            backLinkConfig={{
-              backLinkText: "Back to All Vettes",
-              backLinkHref: "/vettes",
-            }}
-          >
-            <AddVetteForm
-              handleSubmit={onSubmit}
-              vetteToEditInfo={vetteToEditInfo.data}
-            />
-          </AuthenticatedPage>
-        );
-      }
-
-      if (vetteToEditInfo.isLoading) {
-        return (
-          <AuthenticatedPage title="Adding Vette...">
-            <div>Loading...</div>
-          </AuthenticatedPage>
-        );
-      }
-
-      if (vetteToEditInfo.error) {
-        return (
-          <AuthenticatedPage title="Add Vette">
-            <ErrorAlert error={vetteToEditInfo.error} />
-          </AuthenticatedPage>
-        );
-      }
-    } else {
-      // Create a new Vette
-      return (
-        <AuthenticatedPage
-          title="Add New Vette"
-          backLinkConfig={{
-            backLinkText: "Back to All Vettes",
-            backLinkHref: "/vettes",
-          }}
-        >
-          <AddVetteForm handleSubmit={onSubmit} />
-        </AuthenticatedPage>
-      );
-    }
-  }
-
+  // Mutation States
   if (isLoading) {
     return (
       <AuthenticatedPage title="Adding Vette...">
@@ -102,7 +50,7 @@ const AddVette = () => {
   if (isError) {
     return (
       <AuthenticatedPage title="Add Vette">
-        <ErrorAlert error={vetteToEditInfo.error} />
+        <ErrorAlert error={error} />
       </AuthenticatedPage>
     );
   }
@@ -115,9 +63,57 @@ const AddVette = () => {
     router.push(
       `/vettes/${vetteId}?isConfirmationView=true&isUpdate=${isUpdate}`
     );
+
+    return <></>;
   }
 
-  return <></>;
+  // Updating Vette states
+  if (vetteToEditId) {
+    if (vetteToEditInfo.isLoading) {
+      return (
+        <AuthenticatedPage title="Loading Vette...">
+          <div>Loading...</div>
+        </AuthenticatedPage>
+      );
+    }
+
+    if (vetteToEditInfo.error) {
+      return (
+        <AuthenticatedPage title="Add Vette">
+          <ErrorAlert error={vetteToEditInfo.error} />
+        </AuthenticatedPage>
+      );
+    }
+
+    if (vetteToEditInfo.data) {
+      return (
+        <AuthenticatedPage
+          title="Edit Vette"
+          backLinkConfig={{
+            backLinkText: "Back to All Vettes",
+            backLinkHref: "/vettes",
+          }}
+        >
+          <AddVetteForm
+            handleSubmit={onSubmit}
+            vetteToEditInfo={vetteToEditInfo.data}
+          />
+        </AuthenticatedPage>
+      );
+    }
+  }
+
+  return (
+    <AuthenticatedPage
+      title="Add New Vette"
+      backLinkConfig={{
+        backLinkText: "Back to All Vettes",
+        backLinkHref: "/vettes",
+      }}
+    >
+      <AddVetteForm handleSubmit={onSubmit} />
+    </AuthenticatedPage>
+  );
 };
 
 export default AddVette;

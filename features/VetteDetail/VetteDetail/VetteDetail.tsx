@@ -9,8 +9,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 
 const VetteDetail = () => {
   const router = useRouter();
-  const { vetteId } = router.query;
-
+  const { vetteId, isConfirmationView, isUpdate } = router.query;
   const { data, isLoading, error } = useVette({
     vetteId,
     enabled: typeof vetteId === "string",
@@ -66,7 +65,25 @@ const VetteDetail = () => {
           </Link>
         }
       >
-        <VetteDetailCard vetteData={data} wasUpdated={false} />
+        <>
+          {isConfirmationView && !isUpdate && (
+            <Alert
+              alertType={"success"}
+              message="Your Vette has been added!"
+              className="mb-8"
+            />
+          )}
+
+          {isConfirmationView && isUpdate && (
+            <Alert
+              alertType={"success"}
+              message="Your Vette has been updated!"
+              className="mb-8"
+            />
+          )}
+
+          <VetteDetailCard vetteData={data} wasUpdated={false} />
+        </>
       </AuthenticatedPage>
     );
   }

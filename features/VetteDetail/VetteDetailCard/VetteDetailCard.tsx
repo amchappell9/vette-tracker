@@ -98,19 +98,19 @@ export default function VetteDetailCard({
 
       {/* Secondary Info */}
       <div className="my-6 grid grid-cols-1 gap-4 sm:my-8 sm:grid-cols-3 sm:gap-16">
-        <div className="col-span-1 text-center sm:text-left">
+        <div className="col-span-1 text-center">
           <span className="block text-gray-600">Transmission</span>
           <span className="block text-lg font-bold text-gray-800">
             {vetteData.transmissionType}
           </span>
         </div>
-        <div className="col-span-1 text-center sm:text-left">
+        <div className="col-span-1 text-center">
           <span className="block text-gray-600">Exterior Color</span>
           <span className="block text-lg font-bold text-gray-800">
             {vetteData.exteriorColor}
           </span>
         </div>
-        <div className="col-span-1 text-center sm:text-left">
+        <div className="col-span-1 text-center">
           <span className="block text-gray-600">Interior Color</span>
           <span className="block text-lg font-bold text-gray-800">
             {vetteData.interiorColor}
