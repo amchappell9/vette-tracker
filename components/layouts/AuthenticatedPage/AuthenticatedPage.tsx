@@ -43,12 +43,9 @@ const AuthenticatedPage = ({
       <div className="bg-gray-700 px-4 pb-32 sm:px-6 md:px-8">
         <header className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
-          <div className="">
+          <div className="flex-1">
             <Link href="/" className="relative">
-              <Logo
-                variant="default"
-                className="h-8 w-full object-cover sm:h-10"
-              />
+              <Logo variant="default" />
             </Link>
           </div>
 

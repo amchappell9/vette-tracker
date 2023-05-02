@@ -1,6 +1,4 @@
-import mainLogoSmall from "@/public/images/vette-tracker-main-logo-cropped-800x600.png";
 import mainLogoLarge from "@/public/images/vette-tracker-main-logo-cropped-2000x1500.png";
-import invertedLogoSmall from "@/public/images/vette-tracker-inverted-color-cropped800x600.png";
 import invertedLogoLarge from "@/public/images/vette-tracker-inverted-color-cropped-2000x1500.png";
 import Image from "next/image";
 
@@ -16,12 +14,18 @@ const Logo = ({ variant = "default", className }: LogoProps) => {
         src={invertedLogoLarge}
         alt="Vette Tracker Logo"
         className={className}
+        height={40}
       />
     );
   }
 
   return (
-    <Image src={mainLogoLarge} alt="Vette Tracker Logo" className={className} />
+    <Image
+      src={mainLogoLarge}
+      alt="Vette Tracker Logo"
+      className={className}
+      height={40}
+    />
   );
 };
 
