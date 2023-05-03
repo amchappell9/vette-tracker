@@ -63,7 +63,7 @@ const SubmodelSelectorRadioButtons = ({
         id={tablistLabelId}
         className="mb-2 inline-block text-xs font-bold uppercase text-gray-500"
       >
-        Submodels
+        Submodel
       </div>
       <div
         className="flex flex-col gap-2"
