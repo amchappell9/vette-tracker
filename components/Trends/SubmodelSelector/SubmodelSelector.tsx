@@ -1,5 +1,6 @@
 import { useId } from "react";
-import { RadioGroup } from "@headlessui/react";
+import { RadioGroup, Tab } from "@headlessui/react";
+import { motion, spring } from "framer-motion";
 import { cva } from "class-variance-authority";
 import submodels from "@/constants/submodels";
 
@@ -33,13 +34,13 @@ const SubmodelSelector = ({
   );
 };
 
-const selectorOption = cva(
-  "block font-bold py-2 cursor-pointer -mx-4 px-4 rounded-md mb-1 text-lg transition-colors",
+const tabClasses = cva(
+  "relative -mx-4 block  rounded-md px-4 py-2 text-left text-lg font-bold",
   {
     variants: {
       intent: {
-        active: "text-gray-800 bg-gray-200",
-        inactive: "text-gray-700 hover:bg-gray-100",
+        active: "text-gray-800",
+        inactive: "text-gray-700",
       },
     },
     defaultVariants: {
@@ -54,31 +55,46 @@ const SubmodelSelectorRadioButtons = ({
   selectedSubmodel,
   onChange,
 }: SubmodelSelectorRadioButtonsProps) => {
+  const tablistLabelId = useId();
+
   return (
-    <RadioGroup
-      value={selectedSubmodel}
-      onChange={onChange}
-      className="px-12 py-8"
-    >
-      <RadioGroup.Label className="mb-2 inline-block text-xs font-bold uppercase text-gray-500">
-        Submodel
-      </RadioGroup.Label>
-      {submodels.map((submodel) => {
-        return (
-          <RadioGroup.Option value={submodel.title} key={submodel.title}>
-            {({ checked }) => (
-              <div
-                className={selectorOption({
-                  intent: checked ? "active" : "inactive",
-                })}
-              >
-                {submodel.title}
-              </div>
-            )}
-          </RadioGroup.Option>
-        );
-      })}
-    </RadioGroup>
+    <div className="px-12 py-8">
+      <div
+        id={tablistLabelId}
+        className="mb-2 inline-block text-xs font-bold uppercase text-gray-500"
+      >
+        Submodels
+      </div>
+      <div
+        className="flex flex-col gap-2"
+        role="tablist"
+        aria-labelledby={tablistLabelId}
+      >
+        {submodels.map((submodel) => {
+          const isActive = selectedSubmodel === submodel.title;
+
+          return (
+            <button
+              role="tab"
+              key={submodel.title}
+              onClick={() => onChange(submodel.title)}
+              className={tabClasses({
+                intent: isActive ? "active" : "inactive",
+              })}
+              aria-selected={isActive}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute inset-0 rounded-md bg-gray-200"
+                />
+              )}
+              <span className="relative z-10">{submodel.title}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 
