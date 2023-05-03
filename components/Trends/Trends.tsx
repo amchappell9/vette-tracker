@@ -42,7 +42,7 @@ export default function Trends() {
 
   if (data && data.vettes.length > 0) {
     return (
-      <AuthenticatedPage title="Trends">
+      <AuthenticatedPage title="Trends" cardPadding="none">
         <PricesBySubmodel vettes={data.vettes} />
       </AuthenticatedPage>
     );
