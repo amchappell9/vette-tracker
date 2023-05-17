@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
-import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import FILTER_TYPES from "../../constants/filterTypes";
+import { useDetectOutsideClick } from "@/hooks/useDetectOutsideClick";
 
 type DropdownBtnProps = {
   filter: {
