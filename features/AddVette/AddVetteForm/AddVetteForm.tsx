@@ -15,7 +15,7 @@ import FormSelect from "../../../components/forms/FormSelect";
 import FormRadioGroup from "../../../components/forms/FormRadioGroup";
 import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect";
-import { VetteObject, VetteValues } from "../../../types/types";
+import { VetteObject, VetteValues } from "@/types";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
