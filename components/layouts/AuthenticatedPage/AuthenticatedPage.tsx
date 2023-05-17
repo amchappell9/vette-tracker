@@ -20,7 +20,13 @@ type AuthenticatedPageProps = {
   children: React.ReactNode;
   cardPadding?: CardPaddingVariants;
   title: string;
-  pageActionComponent?: React.ReactNode;
+
+  /** The properties used to create an action link on the page. */
+  pageAction?: {
+    icon: (props: React.ComponentProps<"svg">) => JSX.Element;
+    text: string;
+    href: string;
+  };
   backLinkConfig?: BackLinkConfig;
 };
 
@@ -28,7 +34,7 @@ const AuthenticatedPage = ({
   children,
   cardPadding,
   title,
-  pageActionComponent,
+  pageAction,
   backLinkConfig,
 }: AuthenticatedPageProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -126,7 +132,7 @@ const AuthenticatedPage = ({
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
             {/* Title + Button */}
             <h1 className="text-3xl font-bold text-white">{title}</h1>
-            {pageActionComponent ? pageActionComponent : null}
+            {pageAction ? <PageActionLink {...pageAction} /> : null}
           </div>
         </div>
       </div>
@@ -147,3 +153,21 @@ const AuthenticatedPage = ({
 };
 
 export default AuthenticatedPage;
+
+type PageActionLinkProps = {
+  icon: (props: React.ComponentProps<"svg">) => JSX.Element;
+  text: string;
+  href: string;
+};
+
+function PageActionLink({ icon: Icon, text, href }: PageActionLinkProps) {
+  return (
+    <Link
+      href={href}
+      className="flex items-center rounded bg-red-500 px-6 py-2 text-lg text-white drop-shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
+    >
+      <Icon className="mr-1 inline h-5 w-5" />
+      {text}
+    </Link>
+  );
+}

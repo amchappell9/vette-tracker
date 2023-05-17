@@ -60,15 +60,11 @@ export default function AllVettes() {
   return (
     <AuthenticatedPage
       title="All Vettes"
-      pageActionComponent={
-        <Link
-          href="/add-vette"
-          className="flex items-center rounded bg-red-500 px-6 py-2 text-lg text-white drop-shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
-        >
-          <PlusIcon className="mr-1 inline h-5 w-5" />
-          Add Vette
-        </Link>
-      }
+      pageAction={{
+        text: "Add Vette",
+        href: "/add-vette",
+        icon: PlusIcon,
+      }}
     >
       {pageContent}
     </AuthenticatedPage>

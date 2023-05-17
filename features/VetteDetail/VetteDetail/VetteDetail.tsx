@@ -55,15 +55,11 @@ const VetteDetail = () => {
           backLinkText: "Back to All Vettes",
           backLinkHref: "/vettes",
         }}
-        pageActionComponent={
-          <Link
-            href={`/add-vette?vetteToEdit=${data.id}`}
-            className="flex items-center rounded bg-red-500 px-6 py-2 text-lg text-white drop-shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
-          >
-            <PencilAltIcon className="mr-1 inline h-5 w-5" />
-            Edit Vette
-          </Link>
-        }
+        pageAction={{
+          icon: PencilAltIcon,
+          text: "Edit Vette",
+          href: `/add-vette?vetteToEdit=${data.id}`,
+        }}
       >
         <>
           {isConfirmationView && !isUpdate && (
