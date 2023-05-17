@@ -53,8 +53,5 @@
     "build": "run-p build:**",
     "build:app": "next build",
     "build:lambda": "netlify-lambda build src/lambda"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }
