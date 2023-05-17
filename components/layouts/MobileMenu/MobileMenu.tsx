@@ -66,10 +66,10 @@ const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
                       <nav className="flex flex-col">
                         {navLinks.map((link) => (
                           <NavLink
-                            href={link.path}
                             key={link.path}
+                            href={link.path}
                             className="focus:ring-white-500 -ml-3 rounded-md py-2 px-3 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                            activeClassname="bg-red-500 text-white -mx-3 px-3 py-2 rounded-md font-medium hover:bg-red-500"
+                            activeclassname="bg-red-500 text-white -mx-3 px-3 py-2 rounded-md font-medium hover:bg-red-500"
                           >
                             {link.linkName}
                           </NavLink>
