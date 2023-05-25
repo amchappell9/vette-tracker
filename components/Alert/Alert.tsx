@@ -33,7 +33,7 @@ const alertTextStyles = cva("text-sm", {
 
 type AlertStyles = VariantProps<typeof alertStyles>;
 
-type AlertType = AlertStyles["alertType"];
+type AlertType = Exclude<AlertStyles["alertType"], undefined | null>;
 
 const getIconByType = (alertType: AlertType) => {
   switch (alertType) {
@@ -70,7 +70,7 @@ const getIconByType = (alertType: AlertType) => {
       );
 
     default:
-      break;
+      throw new Error(`Unknown alert type: ${alertType}`);
   }
 };
 
@@ -82,9 +82,11 @@ type AlertProps = {
 
 const Alert = ({ alertType, message, className }: AlertProps) => {
   return (
-    <div className={alertStyles({ alertType, className })} role="alert">
+    <div className={alertStyles({ alertType, className })} role="alert" aria-live="polite">
       <div className="flex">
-        <div className="flex-shrink-0">{getIconByType(alertType)}</div>
+        <div className="flex-shrink-0">
+          {getIconByType(alertType)}
+        </div>
         <div className="ml-3">
           <p className={alertTextStyles({ alertType })}>{message}</p>
         </div>
