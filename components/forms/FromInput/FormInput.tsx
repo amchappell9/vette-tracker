@@ -21,6 +21,7 @@ const FormInput = ({ label, name, ...props }: FormInputProps) => {
       <Input
         {...field}
         {...props}
+        id={name}
         name={name}
         className="w-full bg-gray-50 py-2 px-4 text-lg"
       />

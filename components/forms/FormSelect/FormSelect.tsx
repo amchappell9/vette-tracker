@@ -41,6 +41,7 @@ const FormSelect = ({
       <select
         {...field}
         {...props}
+        id={name}
         name={name}
         className={`${className} w-full rounded border border-solid border-gray-300 bg-gray-50 py-2 px-4 text-lg outline-none focus:ring-2 focus:ring-red-500`}
       >
