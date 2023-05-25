@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Card from "../../Card";
 import { CardPaddingVariants } from "../../Card/Card";
 import AuthenticatedPageHeader from "./AuthenticatedPageHeader/AuthenticatedPageHeader";
+import Head from "next/head";
 
 export type BackLinkConfig = {
   backLinkText: string;
@@ -35,6 +36,10 @@ const AuthenticatedPage = ({
 }: AuthenticatedPageProps) => {
   return (
     <div className="flex h-full flex-col">
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       <AuthenticatedPageHeader
         title={title}
         backLinkConfig={backLinkConfig}

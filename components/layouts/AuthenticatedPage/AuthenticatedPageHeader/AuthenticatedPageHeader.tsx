@@ -28,7 +28,7 @@ function AuthenticatedPageHeader({
         dismiss={() => setMobileMenuOpen(false)}
       />
       <div className="bg-gray-700 px-4 pb-32 sm:px-6 md:px-8">
-        <header className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
+        <nav className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
           <div className="flex-1">
             <Link href="/" className="relative">
@@ -36,8 +36,8 @@ function AuthenticatedPageHeader({
             </Link>
           </div>
 
-          {/* Nav */}
-          <nav className="mx-auto hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
+          {/* Nav Links */}
+          <div className="mx-auto hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
             {navLinks.map((link) => (
               <NavLink
                 href={link.path}
@@ -48,8 +48,8 @@ function AuthenticatedPageHeader({
                 {link.linkName}
               </NavLink>
             ))}
-          </nav>
-
+          </div>
+ 
           {/* Logout / Mobile Menu Button */}
           <div className="flex justify-end gap-4 sm:flex-1">
             {/* Desktop Logout Button */}
@@ -95,9 +95,9 @@ function AuthenticatedPageHeader({
               <MenuIcon className="block h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-        </header>
+        </nav>
 
-        <div className="pt-6">
+        <header className="pt-6">
           {/* Back Link */}
           {backLinkConfig ? (
             <div className="mx-auto mb-4 max-w-7xl">
@@ -112,11 +112,11 @@ function AuthenticatedPageHeader({
           ) : null}
 
           <div className="flex max-w-7xl flex-col gap-4 sm:mx-auto sm:flex-row sm:justify-between">
-            {/* Title + Button */}
+            {/* Title + Page Action Button */}
             <h1 className="text-3xl font-bold text-white">{title}</h1>
             {pageAction ? <PageActionLink {...pageAction} /> : null}
           </div>
-        </div>
+        </header>
       </div>
     </>
   );
