@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import faunadb from "faunadb";
 import { DBObject, QueryResponse } from "@/types/faunadb";
 import { VetteObject } from "@/types";
-import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { handleError } from "@/utils/apiUtils";
 import { format } from "date-fns";
 
@@ -11,8 +10,6 @@ const client = new faunadb.Client({
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession(req, res);
-
   // Ensure user is authenticated
   if (!session || !session.user || !session.user.sub) {
     return res.status(401).json({ message: "Not authorized" });
@@ -149,4 +146,4 @@ async function deleteVette(
   }
 }
 
-export default withApiAuthRequired(handler);
+export default handler;
