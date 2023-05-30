@@ -4,37 +4,38 @@ import { VetteObject } from "@/types";
 import { format } from "date-fns";
 import { DBObject, QueryResponse } from "@/types/faunadb";
 import { handleError } from "@/utils/apiUtils";
+import { getAuth } from "@clerk/nextjs/server";
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY,
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { userId } = getAuth(req);
+
   // Ensure user is authenticated
-  if (!session || !session.user || !session.user.sub) {
+  if (userId === null) {
     return res.status(401).json({ message: "Not authorized" });
   }
 
-  const userID = session.user.sub as string;
-
   if (req.method === "GET") {
-    return getAllVettes(req, res, userID);
+    return getAllVettes(req, res, userId);
   } else if (req.method === "POST") {
-    return addVette(req, res, userID);
+    return addVette(req, res, userId);
   }
 }
 
 function getAllVettes(
   req: NextApiRequest,
   res: NextApiResponse,
-  userID: string
+  userId: string
 ) {
   const q = faunadb.query;
 
   return client
     .query<QueryResponse<VetteObject>>(
       q.Map(
-        q.Paginate(q.Match(q.Index("vettes_by_user"), userID)),
+        q.Paginate(q.Match(q.Index("vettes_by_user"), userId)),
         q.Lambda("X", q.Get(q.Var("X")))
       )
     )
@@ -55,7 +56,7 @@ function getAllVettes(
 async function addVette(
   req: NextApiRequest,
   res: NextApiResponse,
-  userID: string
+  userId: string
 ) {
   // TODO: Use Zod to validate values
 
@@ -70,7 +71,7 @@ async function addVette(
     const vetteObj: VetteObject = {
       id: id.toString(),
       date: format(new Date(), "MM-dd-yyyy"),
-      userId: userID,
+      userId: userId,
       ...req.body,
     };
 

@@ -32,12 +32,13 @@ export default function Home() {
           </span>
         </div>
         <div className="mt-6 block">
-          <a
+          {/* <a
             className="duration-20 inline-block rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow active:duration-75"
             href="/api/auth/login"
           >
             Get Started
-          </a>
+          </a> */}
+          <Link href={"/sign-in"}>Get Started</Link>
         </div>
       </section>
       <section className="flex h-64 justify-between overflow-x-hidden bg-gray-700">

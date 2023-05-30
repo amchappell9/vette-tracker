@@ -4,14 +4,17 @@ import { DBObject, QueryResponse } from "@/types/faunadb";
 import { VetteObject } from "@/types";
 import { handleError } from "@/utils/apiUtils";
 import { format } from "date-fns";
+import { getAuth } from "@clerk/nextjs/server";
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY,
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { userId } = getAuth(req);
+
   // Ensure user is authenticated
-  if (!session || !session.user || !session.user.sub) {
+  if (userId === null) {
     return res.status(401).json({ message: "Not authorized" });
   }
 
@@ -20,15 +23,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ message: "Invalid vette id" });
   }
 
-  const userID = session.user.sub as string;
   const vetteID = req.query.vetteId;
 
   if (req.method === "GET") {
-    return getVetteById(req, res, userID, vetteID);
+    return getVetteById(req, res, userId, vetteID);
   } else if (req.method === "PUT") {
-    return updateVette(req, res, userID, vetteID);
+    return updateVette(req, res, userId, vetteID);
   } else if (req.method === "DELETE") {
-    return deleteVette(req, res, userID, vetteID);
+    return deleteVette(req, res, userId, vetteID);
   }
 
   return res.status(405).json({ message: "Method not allowed" });
@@ -62,7 +64,7 @@ function getVetteById(
 async function updateVette(
   req: NextApiRequest,
   res: NextApiResponse,
-  userID: string,
+  userId: string,
   vetteID: string
 ) {
   const q = faunadb.query;
@@ -70,7 +72,7 @@ async function updateVette(
   const vetteObj: VetteObject = {
     id: vetteID,
     date: format(new Date(), "MM-dd-yyyy"),
-    userId: userID,
+    userId: userId,
     ...req.body,
   };
 
@@ -84,7 +86,7 @@ async function updateVette(
     );
 
     // Ensure vette exists and belongs to user
-    if (response.data.length > 0 && response.data[0].data.userId === userID) {
+    if (response.data.length > 0 && response.data[0].data.userId === userId) {
       // Update the vette
       const updatedVette = await client.query<DBObject<VetteObject>>(
         q.Update(
@@ -113,7 +115,7 @@ async function deleteVette(
   vetteId: string
 ) {
   const q = faunadb.query;
-  let userIDMatches = false;
+  let userIdMatches = false;
 
   // Validate user has access to vette
   try {
@@ -125,10 +127,10 @@ async function deleteVette(
         )
       )
       .then(
-        (response) => (userIDMatches = response.data[0].data.userId === userId)
+        (response) => (userIdMatches = response.data[0].data.userId === userId)
       );
 
-    if (userIDMatches) {
+    if (userIdMatches) {
       client.query(
         q.Delete(
           q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteId)))

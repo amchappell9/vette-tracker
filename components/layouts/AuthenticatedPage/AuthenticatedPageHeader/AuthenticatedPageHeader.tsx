@@ -7,6 +7,7 @@ import navLinks from "@/constants/navLinks";
 import NavLink from "@/components/NavLink/NavLink";
 import { Menu, Transition } from "@headlessui/react";
 import { ArrowLeftIcon, CogIcon, MenuIcon } from "@heroicons/react/outline";
+import { UserButton } from "@clerk/nextjs";
 
 type HeaderProps = {
   backLinkConfig?: BackLinkConfig;
@@ -49,7 +50,9 @@ function AuthenticatedPageHeader({
               </NavLink>
             ))}
           </div>
- 
+
+          <UserButton afterSignOutUrl="/" />
+
           {/* Logout / Mobile Menu Button */}
           <div className="flex justify-end gap-4 sm:flex-1">
             {/* Desktop Logout Button */}
