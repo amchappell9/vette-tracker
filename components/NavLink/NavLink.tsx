@@ -1,22 +1,46 @@
-import Link, { LinkProps } from "next/link";
+import { cva } from "class-variance-authority";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
-type NavLinkProps = LinkProps & {
+const NavLinkClasses = cva(
+  "relative px-4 py-2 text-lg font-medium transition-colors",
+  {
+    variants: {
+      intent: {
+        active: "text-white",
+        inactive: "text-gray-300 hover:text-white",
+      },
+    },
+    defaultVariants: {
+      intent: "inactive",
+    },
+  }
+);
+
+type NavLinkProps = {
+  href: string;
   children: React.ReactNode;
-  className: string;
-  activeclassname: string;
 };
 
-export default function NavLink(props: NavLinkProps) {
+const NavLink = ({ href, children }: NavLinkProps) => {
   const router = useRouter();
-  const isActive = router.pathname === props.href;
+  const isActive = router.pathname === href;
 
   return (
     <Link
-      {...props}
-      className={isActive ? props.activeclassname : props.className}
+      href={href}
+      className={NavLinkClasses({ intent: isActive ? "active" : "inactive" })}
     >
-      {props.children}
+      {isActive && (
+        <motion.div
+          layoutId="navLinkBackground"
+          className="absolute inset-0 rounded-md bg-red-500"
+        />
+      )}
+      <span className="relative z-10">{children}</span>
     </Link>
   );
-}
+};
+
+export default NavLink;

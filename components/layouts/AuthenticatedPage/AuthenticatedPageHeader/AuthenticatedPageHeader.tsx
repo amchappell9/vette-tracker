@@ -1,12 +1,12 @@
 import Logo from "@/components/Logo/Logo";
-import NavLink from "@/components/NavLink/NavLink";
-import navLinks from "@/constants/navLinks";
+
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useState } from "react";
 import MobileMenu from "../../MobileMenu/MobileMenu";
 import { BackLinkConfig, PageAction } from "../AuthenticatedPage";
+import NavLinks from "./NavLinks";
 
 type HeaderProps = {
   backLinkConfig?: BackLinkConfig;
@@ -37,18 +37,7 @@ function AuthenticatedPageHeader({
           </div>
 
           {/* Nav Links */}
-          <div className="mx-auto hidden gap-[clamp(1rem,_10vw_-_5.5rem,_3rem)] lg:flex">
-            {navLinks.map((link) => (
-              <NavLink
-                href={link.path}
-                key={link.path}
-                className="rounded-md px-3 py-2 text-lg font-medium text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-                activeclassname="bg-red-500 text-white px-3 py-2 rounded-md font-medium hover:bg-red-500 text-lg"
-              >
-                {link.linkName}
-              </NavLink>
-            ))}
-          </div>
+          <NavLinks />
 
           {/* Logout / Mobile Menu Button */}
           <div className="flex justify-end gap-4 sm:flex-1">
