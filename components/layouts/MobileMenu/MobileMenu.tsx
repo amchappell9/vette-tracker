@@ -1,17 +1,20 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { XIcon, CogIcon } from "@heroicons/react/outline";
+import { XIcon, CogIcon, AdjustmentsIcon } from "@heroicons/react/outline";
+import { useClerk } from "@clerk/clerk-react";
 
 import navLinks from "../../../constants/navLinks";
 import NavLink from "@/components/NavLink";
+import Link from "next/link";
 
 type MobileMenuPros = {
   isOpen: boolean;
   dismiss: () => void;
-  handleLogout?: () => void;
 };
 
-const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
+const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
+  const { signOut } = useClerk();
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -78,15 +81,17 @@ const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
                     </div>
                     <div className="py-4">
                       <ul>
-                        <li>
-                          <button
-                            onClick={handleLogout}
-                            className="-mx-2 flex w-full items-center gap-1 rounded px-2 py-2 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                          >
-                            <CogIcon className="h-6" />
-                            <span className="-translate-y-px">Logout</span>
-                          </button>
-                        </li>
+                        <UserActionItem
+                          as={Link}
+                          href="/user-profile"
+                          icon={AdjustmentsIcon}
+                          text="View Profile"
+                        />
+                        <UserActionItem
+                          icon={CogIcon}
+                          text="Logout"
+                          onClick={() => signOut()}
+                        />
                       </ul>
                     </div>
                   </div>
@@ -97,6 +102,37 @@ const MobileMenu = ({ isOpen, dismiss, handleLogout }: MobileMenuPros) => {
         </div>
       </Dialog>
     </Transition.Root>
+  );
+};
+
+// This type could be better
+// It should enforce the props of the component passed to the `as` prop
+type UserActionItemProps = {
+  as?: React.ElementType;
+  icon: React.ElementType;
+  text: string;
+  onClick?: () => void;
+  href?: string;
+};
+
+const UserActionItem = ({
+  as: Component = "button",
+  icon: Icon,
+  text,
+  onClick,
+  href,
+}: UserActionItemProps) => {
+  return (
+    <li>
+      <Component
+        onClick={onClick}
+        href={href}
+        className="-mx-2 flex w-full items-center gap-1 rounded px-2 py-2 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
+      >
+        <Icon className="h-6" />
+        <span className="-translate-y-px">{text}</span>
+      </Component>
+    </li>
   );
 };
 
