@@ -1,6 +1,5 @@
 import { useId } from "react";
-import { RadioGroup, Tab } from "@headlessui/react";
-import { motion, spring } from "framer-motion";
+import { motion } from "framer-motion";
 import { cva } from "class-variance-authority";
 import submodels from "@/constants/submodels";
 
@@ -35,7 +34,7 @@ const SubmodelSelector = ({
 };
 
 const tabClasses = cva(
-  "relative -mx-4 block  rounded-md px-4 py-2 text-left text-lg font-bold",
+  "relative -mx-4 block rounded-md px-4 py-2 text-left text-lg font-bold",
   {
     variants: {
       intent: {
