@@ -2,10 +2,11 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon, CogIcon, AdjustmentsIcon } from "@heroicons/react/outline";
 import { useClerk } from "@clerk/clerk-react";
+import Link from "next/link";
 
 import navLinks from "../../../constants/navLinks";
-import NavLink from "@/components/NavLink";
-import Link from "next/link";
+import MobileMenuNavLink from "./MobileMenuNavLink";
+import UserActionItem from "./UserActionItem";
 
 type MobileMenuPros = {
   isOpen: boolean;
@@ -66,17 +67,16 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                   </div>
                   <div className="relative mt-8 flex-1 px-6 sm:px-6">
                     <div className="border-b border-gray-500 pb-6">
-                      <nav className="flex flex-col">
-                        {navLinks.map((link) => (
-                          <NavLink
-                            key={link.path}
-                            href={link.path}
-                            className="focus:ring-white-500 -ml-3 rounded-md py-2 px-3 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                            activeclassname="bg-red-500 text-white -mx-3 px-3 py-2 rounded-md font-medium hover:bg-red-500"
-                          >
-                            {link.linkName}
-                          </NavLink>
-                        ))}
+                      <nav>
+                        <ul className="flex flex-col">
+                          {navLinks.map((link) => (
+                            <li key={link.path}>
+                              <MobileMenuNavLink href={link.path}>
+                                {link.linkName}
+                              </MobileMenuNavLink>
+                            </li>
+                          ))}
+                        </ul>
                       </nav>
                     </div>
                     <div className="py-4">
@@ -102,37 +102,6 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
         </div>
       </Dialog>
     </Transition.Root>
-  );
-};
-
-// This type could be better
-// It should enforce the props of the component passed to the `as` prop
-type UserActionItemProps = {
-  as?: React.ElementType;
-  icon: React.ElementType;
-  text: string;
-  onClick?: () => void;
-  href?: string;
-};
-
-const UserActionItem = ({
-  as: Component = "button",
-  icon: Icon,
-  text,
-  onClick,
-  href,
-}: UserActionItemProps) => {
-  return (
-    <li>
-      <Component
-        onClick={onClick}
-        href={href}
-        className="-mx-2 flex w-full items-center gap-1 rounded px-2 py-2 text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2"
-      >
-        <Icon className="h-6" />
-        <span className="-translate-y-px">{text}</span>
-      </Component>
-    </li>
   );
 };
 
