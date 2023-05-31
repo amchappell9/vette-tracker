@@ -1,13 +1,12 @@
-import { Fragment, useState } from "react";
-import { BackLinkConfig, PageAction } from "../AuthenticatedPage";
-import MobileMenu from "../../MobileMenu/MobileMenu";
-import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
-import navLinks from "@/constants/navLinks";
 import NavLink from "@/components/NavLink/NavLink";
-import { Menu, Transition } from "@headlessui/react";
-import { ArrowLeftIcon, CogIcon, MenuIcon } from "@heroicons/react/outline";
+import navLinks from "@/constants/navLinks";
 import { UserButton } from "@clerk/nextjs";
+import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
+import Link from "next/link";
+import { useState } from "react";
+import MobileMenu from "../../MobileMenu/MobileMenu";
+import { BackLinkConfig, PageAction } from "../AuthenticatedPage";
 
 type HeaderProps = {
   backLinkConfig?: BackLinkConfig;
