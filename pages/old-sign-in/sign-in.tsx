@@ -78,7 +78,7 @@ const SignIn = ({ handleAuth }: LoginProps) => {
             Sign In to <span className="">Vette Tracker</span>
           </h1>
           <p className="mt-2 text-lg text-gray-800 sm:text-xl">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-red-500 hover:underline">
               Click here to sign up!
             </Link>
