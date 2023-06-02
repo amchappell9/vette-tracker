@@ -52,9 +52,7 @@
     "dev": "next dev",
     "start": "next start",
     "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "run-p build:**",
-    "build:app": "next build",
-    "build:lambda": "netlify-lambda build src/lambda",
+    "build": "next build",
     "lint": "next lint"
   }
 }
