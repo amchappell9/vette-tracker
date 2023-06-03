@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply bg-gray-700;
-}
-
 html,
 body,
 #__next {
@@ -42,14 +38,3 @@ body,
   @apply rounded-b border-b border-l border-r border-gray-100;
 }
 
-.main-nav-active:hover {
-  @apply: bg-red-500;
-}
-
-.main-nav-active {
-  @apply rounded-md bg-red-500 px-3 py-2 font-medium text-white hover:bg-red-500;
-}
-
-.mobile-nav-active {
-  @apply -my-2 -ml-2 rounded-md bg-red-500 py-2 px-2;
-}
