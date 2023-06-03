@@ -85,7 +85,7 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
             </p>
             <p className="truncate leading-none">{`${vette.exteriorColor} on ${vette.interiorColor} Interior`}</p>
           </div>
-          <div className="hidden basis-40 lg:block">
+          <div className="hidden basis-40 items-center lg:flex">
             {vette.packages.map((option) => (
               <span
                 key={option}

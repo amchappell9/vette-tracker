@@ -25,7 +25,7 @@ type NavLinkProps = {
 
 const NavLink = ({ href, children }: NavLinkProps) => {
   const router = useRouter();
-  const isActive = router.pathname === href;
+  const isActive = router.pathname.includes(href);
 
   return (
     <Link
