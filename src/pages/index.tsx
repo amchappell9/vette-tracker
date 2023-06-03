@@ -1,9 +1,19 @@
-import Link from "next/link";
 import Footer from "@/src/components/Footer/Footer";
-import Head from "next/head";
 import Logo from "@/src/components/Logo/Logo";
+import { useAuth } from "@clerk/nextjs";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const { isLoaded, userId } = useAuth();
+  const router = useRouter();
+
+  // If user is logged in, redirect to vettes page
+  if (isLoaded && userId) {
+    router.push("/vettes");
+  }
+
   return (
     <div className="bg-gray-700">
       <Head>

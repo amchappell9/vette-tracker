@@ -1,6 +1,6 @@
 import Logo from "@/src/components/Logo/Logo";
 
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@clerk/nextjs";
 import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useState } from "react";
@@ -20,6 +20,9 @@ function AuthenticatedPageHeader({
   pageAction,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isLoaded, userId } = useAuth();
+
+  const userSignedIn = isLoaded && userId;
 
   return (
     <>
@@ -31,7 +34,7 @@ function AuthenticatedPageHeader({
         <nav className="mx-auto flex max-w-7xl items-center border-b border-gray-600 py-4 pt-6">
           {/* Logo */}
           <div className="flex-1">
-            <Link href="/" className="relative">
+            <Link href={userSignedIn ? "/vettes" : "/"} className="relative">
               <Logo variant="default" />
             </Link>
           </div>
