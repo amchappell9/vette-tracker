@@ -46,7 +46,7 @@ const AuthenticatedPage = ({
         pageAction={pageAction}
       />
 
-      <div className="flex-1 px-4 sm:px-6 md:px-8">
+      <div className="flex-1 bg-white px-4 sm:px-6 md:px-8">
         <main className="mx-auto -mt-32 max-w-7xl pb-8">
           <Card padding={cardPadding}>{children}</Card>
         </main>
