@@ -75,20 +75,22 @@ const getIconByType = (alertType: AlertType) => {
 };
 
 type AlertProps = {
+  children: React.ReactNode;
   alertType: AlertType;
-  message: string;
   className?: string;
 };
 
-const Alert = ({ alertType, message, className }: AlertProps) => {
+const Alert = ({ children, alertType, className }: AlertProps) => {
   return (
-    <div className={alertStyles({ alertType, className })} role="alert" aria-live="polite">
+    <div
+      className={alertStyles({ alertType, className })}
+      role="alert"
+      aria-live="polite"
+    >
       <div className="flex">
-        <div className="flex-shrink-0">
-          {getIconByType(alertType)}
-        </div>
+        <div className="flex-shrink-0">{getIconByType(alertType)}</div>
         <div className="ml-3">
-          <p className={alertTextStyles({ alertType })}>{message}</p>
+          <p className={alertTextStyles({ alertType })}>{children}</p>
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ type ListOfVettesProps = {
 };
 
 const ListOfVettes = ({ vettesArray }: ListOfVettesProps) => {
+  throw new Error("In list of Vettes");
+
   return (
     <ul>
       {vettesArray.map((vette, index) => (

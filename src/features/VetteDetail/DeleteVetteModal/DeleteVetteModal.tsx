@@ -107,10 +107,9 @@ export default function DeleteVetteModal({
                   {/* Error */}
                   {isError && (
                     <div className="mt-2">
-                      <Alert
-                        alertType={"danger"}
-                        message={getErrorMessage(error)}
-                      />
+                      <Alert alertType={"danger"}>
+                        {getErrorMessage(error)}
+                      </Alert>
                     </div>
                   )}
                 </div>

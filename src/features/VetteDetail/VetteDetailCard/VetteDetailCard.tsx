@@ -45,11 +45,9 @@ export default function VetteDetailCard({
     <div>
       {/* Show alert if vette was updated */}
       {wasUpdated && (
-        <Alert
-          alertType={"success"}
-          message="Your Vette was successfully updated!"
-          className="mb-4"
-        />
+        <Alert alertType={"success"} className="mb-4">
+          Your Vette was successfully updated!
+        </Alert>
       )}
 
       <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between sm:gap-y-0">

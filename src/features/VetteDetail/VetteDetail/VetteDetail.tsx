@@ -41,7 +41,7 @@ const VetteDetail = () => {
         }}
       >
         <div className="mt-4">
-          <Alert alertType={"danger"} message={errorMessage} />
+          <Alert alertType={"danger"}>{errorMessage}</Alert>
         </div>
       </AuthenticatedPage>
     );
@@ -63,19 +63,15 @@ const VetteDetail = () => {
       >
         <>
           {isConfirmationView && !isUpdate && (
-            <Alert
-              alertType={"success"}
-              message="Your Vette has been added!"
-              className="mb-8"
-            />
+            <Alert alertType={"success"} className="mb-8">
+              Your Vette has been added!
+            </Alert>
           )}
 
           {isConfirmationView && isUpdate && (
-            <Alert
-              alertType={"success"}
-              message="Your Vette has been updated!"
-              className="mb-8"
-            />
+            <Alert alertType={"success"} className="mb-8">
+              Your Vette has been updated!
+            </Alert>
           )}
 
           <VetteDetailCard vetteData={data} wasUpdated={false} />
