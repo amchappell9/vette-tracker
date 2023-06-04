@@ -5,58 +5,72 @@ import PaginationControls from "@/src/components/PaginationControls/PaginationCo
 import { useAllVettes } from "@/src/features/AllVettes/api/getAllVettes";
 import AddFirstVetteMessage from "./AddFirstVetteMessage/AddFirstVetteMessage";
 import ListOfVettes from "./ListOfVettes";
-import Link from "next/link";
 import { PlusIcon } from "@heroicons/react/outline";
 
 const PAGE_SIZE = 5;
 
-export default function AllVettes() {
-  const { data, isLoading, error } = useAllVettes();
+function AllVettes() {
+  const { isLoading, isError, error, data } = useAllVettes();
   const [currentPage, setCurrentPage] = useState(1);
 
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
 
-  let pageContent;
-
   // Loading
   if (isLoading) {
-    pageContent = <div>Loading...</div>;
+    return (
+      <Wrapper>
+        <div>Loading...</div>
+      </Wrapper>
+    );
   }
 
   // Error
-  if (error) {
+  if (isError) {
     if (error instanceof Error) {
-      pageContent = <Alert alertType={"danger"} message={error.message} />;
+      return (
+        <Wrapper>
+          <Alert alertType={"danger"}>{error.message}</Alert>
+        </Wrapper>
+      );
     } else {
-      pageContent = (
-        <Alert alertType={"danger"} message={"An error has happened"} />
+      return (
+        <Wrapper>
+          <Alert alertType={"danger"}>An error has happened</Alert>
+        </Wrapper>
       );
     }
   }
 
   // Empty State
-  if (data && data.vettes.length === 0) {
-    pageContent = <AddFirstVetteMessage />;
-  }
-
-  // Has data
-  if (data && data.vettes.length > 0) {
-    const currentTableData = data.vettes.slice(firstPageIndex, lastPageIndex);
-
-    pageContent = (
-      <>
-        <ListOfVettes vettesArray={currentTableData} />
-        <PaginationControls
-          currentPage={currentPage}
-          totalCount={data.vettes.length}
-          pageSize={PAGE_SIZE}
-          onPageChange={(page: number) => setCurrentPage(page)}
-        />
-      </>
+  if (data.vettes.length === 0) {
+    return (
+      <Wrapper>
+        <AddFirstVetteMessage />
+      </Wrapper>
     );
   }
 
+  const currentTableData = data.vettes.slice(firstPageIndex, lastPageIndex);
+
+  return (
+    <Wrapper>
+      <ListOfVettes vettesArray={currentTableData} />
+      <PaginationControls
+        currentPage={currentPage}
+        totalCount={data.vettes.length}
+        pageSize={PAGE_SIZE}
+        onPageChange={(page: number) => setCurrentPage(page)}
+      />
+    </Wrapper>
+  );
+}
+
+type WrapperProps = {
+  children: React.ReactNode;
+};
+
+const Wrapper = ({ children }: WrapperProps) => {
   return (
     <AuthenticatedPage
       title="All Vettes"
@@ -66,7 +80,9 @@ export default function AllVettes() {
         icon: PlusIcon,
       }}
     >
-      {pageContent}
+      {children}
     </AuthenticatedPage>
   );
-}
+};
+
+export default AllVettes;

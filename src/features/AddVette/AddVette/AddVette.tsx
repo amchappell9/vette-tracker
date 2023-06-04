@@ -125,5 +125,5 @@ function ErrorAlert({ error }: { error: unknown }) {
     errorMessage = error.message;
   }
 
-  return <Alert alertType={"danger"} message={errorMessage} />;
+  return <Alert alertType={"danger"}>{errorMessage}</Alert>;
 }

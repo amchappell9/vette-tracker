@@ -20,10 +20,10 @@ export default function Trends() {
     let errorComponent;
 
     if (error instanceof Error) {
-      errorComponent = <Alert alertType={"danger"} message={error.message} />;
+      errorComponent = <Alert alertType={"danger"}>{error.message}</Alert>;
     } else {
       errorComponent = (
-        <Alert alertType={"danger"} message={"An error has happened"} />
+        <Alert alertType={"danger"}>An error has happened</Alert>
       );
     }
 
