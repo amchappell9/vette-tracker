@@ -9,6 +9,7 @@ import TrimInfo from "../TrimInfo";
 import PackagesList from "../PackagesList";
 import DeleteVetteModal from "../DeleteVetteModal";
 import { useQueryClient } from "@tanstack/react-query";
+import { getDateObject } from "@/src/utils/utils";
 
 type VetteDetailCardProps = {
   vetteData: VetteObject;
@@ -23,6 +24,7 @@ export default function VetteDetailCard({
   const [vetteDeleted, setVetteDeleted] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const formattedDate = format(getDateObject(vetteData.date), "MM/dd/yyyy");
 
   if (vetteDeleted) {
     // Remove vette from cache
@@ -52,10 +54,7 @@ export default function VetteDetailCard({
 
       <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between sm:gap-y-0">
         <div className="text-gray-500">
-          <span>
-            Added on{" "}
-            {format(new Date(Date.parse(vetteData.date)), "MM/dd/yyyy")}
-          </span>
+          <span>Added on {formattedDate}</span>
           {vetteData.link && (
             <>
               <span className="px-2">|</span>

@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { VetteObject } from "@/src/types";
 import Link from "next/link";
+import { getDateObject } from "@/src/utils/utils";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";
@@ -29,6 +30,9 @@ type VetteItemProps = {
 };
 
 const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
+  const formattedDate = format(getDateObject(vette.date), "MM/dd/yyyy");
+  const formattedCost = parseInt(vette.cost).toLocaleString();
+
   return (
     <li>
       <Link
@@ -43,10 +47,7 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
           <div className="flex flex-col gap-y-1">
             <p className="text-lg font-bold leading-none text-gray-800">{`${vette.year} Corvette ${vette.submodel}`}</p>
             <p className="text-md leading-none text-gray-600">
-              <span className="after:mx-1 after:content-['|']">{`$${parseInt(
-                vette.cost
-              ).toLocaleString()}`}</span>
-
+              <span className="after:mx-1 after:content-['|']">{`$${formattedCost}`}</span>
               <span>{parseInt(vette.miles).toLocaleString()} Miles</span>
             </p>
           </div>
@@ -61,10 +62,7 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
 
-            <p className="text-md leading-none text-gray-600">{`Added ${format(
-              new Date(Date.parse(vette.date)),
-              "MM/dd/yyyy"
-            )}`}</p>
+            <p className="text-md leading-none text-gray-600">{`Added ${formattedDate}`}</p>
           </div>
 
           {/* Cost and Miles */}
