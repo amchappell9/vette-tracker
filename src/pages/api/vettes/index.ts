@@ -5,10 +5,7 @@ import { format } from "date-fns";
 import { DBObject, QueryResponse } from "@/src/types/faunadb";
 import { handleError } from "@/src/utils/apiUtils";
 import { getAuth } from "@clerk/nextjs/server";
-
-const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET_KEY,
-});
+import { client, getAllVettesById } from "@/src/utils/dbHelpers";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -25,32 +22,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-function getAllVettes(
+async function getAllVettes(
   req: NextApiRequest,
   res: NextApiResponse,
   userId: string
 ) {
-  const q = faunadb.query;
+  const vettes = await getAllVettesById(userId);
 
-  return client
-    .query<QueryResponse<VetteObject>>(
-      q.Map(
-        q.Paginate(q.Match(q.Index("vettes_by_user"), userId)),
-        q.Lambda("X", q.Get(q.Var("X")))
-      )
-    )
-    .then((response) => {
-      const vettes = response.data.map((value) => value.data);
-
-      // Return newest vettes first
-      const sortedVettes = vettes.sort((a, b) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
-
-      return res.status(200).json({
-        vettes: sortedVettes,
-      });
-    });
+  return res.status(200).json({
+    vettes: vettes,
+  });
 }
 
 async function addVette(
