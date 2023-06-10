@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import faunadb from "faunadb";
-import { DBObject, QueryResponse } from "@/src/types/faunadb";
+import { QueryResponse } from "@/src/types/faunadb";
 import { VetteObject } from "@/src/types";
 import { handleError } from "@/src/utils/apiUtils";
-import { format } from "date-fns";
 import { getAuth } from "@clerk/nextjs/server";
 import {
   client,
