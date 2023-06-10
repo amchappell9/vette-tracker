@@ -1,11 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import faunadb from "faunadb";
-import { VetteObject } from "@/src/types";
-import { format } from "date-fns";
-import { DBObject, QueryResponse } from "@/src/types/faunadb";
 import { handleError } from "@/src/utils/apiUtils";
 import { getAuth } from "@clerk/nextjs/server";
-import { client, getAllVettesById } from "@/src/utils/dbHelpers";
+import { getAllVettesById, insertVette } from "@/src/utils/dbHelpers";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -39,35 +35,14 @@ async function addVette(
   res: NextApiResponse,
   userId: string
 ) {
-  // TODO: Use Zod to validate values
+  // TODO: Use Zod to validate req.body is of type VetteValues
+  const response = await insertVette(userId, req.body);
 
-  // Add to database
-  const q = faunadb.query;
-
-  try {
-    // Generate ID
-    const id = await client.query(q.NewId());
-
-    // Add ID, created date, and user id to complete the VetteObject
-    const vetteObj: VetteObject = {
-      id: id.toString(),
-      date: format(new Date(), "MM-dd-yyyy"),
-      userId: userId,
-      ...req.body,
-    };
-
-    // Add record
-    const response = await client.query<DBObject<VetteObject>>(
-      q.Create(q.Collection("Vettes"), { data: vetteObj })
-    );
-
-    // Return new vette
-    return res.status(201).json(response.data);
-  } catch (error) {
-    console.log(error);
-
-    return handleError(error, res);
+  if (response instanceof Error) {
+    return handleError(response, res);
   }
+
+  return res.status(201).json(response);
 }
 
 export default handler;

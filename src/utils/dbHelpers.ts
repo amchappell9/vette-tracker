@@ -1,6 +1,7 @@
 import faunadb from "faunadb";
-import { QueryResponse } from "../types/faunadb";
-import { VetteObject } from "../types";
+import { DBError, DBObject, QueryResponse } from "../types/faunadb";
+import { VetteObject, VetteValues } from "../types";
+import { format } from "date-fns";
 
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET_KEY,
@@ -50,4 +51,39 @@ const getVetteById = async (userId: string, vetteId: string) => {
   return null;
 };
 
-export { client, getAllVettesById, getVetteById };
+const insertVette = async (userId: string, vette: VetteValues) => {
+  const q = faunadb.query;
+
+  try {
+    // Generate ID
+    const id = await client.query(q.NewId());
+
+    // Add ID, created date, and user id to complete the VetteObject
+    const vetteObj: VetteObject = {
+      id: id.toString(),
+      date: format(new Date(), "MM-dd-yyyy"),
+      userId: userId,
+      ...vette,
+    };
+
+    // Add record
+    const response = await client.query<DBObject<VetteObject>>(
+      q.Create(q.Collection("Vettes"), { data: vetteObj })
+    );
+
+    return response.data;
+  } catch (error) {
+    if (isDBError(error)) {
+      return error;
+    }
+
+    throw new Error("Invalid db response");
+  }
+};
+
+// Function that typechecks an error object to see if it is of type DBError
+const isDBError = (error: any): error is DBError => {
+  return error.requestResult.statusCode !== undefined;
+};
+
+export { client, getAllVettesById, getVetteById, insertVette };
