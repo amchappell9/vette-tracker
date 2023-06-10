@@ -5,7 +5,12 @@ import { VetteObject } from "@/src/types";
 import { handleError } from "@/src/utils/apiUtils";
 import { format } from "date-fns";
 import { getAuth } from "@clerk/nextjs/server";
-import { client, getVetteById } from "@/src/utils/dbHelpers";
+import {
+  client,
+  getVetteById,
+  isDBError,
+  updateVetteRecord,
+} from "@/src/utils/dbHelpers";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -54,45 +59,18 @@ async function updateVette(
   userId: string,
   vetteID: string
 ) {
-  const q = faunadb.query;
+  // TODO validate vette values with zod
+  const response = await updateVetteRecord(userId, vetteID, req.body);
 
-  const vetteObj: VetteObject = {
-    id: vetteID,
-    date: format(new Date(), "MM-dd-yyyy"),
-    userId: userId,
-    ...req.body,
-  };
-
-  try {
-    // Get the vette
-    const response = await client.query<QueryResponse<VetteObject>>(
-      q.Map(
-        q.Paginate(q.Match(q.Index("vette_by_id"), vetteID)),
-        q.Lambda("X", q.Get(q.Var("X")))
-      )
-    );
-
-    // Ensure vette exists and belongs to user
-    if (response.data.length > 0 && response.data[0].data.userId === userId) {
-      // Update the vette
-      const updatedVette = await client.query<DBObject<VetteObject>>(
-        q.Update(
-          q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteID))),
-          {
-            data: vetteObj,
-          }
-        )
-      );
-
-      return res.status(200).json(updatedVette.data);
-    }
-
-    return res.status(404).json({ msg: "Vette not found" });
-  } catch (error) {
-    console.log(error);
-
-    return handleError(error, res);
+  if (isDBError(response)) {
+    return handleError(response, res);
   }
+
+  if (response === null) {
+    return res.status(404).json({ msg: "Vette not found" });
+  }
+
+  return res.status(200).json(response);
 }
 
 async function deleteVette(

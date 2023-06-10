@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { handleError } from "@/src/utils/apiUtils";
 import { getAuth } from "@clerk/nextjs/server";
-import { getAllVettesById, insertVette } from "@/src/utils/dbHelpers";
+import {
+  getAllVettesById,
+  insertVetteRecord,
+  isDBError,
+} from "@/src/utils/dbHelpers";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -36,9 +40,9 @@ async function addVette(
   userId: string
 ) {
   // TODO: Use Zod to validate req.body is of type VetteValues
-  const response = await insertVette(userId, req.body);
+  const response = await insertVetteRecord(userId, req.body);
 
-  if (response instanceof Error) {
+  if (isDBError(response)) {
     return handleError(response, res);
   }
 

@@ -51,7 +51,7 @@ const getVetteById = async (userId: string, vetteId: string) => {
   return null;
 };
 
-const insertVette = async (userId: string, vette: VetteValues) => {
+const insertVetteRecord = async (userId: string, vette: VetteValues) => {
   const q = faunadb.query;
 
   try {
@@ -81,9 +81,64 @@ const insertVette = async (userId: string, vette: VetteValues) => {
   }
 };
 
-// Function that typechecks an error object to see if it is of type DBError
-const isDBError = (error: any): error is DBError => {
-  return error.requestResult.statusCode !== undefined;
+const updateVetteRecord = async (
+  userId: string,
+  vetteId: string,
+  vetteValues: VetteValues
+) => {
+  const q = faunadb.query;
+
+  const vetteObj: VetteObject = {
+    id: vetteId,
+    date: format(new Date(), "MM-dd-yyyy"),
+    userId: userId,
+    ...vetteValues,
+  };
+
+  try {
+    // Get the vette
+    const response = await client.query<QueryResponse<VetteObject>>(
+      q.Map(
+        q.Paginate(q.Match(q.Index("vette_by_id"), vetteId)),
+        q.Lambda("X", q.Get(q.Var("X")))
+      )
+    );
+
+    // Ensure vette exists and belongs to user
+    if (response.data.length > 0 && response.data[0].data.userId === userId) {
+      // Update the vette
+      const updatedVette = await client.query<DBObject<VetteObject>>(
+        q.Update(
+          q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteId))),
+          {
+            data: vetteObj,
+          }
+        )
+      );
+
+      return updatedVette.data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    if (isDBError(error)) {
+      return error;
+    }
+
+    throw new Error("Invalid db response");
+  }
 };
 
-export { client, getAllVettesById, getVetteById, insertVette };
+// Function that typechecks an error object to see if it is of type DBError
+const isDBError = (error: any): error is DBError => {
+  return error?.requestResult?.statusCode !== undefined;
+};
+
+export {
+  client,
+  getAllVettesById,
+  getVetteById,
+  insertVetteRecord,
+  updateVetteRecord,
+  isDBError,
+};
