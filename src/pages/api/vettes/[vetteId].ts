@@ -5,10 +5,7 @@ import { VetteObject } from "@/src/types";
 import { handleError } from "@/src/utils/apiUtils";
 import { format } from "date-fns";
 import { getAuth } from "@clerk/nextjs/server";
-
-const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET_KEY,
-});
+import { client, getVetteById } from "@/src/utils/dbHelpers";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -26,7 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const vetteID = req.query.vetteId;
 
   if (req.method === "GET") {
-    return getVetteById(req, res, userId, vetteID);
+    return fetchVetteById(req, res, userId, vetteID);
   } else if (req.method === "PUT") {
     return updateVette(req, res, userId, vetteID);
   } else if (req.method === "DELETE") {
@@ -36,29 +33,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return res.status(405).json({ message: "Method not allowed" });
 }
 
-function getVetteById(
+async function fetchVetteById(
   req: NextApiRequest,
   res: NextApiResponse,
   userId: string,
   vetteId: string
 ) {
-  const q = faunadb.query;
+  const vetteObj = await getVetteById(userId, vetteId);
 
-  return client
-    .query<QueryResponse<VetteObject>>(
-      q.Map(
-        q.Paginate(q.Match(q.Index("vette_by_id"), vetteId)),
-        q.Lambda("X", q.Get(q.Var("X")))
-      )
-    )
-    .then((response) => {
-      if (response.data.length > 0 && response.data[0].data.userId === userId) {
-        return res.status(200).json(response.data[0].data);
-      }
+  if (!vetteObj) {
+    return res.status(404).json({ message: "Vette not found" });
+  }
 
-      // No vette found (or no access)
-      return res.status(404).json({ msg: "Vette not found" });
-    });
+  return res.status(200).json(vetteObj);
 }
 
 async function updateVette(
