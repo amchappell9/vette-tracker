@@ -51,6 +51,9 @@ const getVetteById = async (userId: string, vetteId: string) => {
   return null;
 };
 
+/**
+ * Create new vette record in db.
+ */
 const insertVetteRecord = async (userId: string, vette: VetteValues) => {
   const q = faunadb.query;
 
@@ -81,6 +84,9 @@ const insertVetteRecord = async (userId: string, vette: VetteValues) => {
   }
 };
 
+/**
+ * Update existing vette record in db.
+ */
 const updateVetteRecord = async (
   userId: string,
   vetteId: string,
@@ -129,7 +135,49 @@ const updateVetteRecord = async (
   }
 };
 
-// Function that typechecks an error object to see if it is of type DBError
+/**
+ * Remove vette record from db.
+ */
+const deleteVetteRecord = async (
+  userId: string,
+  vetteId: string
+): Promise<{ successful: boolean } | DBError> => {
+  const q = faunadb.query;
+
+  const vette = await getVetteById(userId, vetteId);
+
+  if (!vette) {
+    return {
+      requestResult: {
+        statusCode: "404",
+      },
+      message: "No vette found",
+    };
+  }
+
+  const userIdMatches = vette.userId === userId;
+
+  if (!userIdMatches) {
+    return {
+      requestResult: {
+        statusCode: "403",
+      },
+      message: "User does not have access to this vette",
+    };
+  }
+
+  const response = client.query(
+    q.Delete(q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteId))))
+  );
+
+  console.log("deleted vete response", response);
+
+  return {
+    successful: true,
+  };
+};
+
+/** Checks that parameter is of type DBError */
 const isDBError = (error: any): error is DBError => {
   return error?.requestResult?.statusCode !== undefined;
 };
@@ -140,5 +188,6 @@ export {
   getVetteById,
   insertVetteRecord,
   updateVetteRecord,
+  deleteVetteRecord,
   isDBError,
 };

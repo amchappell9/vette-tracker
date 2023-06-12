@@ -6,6 +6,7 @@ import { handleError } from "@/src/utils/apiUtils";
 import { getAuth } from "@clerk/nextjs/server";
 import {
   client,
+  deleteVetteRecord,
   getVetteById,
   isDBError,
   updateVetteRecord,
@@ -66,7 +67,7 @@ async function updateVette(
   }
 
   if (response === null) {
-    return res.status(404).json({ msg: "Vette not found" });
+    return res.status(404).json({ message: "Vette not found" });
   }
 
   return res.status(200).json(response);
@@ -78,38 +79,17 @@ async function deleteVette(
   userId: string,
   vetteId: string
 ) {
-  const q = faunadb.query;
-  let userIdMatches = false;
+  const response = await deleteVetteRecord(userId, vetteId);
 
-  // Validate user has access to vette
-  try {
-    await client
-      .query<QueryResponse<VetteObject>>(
-        q.Map(
-          q.Paginate(q.Match(q.Index("vette_by_id"), vetteId)),
-          q.Lambda("X", q.Get(q.Var("X")))
-        )
-      )
-      .then(
-        (response) => (userIdMatches = response.data[0].data.userId === userId)
-      );
-
-    if (userIdMatches) {
-      client.query(
-        q.Delete(
-          q.Select("ref", q.Get(q.Match(q.Index("vette_by_id"), vetteId)))
-        )
-      );
-
-      return res.status(200).json({ msg: `Vette ${vetteId} deleted` });
-    } else {
-      return res.status(403).json({ message: "User not authorized" });
-    }
-  } catch (error) {
-    console.log(error);
-
-    return handleError(error, res);
+  if (isDBError(response)) {
+    return handleError(response, res);
   }
+
+  if (!response.successful) {
+    return res.status(500).json({ message: "Error deleting vette" });
+  }
+
+  return res.status(200).json({ message: `Vette ${vetteId} deleted` });
 }
 
 export default handler;
