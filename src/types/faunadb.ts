@@ -13,6 +13,7 @@ export type DBObject<T> = {
   ts: number;
   data: T;
 };
+
 /**
  * The error object that comes back from FaunaDB
  */
