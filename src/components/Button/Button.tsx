@@ -22,13 +22,13 @@ const buttonStyles = cva("", {
   },
 });
 
-type ButtonProps = OverrideProps<
-  ComponentProps<"button">,
-  {
-    className?: string;
-  }
-> &
-  VariantProps<typeof buttonStyles>;
+type ButtonProps = VariantProps<typeof buttonStyles> &
+  OverrideProps<
+    ComponentProps<"button">,
+    {
+      className?: string;
+    }
+  >;
 
 const Button = ({
   children,
