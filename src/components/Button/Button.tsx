@@ -22,16 +22,13 @@ const buttonStyles = cva("", {
   },
 });
 
-type ButtonAsButtonProps = { as?: "button"; className?: string } & Exclude<
-  ComponentProps<"button">,
-  "className"
-> &
+type ButtonAsButtonProps = { as?: "button" } & ComponentProps<"button"> &
   VariantProps<typeof buttonStyles>;
 
-type ButtonAsLinkProps = { as?: "link"; className?: string } & Exclude<
-  PropsWithChildren<LinkProps>,
-  "className"
-> &
+type ButtonAsLinkProps = {
+  as: "link";
+  className?: string;
+} & PropsWithChildren<LinkProps> &
   VariantProps<typeof buttonStyles>;
 
 const Button = (props: ButtonAsButtonProps | ButtonAsLinkProps) => {
