@@ -1,6 +1,6 @@
-import { OverrideProps } from "@/src/utils/typeHelpers";
 import { cva, VariantProps } from "class-variance-authority";
-import { ComponentProps } from "react";
+import Link, { LinkProps } from "next/link";
+import { ComponentProps, PropsWithChildren } from "react";
 
 const buttonStyles = cva("", {
   variants: {
@@ -22,28 +22,39 @@ const buttonStyles = cva("", {
   },
 });
 
-type ButtonProps = VariantProps<typeof buttonStyles> &
-  OverrideProps<
-    ComponentProps<"button">,
-    {
-      className?: string;
-    }
-  >;
+type ButtonAsButtonProps = { as?: "button"; className?: string } & Exclude<
+  ComponentProps<"button">,
+  "className"
+> &
+  VariantProps<typeof buttonStyles>;
 
-const Button = ({
-  children,
-  buttonSize,
-  intent,
-  className,
-  ...props
-}: ButtonProps) => {
+type ButtonAsLinkProps = { as?: "link"; className?: string } & Exclude<
+  PropsWithChildren<LinkProps>,
+  "className"
+> &
+  VariantProps<typeof buttonStyles>;
+
+const Button = (props: ButtonAsButtonProps | ButtonAsLinkProps) => {
+  const { buttonSize, intent, className } = props;
+
+  if (props.as === "link") {
+    return (
+      <Link
+        {...props}
+        className={buttonStyles({ buttonSize, intent, className })}
+      >
+        {props.children}
+      </Link>
+    );
+  }
+
   return (
-    <button
-      className={buttonStyles({ buttonSize, intent, className })}
+    <Button
       {...props}
+      className={buttonStyles({ buttonSize, intent, className })}
     >
-      {children}
-    </button>
+      {props.children}
+    </Button>
   );
 };
 
