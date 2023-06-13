@@ -1,4 +1,6 @@
+import { OverrideProps } from "@/src/utils/typeHelpers";
 import { cva, VariantProps } from "class-variance-authority";
+import { ComponentProps } from "react";
 
 const buttonStyles = cva("", {
   variants: {
@@ -20,33 +22,24 @@ const buttonStyles = cva("", {
   },
 });
 
-interface ButtonStyleProps extends VariantProps<typeof buttonStyles> {}
-
-interface ButtonProps
-  extends React.HTMLProps<HTMLButtonElement>,
-    ButtonStyleProps {
-  children: React.ReactNode;
-
-  // I don't know why this was necessary
-  type?: "button" | "submit" | "reset" | undefined;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  className?: string;
-  // intent?: "primary" | "secondary";
-  // size?: "default" | "large" | "full";
-}
+type ButtonProps = OverrideProps<
+  ComponentProps<"button">,
+  {
+    className?: string;
+  }
+> &
+  VariantProps<typeof buttonStyles>;
 
 const Button = ({
   children,
   buttonSize,
   intent,
-  onClick,
   className,
   ...props
 }: ButtonProps) => {
   return (
     <button
       className={buttonStyles({ buttonSize, intent, className })}
-      onClick={onClick}
       {...props}
     >
       {children}
