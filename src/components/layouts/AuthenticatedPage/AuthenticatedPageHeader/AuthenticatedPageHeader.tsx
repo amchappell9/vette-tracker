@@ -95,7 +95,11 @@ type PageActionLinkProps = {
 
 function PageActionLink({ icon: Icon, text, href }: PageActionLinkProps) {
   return (
-    <Button as="link" href={href} className="flex items-center">
+    <Button
+      as="link"
+      href={href}
+      className="flex items-center justify-center sm:justify-start"
+    >
       <Icon className="mr-1 inline h-5 w-5" />
       {text}
     </Button>

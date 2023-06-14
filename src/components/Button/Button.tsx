@@ -2,7 +2,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import Link, { LinkProps } from "next/link";
 import { ComponentProps, PropsWithChildren } from "react";
 
-const buttonStyles = cva("", {
+const buttonStyles = cva("text-center", {
   variants: {
     intent: {
       primary:
@@ -14,12 +14,15 @@ const buttonStyles = cva("", {
       default: "px-6 py-2 text-lg drop-shadow-sm",
       small: "px-4 py-2 text-base font-medium drop-shadow-sm",
       large: "px-12 py-6 font-bold text-3xl drop-shadow-md",
-      full: "w-full py-3 font-bold text-xl drop-shadow-sm",
+    },
+    widthBehavior: {
+      default: "w-full sm:w-auto",
     },
   },
   defaultVariants: {
     intent: "primary",
     buttonSize: "default",
+    widthBehavior: "default",
   },
 });
 

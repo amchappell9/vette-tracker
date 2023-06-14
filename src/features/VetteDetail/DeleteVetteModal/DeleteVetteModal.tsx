@@ -5,6 +5,8 @@ import { VetteObject } from "@/src/types";
 import { useDeleteVette } from "../api/deleteVette";
 import { getErrorMessage } from "@/src/utils/utils";
 import Alert from "@/src/components/Alert";
+import Button from "@/src/components/Button/Button";
+import { Balancer } from "react-wrap-balancer";
 
 type DeleteVetteModalProps = {
   open: boolean;
@@ -19,8 +21,8 @@ export default function DeleteVetteModal({
   vetteData,
   onUserAcknowledgedDelete,
 }: DeleteVetteModalProps) {
-  const cancelButtonRef = useRef(null);
   const { isSuccess, isLoading, isError, error, mutate } = useDeleteVette();
+  const cancelButtonRef = useRef(null);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -77,97 +79,92 @@ export default function DeleteVetteModal({
                     Delete Vette
                   </Dialog.Title>
 
-                  {/* Default State */}
-                  {!isLoading && !isError && !isSuccess && (
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
+                  <div className="mt-1">
+                    {/* Default State */}
+                    {!isLoading && !isError && !isSuccess && (
+                      <ModalBodyText>
                         Are you sure you want to delete your
                         <strong className="font-bold">{` ${vetteData.year} Corvette ${vetteData.submodel}`}</strong>
                         ? This action cannot be undone.
-                      </p>
-                    </div>
-                  )}
+                      </ModalBodyText>
+                    )}
 
-                  {/* Loading */}
-                  {isLoading && (
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">Deleting...</p>
-                    </div>
-                  )}
+                    {/* Loading */}
+                    {isLoading && <ModalBodyText>Deleting...</ModalBodyText>}
 
-                  {/* Success */}
-                  {isSuccess && (
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
+                    {/* Success */}
+                    {isSuccess && (
+                      <ModalBodyText>
                         Your Vette has been deleted!
-                      </p>
-                    </div>
-                  )}
+                      </ModalBodyText>
+                    )}
 
-                  {/* Error */}
-                  {isError && (
-                    <div className="mt-2">
+                    {/* Error */}
+                    {isError && (
                       <Alert alertType={"danger"}>
                         {getErrorMessage(error)}
                       </Alert>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <div className="mt-5 flex flex-col gap-2 sm:mt-4 sm:flex-row-reverse">
                 {/* Default State */}
                 {!isLoading && !isError && !isSuccess && (
                   <>
-                    <button
+                    <Button
                       type="button"
-                      className="border-transparent inline-flex w-full justify-center rounded-md border bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      buttonSize={"small"}
                       onClick={() => mutate(vetteData)}
                     >
                       Delete
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
-                      className="focus:ring-indigo-500 mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
+                      intent={"secondary"}
+                      buttonSize={"small"}
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </>
                 )}
 
                 {/* Success */}
                 {isSuccess && (
-                  <button
+                  <Button
                     type="button"
-                    className="focus:ring-indigo-500 mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
+                    intent={"secondary"}
+                    buttonSize={"small"}
                     onClick={() => onUserAcknowledgedDelete(true)}
                     ref={cancelButtonRef}
                   >
                     Go to Vettes
-                  </button>
+                  </Button>
                 )}
 
                 {/* Error */}
                 {isError && (
                   <>
-                    <button
+                    <Button
                       type="button"
-                      className="border-transparent inline-flex w-full justify-center rounded-md border bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      buttonSize={"small"}
                       onClick={() => {
                         mutate(vetteData);
                       }}
                     >
                       Try Again
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
-                      className="focus:ring-indigo-500 mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
+                      intent={"secondary"}
+                      buttonSize={"small"}
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </>
                 )}
               </div>
@@ -178,3 +175,11 @@ export default function DeleteVetteModal({
     </Transition.Root>
   );
 }
+
+const ModalBodyText = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <p className="text-gray-600">
+      <Balancer>{children}</Balancer>
+    </p>
+  );
+};
