@@ -7,6 +7,7 @@ import { useState } from "react";
 import MobileMenu from "../../MobileMenu/MobileMenu";
 import { BackLinkConfig, PageAction } from "../AuthenticatedPage";
 import NavLinks from "./NavLinks";
+import Button from "@/src/components/Button/Button";
 
 type HeaderProps = {
   backLinkConfig?: BackLinkConfig;
@@ -94,12 +95,9 @@ type PageActionLinkProps = {
 
 function PageActionLink({ icon: Icon, text, href }: PageActionLinkProps) {
   return (
-    <Link
-      href={href}
-      className="flex items-center rounded bg-red-500 px-6 py-2 text-lg text-white drop-shadow-sm transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-700"
-    >
+    <Button as="link" href={href} className="flex items-center">
       <Icon className="mr-1 inline h-5 w-5" />
       {text}
-    </Link>
+    </Button>
   );
 }
