@@ -12,6 +12,7 @@ const buttonStyles = cva("", {
     },
     buttonSize: {
       default: "px-6 py-2 text-lg drop-shadow-sm",
+      small: "px-4 py-2 text-base font-medium drop-shadow-sm",
       large: "px-12 py-6 font-bold text-3xl drop-shadow-md",
       full: "w-full py-3 font-bold text-xl drop-shadow-sm",
     },
