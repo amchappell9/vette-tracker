@@ -36,7 +36,7 @@ export default function Home() {
           Looking for a new Vette?
         </h1>
         <div className="mx-auto max-w-xl">
-          <span className="inline-block pb-6 text-xl text-gray-200 sm:text-2xl">
+          <span className="inline-block pb-6 text-xl text-gray-200 sm:text-2xl lg:text-3xl">
             <span className="font-bold text-red-500">Vette Tracker</span> helps
             you track Vette prices over time, helping you find the best deals.
           </span>
