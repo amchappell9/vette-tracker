@@ -33,25 +33,22 @@ type ButtonAsLinkProps = {
 
 const Button = (props: ButtonAsButtonProps | ButtonAsLinkProps) => {
   const { buttonSize, intent, className } = props;
+  const styles = buttonStyles({ buttonSize, intent, className });
 
   if (props.as === "link") {
+    const { as, ...rest } = props;
+
     return (
-      <Link
-        {...props}
-        className={buttonStyles({ buttonSize, intent, className })}
-      >
+      <Link {...rest} className={styles}>
         {props.children}
       </Link>
     );
   }
 
   return (
-    <Button
-      {...props}
-      className={buttonStyles({ buttonSize, intent, className })}
-    >
+    <button {...props} className={styles}>
       {props.children}
-    </Button>
+    </button>
   );
 };
 
