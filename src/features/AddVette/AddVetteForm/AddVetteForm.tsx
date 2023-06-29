@@ -29,7 +29,7 @@ const addVetteFormValidationSchema = Yup.object({
     .matches(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
     .required(VALIDATION_MESSAGES.REQUIRED),
   cost: Yup.string()
-    .matches(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
+    .matches(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, "Invalid cost")
     .required(VALIDATION_MESSAGES.REQUIRED),
   transmissionType: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
   exteriorColor: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
