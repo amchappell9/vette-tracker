@@ -61,7 +61,9 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
               ? vetteToEditInfo.miles
               : "",
           cost:
-            vetteToEditInfo && vetteToEditInfo.cost ? vetteToEditInfo.cost : "",
+            vetteToEditInfo && vetteToEditInfo.cost
+              ? "$" + vetteToEditInfo.cost
+              : "",
           transmissionType:
             vetteToEditInfo && vetteToEditInfo.transmissionType
               ? vetteToEditInfo.transmissionType
