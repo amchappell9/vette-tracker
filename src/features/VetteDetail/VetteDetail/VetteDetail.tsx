@@ -9,13 +9,13 @@ const VetteDetail = ({ vette }: { vette: VetteObject }) => {
 
   return (
     <>
-      {isConfirmationView && isUpdate === "false" && (
+      {isConfirmationView === "true" && isUpdate === "false" && (
         <Alert alertType={"success"} className="mb-8">
           Your Vette has been added!
         </Alert>
       )}
 
-      {isConfirmationView && isUpdate === "true" && (
+      {isConfirmationView === "true" && isUpdate === "true" && (
         <Alert alertType={"success"} className="mb-8">
           Your Vette has been updated!
         </Alert>
