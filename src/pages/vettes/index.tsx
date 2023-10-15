@@ -6,9 +6,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import { PlusIcon } from "@heroicons/react/outline";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export const getServerSideProps: GetServerSideProps<{
-  vettes: VetteObject[];
-}> = async (ctx) => {
+export const getServerSideProps = (async (ctx) => {
   const { userId } = getAuth(ctx.req);
 
   if (userId === null) {
@@ -27,7 +25,9 @@ export const getServerSideProps: GetServerSideProps<{
       vettes,
     },
   };
-};
+}) satisfies GetServerSideProps<{
+  vettes: VetteObject[];
+}>;
 
 export default function AllVettesPage({
   vettes,
