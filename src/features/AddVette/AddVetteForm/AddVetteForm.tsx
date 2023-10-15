@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import * as Yup from "yup";
+import * as z from "zod";
 
 import SubModelRadioButton from "../SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton";
@@ -16,6 +16,7 @@ import FormCheckboxGroup from "../../../components/forms/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect";
 import { VetteObject, VetteValues } from "@/src/types";
 import Button from "@/src/components/Button/Button";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
@@ -23,19 +24,21 @@ const VALIDATION_MESSAGES = {
   MILES: "Miles must be a number",
 };
 
-const addVetteFormValidationSchema = Yup.object({
-  year: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
-  miles: Yup.string()
-    .matches(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/)
-    .required(VALIDATION_MESSAGES.REQUIRED),
-  cost: Yup.string()
-    .matches(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, "Invalid cost")
-    .required(VALIDATION_MESSAGES.REQUIRED),
-  transmissionType: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
-  exteriorColor: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
-  interiorColor: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
-  submodel: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
-  trim: Yup.string().required(VALIDATION_MESSAGES.REQUIRED),
+const addVetteFormValidationSchema = z.object({
+  year: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  miles: z
+    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
+    .regex(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, VALIDATION_MESSAGES.MILES),
+  cost: z
+    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
+    .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/),
+  transmissionType: z.string({
+    required_error: VALIDATION_MESSAGES.REQUIRED,
+  }),
+  exteriorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  interiorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  submodel: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  trim: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
 });
 
 type AddVetteFormProps = {
@@ -90,7 +93,9 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
             vetteToEditInfo && vetteToEditInfo.link ? vetteToEditInfo.link : "",
         }}
         enableReinitialize={true}
-        validationSchema={addVetteFormValidationSchema}
+        validationSchema={toFormikValidationSchema(
+          addVetteFormValidationSchema
+        )}
         onSubmit={(values: VetteValues) => handleSubmit(values)}
       >
         {(props) => (
