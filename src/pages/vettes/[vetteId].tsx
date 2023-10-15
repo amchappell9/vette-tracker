@@ -6,9 +6,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import { PencilAltIcon } from "@heroicons/react/outline";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export const getServerSideProps: GetServerSideProps<{
-  vette: VetteObject;
-}> = async (ctx) => {
+export const getServerSideProps = (async (ctx) => {
   const { userId } = getAuth(ctx.req);
   const { vetteId } = ctx.query;
 
@@ -42,7 +40,9 @@ export const getServerSideProps: GetServerSideProps<{
       vette,
     },
   };
-};
+}) satisfies GetServerSideProps<{
+  vette: VetteObject;
+}>;
 
 export default function VetteById({
   vette,
