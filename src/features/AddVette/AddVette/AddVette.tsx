@@ -58,7 +58,7 @@ const AddVette = () => {
   if (isSuccess) {
     // Get ID from response
     const vetteId = data.id;
-    const isUpdate = vetteToEditInfo !== null;
+    const isUpdate = typeof vetteToEditInfo.data !== "undefined";
 
     router.push(
       `/vettes/${vetteId}?isConfirmationView=true&isUpdate=${isUpdate}`
