@@ -1,6 +1,6 @@
 import { axios } from "@/src/lib/axios";
 import { VetteObject } from "@/src/types";
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export const getVette = ({
   vetteId,
@@ -19,12 +19,16 @@ type UseVetteProps = {
   enabled: boolean;
 };
 
-export const useVette = ({ vetteId, enabled }: UseVetteProps) => {
-  return useQuery({
+export function getVetteQueryOptions({ vetteId, enabled }: UseVetteProps) {
+  return queryOptions({
     queryKey: ["vette", vetteId],
     queryFn: () => getVette({ vetteId }),
     staleTime: 5 * 60 * 1000,
     retryDelay: 1000,
     enabled: enabled,
   });
+}
+
+export const useVette = (props: UseVetteProps) => {
+  return useQuery(getVetteQueryOptions(props));
 };

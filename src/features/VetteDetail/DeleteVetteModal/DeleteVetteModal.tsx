@@ -21,7 +21,7 @@ export default function DeleteVetteModal({
   vetteData,
   onUserAcknowledgedDelete,
 }: DeleteVetteModalProps) {
-  const { isSuccess, isLoading, isError, error, mutate } = useDeleteVette();
+  const { isSuccess, isPending, isError, error, mutate } = useDeleteVette();
   const cancelButtonRef = useRef(null);
 
   return (
@@ -81,7 +81,7 @@ export default function DeleteVetteModal({
 
                   <div className="mt-1">
                     {/* Default State */}
-                    {!isLoading && !isError && !isSuccess && (
+                    {!isPending && !isError && !isSuccess && (
                       <ModalBodyText>
                         Are you sure you want to delete your
                         <strong className="font-bold">{` ${vetteData.year} Corvette ${vetteData.submodel}`}</strong>
@@ -90,7 +90,7 @@ export default function DeleteVetteModal({
                     )}
 
                     {/* Loading */}
-                    {isLoading && <ModalBodyText>Deleting...</ModalBodyText>}
+                    {isPending && <ModalBodyText>Deleting...</ModalBodyText>}
 
                     {/* Success */}
                     {isSuccess && (
@@ -110,7 +110,7 @@ export default function DeleteVetteModal({
               </div>
               <div className="mt-5 flex flex-col gap-2 sm:mt-4 sm:flex-row-reverse">
                 {/* Default State */}
-                {!isLoading && !isError && !isSuccess && (
+                {!isPending && !isError && !isSuccess && (
                   <>
                     <Button
                       type="button"

@@ -26,7 +26,7 @@ const AddVette = () => {
     enabled: typeof vetteToEditId === "string",
   });
 
-  const { isSuccess, data, isError, error, isLoading, mutate } =
+  const { isSuccess, data, isError, error, isPending, mutate } =
     useCreateOrUpdateVette();
 
   const onSubmit = async (values: VetteValues) => {
@@ -39,7 +39,7 @@ const AddVette = () => {
   };
 
   // Mutation States
-  if (isLoading) {
+  if (isPending) {
     return (
       <AuthenticatedPage title="Adding Vette...">
         <div>Loading...</div>

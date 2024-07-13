@@ -1,6 +1,7 @@
 import { axios } from "@/src/lib/axios";
 import { VetteObject, VetteValues } from "@/src/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAllVettesQueryOptions } from "../../AllVettes/api/getAllVettes";
 
 type CreateOrUpdateVetteDTO = {
   vette: VetteValues;
@@ -27,10 +28,10 @@ export const useCreateOrUpdateVette = () => {
       queryClient.setQueryData(["vette", data.id], data);
 
       // Invalidate previous queries
-      queryClient.invalidateQueries(["vettes"]);
+      queryClient.invalidateQueries({ queryKey: ["vettes"] });
 
       // Refetch query
-      queryClient.prefetchQuery(["vettes"]);
+      queryClient.prefetchQuery(getAllVettesQueryOptions());
     },
     mutationFn: createVette,
   });

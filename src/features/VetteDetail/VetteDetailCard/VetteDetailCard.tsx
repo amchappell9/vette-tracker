@@ -28,7 +28,7 @@ export default function VetteDetailCard({
 
   if (vetteDeleted) {
     // Remove vette from cache
-    queryClient.removeQueries(["vette", vetteData.id]);
+    queryClient.removeQueries({ queryKey: ["vette", vetteData.id] });
 
     router.push("/vettes");
 

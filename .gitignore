@@ -29,3 +29,5 @@ yarn-error.log*
 
 #Next.js
 .next
+
+tsconfig.tsbuildinfo
