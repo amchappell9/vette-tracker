@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { VetteObject } from "@/src/types";
 import Link from "next/link";
 import { getDateObject } from "@/src/utils/utils";
+import { useQueryClient } from "@tanstack/react-query";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";

@@ -23,7 +23,6 @@ const AddVette = () => {
   const vetteToEditId = router.query.vetteToEdit;
   const vetteToEditInfo = useVette({
     vetteId: vetteToEditId,
-    enabled: typeof vetteToEditId === "string",
   });
 
   const { isSuccess, data, isError, error, isPending, mutate } =
