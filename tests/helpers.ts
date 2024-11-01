@@ -7,6 +7,8 @@ export async function login(page: Page) {
   await page.goto("");
   await page.getByRole("link", { name: "Get Started" }).click();
 
+  // There's also a clerk helper that you can use
+  // https://github.com/clerk/clerk-playwright-nextjs/blob/main/e2e/app.spec.ts
   await page.getByLabel("Email address").click();
   await page
     .getByLabel("Email address")
