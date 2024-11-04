@@ -1,14 +1,12 @@
-import { useState } from "react";
 import { TrashIcon } from "@heroicons/react/outline";
 import { format } from "date-fns";
+import Link from "next/link";
 import { VetteObject } from "@/src/types";
-import { useRouter } from "next/router";
 import Alert from "@/src/components/Alert";
 import SubmodelInfo from "../SubmodelInfo";
 import TrimInfo from "../TrimInfo";
 import PackagesList from "../PackagesList";
 import DeleteVetteModal from "../DeleteVetteModal";
-import { useQueryClient } from "@tanstack/react-query";
 import { getDateObject } from "@/src/utils/utils";
 
 type VetteDetailCardProps = {
@@ -20,28 +18,7 @@ export default function VetteDetailCard({
   vetteData,
   wasUpdated,
 }: VetteDetailCardProps) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [vetteDeleted, setVetteDeleted] = useState(false);
-  const router = useRouter();
-  const queryClient = useQueryClient();
   const formattedDate = format(getDateObject(vetteData.date), "MM/dd/yyyy");
-
-  if (vetteDeleted) {
-    // Remove vette from cache
-    queryClient.removeQueries({ queryKey: ["vette", vetteData.id] });
-
-    router.push("/vettes");
-
-    return (
-      // <Redirect
-      //   to={{
-      //     pathname: `/vettes`,
-      //     state: { vetteDeleted: true },
-      //   }}
-      // />
-      <></>
-    );
-  }
 
   return (
     <div>
@@ -70,13 +47,13 @@ export default function VetteDetailCard({
           )}
         </div>
         <div>
-          <button
-            onClick={() => !showDeleteModal && setShowDeleteModal(true)}
+          <Link
+            href={`/vettes/${vetteData.id}?deleteConfirmation=true`}
             className="group text-gray-700 underline transition hover:text-red-600"
           >
             <TrashIcon className="mr-1 inline h-5 w-5 align-text-bottom text-gray-500 transition group-hover:text-red-500" />
             Delete Listing
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -133,12 +110,7 @@ export default function VetteDetailCard({
         <PackagesList vettePackages={vetteData.packages} />
       </div>
 
-      <DeleteVetteModal
-        open={showDeleteModal}
-        setOpen={setShowDeleteModal}
-        vetteData={vetteData}
-        onUserAcknowledgedDelete={setVetteDeleted}
-      />
+      <DeleteVetteModal vetteData={vetteData} />
     </div>
   );
 }

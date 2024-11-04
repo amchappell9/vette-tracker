@@ -37,9 +37,8 @@ export const useDeleteVette = () => {
         vettes: updatedVettes,
       });
 
-      // If you invalidate the query here it causes the detail card to start refetching,
-      // which causes a 404 error. Only invalidate once you're navigated away
-      // queryClient.invalidateQueries(["vette", vetteInfo.id]);
+      // Remove vette from vette cache
+      queryClient.removeQueries({ queryKey: ["vette", vetteInfo.id] });
     },
     mutationFn: deleteVette,
   });

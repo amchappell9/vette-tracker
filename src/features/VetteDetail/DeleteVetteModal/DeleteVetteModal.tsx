@@ -7,22 +7,33 @@ import { getErrorMessage } from "@/src/utils/utils";
 import Alert from "@/src/components/Alert";
 import Button from "@/src/components/Button/Button";
 import { Balancer } from "react-wrap-balancer";
+import { useRouter } from "next/router";
 
 type DeleteVetteModalProps = {
-  open: boolean;
-  setOpen: (open: boolean) => void;
   vetteData: VetteObject;
-  onUserAcknowledgedDelete: (deleted: boolean) => void;
 };
 
-export default function DeleteVetteModal({
-  open,
-  setOpen,
-  vetteData,
-  onUserAcknowledgedDelete,
-}: DeleteVetteModalProps) {
+/**
+ * Modal that allows the user to delete a vette. Will display
+ * if "?deleteConfirmation=true" is in the URL.
+ * @param param0
+ * @returns
+ */
+export default function DeleteVetteModal({ vetteData }: DeleteVetteModalProps) {
   const { isSuccess, isPending, isError, error, mutate } = useDeleteVette();
   const cancelButtonRef = useRef(null);
+  const router = useRouter();
+
+  const { deleteConfirmation } = router.query;
+  const open = Boolean(deleteConfirmation);
+
+  const setOpen = (open: boolean) => {
+    if (open) {
+      router.push(`/vettes/${vetteData.id}?deleteConfirmation=true`);
+    } else {
+      router.push(`/vettes/${vetteData.id}`, undefined, { shallow: true });
+    }
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -134,11 +145,10 @@ export default function DeleteVetteModal({
                 {/* Success */}
                 {isSuccess && (
                   <Button
-                    type="button"
+                    as="link"
+                    href={"/vettes"}
                     intent={"secondary"}
                     buttonSize={"small"}
-                    onClick={() => onUserAcknowledgedDelete(true)}
-                    ref={cancelButtonRef}
                   >
                     Go to Vettes
                   </Button>
