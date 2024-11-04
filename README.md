@@ -12,6 +12,10 @@ Clone the repo, then run `npm build`.
 
 Install netlify-cli globally by running `npm i -g netlify-cli`. Then run `netlify dev` from the root folder.
 
+### Tests
+
+To run e2e using Playwright, run `npm run e2e`.
+
 ## React
 
 - [React Docs](https://reactjs.org/)

@@ -32,3 +32,19 @@ test("can navigate to the create vette page", async ({ page }) => {
     page.getByRole("heading", { name: "Add New Vette" })
   ).toBeVisible();
 });
+
+test("can navigate to the trends page", async ({ page }) => {
+  await login(page);
+
+  await page.getByRole("link", { name: "Trends" }).click();
+
+  await expect(page.getByRole("heading", { name: "Trends" })).toBeVisible();
+});
+
+test("can navigate to the resources page", async ({ page }) => {
+  await login(page);
+
+  await page.getByRole("link", { name: "Resources" }).click();
+
+  await expect(page.getByRole("heading", { name: "Resources" })).toBeVisible();
+});
