@@ -1,11 +1,10 @@
 import React from "react";
 
-import Footer from "@/src/components/Footer";
-import Card from "../../Card";
-import { CardPaddingVariants } from "../../Card/Card";
+import Card, { CardPaddingVariants } from "../../Card/Card";
 import AuthenticatedPageHeader from "./AuthenticatedPageHeader/AuthenticatedPageHeader";
 import Head from "next/head";
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary";
+import Footer from "../../Footer/Footer";
 
 export type BackLinkConfig = {
   backLinkText: string;

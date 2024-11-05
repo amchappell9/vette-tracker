@@ -1,5 +1,5 @@
 import { VetteObject } from "@/src/types";
-import VetteItem from "../VetteItem";
+import VetteItem from "../VetteItem/VetteItem";
 
 type ListOfVettesProps = {
   vettesArray: VetteObject[];

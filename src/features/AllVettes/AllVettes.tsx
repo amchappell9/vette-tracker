@@ -2,7 +2,7 @@ import { useState } from "react";
 import PaginationControls from "@/src/components/PaginationControls/PaginationControls";
 import { VetteObject } from "@/src/types";
 import AddFirstVetteMessage from "./AddFirstVetteMessage/AddFirstVetteMessage";
-import ListOfVettes from "./ListOfVettes";
+import ListOfVettes from "./ListOfVettes/ListOfVettes";
 
 const PAGE_SIZE = 5;
 

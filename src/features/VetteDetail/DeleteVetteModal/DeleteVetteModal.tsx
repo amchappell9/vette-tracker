@@ -4,7 +4,7 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import { VetteObject } from "@/src/types";
 import { useDeleteVette } from "../api/deleteVette";
 import { getErrorMessage } from "@/src/utils/utils";
-import Alert from "@/src/components/Alert";
+import Alert from "@/src/components/Alert/Alert";
 import Button from "@/src/components/Button/Button";
 import { Balancer } from "react-wrap-balancer";
 import { useRouter } from "next/router";

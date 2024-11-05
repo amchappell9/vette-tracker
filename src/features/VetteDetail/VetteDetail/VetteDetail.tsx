@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import Alert from "@/src/components/Alert";
-import VetteDetailCard from "../VetteDetailCard";
+import Alert from "@/src/components/Alert/Alert";
+import VetteDetailCard from "../VetteDetailCard/VetteDetailCard";
 import { VetteObject } from "@/src/types";
 
 const VetteDetail = ({ vette }: { vette: VetteObject }) => {

@@ -2,11 +2,11 @@ import { TrashIcon } from "@heroicons/react/outline";
 import { format } from "date-fns";
 import Link from "next/link";
 import { VetteObject } from "@/src/types";
-import Alert from "@/src/components/Alert";
-import SubmodelInfo from "../SubmodelInfo";
-import TrimInfo from "../TrimInfo";
-import PackagesList from "../PackagesList";
-import DeleteVetteModal from "../DeleteVetteModal";
+import Alert from "@/src/components/Alert/Alert";
+import SubmodelInfo from "../SubmodelInfo/SubmodelInfo";
+import TrimInfo from "../TrimInfo/TrimInfo";
+import PackagesList from "../PackagesList/PackagesList";
+import DeleteVetteModal from "../DeleteVetteModal/DeleteVetteModal";
 import { getDateObject } from "@/src/utils/utils";
 
 type VetteDetailCardProps = {

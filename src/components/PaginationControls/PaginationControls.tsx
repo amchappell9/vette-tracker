@@ -1,5 +1,7 @@
-import usePagination from "@/src/hooks/usePagination";
-import PaginationButton, { BUTTON_STATES } from "../PaginationButton";
+import usePagination from "@/src/components/PaginationControls/usePagination";
+import PaginationButton, {
+  BUTTON_STATES,
+} from "../PaginationButton/PaginationButton";
 
 type PaginationControlsProps = {
   currentPage: number;

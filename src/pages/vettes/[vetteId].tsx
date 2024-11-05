@@ -1,5 +1,5 @@
 import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
-import VetteDetail from "@/src/features/VetteDetail/VetteDetail";
+import VetteDetail from "@/src/features/VetteDetail/VetteDetail/VetteDetail";
 import { VetteObject } from "@/src/types";
 import { getVetteById } from "@/src/utils/dbHelpers";
 import { getAuth } from "@clerk/nextjs/server";

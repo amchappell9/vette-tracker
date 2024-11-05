@@ -1,4 +1,4 @@
-import PackageItem from "../PackageItem";
+import PackageItem from "../PackageItem/PackageItem";
 import packages, { PackageType } from "../../../constants/packages";
 
 const getPackageInfoByKey = (key: string): PackageType | undefined => {

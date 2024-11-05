@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useCreateOrUpdateVette } from "../api/addVette";
 import { VetteValues } from "@/src/types";
-import AddVetteForm from "../AddVetteForm";
-import Alert from "@/src/components/Alert";
-import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage";
 import { useVette } from "@/src/features/VetteDetail/api/getVette";
+import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
+import AddVetteForm from "../AddVetteForm/AddVetteForm";
+import Alert from "@/src/components/Alert/Alert";
 
 const formatValues = (values: VetteValues) => {
   let formattedValues = values;
