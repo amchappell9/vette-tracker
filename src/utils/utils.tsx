@@ -17,6 +17,10 @@ const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
     return maybeError;
   }
 
+  if (typeof maybeError === "string") {
+    return new Error(maybeError);
+  }
+
   try {
     return new Error(JSON.stringify(maybeError));
   } catch {
@@ -35,6 +39,18 @@ const isValidDateString = (dateString: string) => {
   return dateRegex.test(dateString);
 };
 
+const datePartsAreValid = (
+  month: number,
+  day: number,
+  year: number
+): boolean => {
+  const isValidMonth = month >= 0 && month <= 11;
+  const isValidDay = day >= 1 && day <= 31;
+  const isValidYear = year >= 0 && year <= 9999;
+
+  return isValidMonth && isValidDay && isValidYear;
+};
+
 export const getDateObject = (dateString: string) => {
   if (!isValidDateString(dateString)) {
     throw new Error(
@@ -42,9 +58,15 @@ export const getDateObject = (dateString: string) => {
     );
   }
 
-  const month = parseInt(dateString.split("-")[0]);
+  const month = parseInt(dateString.split("-")[0]) - 1;
   const day = parseInt(dateString.split("-")[1]);
   const year = parseInt(dateString.split("-")[2]);
+
+  if (!datePartsAreValid(month, day, year)) {
+    throw new Error(
+      `Invalid date string. Expected format of MM-DD-YYYY. Received ${dateString}`
+    );
+  }
 
   return new Date(year, month, day);
 };

@@ -1,17 +1,56 @@
-import { it } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Input from "./Input";
+import { act } from "react";
 
-it("formats miles correctly", async () => {
-  const user = userEvent.setup();
-  const { getByDisplayValue, getByRole } = render(
-    <Input name="test" maskType="miles" />
-  );
-  const input = getByRole("textbox");
+describe("Input", () => {
+  test("renders a normal input", () => {
+    render(<Input name="test" />);
+    expect(screen.getByRole("textbox")).toBeInTheDocument();
+  });
 
-  await user.click(input);
-  await user.keyboard("1234567");
+  test("formats miles correctly", async () => {
+    const user = userEvent.setup();
+    const { getByDisplayValue, getByRole } = render(
+      <label>
+        Test
+        <Input name="test" maskType="miles" />
+      </label>
+    );
+    // const input = getByRole("textbox");
 
-  // expect(getByDisplayValue("1,234,567")).toBeInTheDocument();
+    await act(async () => {
+      await user.click(screen.getByLabelText("Test"));
+      await user.keyboard("1234567");
+    });
+
+    expect(await getByDisplayValue("1,234,567")).toBeInTheDocument();
+  });
+
+  test("formats dollars correctly", async () => {
+    const user = userEvent.setup();
+    const { getByDisplayValue, getByRole } = render(
+      <label>
+        Test
+        <Input name="test" maskType="dollar" />
+      </label>
+    );
+
+    await act(async () => {
+      await user.click(screen.getByLabelText("Test"));
+      await user.keyboard("1234567");
+    });
+
+    expect(await getByDisplayValue("$1,234,567")).toBeInTheDocument();
+  });
+
+  test("applies custom className when provided", () => {
+    render(<Input name="test" className="custom-class" />);
+    expect(screen.getByRole("textbox")).toHaveClass("custom-class");
+  });
+
+  test("applies error class when haserror is true", () => {
+    render(<Input name="test" haserror />);
+    expect(screen.getByRole("textbox")).toHaveClass("border-red-500");
+  });
 });

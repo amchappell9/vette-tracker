@@ -1,13 +1,12 @@
 import { useState, useRef } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
-
-import FILTER_TYPES from "../../constants/filterTypes";
+import FILTER_TYPES, { FilterType } from "../../constants/filterTypes";
 import { useDetectOutsideClick } from "@/src/hooks/useDetectOutsideClick";
 
 type DropdownBtnProps = {
   filter: {
     name: string;
-    type: string;
+    type: FilterType;
     values: string[];
   };
   onFilterChange: () => void;
