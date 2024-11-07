@@ -62,6 +62,7 @@ const Input = ({
         {...props}
         autoComplete={autoComplete}
         className={classes}
+        value={value}
         type={type}
       />
     );

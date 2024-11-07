@@ -9,6 +9,18 @@ describe("Input", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
 
+  test("renders values properly", () => {
+    render(<Input name="test" value="test value" onChange={jest.fn()} />);
+    expect(screen.getByDisplayValue("test value")).toBeInTheDocument();
+  });
+
+  test("calls onChange when input is changed", async () => {
+    const onChange = jest.fn();
+    render(<Input name="test" onChange={onChange} />);
+    await userEvent.type(screen.getByRole("textbox"), "test");
+    expect(onChange).toHaveBeenCalled();
+  });
+
   test("formats miles correctly", async () => {
     const user = userEvent.setup();
     const { getByDisplayValue, getByRole } = render(

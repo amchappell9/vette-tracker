@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import * as z from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 import SubModelRadioButton from "../SubModelRadioButton/SubModelRadioButton";
 import TrimRadioButton from "../TrimRadioButton/TrimRadioButton";
@@ -14,39 +15,55 @@ import FormSelect from "@/src/components/forms/FormSelect/FormSelect";
 import FormRadioGroup from "@/src/components/forms/FormRadioGroup/FormRadioGroup";
 import FormCheckboxGroup from "@/src/components/forms/FormCheckboxGroup/FormCheckboxGroup";
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
-import { VetteObject, VetteValues } from "@/src/types";
+import { VetteValues } from "@/src/types";
 import Button from "@/src/components/Button/Button";
-import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
   YEAR: "Please enter a year",
   MILES: "Miles must be a number",
+  URL: "Please enter a valid URL. Ex: https://www.google.com",
+};
+
+const defaultVetteValues = {
+  link: "",
+  year: "2014",
+  submodel: "",
+  trim: "",
+  packages: [],
+  transmissionType: "Manual",
+  exteriorColor: "Artic White",
+  interiorColor: "Red",
+  miles: "",
+  cost: "",
 };
 
 const addVetteFormValidationSchema = z.object({
+  link: z.string().url({ message: VALIDATION_MESSAGES.URL }).optional(),
   year: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  submodel: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  trim: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  transmissionType: z.string({
+    required_error: VALIDATION_MESSAGES.REQUIRED,
+  }),
+  exteriorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  interiorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
   miles: z
     .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
     .regex(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, VALIDATION_MESSAGES.MILES),
   cost: z
     .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
     .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/),
-  transmissionType: z.string({
-    required_error: VALIDATION_MESSAGES.REQUIRED,
-  }),
-  exteriorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  interiorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  submodel: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  trim: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
 });
 
 type AddVetteFormProps = {
   handleSubmit: (values: VetteValues) => void;
-  vetteToEditInfo?: VetteObject;
+  editVetteValues?: VetteValues;
 };
 
-const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
+const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
+  const isEdit = Boolean(editVetteValues);
+
   return (
     <div className="sm:py-4 sm:px-4 lg:px-16">
       <p className="mb-8 text-gray-700">
@@ -54,44 +71,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
         enter, the easier it is to spot trends!
       </p>
       <Formik
-        initialValues={{
-          year:
-            vetteToEditInfo && vetteToEditInfo.year
-              ? vetteToEditInfo.year
-              : "2014",
-          miles:
-            vetteToEditInfo && vetteToEditInfo.miles
-              ? vetteToEditInfo.miles
-              : "",
-          cost:
-            vetteToEditInfo && vetteToEditInfo.cost
-              ? "$" + vetteToEditInfo.cost
-              : "",
-          transmissionType:
-            vetteToEditInfo && vetteToEditInfo.transmissionType
-              ? vetteToEditInfo.transmissionType
-              : "Manual",
-          exteriorColor:
-            vetteToEditInfo && vetteToEditInfo.exteriorColor
-              ? vetteToEditInfo.exteriorColor
-              : "Artic White",
-          interiorColor:
-            vetteToEditInfo && vetteToEditInfo.interiorColor
-              ? vetteToEditInfo.interiorColor
-              : "Red",
-          submodel:
-            vetteToEditInfo && vetteToEditInfo.submodel
-              ? vetteToEditInfo.submodel
-              : "",
-          trim:
-            vetteToEditInfo && vetteToEditInfo.trim ? vetteToEditInfo.trim : "",
-          packages:
-            vetteToEditInfo && vetteToEditInfo.packages
-              ? vetteToEditInfo.packages
-              : [],
-          link:
-            vetteToEditInfo && vetteToEditInfo.link ? vetteToEditInfo.link : "",
-        }}
+        initialValues={editVetteValues || defaultVetteValues}
         enableReinitialize={true}
         validationSchema={toFormikValidationSchema(
           addVetteFormValidationSchema
@@ -244,7 +224,7 @@ const AddVetteForm = ({ handleSubmit, vetteToEditInfo }: AddVetteFormProps) => {
                 intent="primary"
                 disabled={props.isSubmitting ? true : false}
               >
-                {vetteToEditInfo ? "Edit Vette" : "Add Vette"}
+                {isEdit ? "Edit Vette" : "Add Vette"}
               </Button>
               <Button
                 onClick={props.handleReset}

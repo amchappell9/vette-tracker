@@ -6,18 +6,6 @@ import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/Authen
 import AddVetteForm from "../AddVetteForm/AddVetteForm";
 import Alert from "@/src/components/Alert/Alert";
 
-const formatValues = (values: VetteValues) => {
-  let formattedValues = values;
-
-  // Strip commas from miles
-  formattedValues.miles = formattedValues.miles.replace(",", "");
-
-  // Strip dollar sign and commas from cost
-  formattedValues.cost = formattedValues.cost.replace(",", "").replace("$", "");
-
-  return formattedValues;
-};
-
 const AddVette = () => {
   const router = useRouter();
   const vetteToEditId = router.query.vetteToEdit;
@@ -95,7 +83,7 @@ const AddVette = () => {
         >
           <AddVetteForm
             handleSubmit={onSubmit}
-            vetteToEditInfo={vetteToEditInfo.data}
+            editVetteValues={vetteToEditInfo.data}
           />
         </AuthenticatedPage>
       );
@@ -126,3 +114,15 @@ function ErrorAlert({ error }: { error: unknown }) {
 
   return <Alert alertType={"danger"}>{errorMessage}</Alert>;
 }
+
+const formatValues = (values: VetteValues) => {
+  let formattedValues = values;
+
+  // Strip commas from miles
+  formattedValues.miles = formattedValues.miles.replace(",", "");
+
+  // Strip dollar sign and commas from cost
+  formattedValues.cost = formattedValues.cost.replace(",", "").replace("$", "");
+
+  return formattedValues;
+};
