@@ -17,6 +17,7 @@ import FormCheckboxGroup from "@/src/components/forms/FormCheckboxGroup/FormChec
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteValues } from "@/src/types";
 import Button from "@/src/components/Button/Button";
+import { formatVetteValues } from "./addVetteFormHelpers";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
@@ -53,7 +54,7 @@ const addVetteFormValidationSchema = z.object({
     .regex(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, VALIDATION_MESSAGES.MILES),
   cost: z
     .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
-    .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/),
+    .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, "DOES NOT MEET REGEX"),
 });
 
 type AddVetteFormProps = {
@@ -63,6 +64,9 @@ type AddVetteFormProps = {
 
 const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
   const isEdit = Boolean(editVetteValues);
+  const formattedEditVetteValues = editVetteValues
+    ? formatVetteValues(editVetteValues)
+    : undefined;
 
   return (
     <div className="sm:py-4 sm:px-4 lg:px-16">
@@ -71,7 +75,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
         enter, the easier it is to spot trends!
       </p>
       <Formik
-        initialValues={editVetteValues || defaultVetteValues}
+        initialValues={formattedEditVetteValues || defaultVetteValues}
         enableReinitialize={true}
         validationSchema={toFormikValidationSchema(
           addVetteFormValidationSchema

@@ -8,7 +8,7 @@ test.describe("Vette Tracker", () => {
     // Add a vette
     await page.getByRole("link", { name: "Add Vette" }).click();
     await page.getByLabel("Link").click();
-    await page.getByLabel("Link").fill("www.google.com");
+    await page.getByLabel("Link").fill("https://www.google.com");
     await page.getByLabel("Year").selectOption("2014");
     await page.getByLabel("Z51").click();
     await page.getByLabel("3LT").click();
