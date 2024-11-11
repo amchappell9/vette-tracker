@@ -1,21 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
-type ButtonState = "default" | "previous" | "next" | "dots";
-
-// This seems... unnecessary
-type ButtonStates = {
-  DEFAULT: ButtonState;
-  DOTS: ButtonState;
-  PREV: ButtonState;
-  NEXT: ButtonState;
-};
-
-export const BUTTON_STATES: ButtonStates = {
+export const BUTTON_STATES = {
   DEFAULT: "default",
   DOTS: "dots",
   PREV: "previous",
   NEXT: "next",
-};
+} as const;
+
+type ButtonState = (typeof BUTTON_STATES)[keyof typeof BUTTON_STATES];
 
 const getButtonTextByState = (state: ButtonState, number?: number) => {
   if (state === BUTTON_STATES.PREV) {
