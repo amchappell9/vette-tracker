@@ -1,5 +1,8 @@
-const fakeVettes = [
+import { VetteObject } from "../types";
+
+const fakeVettes: VetteObject[] = [
   {
+    id: "1",
     year: "2014",
     miles: "123456",
     cost: "51000",
@@ -9,11 +12,12 @@ const fakeVettes = [
     trim: "1LT",
     packages: ["npp", "mrc", "pdr"],
     link: "www.google.com",
-    id: "283581563266925056",
-    date: "11-29-2020",
-    userId: "50b181bb-8394-46d7-b825-b6ad53ae3a0e",
+    transmissionType: "Automatic",
+    date: "01-01-2023",
+    userId: "user1",
   },
   {
+    id: "2",
     year: "2015",
     miles: "31000",
     cost: "43000",
@@ -23,11 +27,12 @@ const fakeVettes = [
     trim: "2LT",
     packages: ["npp", "mrc", "pdr"],
     link: "www.google.com",
-    id: "283581563266925057",
-    date: "11-31-2020",
-    userId: "50b181bb-8394-46d7-b825-b6ad53ae3a0e",
+    transmissionType: "Manual",
+    date: "02-01-2023",
+    userId: "user2",
   },
   {
+    id: "3",
     year: "2018",
     miles: "12000",
     cost: "47000",
@@ -37,11 +42,12 @@ const fakeVettes = [
     trim: "3LT",
     packages: ["npp", "mrc", "pdr"],
     link: "www.google.com",
-    id: "283581563266925058",
-    date: "12-13-2020",
-    userId: "50b181bb-8394-46d7-b825-b6ad53ae3a0e",
+    transmissionType: "Automatic",
+    date: "03-01-2023",
+    userId: "user3",
   },
   {
+    id: "4",
     year: "2017",
     miles: "23421",
     cost: "45000",
@@ -51,11 +57,12 @@ const fakeVettes = [
     trim: "2LT",
     packages: ["npp", "mrc", "pdr"],
     link: "www.google.com",
-    id: "283581563266925059",
-    date: "11-29-2020",
-    userId: "50b181bb-8394-46d7-b825-b6ad53ae3a0e",
+    transmissionType: "Manual",
+    date: "04-01-2023",
+    userId: "user4",
   },
   {
+    id: "5",
     year: "2015",
     miles: "42000",
     cost: "37000",
@@ -65,9 +72,9 @@ const fakeVettes = [
     trim: "2LT",
     packages: ["npp", "mrc", "pdr"],
     link: "www.google.com",
-    id: "283581563266925060",
-    date: "11-29-2020",
-    userId: "50b181bb-8394-46d7-b825-b6ad53ae3a0e",
+    transmissionType: "Automatic",
+    date: "05-01-2023",
+    userId: "user5",
   },
 ];
 
