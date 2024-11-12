@@ -33,11 +33,7 @@ const PaginationControls = ({
     onPageChange(currentPage + 1);
   };
 
-  let lastPage =
-    typeof paginationRange !== "undefined"
-      ? paginationRange[paginationRange.length - 1]
-      : null;
-
+  const lastPage = paginationRange[paginationRange.length - 1];
   const lowerRange = (currentPage - 1) * pageSize + 1;
   const upperRange =
     currentPage * pageSize > totalCount ? totalCount : currentPage * pageSize;
@@ -86,12 +82,12 @@ const PaginationControls = ({
 
             {/* Numbered Buttons */}
             {paginationRange &&
-              paginationRange.map((pageNumber) => {
+              paginationRange.map((pageNumber, index) => {
                 if (typeof pageNumber === "string") {
-                  // pageNumber === DOTS
+                  // DOTS
                   return (
                     <PaginationButton
-                      key={pageNumber}
+                      key={`dots${index}`}
                       state={BUTTON_STATES.DOTS}
                     />
                   );

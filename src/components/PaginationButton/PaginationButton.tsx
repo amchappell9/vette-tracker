@@ -10,22 +10,26 @@ export const BUTTON_STATES = {
 type ButtonState = (typeof BUTTON_STATES)[keyof typeof BUTTON_STATES];
 
 const getButtonTextByState = (state: ButtonState, number?: number) => {
-  if (state === BUTTON_STATES.PREV) {
-    return (
-      <>
-        <span className="sr-only">Previous</span>
-        <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-      </>
-    );
-  } else if (state === BUTTON_STATES.NEXT) {
-    return (
-      <>
-        <span className="sr-only">Next</span>
-        <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-      </>
-    );
-  } else if (state === BUTTON_STATES.DEFAULT) {
-    return number;
+  switch (state) {
+    case BUTTON_STATES.PREV:
+      return (
+        <>
+          <span className="sr-only">Previous</span>
+          <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+        </>
+      );
+    case BUTTON_STATES.NEXT:
+      return (
+        <>
+          <span className="sr-only">Next</span>
+          <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+        </>
+      );
+    case BUTTON_STATES.DOTS:
+      return <span className="text-gray-500">...</span>;
+    case BUTTON_STATES.DEFAULT:
+    default:
+      return number;
   }
 };
 
