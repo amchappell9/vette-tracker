@@ -13,6 +13,7 @@ export interface VetteValues {
 
 export interface VetteObject extends VetteValues {
   id: string;
+  // Dates will be in "MM-DD-YYYY" format, which was a mistake
   date: string;
   userId: string;
 }
