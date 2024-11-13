@@ -33,7 +33,6 @@ function getYearFromLink(link: string): string | undefined {
 
 function getSubmodelFromLink(link: string): string | undefined {
   for (const submodel of submodels) {
-    console.log({ link, submodel: submodel.title });
     if (link.toUpperCase().includes(submodel.title.toUpperCase())) {
       return submodel.title;
     }

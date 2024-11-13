@@ -17,10 +17,10 @@ const packages = [
     description:
       "Record high-definition video with telemetry overlays of your driving experiences on and off the track, while also providing an analysis of the run.",
   },
-];
+] as const;
 
-export type PackageType = typeof packages[number];
+export type PackageType = (typeof packages)[number];
 
-export type Packages = typeof packages[number]["value"];
+export type Packages = (typeof packages)[number]["value"];
 
 export default packages;

@@ -39,11 +39,11 @@ describe("addVetteFormHelpers", () => {
 
   describe("getValuesFromLink", () => {
     it("should extract year, submodel, trim, and transmission type from link", () => {
-      const link = "https://example.com/2018-Z06-3LZ-M7";
+      const link = "https://example.com/2018-Z06-3LT-M7";
       const expected = {
         year: "2018",
         submodel: "Z06",
-        trim: "3LZ",
+        trim: "3LT",
         transmissionType: "Manual",
       };
       expect(getValuesFromLink(link)).toEqual(expected);

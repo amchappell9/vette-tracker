@@ -13,7 +13,7 @@ const mockVette: VetteObject = {
   interiorColor: "Black",
   submodel: "Stingray",
   trim: "3LT",
-  packages: ["Z51", "Magnetic Ride"],
+  packages: ["MRC", "NPP"],
   link: "http://example.com",
   date: "01-01-2023",
   userId: "user1",
@@ -26,8 +26,8 @@ describe("VetteItem", () => {
     expect(screen.getAllByText("$60,000")).toHaveLength(2);
     expect(screen.getByText("15,000 Miles")).toBeInTheDocument();
     expect(screen.getByText("Red on Black Interior")).toBeInTheDocument();
-    expect(screen.getByText("Z51")).toBeInTheDocument();
-    expect(screen.getByText("MAGNETIC RIDE")).toBeInTheDocument();
+    expect(screen.getByText("3LT")).toBeInTheDocument();
+    expect(screen.getByText("MRC")).toBeInTheDocument();
   });
 
   it("formats the date correctly", () => {

@@ -1,3 +1,5 @@
+import { Packages } from "../constants/packages";
+
 export interface VetteValues {
   year: string;
   miles: string;
@@ -7,7 +9,7 @@ export interface VetteValues {
   interiorColor: string;
   submodel: string;
   trim: string;
-  packages: string[];
+  packages: Packages[];
   link: string;
 }
 
