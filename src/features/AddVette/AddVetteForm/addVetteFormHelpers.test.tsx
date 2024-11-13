@@ -1,4 +1,8 @@
-import { formatCost, formatVetteValues } from "./addVetteFormHelpers";
+import {
+  formatCost,
+  formatVetteValues,
+  getValuesFromLink,
+} from "./addVetteFormHelpers";
 import { VetteValues } from "@/src/types";
 
 describe("addVetteFormHelpers", () => {
@@ -30,6 +34,41 @@ describe("addVetteFormHelpers", () => {
       };
 
       expect(formatVetteValues(mockVetteValues)).toEqual(expected);
+    });
+  });
+
+  describe("getValuesFromLink", () => {
+    it("should extract year, submodel, trim, and transmission type from link", () => {
+      const link = "https://example.com/2018-Z06-3LZ-M7";
+      const expected = {
+        year: "2018",
+        submodel: "Z06",
+        trim: "3LZ",
+        transmissionType: "Manual",
+      };
+      expect(getValuesFromLink(link)).toEqual(expected);
+    });
+
+    it("should return undefined for missing values in the link", () => {
+      const link = "https://example.com/2018";
+      const expected = {
+        year: "2018",
+        submodel: undefined,
+        trim: undefined,
+        transmissionType: undefined,
+      };
+      expect(getValuesFromLink(link)).toEqual(expected);
+    });
+
+    it("should handle variations in submodel names", () => {
+      const link = "https://example.com/2018-GS-1LT-A8";
+      const expected = {
+        year: "2018",
+        submodel: "Grand Sport",
+        trim: "1LT",
+        transmissionType: "Automatic",
+      };
+      expect(getValuesFromLink(link)).toEqual(expected);
     });
   });
 });

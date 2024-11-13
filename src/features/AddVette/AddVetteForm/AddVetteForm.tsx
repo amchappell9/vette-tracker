@@ -17,7 +17,7 @@ import FormCheckboxGroup from "@/src/components/forms/FormCheckboxGroup/FormChec
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteValues } from "@/src/types";
 import Button from "@/src/components/Button/Button";
-import { formatVetteValues } from "./addVetteFormHelpers";
+import { formatVetteValues, getValuesFromLink } from "./addVetteFormHelpers";
 
 const VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
@@ -89,7 +89,31 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
           >
             {/* Link */}
             <div className="col-span-6">
-              <FormInput name="link" type="text" label="Link" />
+              <FormInput
+                onPaste={(event) => {
+                  // When a user pastes in a link, try and parse out some values
+                  // from it
+                  const values = getValuesFromLink(
+                    event.clipboardData.getData("Text")
+                  );
+
+                  // Strip out properties that are undefined, otherwise they cause issues
+                  // with formik
+                  const formattedValues = Object.fromEntries(
+                    Object.entries(values).filter(([_, v]) => v !== undefined)
+                  );
+
+                  if (formattedValues) {
+                    props.setValues({
+                      ...props.values,
+                      ...formattedValues,
+                    });
+                  }
+                }}
+                name="link"
+                type="text"
+                label="Link"
+              />
             </div>
 
             {/* Year */}
