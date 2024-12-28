@@ -2,13 +2,13 @@ import { Chart, LinearScale, PointElement, TimeScale } from "chart.js";
 import { Scatter } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import { VetteObject } from "@/src/types";
-import { Submodels } from "@/src/constants/submodels";
+import { Submodel } from "@/src/constants/submodels";
 
 Chart.register(LinearScale, PointElement, TimeScale);
 
 type PriceGraphProps = {
   vettes: VetteObject[];
-  submodel: Submodels;
+  submodel: Submodel;
 };
 
 const getChartData = (vettes: VetteObject[]): { x: Date; y: number }[] => {
@@ -20,7 +20,7 @@ const getChartData = (vettes: VetteObject[]): { x: Date; y: number }[] => {
   });
 };
 
-const filterVettesBySubmodel = (vettes: VetteObject[], submodel: Submodels) => {
+const filterVettesBySubmodel = (vettes: VetteObject[], submodel: Submodel) => {
   return vettes.filter((vette) => vette.submodel === submodel);
 };
 

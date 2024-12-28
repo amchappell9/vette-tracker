@@ -66,18 +66,14 @@ const submodels = [
     features: ["Z06 Features", "Improved Cooling", "Ceramic Brakes"],
     years: ["2019"],
   },
-];
-
-// If you make it as const, the AddVetteForm.tsx will complain about the
-// submodels.filter() method. The years property becomes a type of
-// years: readonly ["2014", "2015", "2016", "2017", "2018", "2019"] | readonly ["2017", "2018", "2019"] | readonly ["2015", "2016", "2017", "2018", "2019"] | readonly ["2019"]
-// I still don't know how to get a union type for titles and engines, or years. I could make
-// a type for property then stich it together, but I should just be able to derive it from that array.
+] as const;
 
 export type SubmodelType = (typeof submodels)[number];
 
-export type Submodels = SubmodelType["title"];
+export type Submodel = SubmodelType["title"];
 
-export type Engines = SubmodelType["engine"];
+export type Engine = SubmodelType["engine"];
+
+export type Features = SubmodelType["features"][number];
 
 export default submodels;

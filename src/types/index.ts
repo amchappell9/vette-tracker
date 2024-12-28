@@ -1,4 +1,6 @@
 import { Packages } from "../constants/packages";
+import { Submodel } from "../constants/submodels";
+import { Trim } from "../constants/trims";
 
 export interface VetteValues {
   year: string;
@@ -7,10 +9,10 @@ export interface VetteValues {
   transmissionType: string;
   exteriorColor: string;
   interiorColor: string;
-  submodel: string;
-  trim: string;
+  submodel: Submodel;
+  trim: Trim;
   packages: Packages[];
-  link: string;
+  link?: string;
 }
 
 export interface VetteObject extends VetteValues {

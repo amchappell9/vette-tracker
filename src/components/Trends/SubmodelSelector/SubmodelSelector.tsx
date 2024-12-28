@@ -1,11 +1,11 @@
 import { useId } from "react";
 import { motion } from "framer-motion";
 import { cva } from "class-variance-authority";
-import submodels from "@/src/constants/submodels";
+import submodels, { Submodel } from "@/src/constants/submodels";
 
 interface SubmodelSelectorProps {
   selectedSubmodel: string;
-  onChange: (submodel: string) => void;
+  onChange: (submodel: Submodel) => void;
 }
 
 const SubmodelSelector = ({
@@ -117,7 +117,7 @@ const SubmodelSelectorDropdown = ({
         id={id}
         name={id}
         className="block w-full rounded border border-gray-300 py-2 pl-4 pr-8 text-lg"
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value as Submodel)}
         value={selectedSubmodel}
       >
         {submodels.map((submodel) => {

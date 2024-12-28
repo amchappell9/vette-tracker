@@ -29,10 +29,12 @@ const trims = [
       "Leather-wrapped interior",
     ],
   },
-];
+] as const;
 
-export type TrimsType = typeof trims[number];
+export type TrimsType = (typeof trims)[number];
 
-export type Trims = typeof trims[number]["title"];
+export type Trim = (typeof trims)[number]["title"];
+
+export type TrimFeatures = (typeof trims)[number]["features"][number];
 
 export default trims;

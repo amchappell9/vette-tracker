@@ -1,5 +1,4 @@
 import { Formik } from "formik";
-import * as z from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 import SubModelRadioButton from "../SubModelRadioButton/SubModelRadioButton";
@@ -17,20 +16,18 @@ import FormCheckboxGroup from "@/src/components/forms/FormCheckboxGroup/FormChec
 import ExteriorColorSelect from "../ExteriorColorSelect/ExteriorColorSelect";
 import { VetteValues } from "@/src/types";
 import Button from "@/src/components/Button/Button";
-import { formatVetteValues, getValuesFromLink } from "./addVetteFormHelpers";
+import {
+  addVetteFormValidationSchema,
+  AddVetteFormValues,
+  formatVetteValues,
+  getValuesFromLink,
+} from "./addVetteFormHelpers";
 
-const VALIDATION_MESSAGES = {
-  REQUIRED: "This field is required",
-  YEAR: "Please enter a year",
-  MILES: "Miles must be a number",
-  URL: "Please enter a valid URL. Ex: https://www.google.com",
-};
-
-const defaultVetteValues = {
+const defaultVetteValues: AddVetteFormValues = {
   link: "",
   year: "2014",
-  submodel: "",
-  trim: "",
+  submodel: "Stingray",
+  trim: "1LT",
   packages: [],
   transmissionType: "Manual",
   exteriorColor: "Artic White",
@@ -39,26 +36,8 @@ const defaultVetteValues = {
   cost: "",
 };
 
-const addVetteFormValidationSchema = z.object({
-  link: z.string().url({ message: VALIDATION_MESSAGES.URL }).optional(),
-  year: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  submodel: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  trim: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  transmissionType: z.string({
-    required_error: VALIDATION_MESSAGES.REQUIRED,
-  }),
-  exteriorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  interiorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  miles: z
-    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
-    .regex(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, VALIDATION_MESSAGES.MILES),
-  cost: z
-    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
-    .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, "DOES NOT MEET REGEX"),
-});
-
 type AddVetteFormProps = {
-  handleSubmit: (values: VetteValues) => void;
+  handleSubmit: (values: AddVetteFormValues) => void;
   editVetteValues?: VetteValues;
 };
 
@@ -80,7 +59,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
         validationSchema={toFormikValidationSchema(
           addVetteFormValidationSchema
         )}
-        onSubmit={(values: VetteValues) => handleSubmit(values)}
+        onSubmit={(values) => handleSubmit(values)}
       >
         {(props) => (
           <form
@@ -142,6 +121,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
                 {(name: string) =>
                   submodels
                     .filter((submodel) =>
+                      // @ts-expect-error includes is very narrow, year will be the correct value
                       submodel.years.includes(props.values.year)
                     )
                     .map((submodel) => (

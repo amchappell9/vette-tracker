@@ -1,3 +1,4 @@
+import { TrimFeatures } from "@/src/constants/trims";
 import { RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 
@@ -5,7 +6,8 @@ type TrimRadioButtonProps = {
   name: string;
   className: string;
   title: string;
-  features: string[];
+  // This type is readonly because it comes from the trims.tsx constant
+  features: readonly TrimFeatures[];
 };
 
 const TrimRadioButton = ({

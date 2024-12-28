@@ -1,5 +1,6 @@
 import { PlusIcon, CheckCircleIcon } from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
+import { Features } from "@/src/constants/submodels";
 
 type SubModelRadioButtonProps = {
   name: string;
@@ -8,7 +9,8 @@ type SubModelRadioButtonProps = {
   engine: string;
   hp: string;
   torque: string;
-  features: string[];
+  // This type is readonly because it comes from the submodels.tsx constant
+  features: readonly Features[];
 };
 
 const SubModelRadioButton = ({

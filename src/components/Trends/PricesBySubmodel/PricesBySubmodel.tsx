@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Submodels } from "@/src/constants/submodels";
+import { Submodel } from "@/src/constants/submodels";
 import SubmodelSelector from "../SubmodelSelector/SubmodelSelector";
 import PriceGraph from "../PriceGraph/PriceGraph";
 import { VetteObject } from "@/src/types";
@@ -10,7 +10,7 @@ type PricesBySubmodelProps = {
 
 export default function PricesBySubmodel({ vettes }: PricesBySubmodelProps) {
   const [selectedSubmodel, setSelectedSubmodel] =
-    useState<Submodels>("Stingray");
+    useState<Submodel>("Stingray");
 
   return (
     <div className="flex flex-col md:flex-row">
