@@ -2,10 +2,7 @@ import * as z from "zod";
 import { VetteValues } from "@/src/types";
 import submodels, { Submodel } from "@/src/constants/submodels";
 import trims, { Trim } from "@/src/constants/trims";
-import {
-  constructZodLiteralUnionType,
-  Prettify,
-} from "@/src/utils/typeHelpers";
+import { constructZodLiteralUnionType } from "@/src/utils/typeHelpers";
 import packages from "@/src/constants/packages";
 
 const VALIDATION_MESSAGES = {
@@ -103,7 +100,7 @@ function getSubmodelFromLink(link: string): Submodel | undefined {
 }
 
 function getTrimFromLink(link: string): Trim | undefined {
-  // Check if the link contains 1LT through 3LZ
+  // Check if the link contains 1LT through 3LT
   for (const trim of trims) {
     if (link.toUpperCase().includes(trim.title.toUpperCase())) {
       return trim.title;
