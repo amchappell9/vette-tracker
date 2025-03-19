@@ -64,5 +64,3 @@ export default function VetteById({
     </AuthenticatedPage>
   );
 }
-
-// export default VetteDetail;
