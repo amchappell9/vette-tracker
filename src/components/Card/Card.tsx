@@ -1,6 +1,6 @@
 import { cva, VariantProps } from "class-variance-authority";
 
-const card = cva("mt-4 w-full rounded bg-white drop-shadow-lg", {
+const card = cva("mt-4 w-full rounded-sm bg-white drop-shadow-lg", {
   variants: {
     padding: {
       default: "px-8 py-8 sm:px-16",

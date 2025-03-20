@@ -13,7 +13,7 @@ const getBorderStylesByIndex = (totalLength: number, index: number) => {
   } else if (index === totalLength - 1 && totalLength !== 1) {
     styles = "border rounded-b";
   } else if (index === 0 && totalLength === 1) {
-    styles = "border rounded";
+    styles = "border rounded-sm";
   }
 
   return styles;

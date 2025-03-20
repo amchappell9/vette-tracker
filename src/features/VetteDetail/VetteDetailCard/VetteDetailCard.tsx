@@ -58,7 +58,7 @@ export default function VetteDetailCard({
       </div>
 
       {/* Main Info */}
-      <div className="mt-6 flex flex-col items-center gap-y-4 rounded bg-gray-50 px-8 py-4 sm:flex-row sm:justify-between sm:gap-y-0 md:px-12">
+      <div className="mt-6 flex flex-col items-center gap-y-4 rounded-sm bg-gray-50 px-8 py-4 sm:flex-row sm:justify-between sm:gap-y-0 md:px-12">
         <div className="text-xl font-bold">
           <span>{`${vetteData.year} Corvette ${vetteData.submodel}`}</span>
         </div>

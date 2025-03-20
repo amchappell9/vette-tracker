@@ -56,7 +56,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2"
                           onClick={dismiss}
                         >
                           <span className="sr-only">Close panel</span>

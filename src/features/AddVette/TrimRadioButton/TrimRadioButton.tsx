@@ -21,7 +21,7 @@ const TrimRadioButton = ({
       key={name}
       value={title}
       className={({ active, checked }) =>
-        `${className} flex cursor-pointer flex-col overflow-y-hidden rounded border-gray-100 shadow outline-none transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${
+        `${className} flex cursor-pointer flex-col overflow-y-hidden rounded border-gray-100 shadow outline-hidden transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${
           active ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
         }
          ${checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""} `
