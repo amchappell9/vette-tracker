@@ -7,18 +7,15 @@ import SubmodelInfo from "../SubmodelInfo/SubmodelInfo";
 import TrimInfo from "../TrimInfo/TrimInfo";
 import PackagesList from "../PackagesList/PackagesList";
 import DeleteVetteModal from "../DeleteVetteModal/DeleteVetteModal";
-import { getDateObject } from "@/src/utils/utils";
 
-type VetteDetailCardProps = {
-  vetteData: VetteObject;
-  wasUpdated: boolean;
-};
+type VetteDetailCardProps = { vetteData: VetteObject; wasUpdated: boolean };
 
 export default function VetteDetailCard({
   vetteData,
   wasUpdated,
 }: VetteDetailCardProps) {
-  const formattedDate = format(getDateObject(vetteData.date), "MM/dd/yyyy");
+  const addedDate = new Date(vetteData.createdDate);
+  const updatedDate = new Date(vetteData.updatedDate);
 
   return (
     <div>
@@ -31,7 +28,12 @@ export default function VetteDetailCard({
 
       <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between sm:gap-y-0">
         <div className="text-gray-500">
-          <span>Added on {formattedDate}</span>
+          <span>Added on {format(addedDate, "MM/dd/yyyy")}</span>
+          {updatedDate.getTime() !== addedDate.getTime() && (
+            <span className="ml-2">
+              | Updated on {format(updatedDate, "MM/dd/yyyy")}
+            </span>
+          )}
           {vetteData.link && (
             <>
               <span className="px-2">|</span>

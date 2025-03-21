@@ -1,7 +1,6 @@
 import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
 import VetteDetail from "@/src/features/VetteDetail/VetteDetail/VetteDetail";
 import { VetteObject } from "@/src/types";
-import { getVetteById } from "@/src/utils/dbHelpers";
 import { getAuth } from "@clerk/nextjs/server";
 import { PencilAltIcon } from "@heroicons/react/outline";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -22,27 +21,18 @@ export const getServerSideProps = (async (ctx) => {
 
   // Validate vetteId is a string
   if (typeof vetteId !== "string") {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 
-  const vette = await getVetteById(userId, vetteId);
+  const res = await fetch(`${process.env.BACKEND_BASE_URL}/vettes/${vetteId}`);
+  const vette = (await res.json()) as VetteObject;
 
   if (!vette) {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 
-  return {
-    props: {
-      vette,
-    },
-  };
-}) satisfies GetServerSideProps<{
-  vette: VetteObject;
-}>;
+  return { props: { vette } };
+}) satisfies GetServerSideProps<{ vette: VetteObject }>;
 
 export default function VetteById({
   vette,
