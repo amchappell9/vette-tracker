@@ -4,10 +4,10 @@ import { VetteObject } from "@/src/types";
 import { format } from "date-fns";
 
 const mockVette: VetteObject = {
-  id: "1",
-  year: "2020",
-  miles: "15000",
-  cost: "60000",
+  id: 1,
+  year: 2020,
+  miles: 15000,
+  cost: 60000,
   transmissionType: "Automatic",
   exteriorColor: "Red",
   interiorColor: "Black",
