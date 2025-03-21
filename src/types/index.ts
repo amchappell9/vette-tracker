@@ -15,9 +15,12 @@ export interface VetteValues {
   link?: string;
 }
 
+/**
+ * The value of a vette object that is returned from the API.
+ */
 export interface VetteObject extends VetteValues {
   id: string;
-  // Dates will be in "MM-DD-YYYY" format, which was a mistake
-  date: string;
+  createdDate: string;
+  updatedDate: string;
   userId: string;
 }

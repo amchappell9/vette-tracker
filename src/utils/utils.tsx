@@ -1,7 +1,8 @@
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
-type ErrorWithMessage = {
-  message: string;
-};
+type ErrorWithMessage = { message: string };
 
 const isErrorWithMessage = (error: unknown): error is ErrorWithMessage => {
   return (
@@ -70,3 +71,7 @@ export const getDateObject = (dateString: string) => {
 
   return new Date(year, month, day);
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

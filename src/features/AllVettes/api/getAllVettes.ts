@@ -2,11 +2,7 @@ import { axios } from "@/src/lib/axios";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { VetteObject } from "@/src/types";
 
-export type VettesResponse = {
-  vettes: VetteObject[];
-};
-
-export const getAllVettes = (): Promise<VettesResponse> => {
+export const getAllVettes = (): Promise<VetteObject[]> => {
   return axios.get("/vettes");
 };
 

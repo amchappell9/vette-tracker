@@ -74,7 +74,7 @@ const mockVettes: VetteObject[] = [
     exteriorColor: "Yellow",
     interiorColor: "Gray",
     submodel: "Stingray",
-    trim: "Base",
+    trim: "1LT",
     packages: [],
     link: "",
     date: "01-05-2023",
@@ -89,7 +89,7 @@ const mockVettes: VetteObject[] = [
     exteriorColor: "Green",
     interiorColor: "Black",
     submodel: "Grand Sport",
-    trim: "Base",
+    trim: "3LT",
     packages: [],
     link: "",
     date: "01-06-2023",
@@ -98,7 +98,7 @@ const mockVettes: VetteObject[] = [
 ];
 
 test("renders AddFirstVetteMessage when there are no vettes", () => {
-  render(<AllVettes vettes={[]} />);
+  render(<AllVettes />);
   expect(screen.getByText(/add your first vette!/i)).toBeInTheDocument();
 });
 
@@ -111,9 +111,7 @@ test("renders ListOfVettes with correct number of vettes per page", () => {
 test("renders PaginationControls and handles page changes", async () => {
   const user = userEvent.setup();
   render(<AllVettes vettes={mockVettes} />);
-  const nextPageButton = screen.getAllByRole("button", {
-    name: /next/i,
-  })[0];
+  const nextPageButton = screen.getAllByRole("button", { name: /next/i })[0];
   await act(async () => {
     await user.click(nextPageButton);
   });

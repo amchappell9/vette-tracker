@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { format } from "date-fns";
 import { VetteObject } from "@/src/types";
-import { getDateObject } from "@/src/utils/utils";
+import { getVetteDateString } from "./vetteItemHelpers";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";
@@ -30,7 +29,6 @@ type VetteItemProps = {
 };
 
 const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
-  const formattedDate = format(getDateObject(vette.date), "MM/dd/yyyy");
   const formattedCost = parseInt(vette.cost).toLocaleString();
 
   return (
@@ -62,7 +60,12 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
 
-            <p className="text-md leading-none text-gray-600">{`Added ${formattedDate}`}</p>
+            <p className="text-md leading-none text-gray-600">
+              {getVetteDateString(
+                new Date(vette.createdDate),
+                new Date(vette.updatedDate)
+              )}
+            </p>
           </div>
 
           {/* Cost and Miles */}
