@@ -25,6 +25,11 @@ export const getServerSideProps = (async (ctx) => {
   }
 
   const res = await fetch(`${process.env.BACKEND_BASE_URL}/vettes/${vetteId}`);
+
+  if (!res.ok) {
+    return { notFound: true };
+  }
+
   const vette = (await res.json()) as VetteObject;
 
   if (!vette) {

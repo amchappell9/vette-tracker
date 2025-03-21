@@ -1,4 +1,3 @@
-import { VettesResponse } from "@/src/features/AllVettes/api/getAllVettes";
 import { axios } from "@/src/lib/axios";
 import { VetteObject } from "@/src/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -25,19 +24,17 @@ export const useDeleteVette = () => {
 
   return useMutation({
     onSuccess: (data, vetteInfo, context) => {
-      // Remove vette from all vettes cache
-      const previousVettes = queryClient.getQueryData<VettesResponse>([
+      // Remove vette from "all vettes" cache, without refetching
+      const previousVettes = queryClient.getQueryData<VetteObject[]>([
         "vettes",
       ]);
-      const updatedVettes = previousVettes?.vettes.filter(
+      const updatedVettes = previousVettes?.filter(
         (vette) => vette.id !== vetteInfo.id
       );
 
-      queryClient.setQueryData(["vettes"], {
-        vettes: updatedVettes,
-      });
+      queryClient.setQueryData(["vettes"], updatedVettes);
 
-      // Remove vette from vette cache
+      // Remove vette detail from cache
       queryClient.removeQueries({ queryKey: ["vette", vetteInfo.id] });
     },
     mutationFn: deleteVette,
