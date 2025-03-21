@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon, CogIcon, AdjustmentsIcon } from "@heroicons/react/outline";
-import { useClerk } from "@clerk/clerk-react";
 import Link from "next/link";
 
 import navLinks from "../../../constants/navLinks";
 import MobileMenuNavLink from "./MobileMenuNavLink";
 import UserActionItem from "./UserActionItem";
+import { useAuth } from "@clerk/nextjs";
 
 type MobileMenuPros = {
   isOpen: boolean;
@@ -14,7 +14,7 @@ type MobileMenuPros = {
 };
 
 const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
-  const { signOut } = useClerk();
+  const { signOut } = useAuth();
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
