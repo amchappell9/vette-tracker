@@ -51,21 +51,38 @@ export const addVetteFormValidationSchema = z.object({
 
 export type AddVetteFormValues = z.infer<typeof addVetteFormValidationSchema>;
 
-/** Edit the vette values so they play nice with the form */
+/**
+ * Edit the incoming vette's values so they play nice with the form validation
+ */
 export function formatVetteValues(vetteData: VetteValues): AddVetteFormValues {
   return {
     ...vetteData,
     cost: formatCost(vetteData.cost),
+    year: vetteData.year.toString(),
+    miles: vetteData.miles.toString(),
   };
 }
 
-export function formatCost(cost: string) {
-  // Cost comes in with no commas and no dollar sign, add it so it
-  // passes validation
-  return `$${cost.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+export function formatCost(cost: number): string {
+  // Cost comes in with no commas and no dollar sign, add it so it passes validation
+  return `$${cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }
 
-export function getValuesFromLink(link: string): Partial<VetteValues> {
+/**
+ * Extracts the values from a URL and returns them in a format that can be used to
+ * prefill the AddVetteForm.
+ *
+ * Example: https://www.corvetteforum.com/forums/c7-corvettes-for-sale/4911539-2016-lbr-metallic-3lz-a8.html
+ *
+ * This link would return:
+ * {
+ *  year: "2016",
+ *  submodel: "Stingray",
+ *  trim: "3LZ",
+ *  transmissionType: "Automatic",
+ * }
+ */
+export function getValuesFromLink(link: string): Partial<AddVetteFormValues> {
   return {
     year: getYearFromLink(link),
     submodel: getSubmodelFromLink(link),

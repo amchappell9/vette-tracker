@@ -5,7 +5,7 @@ import { getAllVettesQueryOptions } from "../../AllVettes/api/getAllVettes";
 
 type CreateOrUpdateVetteDTO = {
   vette: VetteValues;
-  id?: string;
+  id?: number;
 };
 
 export const createVette = (
@@ -25,7 +25,7 @@ export const useCreateOrUpdateVette = () => {
   return useMutation({
     onSuccess: (data) => {
       // Add new Vette detail to cache so an extra detail call doesn't need to be made
-      queryClient.setQueryData(["vette", data.id], data);
+      queryClient.setQueryData(["vette", data.id.toString()], data);
 
       // Invalidate previous queries
       queryClient.invalidateQueries({ queryKey: ["vettes"] });

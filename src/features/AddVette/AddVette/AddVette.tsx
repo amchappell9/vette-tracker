@@ -1,27 +1,29 @@
 import { useRouter } from "next/router";
 import { useCreateOrUpdateVette } from "../api/addVette";
-import { VetteValues } from "@/src/types";
-import { useVette } from "@/src/features/VetteDetail/api/getVette";
+import { VetteObject } from "@/src/types";
 import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
 import AddVetteForm from "../AddVetteForm/AddVetteForm";
 import Alert from "@/src/components/Alert/Alert";
+import { formatValues } from "../addVetteHelpers";
+import { AddVetteFormValues } from "../AddVetteForm/addVetteFormHelpers";
 
-const AddVette = () => {
+type AddVetteProps = {
+  vetteToEdit?: VetteObject;
+};
+
+const AddVette = ({ vetteToEdit }: AddVetteProps) => {
   const router = useRouter();
-  const vetteToEditId = router.query.vetteToEdit;
-  const vetteToEditInfo = useVette({
-    vetteId: vetteToEditId,
-  });
+  const isUpdate = typeof vetteToEdit !== "undefined";
 
   const { isSuccess, data, isError, error, isPending, mutate } =
     useCreateOrUpdateVette();
 
-  const onSubmit = async (values: VetteValues) => {
+  const onSubmit = async (values: AddVetteFormValues) => {
     const formattedValues = formatValues(values);
 
     mutate({
       vette: formattedValues,
-      id: vetteToEditInfo.data?.id,
+      id: vetteToEdit?.id,
     });
   };
 
@@ -43,9 +45,8 @@ const AddVette = () => {
   }
 
   if (isSuccess) {
-    // Get ID from response
+    // Get ID from mutation response
     const vetteId = data.id;
-    const isUpdate = typeof vetteToEditInfo.data !== "undefined";
 
     router.push(
       `/vettes/${vetteId}?isConfirmationView=true&isUpdate=${isUpdate}`
@@ -54,51 +55,15 @@ const AddVette = () => {
     return <></>;
   }
 
-  // Updating Vette states
-  if (vetteToEditId) {
-    if (vetteToEditInfo.isLoading) {
-      return (
-        <AuthenticatedPage title="Loading Vette...">
-          <div>Loading...</div>
-        </AuthenticatedPage>
-      );
-    }
-
-    if (vetteToEditInfo.error) {
-      return (
-        <AuthenticatedPage title="Add Vette">
-          <ErrorAlert error={vetteToEditInfo.error} />
-        </AuthenticatedPage>
-      );
-    }
-
-    if (vetteToEditInfo.data) {
-      return (
-        <AuthenticatedPage
-          title="Edit Vette"
-          backLinkConfig={{
-            backLinkText: "Back to All Vettes",
-            backLinkHref: "/vettes",
-          }}
-        >
-          <AddVetteForm
-            handleSubmit={onSubmit}
-            editVetteValues={vetteToEditInfo.data}
-          />
-        </AuthenticatedPage>
-      );
-    }
-  }
-
   return (
     <AuthenticatedPage
-      title="Add New Vette"
+      title={isUpdate ? "Edit Vette" : "Add New Vette"}
       backLinkConfig={{
         backLinkText: "Back to All Vettes",
         backLinkHref: "/vettes",
       }}
     >
-      <AddVetteForm handleSubmit={onSubmit} />
+      <AddVetteForm handleSubmit={onSubmit} editVetteValues={vetteToEdit} />
     </AuthenticatedPage>
   );
 };
@@ -114,15 +79,3 @@ function ErrorAlert({ error }: { error: unknown }) {
 
   return <Alert alertType={"danger"}>{errorMessage}</Alert>;
 }
-
-const formatValues = (values: VetteValues) => {
-  let formattedValues = values;
-
-  // Strip commas from miles
-  formattedValues.miles = formattedValues.miles.replace(",", "");
-
-  // Strip dollar sign and commas from cost
-  formattedValues.cost = formattedValues.cost.replace(",", "").replace("$", "");
-
-  return formattedValues;
-};
