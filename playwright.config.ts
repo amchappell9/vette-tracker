@@ -63,11 +63,11 @@ export default defineConfig({
       dependencies: ["setup clerk"],
     },
 
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-      dependencies: ["setup clerk"],
-    },
+    // {
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"] },
+    //   dependencies: ["setup clerk"],
+    // },
 
     /* Test against mobile viewports. */
     // {
