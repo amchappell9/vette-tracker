@@ -14,7 +14,7 @@ type PriceGraphProps = {
 const getChartData = (vettes: VetteObject[]): { x: Date; y: number }[] => {
   return vettes.map((vette) => {
     return {
-      x: new Date(vette.date),
+      x: new Date(vette.updatedDate),
       y: Number(vette.cost),
     };
   });
