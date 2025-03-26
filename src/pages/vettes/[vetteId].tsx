@@ -6,7 +6,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = (async (ctx) => {
-  const { userId } = getAuth(ctx.req);
+  const { userId, getToken } = getAuth(ctx.req);
   const { vetteId } = ctx.query;
 
   // Validate user is logged in
@@ -24,7 +24,13 @@ export const getServerSideProps = (async (ctx) => {
     return { notFound: true };
   }
 
-  const res = await fetch(`${process.env.BACKEND_BASE_URL}/vettes/${vetteId}`);
+  const token = await getToken();
+
+  const res = await fetch(`${process.env.BACKEND_BASE_URL}/vettes/${vetteId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (!res.ok) {
     return { notFound: true };

@@ -10,10 +10,8 @@ export function getAllVettesQueryOptions() {
   return queryOptions({
     queryKey: ["vettes"],
     queryFn: () => getAllVettes(),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 
-export const useAllVettes = () => {
-  return useQuery(getAllVettesQueryOptions());
-};
+export const useAllVettes = () => useQuery(getAllVettesQueryOptions());
