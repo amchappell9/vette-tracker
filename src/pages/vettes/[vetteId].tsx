@@ -1,53 +1,38 @@
+import Alert from "@/src/components/Alert/Alert";
 import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
+import Spinner from "@/src/components/Spinner.tsx/Spinner";
+import { useVette } from "@/src/features/VetteDetail/api/getVette";
 import VetteDetail from "@/src/features/VetteDetail/VetteDetail/VetteDetail";
-import { VetteObject } from "@/src/types";
-import { getAuth } from "@clerk/nextjs/server";
+import { getErrorMessage } from "@/src/utils/utils";
 import { PencilAltIcon } from "@heroicons/react/outline";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 
-export const getServerSideProps = (async (ctx) => {
-  const { userId, getToken } = getAuth(ctx.req);
-  const { vetteId } = ctx.query;
+export default function VetteById() {
+  const {
+    query: { vetteId },
+  } = useRouter();
+  const { isPending, isError, error, data: vette } = useVette({ vetteId });
 
-  // Validate user is logged in
-  if (userId === null) {
-    return {
-      redirect: {
-        destination: "/sign-in?redirect_url=" + ctx.resolvedUrl,
-        permanent: false,
-      },
-    };
+  if (isPending) {
+    return (
+      <AuthenticatedPage title="Loading Vette...">
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      </AuthenticatedPage>
+    );
   }
 
-  // Validate vetteId is a string
-  if (typeof vetteId !== "string") {
-    return { notFound: true };
+  if (isError) {
+    return (
+      <AuthenticatedPage title="Error">
+        <div className="flex justify-center">
+          <Alert alertType="danger">{getErrorMessage(error)}</Alert>
+        </div>
+      </AuthenticatedPage>
+    );
   }
 
-  const token = await getToken();
-
-  const res = await fetch(`${process.env.BACKEND_BASE_URL}/vettes/${vetteId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!res.ok) {
-    return { notFound: true };
-  }
-
-  const vette = (await res.json()) as VetteObject;
-
-  if (!vette) {
-    return { notFound: true };
-  }
-
-  return { props: { vette } };
-}) satisfies GetServerSideProps<{ vette: VetteObject }>;
-
-export default function VetteById({
-  vette,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <AuthenticatedPage
       title={`${vette.year} Corvette ${vette.submodel}`}
