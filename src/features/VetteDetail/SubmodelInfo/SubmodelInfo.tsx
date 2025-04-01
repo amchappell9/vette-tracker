@@ -24,7 +24,7 @@ const SubmodelInfo = ({ vetteSubmodel, className }: SubmodelInfoProps) => {
   }
 
   return (
-    <div className={`rounded bg-gray-50 p-4 ${className}`}>
+    <div className={`rounded-sm bg-gray-50 p-4 ${className}`}>
       <span className="mb-2 block text-lg font-bold text-gray-800">
         {submodelInfo.title}
       </span>

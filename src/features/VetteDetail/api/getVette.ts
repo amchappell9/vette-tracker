@@ -5,18 +5,12 @@ import { queryOptions, skipToken, useQuery } from "@tanstack/react-query";
 export const getVette = ({
   vetteId,
 }: {
-  vetteId: string | string[];
+  vetteId: string;
 }): Promise<VetteObject> => {
-  if (Array.isArray(vetteId)) {
-    return Promise.reject(new Error("Vette ID is invalid"));
-  }
-
   return axios.get(`/vettes/${vetteId}`);
 };
 
-type UseVetteProps = {
-  vetteId: string | string[] | undefined;
-};
+type UseVetteProps = { vetteId: string | string[] | undefined };
 
 export function getVetteQueryOptions({ vetteId }: UseVetteProps) {
   return queryOptions({

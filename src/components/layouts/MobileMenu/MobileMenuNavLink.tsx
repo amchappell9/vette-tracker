@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const linkClasses = cva(
-  "-ml-3 w-full inline-block rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-offset-white",
+  "-ml-3 w-full inline-block rounded-md py-2 px-3 focus:outline-hidden focus:ring-2 focus:ring-offset-1 focus:ring-offset-white",
   {
     variants: {
       intent: {

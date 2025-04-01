@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon, CogIcon, AdjustmentsIcon } from "@heroicons/react/outline";
-import { useClerk } from "@clerk/clerk-react";
 import Link from "next/link";
 
 import navLinks from "../../../constants/navLinks";
 import MobileMenuNavLink from "./MobileMenuNavLink";
 import UserActionItem from "./UserActionItem";
+import { useAuth } from "@clerk/nextjs";
 
 type MobileMenuPros = {
   isOpen: boolean;
@@ -14,7 +14,7 @@ type MobileMenuPros = {
 };
 
 const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
-  const { signOut } = useClerk();
+  const { signOut } = useAuth();
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -56,7 +56,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2"
                           onClick={dismiss}
                         >
                           <span className="sr-only">Close panel</span>

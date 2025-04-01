@@ -52,7 +52,7 @@ function AuthenticatedPageHeader({
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 lg:hidden"
+              className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 lg:hidden"
             >
               <span className="sr-only">Open main menu</span>
               <MenuIcon className="block h-6 w-6" aria-hidden="true" />

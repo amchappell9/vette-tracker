@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { format } from "date-fns";
 import { VetteObject } from "@/src/types";
-import { getDateObject } from "@/src/utils/utils";
+import { getVetteDateString } from "./vetteItemHelpers";
 
 const getBorderStylesByIndex = (totalLength: number, index: number) => {
   let styles = "";
@@ -13,7 +12,7 @@ const getBorderStylesByIndex = (totalLength: number, index: number) => {
   } else if (index === totalLength - 1 && totalLength !== 1) {
     styles = "border rounded-b";
   } else if (index === 0 && totalLength === 1) {
-    styles = "border rounded";
+    styles = "border rounded-sm";
   }
 
   return styles;
@@ -30,8 +29,8 @@ type VetteItemProps = {
 };
 
 const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
-  const formattedDate = format(getDateObject(vette.date), "MM/dd/yyyy");
-  const formattedCost = parseInt(vette.cost).toLocaleString();
+  const formattedCost = vette.cost.toLocaleString();
+  const formattedMiles = vette.miles.toLocaleString();
 
   return (
     <li>
@@ -48,7 +47,7 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
             <p className="text-lg font-bold leading-none text-gray-800">{`${vette.year} Corvette ${vette.submodel}`}</p>
             <p className="text-md leading-none text-gray-600">
               <span className="after:mx-1 after:content-['|']">{`$${formattedCost}`}</span>
-              <span>{parseInt(vette.miles).toLocaleString()} Miles</span>
+              <span>{`${formattedMiles} Miles`}</span>
             </p>
           </div>
           <div className="">{">"}</div>
@@ -62,16 +61,19 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
 
-            <p className="text-md leading-none text-gray-600">{`Added ${formattedDate}`}</p>
+            <p className="text-md leading-none text-gray-600">
+              {getVetteDateString(
+                new Date(vette.createdDate),
+                new Date(vette.updatedDate)
+              )}
+            </p>
           </div>
 
           {/* Cost and Miles */}
           <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
-            <p className="font-bold leading-none text-gray-700">{`$${parseInt(
-              vette.cost
-            ).toLocaleString()}`}</p>
+            <p className="font-bold leading-none text-gray-700">{`$${formattedCost}`}</p>
             <p className="block leading-none text-gray-700">
-              <strong>{parseInt(vette.miles).toLocaleString()}</strong> Miles
+              <strong>{formattedMiles} Miles</strong>
             </p>
           </div>
 

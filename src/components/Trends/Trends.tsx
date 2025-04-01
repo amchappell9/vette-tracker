@@ -6,7 +6,7 @@ import AuthenticatedPage from "../layouts/AuthenticatedPage/AuthenticatedPage";
 import PricesBySubmodel from "./PricesBySubmodel/PricesBySubmodel";
 
 export default function Trends() {
-  const { data, isLoading, error } = useAllVettes();
+  const { data: vettes, isLoading, error } = useAllVettes();
 
   if (isLoading) {
     return (
@@ -32,7 +32,7 @@ export default function Trends() {
     );
   }
 
-  if (data && data.vettes.length === 0) {
+  if (vettes && vettes.length === 0) {
     return (
       <AuthenticatedPage title="Trends">
         <AddFirstVetteMessage />
@@ -40,10 +40,10 @@ export default function Trends() {
     );
   }
 
-  if (data && data.vettes.length > 0) {
+  if (vettes && vettes.length > 0) {
     return (
       <AuthenticatedPage title="Trends" cardPadding="none">
-        <PricesBySubmodel vettes={data.vettes} />
+        <PricesBySubmodel vettes={vettes} />
       </AuthenticatedPage>
     );
   }

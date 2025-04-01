@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/outline";
 import { cva, VariantProps } from "class-variance-authority";
 
-const alertStyles = cva("rounded border-l-4 p-4", {
+const alertStyles = cva("rounded-sm border-l-4 p-4", {
   variants: {
     alertType: {
       info: "bg-blue-50 border-blue-400",
@@ -88,7 +88,7 @@ const Alert = ({ children, alertType, className }: AlertProps) => {
       aria-live="polite"
     >
       <div className="flex">
-        <div className="flex-shrink-0">{getIconByType(alertType)}</div>
+        <div className="shrink-0">{getIconByType(alertType)}</div>
         <div className="ml-3">
           <p className={alertTextStyles({ alertType })}>{children}</p>
         </div>

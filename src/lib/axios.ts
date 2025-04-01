@@ -6,9 +6,7 @@ function requestInterceptor(
   return config;
 }
 
-export const axios = Axios.create({
-  baseURL: "/api",
-});
+export const axios = Axios.create({ baseURL: "/api/services" });
 
 axios.interceptors.request.use(requestInterceptor);
 axios.interceptors.response.use((response) => response.data);

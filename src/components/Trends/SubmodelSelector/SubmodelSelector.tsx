@@ -116,7 +116,7 @@ const SubmodelSelectorDropdown = ({
       <select
         id={id}
         name={id}
-        className="block w-full rounded border border-gray-300 py-2 pl-4 pr-8 text-lg"
+        className="block w-full rounded-sm border border-gray-300 py-2 pl-4 pr-8 text-lg"
         onChange={(e) => onChange(e.target.value as Submodel)}
         value={selectedSubmodel}
       >

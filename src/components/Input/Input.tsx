@@ -27,7 +27,7 @@ const Input = ({
 }: InputProps) => {
   const classes = `${
     !!className ? className : ""
-  } rounded border border-solid border-gray-300 text-lg outline-none focus:ring-2 focus:ring-red-500 ${
+  } rounded border border-solid border-gray-300 text-lg outline-hidden focus:ring-2 focus:ring-red-500 ${
     haserror ? "border-red-500" : ""
   }`;
 

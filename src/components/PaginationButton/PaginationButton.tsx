@@ -68,7 +68,7 @@ const PaginationButton = ({
       className={`${getClassNameByState(
         state,
         active
-      )} transition-colors focus:border-red-500 focus:outline-none disabled:opacity-40 disabled:hover:bg-white`}
+      )} transition-colors focus:border-red-500 focus:outline-hidden disabled:opacity-40 disabled:hover:bg-white`}
       onClick={() => {
         if (!disabled && typeof onChange === "function") onChange();
       }}

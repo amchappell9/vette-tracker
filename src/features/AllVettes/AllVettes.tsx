@@ -1,20 +1,32 @@
 import { useState } from "react";
 import PaginationControls from "@/src/components/PaginationControls/PaginationControls";
-import { VetteObject } from "@/src/types";
 import AddFirstVetteMessage from "./AddFirstVetteMessage/AddFirstVetteMessage";
 import ListOfVettes from "./ListOfVettes/ListOfVettes";
+import { useAllVettes } from "./api/getAllVettes";
+import Spinner from "@/src/components/Spinner.tsx/Spinner";
+import Alert from "@/src/components/Alert/Alert";
+import { getErrorMessage } from "@/src/utils/utils";
 
 const PAGE_SIZE = 5;
 
-type AllVettes = {
-  vettes: VetteObject[];
-};
+function AllVettes() {
+  const { isPending, isError, error, data: vettes } = useAllVettes();
 
-function AllVettes({ vettes }: AllVettes) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
   const lastPageIndex = firstPageIndex + PAGE_SIZE;
+
+  if (isPending) {
+    return (
+      <div className="flex justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <Alert alertType="danger">{getErrorMessage(error)}</Alert>;
+  }
 
   // Empty State
   if (vettes.length === 0) {

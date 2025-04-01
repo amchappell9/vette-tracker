@@ -18,19 +18,20 @@ describe("AddVetteForm", () => {
 
   test("renders form with vetteToEditInfo values", () => {
     const vetteToEditInfo: VetteObject = {
-      id: "1234567890",
-      date: "2021-01-01",
+      id: 1234567890,
+      createdDate: "2025-02-17T00:00:00Z",
+      updatedDate: "2025-02-17T00:00:00Z",
       userId: "1234567890",
       link: "https://example.com",
-      year: "2015",
+      year: 2015,
       submodel: "Z06",
       trim: "3LT",
       packages: ["NPP", "MRC", "PDR"],
       transmissionType: "Automatic",
       exteriorColor: "Laguna Blue",
       interiorColor: "Black",
-      miles: "10000",
-      cost: "50000",
+      miles: 10000,
+      cost: 50000,
     };
 
     render(
@@ -202,19 +203,20 @@ describe("AddVetteForm", () => {
 
   test("renders edit vette values properly", async () => {
     const vetteToEditInfo: VetteObject = {
-      id: "1234567890",
-      date: "2021-01-01",
+      id: 1234567890,
+      createdDate: "2025-02-17T00:00:00Z",
+      updatedDate: "2025-02-17T00:00:00Z",
       userId: "1234567890",
       link: "https://example.com",
-      year: "2015",
+      year: 2015,
       submodel: "Z06",
       trim: "3LT",
       packages: ["NPP", "MRC", "PDR"],
       transmissionType: "Automatic",
       exteriorColor: "Laguna Blue",
       interiorColor: "Black",
-      miles: "10000",
-      cost: "50000",
+      miles: 10000,
+      cost: 50000,
     };
 
     render(

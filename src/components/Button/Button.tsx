@@ -6,13 +6,13 @@ const buttonStyles = cva("text-center", {
   variants: {
     intent: {
       primary:
-        "bg-red-500 hover:bg-red-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-700 transition-colors",
+        "bg-red-500 hover:bg-red-600 text-white rounded-sm focus:outline-hidden focus:ring-2 focus:ring-red-700 transition-colors",
       secondary:
-        "bg-white hover:bg-gray-100 text-gray-800 border rounded border-gray-300 transition-colors",
+        "bg-white hover:bg-gray-100 text-gray-800 border rounded-sm border-gray-300 transition-colors",
     },
     buttonSize: {
-      default: "px-6 py-2 text-lg drop-shadow-sm",
-      small: "px-4 py-2 text-base font-medium drop-shadow-sm",
+      default: "px-6 py-2 text-lg drop-shadow-xs",
+      small: "px-4 py-2 text-base font-medium drop-shadow-xs",
       large: "px-12 py-6 font-bold text-3xl drop-shadow-md",
     },
     widthBehavior: {

@@ -70,7 +70,7 @@ const PaginationControls = ({
         <div></div>
         <div>
           <nav
-            className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
+            className="relative z-0 inline-flex -space-x-px rounded-md shadow-xs"
             aria-label="Pagination"
           >
             {/* Previous Button */}

@@ -96,7 +96,7 @@ const SignInButton = () => {
   return (
     <Link
       href={"/sign-in"}
-      className="duration-20 inline-block rounded bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow active:duration-75"
+      className="duration-20 inline-block rounded-sm bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow-sm active:duration-75"
     >
       Get Started
     </Link>

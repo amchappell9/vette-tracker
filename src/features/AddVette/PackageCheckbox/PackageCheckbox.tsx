@@ -21,7 +21,7 @@ const PackageCheckbox = ({
 
   return (
     <div
-      className={`${className} packageCheckbox flex items-baseline p-4 focus-within:ring focus-within:ring-red-500`}
+      className={`${className} packageCheckbox flex items-baseline p-4 focus-within:ring-3 focus-within:ring-red-500`}
     >
       <div className="pr-4">
         <input
@@ -30,7 +30,7 @@ const PackageCheckbox = ({
           type="checkbox"
           name={name}
           value={value}
-          className="h-4 w-4 cursor-pointer rounded accent-red-500 focus:ring-red-500"
+          className="h-4 w-4 cursor-pointer rounded-sm accent-red-500 focus:ring-red-500"
         />
       </div>
       <div>

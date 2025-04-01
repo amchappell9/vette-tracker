@@ -27,7 +27,7 @@ const SubModelRadioButton = ({
       key={name}
       value={title}
       className={({ active, checked }) =>
-        `${className}  flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow outline-none transition duration-300 hover:-translate-y-0.5 hover:shadow-lg  focus:-translate-y-0.5 focus:shadow-lg  ${
+        `${className}  flex h-full cursor-pointer flex-col rounded border border-gray-100 shadow outline-hidden transition duration-300 hover:-translate-y-0.5 hover:shadow-lg  focus:-translate-y-0.5 focus:shadow-lg  ${
           active ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""
         }
         ${checked ? "ring-2 ring-red-500 ring-opacity-80 ring-offset-2" : ""} `
@@ -46,7 +46,7 @@ const SubModelRadioButton = ({
             <span className="block text-gray-600">
               {hp} HP | {torque} LBS/FT
             </span>
-            <ul className="mt-2 grid grid-cols-[repeat(auto-fill,_minmax(150px,_1fr))] gap-y-2 gap-x-4">
+            <ul className="mt-2 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-y-2 gap-x-4">
               {features.map((feature) => (
                 <li key={`${title}-${feature}`} className="col-span-1 flex">
                   <div>
