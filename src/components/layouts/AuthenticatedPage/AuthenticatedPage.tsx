@@ -1,21 +1,12 @@
 import React from "react";
-
 import Card, { CardPaddingVariants } from "../../Card/Card";
-import AuthenticatedPageHeader from "./AuthenticatedPageHeader/AuthenticatedPageHeader";
+import AuthenticatedPageHeader, {
+  BackLinkConfig,
+  PageAction,
+} from "./AuthenticatedPageHeader/AuthenticatedPageHeader";
 import Head from "next/head";
 import ErrorBoundary from "../../ErrorBoundary/ErrorBoundary";
 import Footer from "../../Footer/Footer";
-
-export type BackLinkConfig = {
-  backLinkText: string;
-  backLinkHref: string;
-};
-
-export type PageAction = {
-  icon: (props: React.ComponentProps<"svg">) => JSX.Element;
-  text: string;
-  href: string;
-};
 
 type AuthenticatedPageProps = {
   children: React.ReactNode;

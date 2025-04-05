@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useCreateOrUpdateVette } from "../api/addVette";
 import { VetteObject } from "@/src/types";
 import AuthenticatedPage from "@/src/components/layouts/AuthenticatedPage/AuthenticatedPage";
@@ -6,13 +5,14 @@ import AddVetteForm from "../AddVetteForm/AddVetteForm";
 import Alert from "@/src/components/Alert/Alert";
 import { formatValues } from "../addVetteHelpers";
 import { AddVetteFormValues } from "../AddVetteForm/addVetteFormHelpers";
+import { PencilAltIcon } from "@heroicons/react/outline";
+import VetteDetail from "../../VetteDetail/VetteDetail/VetteDetail";
 
 type AddVetteProps = {
   vetteToEdit?: VetteObject;
 };
 
 const AddVette = ({ vetteToEdit }: AddVetteProps) => {
-  const router = useRouter();
   const isUpdate = typeof vetteToEdit !== "undefined";
 
   const { isSuccess, data, isError, error, isPending, mutate } =
@@ -36,23 +36,27 @@ const AddVette = ({ vetteToEdit }: AddVetteProps) => {
     );
   }
 
-  if (isError) {
+  if (isSuccess) {
+    // Display the Vette details after creation/update
     return (
-      <AuthenticatedPage title="Add Vette">
-        <ErrorAlert error={error} />
+      <AuthenticatedPage
+        title={`${data.year} Corvette ${data.submodel}`}
+        backLinkConfig={{
+          backLinkText: "Back to All Vettes",
+          backLinkHref: "/vettes",
+        }}
+        pageAction={{
+          icon: PencilAltIcon,
+          text: "Edit Vette",
+          href: `/add-vette?vetteToEdit=${data.id}`,
+        }}
+      >
+        <VetteDetail
+          vette={data}
+          successMessage={vetteToEdit ? "updated" : "added"}
+        />
       </AuthenticatedPage>
     );
-  }
-
-  if (isSuccess) {
-    // Get ID from mutation response
-    const vetteId = data.id;
-
-    router.push(
-      `/vettes/${vetteId}?isConfirmationView=true&isUpdate=${isUpdate}`
-    );
-
-    return <></>;
   }
 
   return (
@@ -63,6 +67,8 @@ const AddVette = ({ vetteToEdit }: AddVetteProps) => {
         backLinkHref: "/vettes",
       }}
     >
+      {/* The error state could use some love. Currently all data is lost if there's an error */}
+      {isError ? <ErrorAlert error={error} /> : null}
       <AddVetteForm handleSubmit={onSubmit} editVetteValues={vetteToEdit} />
     </AuthenticatedPage>
   );

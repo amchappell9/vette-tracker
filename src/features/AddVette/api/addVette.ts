@@ -23,6 +23,7 @@ export const useCreateOrUpdateVette = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationFn: createVette,
     onSuccess: (data) => {
       // Add new Vette detail to cache so an extra detail call doesn't need to be made
       queryClient.setQueryData(["vette", data.id.toString()], data);
@@ -33,6 +34,5 @@ export const useCreateOrUpdateVette = () => {
       // Refetch query
       queryClient.prefetchQuery(getAllVettesQueryOptions());
     },
-    mutationFn: createVette,
   });
 };

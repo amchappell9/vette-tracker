@@ -1,13 +1,22 @@
 import Logo from "@/src/components/Logo/Logo";
-
 import { UserButton, useAuth } from "@clerk/nextjs";
 import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useState } from "react";
 import MobileMenu from "../../MobileMenu/MobileMenu";
-import { BackLinkConfig, PageAction } from "../AuthenticatedPage";
 import NavLinks from "./NavLinks";
 import Button from "@/src/components/Button/Button";
+
+export type BackLinkConfig = {
+  backLinkText: string;
+  backLinkHref: string;
+};
+
+export type PageAction = {
+  icon: (props: React.ComponentProps<"svg">) => JSX.Element;
+  text: string;
+  href: string;
+};
 
 type HeaderProps = {
   backLinkConfig?: BackLinkConfig;

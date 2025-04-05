@@ -2,30 +2,21 @@ import { TrashIcon } from "@heroicons/react/outline";
 import { format } from "date-fns";
 import Link from "next/link";
 import { VetteObject } from "@/src/types";
-import Alert from "@/src/components/Alert/Alert";
 import SubmodelInfo from "../SubmodelInfo/SubmodelInfo";
 import TrimInfo from "../TrimInfo/TrimInfo";
 import PackagesList from "../PackagesList/PackagesList";
 import DeleteVetteModal from "../DeleteVetteModal/DeleteVetteModal";
 
-type VetteDetailCardProps = { vetteData: VetteObject; wasUpdated: boolean };
+type VetteDetailCardProps = {
+  vetteData: VetteObject;
+};
 
-export default function VetteDetailCard({
-  vetteData,
-  wasUpdated,
-}: VetteDetailCardProps) {
+export default function VetteDetailCard({ vetteData }: VetteDetailCardProps) {
   const addedDate = new Date(vetteData.createdDate);
   const updatedDate = new Date(vetteData.updatedDate);
 
   return (
     <div>
-      {/* Show alert if vette was updated */}
-      {wasUpdated && (
-        <Alert alertType={"success"} className="mb-4">
-          Your Vette was successfully updated!
-        </Alert>
-      )}
-
       <div className="flex flex-col gap-y-4 sm:flex-row sm:justify-between sm:gap-y-0">
         <div className="text-gray-500">
           <span>Added on {format(addedDate, "MM/dd/yyyy")}</span>

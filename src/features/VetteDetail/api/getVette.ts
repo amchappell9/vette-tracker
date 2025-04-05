@@ -1,6 +1,11 @@
 import { axios } from "@/src/lib/axios";
 import { VetteObject } from "@/src/types";
-import { queryOptions, skipToken, useQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  skipToken,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export const getVette = ({
   vetteId,
@@ -23,5 +28,14 @@ export function getVetteQueryOptions({ vetteId }: UseVetteProps) {
 }
 
 export const useVette = (props: UseVetteProps) => {
-  return useQuery(getVetteQueryOptions(props));
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    ...getVetteQueryOptions(props),
+    initialData: () => {
+      return queryClient
+        .getQueryData<VetteObject[]>(["vettes"])
+        ?.find((vette) => vette.id === Number(props.vetteId));
+    },
+  });
 };
