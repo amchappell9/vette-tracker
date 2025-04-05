@@ -26,6 +26,8 @@ export default function Document() {
           name="description"
           content="Track the prices of C7 Corvettes to find the best deals"
         />
+        <meta httpEquiv="Content-Language" content="en" />
+        <meta name="language" content="English" />
       </Head>
       <body>
         <Main />
