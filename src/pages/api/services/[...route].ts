@@ -38,6 +38,9 @@ export default async function handler(
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
         ...req.headers,
+        // Don't forward the host header from the client, or it causes SSL issues due to
+        // the server only being signed for the api subdomain
+        host: new URL(process.env.BACKEND_BASE_URL as string).hostname,
       },
       data: req.method !== "GET" ? req.body : undefined,
     });
