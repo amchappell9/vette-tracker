@@ -29,6 +29,8 @@ export default async function handler(
   try {
     const backendUrl = `${process.env.BACKEND_BASE_URL}/${Array.isArray(route) ? route.join("/") : route}`;
 
+    console.log("backendUrl", backendUrl);
+
     const response = await axios({
       method: req.method,
       url: backendUrl,
