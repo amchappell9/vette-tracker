@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-*: initial;
@@ -76,6 +76,11 @@ body,
   height: 100%;
 }
 
+html {
+  /* Fixes issue where nav links shifted when navigating between pages that had/didn't have a scrollbar */
+  padding-left: calc(100vw - 100%);
+}
+
 .home-triangle-left {
   @apply h-0 w-0;
 
@@ -105,4 +110,3 @@ body,
 .packageCheckbox:last-of-type {
   @apply rounded-b border-b border-l border-r border-gray-100;
 }
-
