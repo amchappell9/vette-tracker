@@ -2,22 +2,6 @@ import Link from "next/link";
 import { VetteObject } from "@/src/types";
 import { getVetteDateString } from "./vetteItemHelpers";
 
-const getBorderStylesByIndex = (totalLength: number, index: number) => {
-  let styles = "";
-
-  if (index === 0 && totalLength !== 1) {
-    styles = "border rounded-t border-b-0";
-  } else if (index > 0 && index !== totalLength - 1) {
-    styles = "border-b-0";
-  } else if (index === totalLength - 1 && totalLength !== 1) {
-    styles = "border rounded-b";
-  } else if (index === 0 && totalLength === 1) {
-    styles = "border rounded-sm";
-  }
-
-  return styles;
-};
-
 type VetteItemProps = {
   vette: VetteObject;
 
@@ -102,3 +86,19 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
 };
 
 export default VetteItem;
+
+const getBorderStylesByIndex = (totalLength: number, index: number) => {
+  let styles = "";
+
+  if (index === 0 && totalLength !== 1) {
+    styles = "border rounded-t border-b-0";
+  } else if (index > 0 && index !== totalLength - 1) {
+    styles = "border-b-0";
+  } else if (index === totalLength - 1 && totalLength !== 1) {
+    styles = "border rounded-b";
+  } else if (index === 0 && totalLength === 1) {
+    styles = "border rounded-sm";
+  }
+
+  return styles;
+};

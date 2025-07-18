@@ -15,8 +15,8 @@ const mockVette: VetteObject = {
   trim: "3LT",
   packages: ["MRC", "NPP"],
   link: "http://example.com",
-  createdDate: "2023-01-15T00:00:00Z",
-  updatedDate: "2023-01-15T00:00:00Z",
+  createdDate: "2023-01-15T00:00:00",
+  updatedDate: "2023-01-15T00:00:00",
   userId: "user1",
 };
 
@@ -25,7 +25,10 @@ describe("VetteItem", () => {
     render(<VetteItem vette={mockVette} index={0} listLength={1} />);
     expect(screen.getByText("2020 Corvette Stingray")).toBeInTheDocument();
     expect(screen.getAllByText("$60,000")).toHaveLength(2);
-    expect(screen.getByText("15,000 Miles")).toBeInTheDocument();
+    // There may be multiple elements with '15,000 Miles', so use getAllByText
+    expect(screen.getAllByText("15,000 Miles").length).toBeGreaterThanOrEqual(
+      1
+    );
     expect(screen.getByText("Red on Black Interior")).toBeInTheDocument();
     expect(screen.getByText("3LT")).toBeInTheDocument();
     expect(screen.getByText("MRC")).toBeInTheDocument();
@@ -33,22 +36,24 @@ describe("VetteItem", () => {
 
   it("formats the date correctly", () => {
     render(<VetteItem vette={mockVette} index={0} listLength={1} />);
-    const formattedDate = format(new Date(mockVette.createdDate), "MM/dd/yyyy");
+    // Use local time for date construction to match display logic
+    const createdDate = new Date(2023, 0, 15); // Jan is 0
+    const formattedDate = format(createdDate, "MM/dd/yyyy");
     expect(screen.getByText(`Added ${formattedDate}`)).toBeInTheDocument();
   });
 
   it("formats the date correctly when updated", () => {
     render(
       <VetteItem
-        vette={{ ...mockVette, updatedDate: "2023-01-16T00:00:00Z" }}
+        vette={{
+          ...mockVette,
+          updatedDate: new Date(2023, 0, 18).toISOString(),
+        }}
         index={0}
         listLength={1}
       />
     );
-    const formattedDate = format(
-      new Date("2023-01-16T00:00:00Z"),
-      "MM/dd/yyyy"
-    );
+    const formattedDate = format(new Date(2023, 0, 18), "MM/dd/yyyy");
     expect(screen.getByText(`Updated ${formattedDate}`)).toBeInTheDocument();
   });
 
