@@ -55,13 +55,13 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
         {/* Desktop List Styles */}
         <div className="hidden justify-between sm:flex">
           {/* Year, Submodel and Date */}
-          <div className="flex flex-1 flex-col gap-1 ">
+          <div className="flex flex-1 flex-col gap-1">
             <p className="text-lg font-bold leading-none text-gray-800">
               {`${vette.year} Corvette`}
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
 
-            <p className="text-md leading-none text-gray-600">
+            <p className="text-sm leading-none text-gray-600">
               {getVetteDateString(
                 new Date(vette.createdDate),
                 new Date(vette.updatedDate)

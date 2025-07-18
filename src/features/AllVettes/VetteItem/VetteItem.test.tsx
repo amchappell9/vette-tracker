@@ -15,8 +15,8 @@ const mockVette: VetteObject = {
   trim: "3LT",
   packages: ["MRC", "NPP"],
   link: "http://example.com",
-  createdDate: "2023-01-15T00:00:00Z",
-  updatedDate: "2023-01-15T00:00:00Z",
+  createdDate: "2023-01-15T14:30:00",
+  updatedDate: "2023-01-15T14:30:00",
   userId: "user1",
 };
 
@@ -33,21 +33,26 @@ describe("VetteItem", () => {
 
   it("formats the date correctly", () => {
     render(<VetteItem vette={mockVette} index={0} listLength={1} />);
-    const formattedDate = format(new Date(mockVette.createdDate), "MM/dd/yyyy");
+    // Use local time for date construction to match display logic
+    const createdDate = new Date(2023, 0, 15, 14, 30); // Jan is 0, 2:30 PM
+    const formattedDate = format(createdDate, "MM/dd/yyyy 'at' h:mm a");
     expect(screen.getByText(`Added ${formattedDate}`)).toBeInTheDocument();
   });
 
   it("formats the date correctly when updated", () => {
     render(
       <VetteItem
-        vette={{ ...mockVette, updatedDate: "2023-01-16T00:00:00Z" }}
+        vette={{
+          ...mockVette,
+          updatedDate: new Date(2023, 0, 18, 9, 15).toISOString(), // 9:15 AM
+        }}
         index={0}
         listLength={1}
       />
     );
     const formattedDate = format(
-      new Date("2023-01-16T00:00:00Z"),
-      "MM/dd/yyyy"
+      new Date(2023, 0, 18, 9, 15),
+      "MM/dd/yyyy 'at' h:mm a"
     );
     expect(screen.getByText(`Updated ${formattedDate}`)).toBeInTheDocument();
   });
