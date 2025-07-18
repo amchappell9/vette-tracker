@@ -24,12 +24,28 @@ describe("addVetteFormHelpers", () => {
     it("should format the cost while preserving other values", () => {
       const mockVetteValues: VetteValues = {
         cost: 50000,
+        year: 2020,
+        submodel: "Stingray",
+        trim: "3LT",
+        transmissionType: "Automatic",
+        miles: 15000,
+        exteriorColor: "Red",
+        interiorColor: "Black",
+        packages: ["MRC", "NPP"],
         // @ts-expect-error
-        someOtherField: "test",
+        someOtherField: "test", // Additional field to test preservation
       };
 
       const expected = {
         cost: "$50,000",
+        year: "2020",
+        submodel: "Stingray",
+        trim: "3LT",
+        transmissionType: "Automatic",
+        miles: "15000",
+        exteriorColor: "Red",
+        interiorColor: "Black",
+        packages: ["MRC", "NPP"],
         someOtherField: "test",
       };
 
