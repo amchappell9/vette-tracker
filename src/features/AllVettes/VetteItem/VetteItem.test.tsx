@@ -25,7 +25,10 @@ describe("VetteItem", () => {
     render(<VetteItem vette={mockVette} index={0} listLength={1} />);
     expect(screen.getByText("2020 Corvette Stingray")).toBeInTheDocument();
     expect(screen.getAllByText("$60,000")).toHaveLength(2);
-    expect(screen.getByText("15,000 Miles")).toBeInTheDocument();
+    // There may be multiple elements with '15,000 Miles', so use getAllByText
+    expect(screen.getAllByText("15,000 Miles").length).toBeGreaterThanOrEqual(
+      1
+    );
     expect(screen.getByText("Red on Black Interior")).toBeInTheDocument();
     expect(screen.getByText("3LT")).toBeInTheDocument();
     expect(screen.getByText("MRC")).toBeInTheDocument();

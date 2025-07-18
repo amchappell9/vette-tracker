@@ -19,7 +19,7 @@ export function getVetteDateString(addedDate: Date, updatedDate: Date) {
   const formattedAddedDate = format(addedDate, "MM/dd/yyyy 'at' h:mm a");
   const formattedUpdatedDate = format(updatedDate, "MM/dd/yyyy 'at' h:mm a");
 
-  if (addedDate.getTime() <= updatedDate.getTime()) {
+  if (addedDate.getTime() >= updatedDate.getTime()) {
     return `Added ${formattedAddedDate}`;
   } else {
     return `Updated ${formattedUpdatedDate}`;
