@@ -23,7 +23,9 @@ test.describe("Vette Tracker", () => {
     await page.getByRole("button", { name: "Add Vette" }).click();
 
     // View Vette
-    await expect(page.getByText("Your Vette has been added!")).toBeVisible();
+    await expect(
+      page.getByText("Your Vette was successfully added!")
+    ).toBeVisible();
     await expect(page.getByText("2014 Corvette Z51").first()).toBeVisible();
     await expect(page.getByText("$45,000")).toBeVisible();
     await expect(page.getByText("20,000 Miles")).toBeVisible();
@@ -40,13 +42,24 @@ test.describe("Vette Tracker", () => {
 
     // Edit Vette
     await page.getByRole("link", { name: "Edit Vette" }).click();
+    await expect(
+      page.getByRole("heading", { name: "Edit Vette" })
+    ).toBeVisible();
+
     await page.getByLabel("Year").selectOption("2019");
-    await page.getByLabel("ZR1").click();
+
+    // Wait for ZR1 option to become available after year selection
+    await page
+      .getByRole("radio", { name: "ZR1" })
+      .waitFor({ state: "visible" });
+    await page.getByRole("radio", { name: "ZR1" }).click();
     await page.getByLabel("1LT").click();
     await page.getByRole("button", { name: "Edit Vette" }).click();
 
     // Check updates
-    await expect(page.getByText("Your Vette has been updated!")).toBeVisible();
+    await expect(
+      page.getByText("Your Vette was successfully updated!")
+    ).toBeVisible();
     await expect(page.getByText("2019 Corvette ZR1").first()).toBeVisible();
     await expect(page.getByText("1LT").first()).toBeVisible();
 

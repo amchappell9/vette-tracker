@@ -15,7 +15,7 @@ type AddVetteProps = {
 const AddVette = ({ vetteToEdit }: AddVetteProps) => {
   const isUpdate = typeof vetteToEdit !== "undefined";
 
-  const { isSuccess, data, isError, error, isPending, mutate } =
+  const { isSuccess, data, isError, error, isPending, mutate, reset } =
     useCreateOrUpdateVette();
 
   const onSubmit = async (values: AddVetteFormValues) => {
@@ -49,6 +49,9 @@ const AddVette = ({ vetteToEdit }: AddVetteProps) => {
           icon: PencilAltIcon,
           text: "Edit Vette",
           href: `/add-vette?vetteToEdit=${data.id}`,
+          onClick: () => {
+            reset(); // Reset the mutation state to allow for another edit
+          },
         }}
       >
         <VetteDetail
