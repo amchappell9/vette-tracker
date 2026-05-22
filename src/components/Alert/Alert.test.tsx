@@ -1,8 +1,6 @@
 import { getByRole, render, screen } from "@testing-library/react";
-import { axe, toHaveNoViolations } from "jest-axe";
 import Alert from "./Alert";
-
-expect.extend(toHaveNoViolations);
+import { axe } from "vitest-axe";
 
 describe("Alert", () => {
   test("renders with correct text", () => {
@@ -12,7 +10,7 @@ describe("Alert", () => {
 
   test("renders with correct role", () => {
     const { container } = render(
-      <Alert alertType="warning">This is an alert</Alert>
+      <Alert alertType="warning">This is an alert</Alert>,
     );
     expect(getByRole(container, "alert")).toBeTruthy();
   });
@@ -27,7 +25,7 @@ describe("Alert", () => {
 
   test("renders variants with correct backgrounds", () => {
     const { container, rerender } = render(
-      <Alert alertType="info">Info component</Alert>
+      <Alert alertType="info">Info component</Alert>,
     );
 
     // Info
@@ -48,7 +46,7 @@ describe("Alert", () => {
 
   test("is accessible", async () => {
     const { container, rerender } = render(
-      <Alert alertType="info">Accessibility Test</Alert>
+      <Alert alertType="info">Accessibility Test</Alert>,
     );
 
     let results = await axe(container);

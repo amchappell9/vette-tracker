@@ -10,12 +10,12 @@ describe("Input", () => {
   });
 
   test("renders values properly", () => {
-    render(<Input name="test" value="test value" onChange={jest.fn()} />);
+    render(<Input name="test" value="test value" onChange={vi.fn()} />);
     expect(screen.getByDisplayValue("test value")).toBeInTheDocument();
   });
 
   test("calls onChange when input is changed", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<Input name="test" onChange={onChange} />);
     await userEvent.type(screen.getByRole("textbox"), "test");
     expect(onChange).toHaveBeenCalled();
@@ -27,7 +27,7 @@ describe("Input", () => {
       <label>
         Test
         <Input name="test" maskType="miles" />
-      </label>
+      </label>,
     );
     // const input = getByRole("textbox");
 
@@ -45,7 +45,7 @@ describe("Input", () => {
       <label>
         Test
         <Input name="test" maskType="dollar" />
-      </label>
+      </label>,
     );
 
     await act(async () => {

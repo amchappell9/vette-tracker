@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Button from "./Button";
-import { axe, toHaveNoViolations } from "jest-axe";
+import { axe } from "vitest-axe";
 
-expect.extend(toHaveNoViolations);
+// expect.extend(toHaveNoViolations);
 
 describe("Button", () => {
   test("fires the onClick prop when clicked", async () => {
-    const mockCallback = jest.fn();
+    const mockCallback = vi.fn();
     render(<Button onClick={mockCallback}>Click Me!</Button>);
 
     await userEvent.click(screen.getByRole("button"));
@@ -25,7 +25,7 @@ describe("Button", () => {
     const { container } = render(
       <Button className="testClass" onClick={() => {}}>
         Here is a button
-      </Button>
+      </Button>,
     );
 
     expect(container.getElementsByClassName("testClass").length).toBe(1);
@@ -35,17 +35,17 @@ describe("Button", () => {
     const { container } = render(
       <Button as="link" href="/test">
         Here is a link
-      </Button>
+      </Button>,
     );
 
     expect(container.getElementsByTagName("a").length).toBe(1);
   });
 
   test("is accessible", async () => {
-    const mockCallback = jest.fn();
+    const mockCallback = vi.fn();
 
     const { container, rerender } = render(
-      <Button onClick={mockCallback}>Accessible Button</Button>
+      <Button onClick={mockCallback}>Accessible Button</Button>,
     );
 
     let results = await axe(container);
@@ -55,7 +55,7 @@ describe("Button", () => {
     rerender(
       <Button buttonSize="large" onClick={mockCallback}>
         Accessible Button
-      </Button>
+      </Button>,
     );
     results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -64,7 +64,7 @@ describe("Button", () => {
     rerender(
       <Button intent="primary" onClick={mockCallback}>
         Accessible Button
-      </Button>
+      </Button>,
     );
     results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -72,7 +72,7 @@ describe("Button", () => {
     rerender(
       <Button intent="secondary" onClick={mockCallback}>
         Accessible Button
-      </Button>
+      </Button>,
     );
     results = await axe(container);
     expect(results).toHaveNoViolations();

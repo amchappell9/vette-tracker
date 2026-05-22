@@ -6,5 +6,6 @@
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

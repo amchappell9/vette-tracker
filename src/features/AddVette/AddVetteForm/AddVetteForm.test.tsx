@@ -6,7 +6,7 @@ import { VetteObject } from "@/src/types";
 
 describe("AddVetteForm", () => {
   test("renders form with default values", () => {
-    render(<AddVetteForm handleSubmit={jest.fn} />);
+    render(<AddVetteForm handleSubmit={vi.fn} />);
     expect(screen.getByLabelText("Link")).toHaveValue("");
     expect(screen.getByLabelText("Year")).toHaveValue("2014");
     expect(screen.getByLabelText("Transmission")).toHaveValue("Manual");
@@ -35,18 +35,18 @@ describe("AddVetteForm", () => {
     };
 
     render(
-      <AddVetteForm handleSubmit={jest.fn} editVetteValues={vetteToEditInfo} />
+      <AddVetteForm handleSubmit={vi.fn} editVetteValues={vetteToEditInfo} />,
     );
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
     expect(screen.getByRole("radio", { name: /Z06/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByRole("radio", { name: /3LT/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByLabelText("Transmission")).toHaveValue("Automatic");
     expect(screen.getByLabelText("Exterior Color")).toHaveValue("Laguna Blue");
@@ -56,7 +56,7 @@ describe("AddVetteForm", () => {
   });
 
   test("submits form with correct values", async () => {
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
 
     render(<AddVetteForm handleSubmit={handleSubmit} />);
     const user = userEvent.setup();
@@ -64,12 +64,12 @@ describe("AddVetteForm", () => {
     await act(async () => {
       await user.type(
         screen.getByRole("textbox", { name: /link/i }),
-        "https://example.com"
+        "https://example.com",
       );
 
       await user.selectOptions(
         screen.getByRole("combobox", { name: /year/i }),
-        ["2015"]
+        ["2015"],
       );
 
       await user.click(screen.getByRole("radio", { name: /Z06/i }));
@@ -81,17 +81,17 @@ describe("AddVetteForm", () => {
 
       await user.selectOptions(
         screen.getByRole("combobox", { name: /transmission/i }),
-        ["Automatic"]
+        ["Automatic"],
       );
 
       await user.selectOptions(
         screen.getByRole("combobox", { name: /exterior color/i }),
-        ["Laguna Blue"]
+        ["Laguna Blue"],
       );
 
       await user.selectOptions(
         screen.getByRole("combobox", { name: /interior color/i }),
-        ["Ash Gray"]
+        ["Ash Gray"],
       );
 
       await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
@@ -102,11 +102,11 @@ describe("AddVetteForm", () => {
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
     expect(screen.getByRole("radio", { name: /Z06/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByRole("radio", { name: /3LT/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
 
     expect(screen.getByLabelText("Transmission")).toHaveValue("Automatic");
@@ -134,17 +134,17 @@ describe("AddVetteForm", () => {
   });
 
   test("resets form values", async () => {
-    render(<AddVetteForm handleSubmit={jest.fn} />);
+    render(<AddVetteForm handleSubmit={vi.fn} />);
     const user = userEvent.setup();
 
     await act(async () => {
       await user.type(
         screen.getByRole("textbox", { name: /link/i }),
-        "https://example.com"
+        "https://example.com",
       );
       await user.selectOptions(
         screen.getByRole("combobox", { name: /year/i }),
-        ["2015"]
+        ["2015"],
       );
       await user.click(screen.getByRole("radio", { name: /Z06/i }));
       await user.click(screen.getByRole("radio", { name: /3LT/i }));
@@ -153,15 +153,15 @@ describe("AddVetteForm", () => {
       await user.click(screen.getByLabelText(/Performance Data Recorder/i));
       await user.selectOptions(
         screen.getByRole("combobox", { name: /transmission/i }),
-        ["Automatic"]
+        ["Automatic"],
       );
       await user.selectOptions(
         screen.getByRole("combobox", { name: /exterior color/i }),
-        ["Laguna Blue"]
+        ["Laguna Blue"],
       );
       await user.selectOptions(
         screen.getByRole("combobox", { name: /interior color/i }),
-        ["Ash Gray"]
+        ["Ash Gray"],
       );
       await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
       await user.type(screen.getByRole("textbox", { name: /cost/i }), "45000");
@@ -171,11 +171,11 @@ describe("AddVetteForm", () => {
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
     expect(screen.getByRole("radio", { name: /Z06/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByRole("radio", { name: /3LT/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByLabelText("Transmission")).toHaveValue("Automatic");
     expect(screen.getByLabelText("Exterior Color")).toHaveValue("Laguna Blue");
@@ -192,7 +192,7 @@ describe("AddVetteForm", () => {
     expect(screen.queryByRole("radio", { name: /Z06/i })).toBeNull();
     expect(screen.getByRole("radio", { name: /3LT/i })).toHaveAttribute(
       "aria-checked",
-      "false"
+      "false",
     );
     expect(screen.getByLabelText("Transmission")).toHaveValue("Manual");
     expect(screen.getByLabelText("Exterior Color")).toHaveValue("Arctic White");
@@ -220,18 +220,18 @@ describe("AddVetteForm", () => {
     };
 
     render(
-      <AddVetteForm handleSubmit={jest.fn} editVetteValues={vetteToEditInfo} />
+      <AddVetteForm handleSubmit={vi.fn} editVetteValues={vetteToEditInfo} />,
     );
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
     expect(screen.getByRole("radio", { name: /Z06/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByRole("radio", { name: /3LT/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "true",
     );
     expect(screen.getByLabelText("Transmission")).toHaveValue("Automatic");
     expect(screen.getByLabelText("Exterior Color")).toHaveValue("Laguna Blue");

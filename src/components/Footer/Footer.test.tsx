@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { axe, toHaveNoViolations } from "jest-axe";
+import { axe } from "vitest-axe";
 import Footer from "./Footer";
 
-expect.extend(toHaveNoViolations);
+// expect.extend(toHaveNoViolations);
 
 describe("Footer", () => {
   test("renders with correct text", () => {

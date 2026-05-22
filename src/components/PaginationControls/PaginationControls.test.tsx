@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import PaginationControls from "./PaginationControls";
 
-jest.mock("./usePagination", () => ({
+vi.mock("./usePagination", () => ({
   __esModule: true,
-  default: jest.fn((params) => {
+  default: vi.fn((params) => {
     const { currentPage, totalCount, pageSize } = params;
     const totalPages = Math.ceil(totalCount / pageSize);
     if (totalPages <= 5) {
@@ -40,17 +40,17 @@ describe("PaginationControls", () => {
     currentPage: 1,
     totalCount: 100,
     pageSize: 10,
-    onPageChange: jest.fn(),
+    onPageChange: vi.fn(),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders pagination info correctly", () => {
     render(<PaginationControls {...defaultProps} />);
     expect(screen.getByText(/Showing/)).toHaveTextContent(
-      "Showing 1 to 10 of 100 results"
+      "Showing 1 to 10 of 100 results",
     );
   });
 
@@ -61,7 +61,7 @@ describe("PaginationControls", () => {
       .filter(
         (button) =>
           !button.textContent?.includes("Previous") &&
-          !button.textContent?.includes("Next")
+          !button.textContent?.includes("Next"),
       );
     expect(numberButtons).toHaveLength(6); // 1, 2, 3, 4, ..., 10
   });
@@ -106,7 +106,7 @@ describe("PaginationControls", () => {
   it("handles last page range correctly", () => {
     render(<PaginationControls {...defaultProps} currentPage={10} />);
     expect(screen.getByText(/Showing/)).toHaveTextContent(
-      "Showing 91 to 100 of 100 results"
+      "Showing 91 to 100 of 100 results",
     );
   });
 
