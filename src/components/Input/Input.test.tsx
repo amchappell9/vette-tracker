@@ -10,12 +10,12 @@ describe("Input", () => {
   });
 
   test("renders values properly", () => {
-    render(<Input name="test" value="test value" onChange={jest.fn()} />);
+    render(<Input name="test" value="test value" onChange={vi.fn()} />);
     expect(screen.getByDisplayValue("test value")).toBeInTheDocument();
   });
 
   test("calls onChange when input is changed", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<Input name="test" onChange={onChange} />);
     await userEvent.type(screen.getByRole("textbox"), "test");
     expect(onChange).toHaveBeenCalled();

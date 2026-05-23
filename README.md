@@ -17,3 +17,8 @@ Right now the app is entirely client-side rendered, and all data fetching happen
 - Data fetching is only kicked off once the JS bundle is loaded and parsed. Optimally I would kick off the data fetching request on the server, then stream in the results.
 - The error handling around optimistic updates needs work
 - Creations _may_ be able to be done optimistically, however that has not been implemented yet.
+
+### TODOs
+
+- Migrate to vitest
+- Migrate to latest Next.js

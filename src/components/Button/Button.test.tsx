@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Button from "./Button";
-import { axe, toHaveNoViolations } from "jest-axe";
+import { axe, toHaveNoViolations } from "vitest-axe";
 
-expect.extend(toHaveNoViolations);
+expect.extend({ toHaveNoViolations });
 
 describe("Button", () => {
   test("fires the onClick prop when clicked", async () => {
-    const mockCallback = jest.fn();
+    const mockCallback = vi.fn();
     render(<Button onClick={mockCallback}>Click Me!</Button>);
 
     await userEvent.click(screen.getByRole("button"));
@@ -42,7 +42,7 @@ describe("Button", () => {
   });
 
   test("is accessible", async () => {
-    const mockCallback = jest.fn();
+    const mockCallback = vi.fn();
 
     const { container, rerender } = render(
       <Button onClick={mockCallback}>Accessible Button</Button>

@@ -1,8 +1,8 @@
 import { getByRole, render, screen } from "@testing-library/react";
-import { axe, toHaveNoViolations } from "jest-axe";
+import { axe, toHaveNoViolations } from "vitest-axe";
 import Alert from "./Alert";
 
-expect.extend(toHaveNoViolations);
+expect.extend({ toHaveNoViolations });
 
 describe("Alert", () => {
   test("renders with correct text", () => {
