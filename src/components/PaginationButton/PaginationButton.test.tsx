@@ -20,7 +20,7 @@ describe("PaginationButton", () => {
 
   it("calls onChange when clicked", async () => {
     const user = userEvent.setup();
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     render(<PaginationButton onChange={mockOnChange} number={0} />);
     await user.click(screen.getByText("0"));
     expect(mockOnChange).toHaveBeenCalled();
@@ -28,7 +28,7 @@ describe("PaginationButton", () => {
 
   it("does not call onChange when disabled", async () => {
     const user = userEvent.setup();
-    const mockOnChange = jest.fn();
+    const mockOnChange = vi.fn();
     render(<PaginationButton disabled onChange={mockOnChange} />);
     await user.click(screen.getByRole("button"));
     expect(mockOnChange).not.toHaveBeenCalled();
