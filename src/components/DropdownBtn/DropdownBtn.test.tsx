@@ -10,7 +10,7 @@ describe("DropdownBtn", () => {
     values: ["Option 1", "Option 2", "Option 3"],
   };
 
-  const onFilterChange = jest.fn();
+  const onFilterChange = vi.fn();
 
   test("renders DropdownBtn with default filter name", () => {
     render(<DropdownBtn filter={filter} onFilterChange={onFilterChange} />);
