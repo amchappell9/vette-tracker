@@ -6,7 +6,7 @@ import { VetteObject } from "@/src/types";
 
 describe("AddVetteForm", () => {
   test("renders form with default values", () => {
-    render(<AddVetteForm handleSubmit={jest.fn} />);
+    render(<AddVetteForm handleSubmit={vi.fn()} />);
     expect(screen.getByLabelText("Link")).toHaveValue("");
     expect(screen.getByLabelText("Year")).toHaveValue("2014");
     expect(screen.getByLabelText("Transmission")).toHaveValue("Manual");
@@ -35,7 +35,7 @@ describe("AddVetteForm", () => {
     };
 
     render(
-      <AddVetteForm handleSubmit={jest.fn} editVetteValues={vetteToEditInfo} />
+      <AddVetteForm handleSubmit={vi.fn()} editVetteValues={vetteToEditInfo} />
     );
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");
@@ -56,7 +56,7 @@ describe("AddVetteForm", () => {
   });
 
   test("submits form with correct values", async () => {
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
 
     render(<AddVetteForm handleSubmit={handleSubmit} />);
     const user = userEvent.setup();
@@ -134,7 +134,7 @@ describe("AddVetteForm", () => {
   });
 
   test("resets form values", async () => {
-    render(<AddVetteForm handleSubmit={jest.fn} />);
+    render(<AddVetteForm handleSubmit={vi.fn()} />);
     const user = userEvent.setup();
 
     await act(async () => {
@@ -220,7 +220,7 @@ describe("AddVetteForm", () => {
     };
 
     render(
-      <AddVetteForm handleSubmit={jest.fn} editVetteValues={vetteToEditInfo} />
+      <AddVetteForm handleSubmit={vi.fn()} editVetteValues={vetteToEditInfo} />
     );
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");

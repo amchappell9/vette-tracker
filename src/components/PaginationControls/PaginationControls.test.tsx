@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import PaginationControls from "./PaginationControls";
 
-jest.mock("./usePagination", () => ({
+vi.mock("./usePagination", () => ({
   __esModule: true,
-  default: jest.fn((params) => {
+  default: vi.fn((params) => {
     const { currentPage, totalCount, pageSize } = params;
     const totalPages = Math.ceil(totalCount / pageSize);
     if (totalPages <= 5) {
@@ -40,11 +40,11 @@ describe("PaginationControls", () => {
     currentPage: 1,
     totalCount: 100,
     pageSize: 10,
-    onPageChange: jest.fn(),
+    onPageChange: vi.fn(),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders pagination info correctly", () => {
