@@ -32,7 +32,7 @@ const DropdownBtn = ({ filter, onFilterChange }: DropdownBtnProps) => {
     <div className="relative inline-block text-left">
       <button
         type="button"
-        className="focus:ring-offset-100 inline-flex justify-center rounded-lg px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-red-300"
+        className="inline-flex justify-center rounded-lg px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 focus:ring-2 focus:ring-red-300 focus:ring-offset-100 focus:outline-hidden"
         aria-haspopup="true"
         aria-expanded="true"
         onClick={() => setIsActive(!isActive)}
@@ -58,7 +58,7 @@ const DropdownBtn = ({ filter, onFilterChange }: DropdownBtnProps) => {
             {filter.values.map((value) => (
               <button
                 key={value}
-                className="block py-2 pl-4 pr-10 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className="block py-2 pr-10 pl-4 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 role="menuitem"
                 onClick={() => handleChange(value)}
               >

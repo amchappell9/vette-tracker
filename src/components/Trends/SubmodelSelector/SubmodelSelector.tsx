@@ -45,7 +45,7 @@ const tabClasses = cva(
     defaultVariants: {
       intent: "inactive",
     },
-  }
+  },
 );
 
 interface SubmodelSelectorRadioButtonsProps extends SubmodelSelectorProps {}
@@ -60,7 +60,7 @@ const SubmodelSelectorRadioButtons = ({
     <div className="px-12 py-8">
       <div
         id={tablistLabelId}
-        className="mb-2 inline-block text-xs font-bold uppercase text-gray-500"
+        className="mb-2 inline-block text-xs font-bold text-gray-500 uppercase"
       >
         Submodel
       </div>
@@ -116,7 +116,7 @@ const SubmodelSelectorDropdown = ({
       <select
         id={id}
         name={id}
-        className="block w-full rounded-sm border border-gray-300 py-2 pl-4 pr-8 text-lg"
+        className="block w-full rounded-sm border border-gray-300 py-2 pr-8 pl-4 text-lg"
         onChange={(e) => onChange(e.target.value as Submodel)}
         value={selectedSubmodel}
       >

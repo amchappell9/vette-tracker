@@ -10,7 +10,7 @@ type SuccessfulResponseObject = {
 };
 
 export const deleteVette = (
-  vetteInfo: VetteObject
+  vetteInfo: VetteObject,
 ): Promise<SuccessfulResponseObject> => {
   const url = `/vettes/${vetteInfo.id}`;
 
@@ -29,7 +29,7 @@ export const useDeleteVette = () => {
         "vettes",
       ]);
       const updatedVettes = previousVettes?.filter(
-        (vette) => vette.id !== vetteInfo.id
+        (vette) => vette.id !== vetteInfo.id,
       );
 
       queryClient.setQueryData(["vettes"], updatedVettes);

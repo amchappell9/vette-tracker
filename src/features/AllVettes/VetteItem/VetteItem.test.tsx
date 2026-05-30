@@ -27,7 +27,7 @@ describe("VetteItem", () => {
     expect(screen.getAllByText("$60,000")).toHaveLength(2);
     // There may be multiple elements with '15,000 Miles', so use getAllByText
     expect(screen.getAllByText("15,000 Miles").length).toBeGreaterThanOrEqual(
-      1
+      1,
     );
     expect(screen.getByText("Red on Black Interior")).toBeInTheDocument();
     expect(screen.getByText("3LT")).toBeInTheDocument();
@@ -51,11 +51,11 @@ describe("VetteItem", () => {
         }}
         index={0}
         listLength={1}
-      />
+      />,
     );
     const formattedDate = format(
       new Date(2023, 0, 18, 9, 15),
-      "MM/dd/yyyy 'at' h:mm a"
+      "MM/dd/yyyy 'at' h:mm a",
     );
     expect(screen.getByText(`Updated ${formattedDate}`)).toBeInTheDocument();
   });

@@ -48,7 +48,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
     : undefined;
 
   return (
-    <div className="sm:py-4 sm:px-4 lg:px-16">
+    <div className="sm:px-4 sm:py-4 lg:px-16">
       <p className="mb-8 text-gray-700">
         Add your info about your potential Vette here. The more Vettes you
         enter, the easier it is to spot trends!
@@ -57,7 +57,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
         initialValues={formattedEditVetteValues || defaultVetteValues}
         enableReinitialize={true}
         validationSchema={toFormikValidationSchema(
-          addVetteFormValidationSchema
+          addVetteFormValidationSchema,
         )}
         onSubmit={(values) => handleSubmit(values)}
       >
@@ -73,13 +73,13 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
                   // When a user pastes in a link, try and parse out some values
                   // from it
                   const values = getValuesFromLink(
-                    event.clipboardData.getData("Text")
+                    event.clipboardData.getData("Text"),
                   );
 
                   // Strip out properties that are undefined, otherwise they cause issues
                   // with formik
                   const formattedValues = Object.fromEntries(
-                    Object.entries(values).filter(([_, v]) => v !== undefined)
+                    Object.entries(values).filter(([_, v]) => v !== undefined),
                   );
 
                   if (formattedValues) {
@@ -122,7 +122,7 @@ const AddVetteForm = ({ handleSubmit, editVetteValues }: AddVetteFormProps) => {
                   submodels
                     .filter((submodel) =>
                       // @ts-expect-error includes is very narrow, year will be the correct value
-                      submodel.years.includes(props.values.year)
+                      submodel.years.includes(props.values.year),
                     )
                     .map((submodel) => (
                       <SubModelRadioButton

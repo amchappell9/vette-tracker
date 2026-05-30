@@ -1,7 +1,7 @@
 import Axios, { InternalAxiosRequestConfig } from "axios";
 
 function requestInterceptor(
-  config: InternalAxiosRequestConfig
+  config: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig {
   return config;
 }

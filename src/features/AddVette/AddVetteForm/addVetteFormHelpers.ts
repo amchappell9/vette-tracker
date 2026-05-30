@@ -14,19 +14,19 @@ const VALIDATION_MESSAGES = {
 
 function buildSubmodelValidation() {
   return constructZodLiteralUnionType(
-    submodels.map((submodel) => z.literal(submodel.title))
+    submodels.map((submodel) => z.literal(submodel.title)),
   );
 }
 
 function buildPackagesValidation() {
   return constructZodLiteralUnionType(
-    packages.map((vettePackage) => z.literal(vettePackage.value))
+    packages.map((vettePackage) => z.literal(vettePackage.value)),
   );
 }
 
 function buildTrimsValidation() {
   return constructZodLiteralUnionType(
-    trims.map((trim) => z.literal(trim.title))
+    trims.map((trim) => z.literal(trim.title)),
   );
 }
 

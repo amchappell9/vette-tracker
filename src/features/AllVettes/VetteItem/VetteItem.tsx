@@ -22,13 +22,13 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
         href={`/vettes/${vette.id}`}
         className={` ${getBorderStylesByIndex(
           listLength,
-          index
-        )} block w-full  border border-gray-200 p-4 transition-colors hover:bg-gray-50`}
+          index,
+        )} block w-full border border-gray-200 p-4 transition-colors hover:bg-gray-50`}
       >
         {/* Mobile List Styles */}
         <div className="flex justify-between sm:hidden">
           <div className="flex flex-col gap-y-1">
-            <p className="text-lg font-bold leading-none text-gray-800">{`${vette.year} Corvette ${vette.submodel}`}</p>
+            <p className="text-lg leading-none font-bold text-gray-800">{`${vette.year} Corvette ${vette.submodel}`}</p>
             <p className="text-md leading-none text-gray-600">
               <span className="after:mx-1 after:content-['|']">{`$${formattedCost}`}</span>
               <span>{`${formattedMiles} Miles`}</span>
@@ -40,7 +40,7 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
         <div className="hidden justify-between sm:flex">
           {/* Year, Submodel and Date */}
           <div className="flex flex-1 flex-col gap-1">
-            <p className="text-lg font-bold leading-none text-gray-800">
+            <p className="text-lg leading-none font-bold text-gray-800">
               {`${vette.year} Corvette`}
               <span className="md:hidden">{` ${vette.submodel}`}</span>
             </p>
@@ -48,14 +48,14 @@ const VetteItem = ({ vette, index, listLength }: VetteItemProps) => {
             <p className="text-sm leading-none text-gray-600">
               {getVetteDateString(
                 new Date(vette.createdDate),
-                new Date(vette.updatedDate)
+                new Date(vette.updatedDate),
               )}
             </p>
           </div>
 
           {/* Cost and Miles */}
           <div className="flex flex-1 flex-col gap-y-1 sm:flex-none sm:basis-1/4">
-            <p className="font-bold leading-none text-gray-700">{`$${formattedCost}`}</p>
+            <p className="leading-none font-bold text-gray-700">{`$${formattedCost}`}</p>
             <p className="block leading-none text-gray-700">
               <strong>{formattedMiles} Miles</strong>
             </p>

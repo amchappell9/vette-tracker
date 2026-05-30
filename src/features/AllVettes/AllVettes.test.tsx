@@ -11,7 +11,7 @@ test("renders AddFirstVetteMessage when there are no vettes", async () => {
   server.use(
     http.get("/api/services/vettes", () => {
       return HttpResponse.json([]);
-    })
+    }),
   );
 
   render(<AllVettes />);

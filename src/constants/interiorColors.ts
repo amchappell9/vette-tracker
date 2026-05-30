@@ -6,6 +6,6 @@ const interiorColors = [
   "Brownstone",
 ];
 
-export type InteriorColor = typeof interiorColors[number];
+export type InteriorColor = (typeof interiorColors)[number];
 
 export default interiorColors;

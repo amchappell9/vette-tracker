@@ -37,7 +37,7 @@ describe("FormCheckboxGroup", () => {
           <FormCheckboxGroup {...defaultProps} {...props} />
           <button type="submit">Submit</button>
         </Form>
-      </Formik>
+      </Formik>,
     );
   };
 

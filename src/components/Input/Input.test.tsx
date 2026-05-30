@@ -27,7 +27,7 @@ describe("Input", () => {
       <label>
         Test
         <Input name="test" maskType="miles" />
-      </label>
+      </label>,
     );
     // const input = getByRole("textbox");
 
@@ -45,7 +45,7 @@ describe("Input", () => {
       <label>
         Test
         <Input name="test" maskType="dollar" />
-      </label>
+      </label>,
     );
 
     await act(async () => {

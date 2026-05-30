@@ -37,7 +37,7 @@ const NavLinkClasses = cva(
     defaultVariants: {
       intent: "inactive",
     },
-  }
+  },
 );
 
 type NavLinkProps = {

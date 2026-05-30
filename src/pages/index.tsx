@@ -32,7 +32,7 @@ export default function Home() {
         </div>
       </header>
       <section className="mb-20 px-8 pt-20 text-center">
-        <h1 className="pb-6 text-[clamp(_3rem,_4.8vw_+_1rem,_4.5rem)] font-bold leading-none text-white">
+        <h1 className="pb-6 text-[clamp(_3rem,_4.8vw_+_1rem,_4.5rem)] leading-none font-bold text-white">
           Looking for a new Vette?
         </h1>
         <div className="mx-auto max-w-xl">
@@ -76,7 +76,7 @@ type FeatureCardProps = {
 
 const FeatureCard = ({ title, description }: FeatureCardProps) => {
   return (
-    <div className="max-w-[400px] flex-1 bg-gray-300 py-8 px-2 sm:px-4">
+    <div className="max-w-[400px] flex-1 bg-gray-300 px-2 py-8 sm:px-4">
       <div className="flex justify-center">
         <div className="h-16 w-16 rounded-full bg-red-500"></div>
       </div>
@@ -86,7 +86,7 @@ const FeatureCard = ({ title, description }: FeatureCardProps) => {
         </span>
       </div>
       <div className="mt-2 px-4 text-center">
-        <span className="text-lg text-gray-900 lg:text-xl ">{description}</span>
+        <span className="text-lg text-gray-900 lg:text-xl">{description}</span>
       </div>
     </div>
   );
@@ -96,7 +96,7 @@ const SignInButton = () => {
   return (
     <Link
       href={"/sign-in"}
-      className="duration-20 inline-block rounded-sm bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow-sm active:duration-75"
+      className="inline-block rounded-sm bg-red-500 px-8 py-4 text-2xl font-bold text-white drop-shadow-md transition duration-20 hover:-translate-y-0.5 hover:drop-shadow-lg active:translate-y-px active:bg-red-600 active:drop-shadow-sm active:duration-75"
     >
       Get Started
     </Link>

@@ -23,7 +23,7 @@ const FormInput = ({ label, name, ...props }: FormInputProps) => {
         {...props}
         id={name}
         name={name}
-        className="w-full bg-gray-50 py-2 px-4 text-lg"
+        className="w-full bg-gray-50 px-4 py-2 text-lg"
       />
       {meta.touched && meta.error ? (
         <FormFieldErrorMessage errorMessage={meta.error} className="mt-1" />

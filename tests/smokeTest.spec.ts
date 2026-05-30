@@ -29,7 +29,7 @@ test("can navigate to the create vette page", async ({ page }) => {
   await page.getByRole("link", { name: "Add Vette" }).click();
 
   await expect(
-    page.getByRole("heading", { name: "Add New Vette" })
+    page.getByRole("heading", { name: "Add New Vette" }),
   ).toBeVisible();
 });
 

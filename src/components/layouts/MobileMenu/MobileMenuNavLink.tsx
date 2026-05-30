@@ -15,7 +15,7 @@ const linkClasses = cva(
     defaultVariants: {
       intent: "inactive",
     },
-  }
+  },
 );
 
 type MobileMenuNavLinkProps = {

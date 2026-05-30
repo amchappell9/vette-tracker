@@ -55,7 +55,7 @@ export default function DeleteVetteModal({ vetteData }: DeleteVetteModalProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <DialogBackdrop className="bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -85,7 +85,7 @@ export default function DeleteVetteModal({ vetteData }: DeleteVetteModalProps) {
                 <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg leading-6 font-medium text-gray-900"
                   >
                     Delete Vette
                   </Dialog.Title>

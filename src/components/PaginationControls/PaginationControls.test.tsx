@@ -50,7 +50,7 @@ describe("PaginationControls", () => {
   it("renders pagination info correctly", () => {
     render(<PaginationControls {...defaultProps} />);
     expect(screen.getByText(/Showing/)).toHaveTextContent(
-      "Showing 1 to 10 of 100 results"
+      "Showing 1 to 10 of 100 results",
     );
   });
 
@@ -61,7 +61,7 @@ describe("PaginationControls", () => {
       .filter(
         (button) =>
           !button.textContent?.includes("Previous") &&
-          !button.textContent?.includes("Next")
+          !button.textContent?.includes("Next"),
       );
     expect(numberButtons).toHaveLength(6); // 1, 2, 3, 4, ..., 10
   });
@@ -106,7 +106,7 @@ describe("PaginationControls", () => {
   it("handles last page range correctly", () => {
     render(<PaginationControls {...defaultProps} currentPage={10} />);
     expect(screen.getByText(/Showing/)).toHaveTextContent(
-      "Showing 91 to 100 of 100 results"
+      "Showing 91 to 100 of 100 results",
     );
   });
 

@@ -67,7 +67,7 @@ const PaginationButton = ({
       aria-disabled={disabled}
       className={`${getClassNameByState(
         state,
-        active
+        active,
       )} transition-colors focus:border-red-500 focus:outline-hidden disabled:opacity-40 disabled:hover:bg-white`}
       onClick={() => {
         if (!disabled && typeof onChange === "function") onChange();

@@ -24,7 +24,7 @@ test.describe("Vette Tracker", () => {
 
     // View Vette
     await expect(
-      page.getByText("Your Vette was successfully added!")
+      page.getByText("Your Vette was successfully added!"),
     ).toBeVisible();
     await expect(page.getByText("2014 Corvette Z51").first()).toBeVisible();
     await expect(page.getByText("$45,000")).toBeVisible();
@@ -37,13 +37,13 @@ test.describe("Vette Tracker", () => {
     await expect(page.getByText("Magnetic Ride Control")).toBeVisible();
     await expect(page.getByText("NPP Exhaust")).toBeVisible();
     await expect(
-      page.getByText("Performance Data Recorder").first()
+      page.getByText("Performance Data Recorder").first(),
     ).toBeVisible();
 
     // Edit Vette
     await page.getByRole("link", { name: "Edit Vette" }).click();
     await expect(
-      page.getByRole("heading", { name: "Edit Vette" })
+      page.getByRole("heading", { name: "Edit Vette" }),
     ).toBeVisible();
 
     await page.getByLabel("Year").selectOption("2019");
@@ -58,7 +58,7 @@ test.describe("Vette Tracker", () => {
 
     // Check updates
     await expect(
-      page.getByText("Your Vette was successfully updated!")
+      page.getByText("Your Vette was successfully updated!"),
     ).toBeVisible();
     await expect(page.getByText("2019 Corvette ZR1").first()).toBeVisible();
     await expect(page.getByText("1LT").first()).toBeVisible();

@@ -28,7 +28,7 @@ function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
     return React.createElement(
       QueryClientProvider,
       { client: queryClient },
-      children
+      children,
     );
   }
 

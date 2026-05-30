@@ -40,7 +40,7 @@ const getIconByType = (alertType: AlertType) => {
     case "info":
       return (
         <InformationCircleIcon
-          className="text-blue-400 h-5 w-5"
+          className="h-5 w-5 text-blue-400"
           aria-hidden="true"
         />
       );

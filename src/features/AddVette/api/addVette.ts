@@ -9,7 +9,7 @@ type CreateOrUpdateVetteDTO = {
 };
 
 export const createVette = (
-  data: CreateOrUpdateVetteDTO
+  data: CreateOrUpdateVetteDTO,
 ): Promise<VetteObject> => {
   // Check if an ID is present, if it is it's an update
   if (data.id) {

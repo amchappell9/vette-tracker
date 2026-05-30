@@ -37,7 +37,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <DialogBackdrop className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <DialogBackdrop className="bg-opacity-75 absolute inset-0 bg-gray-500 transition-opacity" />
           </Transition.Child>
 
           <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
@@ -60,7 +60,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2"
+                          className="focus:ring-white-500 rounded-md bg-gray-700 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
                           onClick={dismiss}
                         >
                           <span className="sr-only">Close panel</span>
