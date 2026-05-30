@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from "react";
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 
 export type InputType = "miles" | "dollar";
 
@@ -47,7 +47,7 @@ const Input = ({
 
   if (maskType) {
     return (
-      <NumberFormat
+      <NumericFormat
         {...maskOptions}
         {...props}
         className={classes}

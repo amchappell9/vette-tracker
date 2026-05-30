@@ -1,6 +1,10 @@
 import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon, CogIcon, AdjustmentsIcon } from "@heroicons/react/outline";
+import { Dialog, DialogBackdrop, Transition } from "@headlessui/react";
+import {
+  AdjustmentsHorizontalIcon,
+  Cog6ToothIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 import navLinks from "../../../constants/navLinks";
@@ -33,7 +37,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <DialogBackdrop className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
           <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
@@ -60,7 +64,7 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                           onClick={dismiss}
                         >
                           <span className="sr-only">Close panel</span>
-                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                          <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -84,11 +88,11 @@ const MobileMenu = ({ isOpen, dismiss }: MobileMenuPros) => {
                         <UserActionItem
                           as={Link}
                           href="/user-profile"
-                          icon={AdjustmentsIcon}
+                          icon={AdjustmentsHorizontalIcon}
                           text="View Profile"
                         />
                         <UserActionItem
-                          icon={CogIcon}
+                          icon={Cog6ToothIcon}
                           text="Logout"
                           onClick={() => signOut()}
                         />

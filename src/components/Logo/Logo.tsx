@@ -14,6 +14,7 @@ const Logo = ({ variant = "default", className }: LogoProps) => {
         src={invertedLogoLarge}
         alt="Vette Tracker Logo"
         className={className}
+        width={160}
         height={40}
       />
     );
@@ -24,6 +25,7 @@ const Logo = ({ variant = "default", className }: LogoProps) => {
       src={mainLogoLarge}
       alt="Vette Tracker Logo"
       className={className}
+      width={160}
       height={40}
     />
   );

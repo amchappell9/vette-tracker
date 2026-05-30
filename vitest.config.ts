@@ -3,6 +3,8 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   esbuild: {
+    // Vitest/Rolldown still needs this to parse TS test setup files correctly.
+    // @ts-expect-error Vite's current ESBuildOptions type no longer exposes jsx.
     jsx: "automatic",
   },
   oxc: false,

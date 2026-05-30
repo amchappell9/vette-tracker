@@ -5,7 +5,7 @@ import { getAllVettesQueryOptions } from "@/src/features/AllVettes/api/getAllVet
 import { useVette } from "@/src/features/VetteDetail/api/getVette";
 import VetteDetail from "@/src/features/VetteDetail/VetteDetail/VetteDetail";
 import { getErrorMessage } from "@/src/utils/utils";
-import { PencilAltIcon } from "@heroicons/react/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { usePrefetchQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
@@ -46,7 +46,7 @@ export default function VetteById() {
         backLinkHref: "/vettes",
       }}
       pageAction={{
-        icon: PencilAltIcon,
+        icon: PencilSquareIcon,
         text: "Edit Vette",
         href: `/add-vette?vetteToEdit=${vette.id}`,
       }}

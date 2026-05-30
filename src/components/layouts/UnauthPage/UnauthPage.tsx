@@ -18,7 +18,7 @@ const UnauthPage = ({ children }: UnauthPageProps) => {
             <Link href="/" className="relative">
               <Logo
                 variant="inverted"
-                className="h-8 w-full object-cover sm:h-10"
+                className="h-8 w-auto object-contain sm:h-10"
               />
             </Link>
           </div>

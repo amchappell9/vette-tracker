@@ -1,5 +1,5 @@
 import trims, { TrimsType } from "@/src/constants/trims";
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const getTrimInfoByKey = (key: string): TrimsType | undefined => {
   for (const trim of trims) {

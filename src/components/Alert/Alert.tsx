@@ -1,9 +1,9 @@
 import {
-  ExclamationIcon,
+  ExclamationTriangleIcon,
   ExclamationCircleIcon,
   CheckCircleIcon,
   InformationCircleIcon,
-} from "@heroicons/react/outline";
+} from "@heroicons/react/24/outline";
 import { cva, VariantProps } from "class-variance-authority";
 
 const alertStyles = cva("rounded-sm border-l-4 p-4", {
@@ -55,7 +55,7 @@ const getIconByType = (alertType: AlertType) => {
 
     case "warning":
       return (
-        <ExclamationIcon
+        <ExclamationTriangleIcon
           className="h-5 w-5 text-yellow-400"
           aria-hidden="true"
         />

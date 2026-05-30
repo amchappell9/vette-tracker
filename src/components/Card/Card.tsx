@@ -22,7 +22,10 @@ type CardProps = {
   className?: string;
 };
 
-const Card = ({ children, padding = "default" }: CardProps): JSX.Element => {
+const Card = ({
+  children,
+  padding = "default",
+}: CardProps): React.ReactElement => {
   return <div className={card({ padding })}>{children}</div>;
 };
 

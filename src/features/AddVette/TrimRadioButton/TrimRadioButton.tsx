@@ -1,6 +1,6 @@
 import { TrimFeatures } from "@/src/constants/trims";
 import { RadioGroup } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 type TrimRadioButtonProps = {
   name: string;

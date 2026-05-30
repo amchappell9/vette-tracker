@@ -5,7 +5,7 @@ import AddVetteForm from "../AddVetteForm/AddVetteForm";
 import Alert from "@/src/components/Alert/Alert";
 import { formatValues } from "../addVetteHelpers";
 import { AddVetteFormValues } from "../AddVetteForm/addVetteFormHelpers";
-import { PencilAltIcon } from "@heroicons/react/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import VetteDetail from "../../VetteDetail/VetteDetail/VetteDetail";
 
 type AddVetteProps = {
@@ -46,7 +46,7 @@ const AddVette = ({ vetteToEdit }: AddVetteProps) => {
           backLinkHref: "/vettes",
         }}
         pageAction={{
-          icon: PencilAltIcon,
+          icon: PencilSquareIcon,
           text: "Edit Vette",
           href: `/add-vette?vetteToEdit=${data.id}`,
           onClick: () => {

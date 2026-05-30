@@ -36,11 +36,19 @@ type ButtonAsLinkProps = {
   VariantProps<typeof buttonStyles>;
 
 const Button = (props: ButtonAsButtonProps | ButtonAsLinkProps) => {
-  const { buttonSize, intent, className } = props;
-  const styles = buttonStyles({ buttonSize, intent, className });
+  const { buttonSize, intent, widthBehavior, className } = props;
+  const styles = buttonStyles({ buttonSize, intent, widthBehavior, className });
 
   if (props.as === "link") {
-    const { as, ...rest } = props;
+    // Strip CVA-only props so React doesn't forward unknown attributes to the DOM.
+    const {
+      as,
+      buttonSize: _buttonSize,
+      intent: _intent,
+      widthBehavior: _widthBehavior,
+      className: _className,
+      ...rest
+    } = props;
 
     return (
       <Link {...rest} className={styles}>
@@ -49,8 +57,17 @@ const Button = (props: ButtonAsButtonProps | ButtonAsLinkProps) => {
     );
   }
 
+  // Strip CVA-only props so React doesn't forward unknown attributes to the DOM.
+  const {
+    buttonSize: _buttonSize,
+    intent: _intent,
+    widthBehavior: _widthBehavior,
+    className: _className,
+    ...rest
+  } = props;
+
   return (
-    <button {...props} className={styles}>
+    <button {...rest} className={styles}>
       {props.children}
     </button>
   );

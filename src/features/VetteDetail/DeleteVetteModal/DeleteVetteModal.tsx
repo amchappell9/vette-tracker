@@ -1,6 +1,6 @@
 import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
+import { Dialog, DialogBackdrop, Transition } from "@headlessui/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { VetteObject } from "@/src/types";
 import { useDeleteVette } from "../api/deleteVette";
 import { getErrorMessage } from "@/src/utils/utils";
@@ -55,7 +55,7 @@ export default function DeleteVetteModal({ vetteData }: DeleteVetteModalProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -77,7 +77,7 @@ export default function DeleteVetteModal({ vetteData }: DeleteVetteModalProps) {
             <div className="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
               <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <ExclamationIcon
+                  <ExclamationTriangleIcon
                     className="h-6 w-6 text-red-600"
                     aria-hidden="true"
                   />

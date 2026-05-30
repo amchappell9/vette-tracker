@@ -17,8 +17,7 @@ const FormRadioGroup = ({
   labelClassName,
   children,
 }: FormRadioGroupProps) => {
-  //  eslint-disable-next-line
-  const [field, meta, helpers] = useField({
+  const [, meta, helpers] = useField({
     name: name,
     type: "radio",
   });
