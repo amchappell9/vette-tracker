@@ -1,5 +1,5 @@
 import submodels, { SubmodelType } from "@/src/constants/submodels";
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const getSubmodelInfoByKey = (key: string): SubmodelType | undefined => {
   for (const submodel of submodels) {

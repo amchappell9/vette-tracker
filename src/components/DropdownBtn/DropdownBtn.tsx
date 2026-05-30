@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ChevronDownIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import FILTER_TYPES, { FilterType } from "../../constants/filterTypes";
 import { useDetectOutsideClick } from "@/src/hooks/useDetectOutsideClick";
 

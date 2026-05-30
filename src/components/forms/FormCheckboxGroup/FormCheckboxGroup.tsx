@@ -18,9 +18,7 @@ const FormCheckboxGroup = ({
   // Needs a unique ID for the radio button group
   const id = useId();
 
-  // I don't know how to only get the second value from the array...
-  // eslint-disable-next-line
-  const [field, meta] = useField(name);
+  const [, meta] = useField(name);
 
   return (
     <>

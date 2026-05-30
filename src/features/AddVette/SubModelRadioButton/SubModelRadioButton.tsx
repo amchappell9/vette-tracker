@@ -1,4 +1,4 @@
-import { PlusIcon, CheckCircleIcon } from "@heroicons/react/outline";
+import { PlusIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { RadioGroup } from "@headlessui/react";
 import { Features } from "@/src/constants/submodels";
 

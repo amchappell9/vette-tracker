@@ -1,6 +1,6 @@
 import Logo from "@/src/components/Logo/Logo";
 import { UserButton, useAuth } from "@clerk/nextjs";
-import { ArrowLeftIcon, MenuIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
 import MobileMenu from "../../MobileMenu/MobileMenu";
@@ -13,7 +13,7 @@ export type BackLinkConfig = {
 };
 
 export type PageAction = {
-  icon: (props: React.ComponentProps<"svg">) => JSX.Element;
+  icon: React.ElementType<React.ComponentProps<"svg">>;
   text: string;
   href: string;
   onClick?: () => void;
@@ -46,7 +46,7 @@ function AuthenticatedPageHeader({
           {/* Logo */}
           <div className="flex-1">
             <Link href={userSignedIn ? "/vettes" : "/"} className="relative">
-              <Logo variant="default" />
+              <Logo variant="default" className="h-10 w-auto object-contain" />
             </Link>
           </div>
 
@@ -65,7 +65,7 @@ function AuthenticatedPageHeader({
               className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 lg:hidden"
             >
               <span className="sr-only">Open main menu</span>
-              <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+              <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </nav>
@@ -98,7 +98,7 @@ function AuthenticatedPageHeader({
 export default AuthenticatedPageHeader;
 
 type PageActionLinkProps = {
-  icon: (props: React.ComponentProps<"svg">) => JSX.Element;
+  icon: React.ElementType<React.ComponentProps<"svg">>;
   text: string;
   href: string;
   onClick?: () => void;

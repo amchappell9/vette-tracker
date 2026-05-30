@@ -4,7 +4,7 @@ import { useState, useEffect, RefObject } from "react";
  * https://gist.github.com/jmblog/fb05eaba27a8993749145adc898f9bcb
  */
 export const useDetectOutsideClick = (
-  el: RefObject<HTMLElement>,
+  el: RefObject<HTMLElement | null>,
   initialState: boolean
 ) => {
   const [isActive, setIsActive] = useState(initialState);
