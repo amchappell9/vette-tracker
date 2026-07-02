@@ -2,7 +2,6 @@ import { screen, waitFor } from "@testing-library/react";
 import { render } from "@/tests/utils/testUtils";
 import AllVettes from "./AllVettes";
 import userEvent from "@testing-library/user-event";
-import { act } from "react";
 import { server } from "@/tests/mocks/server";
 import { http, HttpResponse } from "msw";
 
@@ -50,9 +49,7 @@ test("renders PaginationControls and handles page changes", async () => {
   // Find and click the next page button
   const nextPageButton = screen.getAllByRole("button", { name: /next/i })[0];
 
-  await act(async () => {
-    await user.click(nextPageButton);
-  });
+  await user.click(nextPageButton);
 
   // Should now show different vettes (page 2)
   await waitFor(() => {

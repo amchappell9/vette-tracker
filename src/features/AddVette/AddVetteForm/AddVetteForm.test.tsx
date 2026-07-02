@@ -1,4 +1,3 @@
-import React, { act } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddVetteForm from "./AddVetteForm";
@@ -61,42 +60,39 @@ describe("AddVetteForm", () => {
     render(<AddVetteForm handleSubmit={handleSubmit} />);
     const user = userEvent.setup();
 
-    await act(async () => {
-      await user.type(
-        screen.getByRole("textbox", { name: /link/i }),
-        "https://example.com",
-      );
+    await user.type(
+      screen.getByRole("textbox", { name: /link/i }),
+      "https://example.com",
+    );
 
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /year/i }),
-        ["2015"],
-      );
+    await user.selectOptions(screen.getByRole("combobox", { name: /year/i }), [
+      "2015",
+    ]);
 
-      await user.click(screen.getByRole("radio", { name: /Z06/i }));
-      await user.click(screen.getByRole("radio", { name: /3LT/i }));
+    await user.click(screen.getByRole("radio", { name: /Z06/i }));
+    await user.click(screen.getByRole("radio", { name: /3LT/i }));
 
-      await user.click(screen.getByLabelText(/Magnetic Ride Control/i));
-      await user.click(screen.getByLabelText(/NPP Exhaust/i));
-      await user.click(screen.getByLabelText(/Performance Data Recorder/i));
+    await user.click(screen.getByLabelText(/Magnetic Ride Control/i));
+    await user.click(screen.getByLabelText(/NPP Exhaust/i));
+    await user.click(screen.getByLabelText(/Performance Data Recorder/i));
 
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /transmission/i }),
-        ["Automatic"],
-      );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /transmission/i }),
+      ["Automatic"],
+    );
 
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /exterior color/i }),
-        ["Laguna Blue"],
-      );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /exterior color/i }),
+      ["Laguna Blue"],
+    );
 
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /interior color/i }),
-        ["Ash Gray"],
-      );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /interior color/i }),
+      ["Ash Gray"],
+    );
 
-      await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
-      await user.type(screen.getByRole("textbox", { name: /cost/i }), "45000");
-    });
+    await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
+    await user.type(screen.getByRole("textbox", { name: /cost/i }), "45000");
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
@@ -115,9 +111,7 @@ describe("AddVetteForm", () => {
     expect(screen.getByLabelText("Miles")).toHaveValue("72,000");
     expect(screen.getByLabelText("Cost")).toHaveValue("$45,000");
 
-    await act(async () => {
-      await user.click(screen.getByRole("button", { name: /add vette/i }));
-    });
+    await user.click(screen.getByRole("button", { name: /add vette/i }));
 
     expect(handleSubmit).toHaveBeenCalledWith({
       link: "https://example.com",
@@ -137,35 +131,32 @@ describe("AddVetteForm", () => {
     render(<AddVetteForm handleSubmit={vi.fn()} />);
     const user = userEvent.setup();
 
-    await act(async () => {
-      await user.type(
-        screen.getByRole("textbox", { name: /link/i }),
-        "https://example.com",
-      );
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /year/i }),
-        ["2015"],
-      );
-      await user.click(screen.getByRole("radio", { name: /Z06/i }));
-      await user.click(screen.getByRole("radio", { name: /3LT/i }));
-      await user.click(screen.getByLabelText(/Magnetic Ride Control/i));
-      await user.click(screen.getByLabelText(/NPP Exhaust/i));
-      await user.click(screen.getByLabelText(/Performance Data Recorder/i));
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /transmission/i }),
-        ["Automatic"],
-      );
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /exterior color/i }),
-        ["Laguna Blue"],
-      );
-      await user.selectOptions(
-        screen.getByRole("combobox", { name: /interior color/i }),
-        ["Ash Gray"],
-      );
-      await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
-      await user.type(screen.getByRole("textbox", { name: /cost/i }), "45000");
-    });
+    await user.type(
+      screen.getByRole("textbox", { name: /link/i }),
+      "https://example.com",
+    );
+    await user.selectOptions(screen.getByRole("combobox", { name: /year/i }), [
+      "2015",
+    ]);
+    await user.click(screen.getByRole("radio", { name: /Z06/i }));
+    await user.click(screen.getByRole("radio", { name: /3LT/i }));
+    await user.click(screen.getByLabelText(/Magnetic Ride Control/i));
+    await user.click(screen.getByLabelText(/NPP Exhaust/i));
+    await user.click(screen.getByLabelText(/Performance Data Recorder/i));
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /transmission/i }),
+      ["Automatic"],
+    );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /exterior color/i }),
+      ["Laguna Blue"],
+    );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /interior color/i }),
+      ["Ash Gray"],
+    );
+    await user.type(screen.getByRole("textbox", { name: /miles/i }), "72000");
+    await user.type(screen.getByRole("textbox", { name: /cost/i }), "45000");
 
     expect(screen.getByLabelText("Link")).toHaveValue("https://example.com");
     expect(screen.getByLabelText("Year")).toHaveValue("2015");
@@ -183,9 +174,7 @@ describe("AddVetteForm", () => {
     expect(screen.getByLabelText("Miles")).toHaveValue("72,000");
     expect(screen.getByLabelText("Cost")).toHaveValue("$45,000");
 
-    await act(async () => {
-      await user.click(screen.getByRole("button", { name: /clear/i }));
-    });
+    await user.click(screen.getByRole("button", { name: /clear/i }));
 
     expect(screen.getByLabelText("Link")).toHaveValue("");
     expect(screen.getByLabelText("Year")).toHaveValue("2014");

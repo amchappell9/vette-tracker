@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Input from "./Input";
-import { act } from "react";
 
 describe("Input", () => {
   test("renders a normal input", () => {
@@ -23,35 +22,30 @@ describe("Input", () => {
 
   test("formats miles correctly", async () => {
     const user = userEvent.setup();
-    const { getByDisplayValue, getByRole } = render(
+    const { getByDisplayValue } = render(
       <label>
         Test
         <Input name="test" maskType="miles" />
       </label>,
     );
-    // const input = getByRole("textbox");
 
-    await act(async () => {
-      await user.click(screen.getByLabelText("Test"));
-      await user.keyboard("1234567");
-    });
+    await user.click(screen.getByLabelText("Test"));
+    await user.keyboard("1234567");
 
     expect(await getByDisplayValue("1,234,567")).toBeInTheDocument();
   });
 
   test("formats dollars correctly", async () => {
     const user = userEvent.setup();
-    const { getByDisplayValue, getByRole } = render(
+    const { getByDisplayValue } = render(
       <label>
         Test
         <Input name="test" maskType="dollar" />
       </label>,
     );
 
-    await act(async () => {
-      await user.click(screen.getByLabelText("Test"));
-      await user.keyboard("1234567");
-    });
+    await user.click(screen.getByLabelText("Test"));
+    await user.keyboard("1234567");
 
     expect(await getByDisplayValue("$1,234,567")).toBeInTheDocument();
   });
