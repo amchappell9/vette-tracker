@@ -1,7 +1,7 @@
-import "@vitest/expect";
+import "vitest";
 
-declare module "@vitest/expect" {
-  interface Assertion<T = unknown> {
-    toHaveNoViolations(): void;
+declare module "vitest" {
+  interface Matchers<R, T> {
+    toHaveNoViolations(): R;
   }
 }
