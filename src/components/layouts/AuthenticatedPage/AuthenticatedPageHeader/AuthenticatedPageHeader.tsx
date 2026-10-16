@@ -56,7 +56,7 @@ function AuthenticatedPageHeader({
           {/* Logout / Mobile Menu Button */}
           <div className="flex justify-end gap-4 sm:flex-1">
             <div className="hidden lg:block">
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             </div>
 
             {/* Mobile Menu Button */}

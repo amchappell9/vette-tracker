@@ -22,7 +22,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <ClerkProvider {...pageProps}>
+    <ClerkProvider
+      {...pageProps}
+      afterSignOutUrl="/"
+      signInFallbackRedirectUrl="/vettes"
+      signUpFallbackRedirectUrl="/vettes"
+    >
       <QueryClientProvider client={queryClient}>
         <Head>
           <meta
