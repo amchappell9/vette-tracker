@@ -2,6 +2,8 @@
 
 A tool to track Corvette prices over time. Built using Next.js, Tanstack Query, Clerk, and Tailwindcss.
 
+Run `npm run lint` for Oxlint and `npm run ts-lint` for TypeScript checking. See [linting notes and benchmarks](docs/linting.md) for rule compatibility and migration measurements.
+
 ## Performance Considerations
 
 Right now the app is entirely client-side rendered, and all data fetching happens using Tanstack Query hooks. Most page to page navigations should be instantaneous. Initial page load still needs work.
