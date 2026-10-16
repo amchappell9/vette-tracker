@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 import { VetteObject } from "../../src/types";
 
 // Sample mock vette data for testing

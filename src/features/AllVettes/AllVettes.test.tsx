@@ -3,7 +3,7 @@ import { render } from "@/tests/utils/testUtils";
 import AllVettes from "./AllVettes";
 import userEvent from "@testing-library/user-event";
 import { server } from "@/tests/mocks/server";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 
 // Test that renders AddFirstVetteMessage when there are no vettes
 test("renders AddFirstVetteMessage when there are no vettes", async () => {

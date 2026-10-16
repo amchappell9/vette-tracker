@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@clerk/testing": "^2.2.46",
-    "@next/eslint-plugin-next": "16.4.1",
+    "@next/eslint-plugin-next": "16.4.2",
     "@playwright/test": "^1.61.1",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "@tanstack/react-query-devtools": "^5.69.0",
@@ -58,7 +58,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
     "jsdom": "^30.0.1",
-    "msw": "^2.14.6",
+    "msw": "^3.0.3",
     "oxlint": "1.88.0",
     "prettier": "^3.9.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
