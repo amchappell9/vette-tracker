@@ -12,6 +12,11 @@ const VALIDATION_MESSAGES = {
   URL: "Please enter a valid URL. Ex: https://www.google.com",
 };
 
+const requiredString = z.string({
+  error: (issue) =>
+    issue.input === undefined ? VALIDATION_MESSAGES.REQUIRED : undefined,
+});
+
 function buildSubmodelValidation() {
   return constructZodLiteralUnionType(
     submodels.map((submodel) => z.literal(submodel.title)),
@@ -31,22 +36,22 @@ function buildTrimsValidation() {
 }
 
 export const addVetteFormValidationSchema = z.object({
-  link: z.string().url({ message: VALIDATION_MESSAGES.URL }).optional(),
-  year: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
+  link: z.url({ error: VALIDATION_MESSAGES.URL }).optional(),
+  year: requiredString,
   submodel: buildSubmodelValidation(),
   trim: buildTrimsValidation(),
   packages: z.array(buildPackagesValidation()),
-  transmissionType: z.string({
-    required_error: VALIDATION_MESSAGES.REQUIRED,
-  }),
-  exteriorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  interiorColor: z.string({ required_error: VALIDATION_MESSAGES.REQUIRED }),
-  miles: z
-    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
-    .regex(/^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, VALIDATION_MESSAGES.MILES),
-  cost: z
-    .string({ required_error: VALIDATION_MESSAGES.REQUIRED })
-    .regex(/^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/, "DOES NOT MEET REGEX"),
+  transmissionType: requiredString,
+  exteriorColor: requiredString,
+  interiorColor: requiredString,
+  miles: requiredString.regex(
+    /^(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/,
+    VALIDATION_MESSAGES.MILES,
+  ),
+  cost: requiredString.regex(
+    /^\$(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$/,
+    "DOES NOT MEET REGEX",
+  ),
 });
 
 export type AddVetteFormValues = z.infer<typeof addVetteFormValidationSchema>;

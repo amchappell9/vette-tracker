@@ -4,6 +4,19 @@ import AddVetteForm from "./AddVetteForm";
 import { VetteObject } from "@/src/types";
 
 describe("AddVetteForm", () => {
+  test("shows required-field errors and blocks an incomplete submission", async () => {
+    const handleSubmit = vi.fn();
+    render(<AddVetteForm handleSubmit={handleSubmit} />);
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole("button", { name: /add vette/i }));
+
+    expect(await screen.findAllByText("This field is required")).toHaveLength(
+      2,
+    );
+    expect(handleSubmit).not.toHaveBeenCalled();
+  });
+
   test("renders form with default values", () => {
     render(<AddVetteForm handleSubmit={vi.fn()} />);
     expect(screen.getByLabelText("Link")).toHaveValue("");

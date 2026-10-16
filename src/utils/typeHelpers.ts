@@ -14,7 +14,7 @@ import * as z from "zod";
 export type OverrideProps<T, TOverridden> = Omit<T, keyof TOverridden> &
   TOverridden;
 
-export function isValidZodLiteralUnion<T extends z.ZodLiteral<unknown>>(
+export function isValidZodLiteralUnion<T extends z.ZodLiteral>(
   literals: T[],
 ): literals is [T, T, ...T[]] {
   return literals.length >= 2;
@@ -28,7 +28,7 @@ export function isValidZodLiteralUnion<T extends z.ZodLiteral<unknown>>(
  * @param literals
  * @returns
  */
-export function constructZodLiteralUnionType<T extends z.ZodLiteral<unknown>>(
+export function constructZodLiteralUnionType<T extends z.ZodLiteral>(
   literals: T[],
 ) {
   if (!isValidZodLiteralUnion(literals)) {
